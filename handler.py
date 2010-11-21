@@ -2,6 +2,7 @@
 
 """Application for tracking SLUG user group events."""
 
+import config
 
 import pprint
 import logging

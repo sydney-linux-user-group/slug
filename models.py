@@ -1,4 +1,5 @@
 
+import config
 
 from google.appengine.ext import db
 import aeoid
