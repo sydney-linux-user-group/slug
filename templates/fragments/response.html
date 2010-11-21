@@ -108,8 +108,19 @@
         <tr>
           <td colspan=2>
             <img class="gravatar-large"
-              src="{{ response.created_by.email|gravatar }}"
+              src="{{ response.created_by.email|gravatar:148 }}"
               alt="{{ response.created_by.nickname }}'s Gravatar">
+          </td>
+        </tr>
+        <tr>
+          <td colspan=2>
+            <table>
+              <tr>
+                <td><img class="response-small" src="/images/tick.png"></td>
+                <td><img class="response-small" src="/images/tick.png"></td>
+                <td>Bring friends!</td>
+              </tr>
+            </table>
           </td>
         </tr>
         <tr>
@@ -134,7 +145,7 @@
         <tr>
           <td colspan=2>
             <img class="gravatar-large"
-              src="{{ response.created_by.email|gravatar }}"
+              src="{{ response.created_by.email|gravatar:148 }}"
               alt="{{ response.created_by.nickname }}'s Gravatar">
           </td>
         </tr>

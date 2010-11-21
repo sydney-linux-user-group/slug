@@ -11,11 +11,11 @@ from aeoid import users as openid_users
 import models
 from utils.render import render
 
-def GetResponseFragment(current_user):
+def GetResponses(event, user):
   query = models.Response.gql(
       "WHERE created_by = :user AND event = :event",
-      user = current_user._user_info_key,
-      event = models.Event.get_by_id(1),
+      user = user._user_info_key,
+      event = event,
       )
 
   responses = query.fetch(100)
@@ -31,24 +31,20 @@ def GetResponseFragment(current_user):
       else:
         guests.append(response)
 
-  arguments = {
-      'response': response,
-      'guests': guests,
-      }
-
-  logging.warn(arguments)
-
-  return render('templates/fragments/response.html', arguments)
+  return response, guests
 
 
 class ShowResponsePage(webapp.RequestHandler):
   def get(self):
-    self.response.headers['Content-Type'] = 'text/html'
-
+    ####################################################
+    event = models.Event.get_by_id(1)
     current_user = openid_users.get_current_user()
     if not current_user:
-      self.response.out.write('<html><body>User not logged in.</body></html>')
+      self.redirect('/')
       return
+    ####################################################
+
+    response, guests = GetResponses(event, current_user)
 
     self.response.out.write("""\
 <html>
@@ -59,40 +55,60 @@ class ShowResponsePage(webapp.RequestHandler):
   <body>
 %s
   </body>
-</html>""" % GetResponseFragment(current_user))
+</html>""" % render('templates/fragments/response.html', locals()))
 
 
-class AddResponsePage(webapp.RequestHandler):
+class FriendsResponsePage(webapp.RequestHandler):
   def get(self):
-
-    admin = appengine_users.get_current_user()
-    if admin is None:
-      self.redirect(appengine_users.create_login_url(self.request.uri))
-      return
-
-    logging.warn('Admin %s', admin)
-
+    ####################################################
     event = models.Event.get_by_id(1)
-    if event is None:
-      event = models.Event(
-          name = 'temp',
-          text = 'desc',
-          start = datetime.datetime.fromtimestamp(0),
-          end = datetime.datetime.fromtimestamp(0),
-          )
-      event.put()
-
     current_user = openid_users.get_current_user()
-    if current_user is None:
-      self.redirect(openid_users.create_login_url(self.request.uri))
+    if not current_user:
+      self.redirect('/')
       return
+    ####################################################
 
-    response = models.Response(
-        event=event, guest=False, attending=True)
+    response, guests = GetResponses(event, current_user)
+    self.response.out.write(render(
+        'templates/response-friends.html', locals()))
+
+
+class UpdateResponsePage(webapp.RequestHandler):
+
+  def post(self):
+    ####################################################
+    event = models.Event.get_by_id(1)
+    current_user = openid_users.get_current_user()
+    if not current_user:
+      self.redirect('/')
+      return
+    ####################################################
+
+    response, guests = GetResponses(event, current_user)
+    if not response:
+      response = models.Response(event=event, guest=False, attending=True)
+
+    response.attending=self.request.get('attending').lower() == 'no'
     response.put()
 
-    response = models.Response(
-        event=event, guest=True, attending=True,
-        guest_email = "james@polley.org",
-        guest_name = "James Polley")
-    response.put()
+    for guest in guests:
+      guest.delete()
+
+    guest_names = self.request.get_all('guest_name')
+    logging.info('guest_names %s', guest_names)
+    guest_emails = self.request.get_all('guest_emails')
+    logging.info('guest_emails %s', guest_emails)
+    assert len(guest_names) == len(guest_emails)
+
+    for guest_name, guest_email in zip(guest_names, guest_emails):
+      guest_name, guest_email = guest_name.strip(), guest_email.strip()
+      if not guest_name or not guest_email:
+        continue
+
+      response = models.Response(event=event, guest=True)
+      response.attending = True
+      response.guest_name = name
+      response.guest_email = email
+      response.put()
+
+    self.redirect('/')
