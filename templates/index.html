@@ -1,5 +1,51 @@
 <html>
+  <head>
+    <title>Sydney Linux User Group</title>
+    <link rel="StyleSheet" href="/css/base.css" type="text/css" media="screen">
+  </head>
   <body>
-	<img src="/images/logo.png">
+    <img src="/images/logo.png">
+
+    <div class="rounded shadow border">
+      <h1>Are you coming?</h1>
+      <ul>
+        <li><img class="response" src="/images/tick.png"> Yes!
+        <li>
+          <div style="width: 64px; height: 48px;">
+            <img class="response" src="/images/tick.png"
+                 style="float: left; position:relative;">
+            <img class="response-small" src="/images/tick.png">
+            <img class="response-small" src="/images/tick.png">
+            <img class="response-small" src="/images/tick.png">
+          </div>
+          Yes, with friends!
+        <li><img class="response" src="/images/cross.png"> No :(
+      </ul>
+    </div>
+
+    <div class="rounded shadow border">
+      <img class="response" src="/images/tick.png">
+      <h1>I'm attending!</h1>
+      <img class="gravatar-large" src="{{ gravatar }}" alt="Gravatar">
+      <h2>Change response</h2>
+    </div>
+
+    <div class="rounded shadow border">
+      <img class="response" src="/images/tick.png">
+      <h1>I'm attending with friends!</h1>
+      <div class="gravatar-n-friends">
+        <img class="gravatar-large" style="float: left; position: relative;" src="{{ gravatar }}" alt="Gravatar">
+        <img class="gravatar-small" src="/images/silhouette.png" alt="Friend A">
+        <img class="gravatar-small" src="/images/silhouette.png" alt="Friend B">
+        <img class="gravatar-small" src="/images/silhouette.png" alt="Friend C">
+      </div>
+      <h2>Change response</h2>
+    </div>
+
+    <div class="rounded shadow border">
+      <img class="response" src="/images/cross.png">
+      <h1>I'm not attending :(</h1>
+      <h2>Change response</h2>
+    </div>
   </body>
 </html>

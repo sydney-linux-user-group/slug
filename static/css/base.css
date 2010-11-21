@@ -1,0 +1,65 @@
+
+/* Fix PNG transparence in older IE browsers. */
+img, div, a, input {
+  behavior: url(/css/resources/iepngfix.htc);
+}
+
+/* CSS only rounded corners, even in IE! */
+.rounded {
+  behavior: url(/css/htc/border-radius.htc);
+
+  -moz-border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -khtml-border-radius: 20px;
+  border-radius: 20px;
+
+  padding: 10px;
+}
+
+/* CSS only drop shadow */
+.shadow {
+  -moz-box-shadow: 5px 5px 5px black;
+  -webkit-box-shadow: 5px 5px 5px black;
+  box-shadow: 5px 5px 5px black;
+}
+
+.border {
+  border: 1px solid gray;
+}
+
+.response-small {
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+.response {
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+
+.gravatar-large {
+  width: 148px;
+  height: 148px;
+  padding: 1px;
+  margin: 0;
+}
+
+.gravatar-small {
+  width: 48px;
+  height: 48px;
+  padding: 1px;
+  margin: 0;
+}
+
+.gravatar-n-friends {
+  width: 200px; /* gravatar.height + 2*gravatar.padding +
+                   gravatar-small.height + 2*gravatar-small.padding */
+  height: 150px; /* .gravatar.height + 2*gravatar.padding */
+}
