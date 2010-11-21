@@ -6,6 +6,7 @@ import config
 
 import pprint
 import logging
+import events
 
 from google.appengine.api import users
 from google.appengine.ext import webapp
@@ -24,6 +25,8 @@ class IndexPage(webapp.RequestHandler):
 
 application = webapp.WSGIApplication(
   [('/', IndexPage),
+   ('/event/(.*)', events.Event),
+   ('/events(.*)', events.Events),
    ],
   debug=True)
 

@@ -1,0 +1,13 @@
+<html>
+  <head><title>Events</title></head>
+  <body>
+  <form action="/events/" method="post">
+    <div>Event Name: <input type="text" name="name"/></div>
+    <div>Event Text: <input type="textarea" rows=30 cols=80 name="text"/></div>
+    <div><input type="submit"/>
+  </form>
+  {% if urltail %}
+  URL Tail: {{ urltail }}
+  {% endif %}
+  </body>
+</html>
