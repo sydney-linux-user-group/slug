@@ -4,24 +4,18 @@
     <link rel="StyleSheet" href="/css/base.css" type="text/css" media="screen">
   </head>
   <body>
-    <img src="/images/logo.png">
 
-    {% include "fragments/attending-question.html" %}
-
-    <br>
-    <br>
-
-    {% include "fragments/attending-single.html" %}
-
-    <br>
-    <br>
-
-    {% include "fragments/attending-multiple.html" %}
-
-    <br>
-    <br>
-
-    {% include "fragments/notattending.html" %}
+    <div>
+      {% if openid_user %}
+        <p>You are logged in as {{ openid_user.nickname }}.</p>
+        <a href="{{ logout_url }}">Logout</a>
+      {% else %}
+        <a href="{{ login_url }}">Login</a>
+      {% endif %}
+    </div>
+    <div>
+      <img src="/images/logo.png">
+    </div>
 
   </body>
 </html>

@@ -1,3 +1,3 @@
 [submodule "aeoid"]
 	path = aeoid
-	url = git://github.com/Arachnid/aeoid.git
+	url = git://github.com/mithro/aeoid.git

@@ -2,14 +2,10 @@
 import config
 
 from google.appengine.ext import db
-import aeoid.users
 
-# Setup some namespaces to make it easy to tell the difference between the two
-# types of users.
-class appengine:
-  UserProperty = db.UserProperty
-class openid:
-  UserProperty = aeoid.users.UserProperty
+# Some clever namespaces to make it easier to understand.
+from google.appengine.ext import db as appengine
+from aeoid import users as openid
 
 
 class Event(db.Model):
@@ -50,11 +46,13 @@ class LightningTalk(db.Model):
   given_at = db.Reference(Event)
 
 
-class SignUp(db.Model):
+class Response(db.Model):
   creator = openid.UserProperty(auto_current_user_add=True, required=True)
   created_on = db.DateTimeProperty(auto_now_add=True, required=True)
 
   event = db.ReferenceProperty(Event)
+
+  attending = db.BooleanProperty(required=True)
 
   # If this is a guest, then we store their details here, otherwise we just use
   # the creator's details.

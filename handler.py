@@ -7,25 +7,29 @@ import config
 import pprint
 import logging
 
-from google.appengine.api import users
 from google.appengine.ext import webapp
-from google.appengine.ext.webapp import template
 from google.appengine.ext.webapp.util import run_wsgi_app
 
 import models
+import response
 
+from utils.render import render as r
+
+import aeoid.middleware
 
 class IndexPage(webapp.RequestHandler):
   def get(self):
     self.response.headers['Content-Type'] = 'text/html'
-    self.response.out.write(template.render(
-      'templates/index.html', {}))
+    self.response.out.write(r('templates/index.html', {}))
 
 
 application = webapp.WSGIApplication(
   [('/', IndexPage),
+   ('/response/show', response.ShowResponsePage),
+   ('/response/add', response.AddResponsePage),
    ],
   debug=True)
+application = aeoid.middleware.AeoidMiddleware(application)
 
 
 def main():
