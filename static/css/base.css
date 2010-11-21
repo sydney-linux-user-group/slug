@@ -1,0 +1,15 @@
+
+/* Fix PNG transparence in older IE browsers. */
+img, div, a, input {
+  behavior: url(/css/resources/iepngfix.htc);
+}
+
+/* CSS only rounded corners, even in IE! */
+.rounded {
+  behavior: url(/css/htc/border-radius.htc);
+
+  -moz-border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -khtml-border-radius: 20px;
+  border-radius: 20px;
+}

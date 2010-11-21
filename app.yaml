@@ -5,7 +5,13 @@ api_version: 1
 
 handlers:
 - url: /images
-  static_dir: images
+  static_dir: static/images
+
+- url: /css
+  static_dir: static/css
+
+- url: /js
+  static_dir: static/js
 
 - url: /.*
   script: handler.py

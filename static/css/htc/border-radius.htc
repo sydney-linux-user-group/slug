@@ -1,0 +1,406 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+ <link rel="icon" type="image/vnd.microsoft.icon" href="http://www.gstatic.com/codesite/ph/images/phosting.ico">
+ 
+ <script type="text/javascript">
+ 
+ 
+ 
+ var codesite_token = null;
+ 
+ 
+ var logged_in_user_email = null;
+ 
+ 
+ var relative_base_url = "";
+ 
+ </script>
+ 
+ 
+ <title>border-radius.htc - 
+ curved-corner -
+ 
+ Border radius htc v3 with IE6, 7 &amp; 8 support - Project Hosting on Google Code</title>
+ <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" >
+ 
+ <meta name="ROBOTS" content="NOARCHIVE">
+ 
+ <link type="text/css" rel="stylesheet" href="http://www.gstatic.com/codesite/ph/3611006504229449998/css/ph_core.css">
+ 
+ <link type="text/css" rel="stylesheet" href="http://www.gstatic.com/codesite/ph/3611006504229449998/css/ph_detail.css" >
+ 
+ 
+ 
+ 
+<!--[if IE]>
+ <link type="text/css" rel="stylesheet" href="http://www.gstatic.com/codesite/ph/3611006504229449998/css/d_ie.css" >
+<![endif]-->
+ <style type="text/css">
+ .menuIcon.off { background: no-repeat url(http://www.gstatic.com/codesite/ph/images/dropdown_sprite.gif) 0 -42px }
+ .menuIcon.on { background: no-repeat url(http://www.gstatic.com/codesite/ph/images/dropdown_sprite.gif) 0 -28px }
+ .menuIcon.down { background: no-repeat url(http://www.gstatic.com/codesite/ph/images/dropdown_sprite.gif) 0 0; }
+ </style>
+</head>
+<body class="t2">
+ <script type="text/javascript">
+ var _gaq = _gaq || [];
+ _gaq.push(
+ ['siteTracker._setAccount', 'UA-18071-1'],
+ ['siteTracker._trackPageview']);
+ 
+ _gaq.push(
+ ['projectTracker._setAccount', 'UA-6390720-5'],
+ ['projectTracker._trackPageview']);
+ 
+ (function() {
+ var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+ ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+ (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+ })();
+ </script>
+ <div id="gaia">
+ 
+ <span>
+ 
+ <a href="#" id="projects-dropdown" onclick="return false;"><u>My favorites</u> <small>&#9660;</small></a>
+ | <a href="https://www.google.com/accounts/ServiceLogin?service=code&amp;ltmpl=phosting&amp;continue=http%3A%2F%2Fcode.google.com%2Fp%2Fcurved-corner%2Fdownloads%2Fdetail%3Fname%3Dborder-radius.htc%26can%3D2%26q%3D&amp;followup=http%3A%2F%2Fcode.google.com%2Fp%2Fcurved-corner%2Fdownloads%2Fdetail%3Fname%3Dborder-radius.htc%26can%3D2%26q%3D" onclick="_CS_click('/gb/ph/signin');"><u>Sign in</u></a>
+ 
+ </span>
+
+ </div>
+ <div class="gbh" style="left: 0pt;"></div>
+ <div class="gbh" style="right: 0pt;"></div>
+ 
+ 
+ <div style="height: 1px"></div>
+<!--[if IE 6]>
+<div style="text-align:center;">
+Support browsers that contribute to open source, try <a href="http://www.firefox.com">Firefox</a> or <a href="http://www.google.com/chrome">Google Chrome</a>.
+</div>
+<![endif]-->
+
+
+
+
+ <table style="padding:0px; margin: 20px 0px 0px 0px; width:100%" cellpadding="0" cellspacing="0">
+ <tr style="height: 58px;">
+ 
+ <td style="width: 55px; text-align:center;">
+ <a href="/p/curved-corner/">
+ 
+ <img src="http://www.gstatic.com/codesite/ph/images/defaultlogo.png" alt="Logo">
+ 
+ </a>
+ </td>
+ 
+ <td style="padding-left: 0.5em">
+ 
+ <div id="pname" style="margin: 0px 0px -3px 0px">
+ <a href="/p/curved-corner/" style="text-decoration:none; color:#000">curved-corner</a>
+ 
+ </div>
+ <div id="psum">
+ <i><a id="project_summary_link" href="/p/curved-corner/" style="text-decoration:none; color:#000">CSS curved corner</a></i>
+ </div>
+ 
+ </td>
+ <td style="white-space:nowrap;text-align:right">
+ 
+ <form action="/hosting/search">
+ <input size="30" name="q" value="">
+ <input type="submit" name="projectsearch" value="Search projects" >
+ </form>
+ 
+ </tr>
+ </table>
+
+
+ 
+<table id="mt" cellspacing="0" cellpadding="0" width="100%" border="0">
+ <tr>
+ <th onclick="if (!cancelBubble) _go('/p/curved-corner/');">
+ <div class="tab inactive">
+ <div class="round4"></div>
+ <div class="round2"></div>
+ <div class="round1"></div>
+ <div class="box-inner">
+ <a onclick="cancelBubble=true;" href="/p/curved-corner/">Project&nbsp;Home</a>
+ </div>
+ </div>
+ </th><td>&nbsp;&nbsp;</td>
+ 
+ 
+ 
+ 
+ <th onclick="if (!cancelBubble) _go('/p/curved-corner/downloads/list');">
+ <div class="tab active">
+ <div class="round4"></div>
+ <div class="round2"></div>
+ <div class="round1"></div>
+ <div class="box-inner">
+ <a onclick="cancelBubble=true;" href="/p/curved-corner/downloads/list">Downloads</a>
+ </div>
+ </div>
+ </th><td>&nbsp;&nbsp;</td>
+ 
+ 
+ 
+ 
+ 
+ <th onclick="if (!cancelBubble) _go('/p/curved-corner/w/list');">
+ <div class="tab inactive">
+ <div class="round4"></div>
+ <div class="round2"></div>
+ <div class="round1"></div>
+ <div class="box-inner">
+ <a onclick="cancelBubble=true;" href="/p/curved-corner/w/list">Wiki</a>
+ </div>
+ </div>
+ </th><td>&nbsp;&nbsp;</td>
+ 
+ 
+ 
+ 
+ 
+ <th onclick="if (!cancelBubble) _go('/p/curved-corner/issues/list');">
+ <div class="tab inactive">
+ <div class="round4"></div>
+ <div class="round2"></div>
+ <div class="round1"></div>
+ <div class="box-inner">
+ <a onclick="cancelBubble=true;" href="/p/curved-corner/issues/list">Issues</a>
+ </div>
+ </div>
+ </th><td>&nbsp;&nbsp;</td>
+ 
+ 
+ 
+ 
+ 
+ <th onclick="if (!cancelBubble) _go('/p/curved-corner/source/checkout');">
+ <div class="tab inactive">
+ <div class="round4"></div>
+ <div class="round2"></div>
+ <div class="round1"></div>
+ <div class="box-inner">
+ <a onclick="cancelBubble=true;" href="/p/curved-corner/source/checkout">Source</a>
+ </div>
+ </div>
+ </th><td>&nbsp;&nbsp;</td>
+ 
+ 
+ <td width="100%">&nbsp;</td>
+ </tr>
+</table>
+<table cellspacing="0" cellpadding="0" width="100%" align="center" border="0" class="st">
+ <tr>
+ 
+ 
+ 
+ 
+ <td>
+ <div class="issueDetail">
+<div class="isf">
+ 
+ <span class="inIssueList"> 
+ <span>Search</span>
+ <form action="list" method="GET" style="display:inline">
+ <select id="can" name="can" style="font-size:92%">
+ <option disabled="disabled">Search within:</option>
+ 
+ <option value="1" >&nbsp;All downloads</option>
+ <option value="3" >&nbsp;Featured downloads</option>
+ <option value="2" selected="selected">&nbsp;Current downloads</option>
+ 
+ 
+ <option value="4" >&nbsp;Deprecated downloads</option>
+ 
+ </select>
+ <span>for</span>
+ <span id="qq"><input type="text" size="38" id="searchq" name="q" value=""
+ autocomplete="off" style="font-size:92%" ></span>
+ 
+ 
+ <input type="submit" value="Search" style="font-size:92%" >
+ </form>
+ </span>
+</div>
+</div>
+
+ </td>
+ 
+ 
+ 
+ 
+ 
+ <td height="4" align="right" valign="top" class="bevel-right">
+ <div class="round4"></div>
+ <div class="round2"></div>
+ <div class="round1"></div>
+ </td>
+ </tr>
+</table>
+<script type="text/javascript">
+ var cancelBubble = false;
+ function _go(url) { document.location = url; }
+</script>
+
+
+<div id="maincol"
+ 
+>
+
+ 
+<!-- IE -->
+
+
+
+
+<div id="color_control" class="">
+<div id="issueheader">
+<table cellpadding="0" cellspacing="0" width="100%"><tbody>
+ <tr>
+ <td class="vt h3" nowrap="nowrap" style="padding:0 5px">
+ 
+ Download:
+ </td>
+ <td width="90%" class="vt">
+ 
+ <span class="h3" >Border radius htc v3 with IE6, 7 &amp; 8 support</span>
+ </td>
+ </tr>
+ <tr>
+ <td></td>
+ <td nowrap="nowrap">
+ 
+ 
+ 11 people starred this download
+ 
+ 
+ </td>
+ </tr>
+</tbody></table>
+</div><table width="100%" cellpadding="0" cellspacing="0" border="0" class="issuepage">
+<tbody class="opened expand">
+ <tr>
+ <td id="issuemeta" rowspan="1000"> 
+ <table cellspacing="0" cellpadding="0">
+ <tr>
+ <th align="left">Uploaded&nbsp;by:&nbsp;</th>
+ <td width="100%"><a style="white-space: nowrap" href="/u/rahnas/">rahnas</a></td>
+ </tr>
+ <tr><th align="left">Uploaded:&nbsp;</th><td>
+ <span class="date" style="white-space:nowrap" title="Wed Nov 18 07:50:24 2009">Nov 18, 2009</span>
+ </td></tr>
+ <tr><th align="left">Downloads:&nbsp;</th><td>54913</td></tr>
+ 
+ 
+ <tr><td colspan="2"><a href="list?q=label:Featured"
+ title="Listed on project home page"
+ class="label">Featured</a>
+ </td></tr>
+ 
+ 
+ 
+ <tr><td colspan="2">
+ <a href="list?q=label:Type-Source"
+ title="Source code archive"
+ class="label"><b>Type-</b>Source</a>
+ </td></tr>
+ 
+ 
+ 
+ <tr><td colspan="2">
+ <a href="list?q=label:OpSys-All"
+ title="Works with all operating systems"
+ class="label"><b>OpSys-</b>All</a>
+ </td></tr>
+ 
+ 
+ </table>
+<br>
+<br>
+<br>
+ </td>
+ <td class="vt issuedescription" width="100%" style="padding:16px">
+ <table><tr><td>
+ <div style="background:#ddf8cc; margin-bottom: 5px">
+ <div class="round4"></div>
+ <div class="round2"></div>
+ <div class="round1"></div>
+ <div class="box-inner">
+ <a
+ 
+ onclick="generateDownloadEvent(); return true;"
+ 
+ href="http://curved-corner.googlecode.com/files/border-radius.htc"><img src="http://www.gstatic.com/codesite/ph/images/dl_arrow.gif" style="vertical-align:middle;" ></a>&nbsp;
+ <a style="font-size: 140%"
+ 
+ onclick="generateDownloadEvent(); return true;"
+ 
+ href="http://curved-corner.googlecode.com/files/border-radius.htc">border-radius.htc</a> &nbsp; 4.8 KB
+ </div>
+ <div class="round1"></div>
+ <div class="round2"></div>
+ <div class="round4"></div>
+ </div>
+ </td></tr></table>
+ <span style="white-space:nowrap">SHA1 Checksum: 206849658dc8f240ff368d0b1da730032fa6d0f1</span><br>
+ <b>Tip:</b> Use the SHA1 checksum shown to verify file integrity. <br/>
+ <img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chl=http://curved-corner.googlecode.com/files/border-radius.htc&chld=L|1&choe=UTF-8" title="File download URL"/>
+ </td>
+ </tr>
+</tbody>
+</table>
+<br>
+<br>
+<br>
+</div> 
+<script type="text/javascript" src="http://www.gstatic.com/codesite/ph/3611006504229449998/js/dit_scripts.js"></script>
+
+
+ 
+
+<script type="text/javascript">
+ function generateDownloadEvent() {
+ _gaq.push(['siteTracker._trackEvent', 'Download - Downloaded',
+ 'http://curved-corner.googlecode.com/files/border-radius.htc', 'Featured, Type-Source, OpSys-All']
+ ,
+ ['projectTracker._trackEvent', 'Download - Downloaded',
+ 'http://curved-corner.googlecode.com/files/border-radius.htc', 'Featured, Type-Source, OpSys-All']
+ 
+ );
+ }
+</script>
+ 
+ 
+ <script type="text/javascript" src="http://www.gstatic.com/codesite/ph/3611006504229449998/js/core_scripts_20081103.js"></script>
+ <script type="text/javascript" src="/js/codesite_product_dictionary_ph.pack.04102009.js"></script>
+ </div>
+<div id="footer" dir="ltr">
+ 
+ <div class="text">
+ 
+ &copy;2010 Google -
+ <a href="/projecthosting/terms.html">Terms</a> -
+ <a href="http://www.google.com/privacy.html">Privacy</a> -
+ <a href="/p/support/">Project Hosting Help</a>
+ 
+ </div>
+</div>
+
+ <div class="hostedBy" style="margin-top: -20px;">
+ <span style="vertical-align: top;">Powered by <a href="http://code.google.com/projecthosting/">Google Project Hosting</a></span>
+ </div>
+ 
+ 
+
+
+ 
+ </body>
+</html>
+
