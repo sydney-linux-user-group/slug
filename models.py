@@ -52,7 +52,7 @@ class Response(db.Model):
 
   event = db.ReferenceProperty(Event)
 
-  attending = db.BooleanProperty(required=True)
+  attending = db.BooleanProperty(required=True, default=True)
 
   # If this is a guest, then we store their details here, otherwise we just use
   # the creater's details.

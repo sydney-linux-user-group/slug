@@ -46,6 +46,8 @@ class ShowResponsePage(webapp.RequestHandler):
 
     response, guests = GetResponses(event, current_user)
 
+    logging.warn("%s %s" % (response, guests))
+
     self.response.out.write("""\
 <html>
   <head>
@@ -86,9 +88,9 @@ class UpdateResponsePage(webapp.RequestHandler):
 
     response, guests = GetResponses(event, current_user)
     if not response:
-      response = models.Response(event=event, guest=False, attending=True)
+      response = models.Response(event=event, guest=False)
 
-    response.attending=self.request.get('attending').lower() == 'no'
+    response.attending = self.request.get('attending').lower() != 'no'
     response.put()
 
     for guest in guests:
@@ -96,13 +98,13 @@ class UpdateResponsePage(webapp.RequestHandler):
 
     guest_names = self.request.get_all('guest_name')
     logging.info('guest_names %s', guest_names)
-    guest_emails = self.request.get_all('guest_emails')
+    guest_emails = self.request.get_all('guest_email')
     logging.info('guest_emails %s', guest_emails)
     assert len(guest_names) == len(guest_emails)
 
-    for guest_name, guest_email in zip(guest_names, guest_emails):
-      guest_name, guest_email = guest_name.strip(), guest_email.strip()
-      if not guest_name or not guest_email:
+    for name, email in zip(guest_names, guest_emails):
+      name, email = name.strip(), email.strip()
+      if not name or not email:
         continue
 
       response = models.Response(event=event, guest=True)
@@ -111,6 +113,6 @@ class UpdateResponsePage(webapp.RequestHandler):
       response.guest_email = email
       response.put()
 
-    self.redirect('/')
+    self.redirect('/response/show')
 
   get = post

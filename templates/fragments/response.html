@@ -64,7 +64,7 @@
               </tr>
               <tr>
                 {% for guest in guests %}
-                  {% if forloop.counter0|add:1|divisibleby:3 %}
+                  {% if forloop.counter0|add:2|divisibleby:3 %}
                   <td>
                     <img class="gravatar-small"
                       src="{{ guest.guest_email|gravatar:48 }}"
@@ -75,7 +75,7 @@
               </tr>
               <tr>
                 {% for guest in guests %}
-                  {% if forloop.counter0|add:2|divisibleby:3 %}
+                  {% if forloop.counter0|add:1|divisibleby:3 %}
                   <td>
                     <img class="gravatar-small"
                       src="{{ guest.guest_email|gravatar:48 }}"
