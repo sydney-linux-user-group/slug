@@ -49,7 +49,7 @@ class Events(webapp.RequestHandler):
 
     self.response.headers['Content-Type'] = 'text/html'
     self.response.out.write(r(
-      'templates/Events.html', 
+      'templates/events.html', 
       {'future_events': future_events, 'current_events': current_events}))
 
   def post(self, urltail):
