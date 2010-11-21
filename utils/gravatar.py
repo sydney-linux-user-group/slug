@@ -4,7 +4,7 @@
 import urllib, hashlib
 
 def gravatar(email, size=40):
-  default = "http://www.example.com/default.jpg"
+  default = "/images/silhouette.png"
 
   # construct the url
   gravatar_url = "http://www.gravatar.com/avatar/" + hashlib.md5(email.lower()).hexdigest() + "?"
