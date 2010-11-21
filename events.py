@@ -17,12 +17,13 @@ import datetime
 
 
 class Event(webapp.RequestHandler):
-  def get(self, eventid):
-    eventid = eventid.lstrip('/')
-    event = models.Event.get_by_key_name(eventid)
+  def get(self, id):
+    id = long(id)
+    event = models.Event.get_by_id(id)
+    #event = models.Event.get_by_key_name('ahdzeWRuZXktbGludXgtdXNlci1ncm91cHILCxIFRXZlbnQYAQw')
 
     template_values = {
-      'key': eventid,
+      'key': id,
       'name': event.name,
       'text': event.text,
     }
@@ -47,4 +48,4 @@ class Events(webapp.RequestHandler):
                         end = datetime.datetime.now(),
                        )
    event.put()
-   self.redirect('/event/' + str(event.key()))
+   self.redirect('/event/%d' % event.key().id())
