@@ -12,4 +12,13 @@ img, div, a, input {
   -webkit-border-radius: 20px;
   -khtml-border-radius: 20px;
   border-radius: 20px;
+
+  padding: 10px;
+}
+
+/* CSS only drop shadow */
+.shadow {
+  -moz-box-shadow: 5px 5px 5px black;
+  -webkit-box-shadow: 5px 5px 5px black;
+  box-shadow: 5px 5px 5px black;
 }
