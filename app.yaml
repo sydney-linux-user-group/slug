@@ -30,4 +30,4 @@ skip_files:
 - third_party/pytz/
 - third_party/*.tar.gz
 - third_party/mkzip
-- .git/
+- (.*/)*.git/
