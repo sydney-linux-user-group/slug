@@ -7,6 +7,6 @@ sys.path.insert(0, 'third_party.zip/python-dateutil-1.5')
 sys.path.insert(0, 'third_party.zip/python-datetime-tz')
 sys.path.insert(0, 'third_party.zip/pytz/src')
 
-#from google.appengine.dist import use_library
-#use_library('django', '1.0')
+from google.appengine.dist import use_library
+use_library('django', '1.0')
 
