@@ -14,7 +14,7 @@
       {% if openid_user %}
       <td><iframe src="/event/{{ event.key.id }}/response/show"></td>
       {% else %}
-      <td>Login to RSVP!</td>
+      <td><a href="{{ openid_login_url }}">Login to RSVP!</a></td>
       {% endif %}
     </tr>
     {% endfor %}
@@ -31,9 +31,9 @@
     <td>{{ event.name }}</td>
     <td>{{ event.text }}</td>
     {% if openid_user %}
-    <td><iframe src="/event/{{ event.key.id }}/response/show"></td>
+    <td><iframe src="/event/{{ event.key.id }}/response/show"></iframe></td>
     {% else %}
-    <td>Login to RSVP!</td>
+    <td><a href="{{ openid_login_url }}">Login to RSVP!</a></td>
     {% endif %}
   </tr>
   {% endfor %}
