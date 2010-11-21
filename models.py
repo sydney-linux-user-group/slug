@@ -2,14 +2,14 @@
 import config
 
 from google.appengine.ext import db
-import aeoid
+import aeoid.users
 
 # Setup some namespaces to make it easy to tell the difference between the two
 # types of users.
 class appengine:
   UserProperty = db.UserProperty
 class openid:
-  UserProperty = aeoid.users.UserPropery
+  UserProperty = aeoid.users.UserProperty
 
 
 class Event(db.Model):
@@ -34,7 +34,7 @@ class Announcement(db.Model):
   valid_until = db.DateTimeProperty(required=True)
 
   # If a approver exists, then it is approved.
-  approver = appengine.UsersProperty()
+  approver = appengine.UserProperty()
 
 
 class LightningTalk(db.Model):
@@ -44,8 +44,8 @@ class LightningTalk(db.Model):
   name = db.StringProperty(required=True)
   text = db.StringProperty(multiline=True)
 
-  approved = db.BooleanProperty(required=True, default=False)
-  approver = db.UsersProperty()
+  # If a approver exists, then it is approved.
+  approver = appengine.UserProperty()
 
   given_at = db.Reference(Event)
 
