@@ -6,175 +6,22 @@
   <body>
     <img src="/images/logo.png">
 
-    <br>
-    <br>
-
-    <div class="rounded shadow border">
-      <table>
-        <tr>
-          <th colspan=2><span class="response-header">Are you coming?</span></th>
-        </tr>
-        <tr>
-          <td>
-            <img class="response" src="/images/tick.png">
-          </td>
-          <td>
-            Yes!
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <table>
-              <tr>
-                <td rowspan=3>
-                  <img class="response" src="/images/tick.png">
-                </td>
-                <td>
-                  <img class="response-small" src="/images/tick.png">
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <img class="response-small" src="/images/tick.png">
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <img class="response-small" src="/images/tick.png">
-                </td>
-              </tr>
-            </table>
-          </td>
-          <td>
-            Yes, with friends!
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <img class="response" src="/images/cross.png">
-          </td>
-          <td>
-            No :(
-          </td>
-        </tr>
-      </table>
-    </div>
+    {% include "fragments/attending-question.html" %}
 
     <br>
     <br>
 
-    <div class="rounded shadow border">
-      <table>
-        <tr>
-          <th>
-            <img class="response" src="/images/tick.png">
-          </th>
-          <th>
-            <span class="response-header">I'm attending!</span>
-          </th>
-        </tr>
-        <tr>
-          <td colspan=2>
-            <img class="gravatar-large" src="{{ gravatar }}" alt="Gravatar">
-          </td>
-        </tr>
-        <tr>
-          <td colspan=2>
-            <h2>Change response</h2>
-          </td>
-        </tr>
-      </table>
-    </div>
+    {% include "fragments/attending-single.html" %}
 
     <br>
     <br>
 
-    <div class="rounded shadow border">
-      <table>
-        <tr>
-          <th>
-            <table>
-              <tr>
-                <td rowspan=3>
-                  <img class="response" src="/images/tick.png">
-                </td>
-                <td>
-                  <img class="response-small" src="/images/tick.png">
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <img class="response-small" src="/images/tick.png">
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <img class="response-small" src="/images/tick.png">
-                </td>
-              </tr>
-            </table>
-          </th>
-          <th>
-            <span class="response-header">I'm attending with friends!</span>
-          </th>
-        </tr>
-        <tr>
-          <td colspan=2>
-
-            <table class="gravatar-n-friends">
-              <tr>
-                <td rowspan=3>
-                  <img class="gravatar-large" src="{{ gravatar }}" alt="Gravatar">
-                </td>
-                <td>
-                  <img class="gravatar-small" src="/images/silhouette.png" alt="Friend A">
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <img class="gravatar-small" src="/images/silhouette.png" alt="Friend B">
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <img class="gravatar-small" src="/images/silhouette.png" alt="Friend C">
-                </td>
-              </tr>
-            </table>
-
-          </td>
-        <tr>
-          <td colspan=2>
-            <h2>Change response</h2>
-          </td>
-        </tr>
-      </table>
-    </div>
+    {% include "fragments/attending-multiple.html" %}
 
     <br>
     <br>
 
-    <div class="rounded shadow border">
-      <table>
-        <tr>
-          <th>
-            <img class="response" src="/images/cross.png">
-          </th>
-          <th>
-            <span class="response-header">I'm not attending :(</span>
-          </th>
-        </tr>
-        <tr>
-          <td colspan=2>
-            <img class="gravatar-large" src="{{ gravatar }}" alt="Gravatar">
-          </td>
-        </tr>
-        <tr>
-          <td colspan=2>
-            <h2>Change response</h2>
-          </td>
-        </tr>
-      </table>
-    </div>
+    {% include "fragments/notattending.html" %}
+
   </body>
 </html>

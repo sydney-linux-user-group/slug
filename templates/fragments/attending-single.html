@@ -1,0 +1,22 @@
+    <div class="rounded shadow border">
+      <table>
+        <tr>
+          <th>
+            {% include "fragments/positive-single.html" %}
+          </th>
+          <th>
+            <span class="response-header">I'm attending!</span>
+          </th>
+        </tr>
+        <tr>
+          <td colspan=2>
+            <img class="gravatar-large" src="{{ gravatar }}" alt="Gravatar">
+          </td>
+        </tr>
+        <tr>
+          <td colspan=2>
+            {% include "fragments/change-response.html" %}
+          </td>
+        </tr>
+      </table>
+    </div>
