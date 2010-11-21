@@ -10,7 +10,7 @@ from aeoid import users as openid
 
 class Event(db.Model):
   """A single combination game."""
-  creator = appengine.UserProperty(auto_current_user_add=True, required=True)
+  created_by = appengine.UserProperty(auto_current_user_add=True, required=True)
   created_on = db.DateTimeProperty(auto_now_add=True, required=True)
 
   name = db.StringProperty(required=True)
@@ -21,7 +21,7 @@ class Event(db.Model):
 
 
 class Announcement(db.Model):
-  creator = openid.UserProperty(auto_current_user_add=True, required=True)
+  created_by = openid.UserProperty(auto_current_user_add=True, required=True)
   created_on = db.DateTimeProperty(auto_now_add=True, required=True)
 
   name = db.StringProperty(required=True)
@@ -34,7 +34,7 @@ class Announcement(db.Model):
 
 
 class LightningTalk(db.Model):
-  creator = openid.UserProperty(auto_current_user_add=True, required=True)
+  created_by = openid.UserProperty(auto_current_user_add=True, required=True)
   created_on = db.DateTimeProperty(auto_now_add=True, required=True)
 
   name = db.StringProperty(required=True)
@@ -47,7 +47,7 @@ class LightningTalk(db.Model):
 
 
 class Response(db.Model):
-  creator = openid.UserProperty(auto_current_user_add=True, required=True)
+  created_by = openid.UserProperty(auto_current_user_add=True, required=True)
   created_on = db.DateTimeProperty(auto_now_add=True, required=True)
 
   event = db.ReferenceProperty(Event)
@@ -55,7 +55,7 @@ class Response(db.Model):
   attending = db.BooleanProperty(required=True)
 
   # If this is a guest, then we store their details here, otherwise we just use
-  # the creator's details.
+  # the creater's details.
   guest = db.BooleanProperty(required=True, default=False)
   guest_name = db.StringProperty()
   guest_email = db.EmailProperty()
