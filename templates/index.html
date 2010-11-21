@@ -1,26 +1,8 @@
-<html>
-  <head>
-    <title>Sydney Linux User Group</title>
-    <link rel="StyleSheet" href="/css/base.css" type="text/css" media="screen">
-  </head>
-  <body>
-
-    <div>
-      <img src="/images/logo.png">
-    </div>
+{% extends "base.html" %}
+{% block body %}
 
     <div>
       <a href="/events/">List of Events</a>
     </div>
 
-    <div>
-      {% if openid_user %}
-        <p>You are logged in as {{ openid_user.nickname }}.</p>
-        <a href="{{ logout_url }}">Logout</a>
-      {% else %}
-        <a href="{{ login_url }}">Login</a>
-      {% endif %}
-    </div>
-
-  </body>
-</html>
+{% endblock %}

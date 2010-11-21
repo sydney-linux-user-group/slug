@@ -1,0 +1,20 @@
+<html>
+  <head>
+    <title>Sydney Linux User Group</title>
+    <link rel="StyleSheet" href="/css/base.css" type="text/css" media="screen">
+  </head>
+  <body>
+    <span>
+      {% if openid_user %}
+        You are logged in as {{ openid_user.nickname }}.
+        <a href="{{ logout_url }}">Logout</a>
+      {% else %}
+        <a href="{{ login_url }}">Login</a>
+      {% endif %}
+    </span>
+    <hr>
+
+    {% block body %}{% endblock %}
+
+  </body>
+</html>
