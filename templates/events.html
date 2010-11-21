@@ -6,7 +6,7 @@
     <tr><th>Start Date</th><th>End Date</th><th>Event Name</th><th>Event Text</th></tr>
     {% for event in current_events %}
     {{ event }}
-    <tr onclick="location.href='/event/{{ event.key.id }}'">
+    <tr class="{% cycle 'evenRow' 'oddRow' %}" onclick="location.href='/event/{{ event.key.id }}'">
       <td>{{ event.start }}</td>
       <td>{{ event.end }}</td>
       <td>{{ event.name }}</td>
@@ -20,7 +20,7 @@
   <table>
   <tr><th>Start Date</th><th>End Date</th><th>Event Name</th><th>Event Text</th></tr>
   {% for event in future_events %}
-  <tr onclick="location.href='/event/{{ event.key.id }}'">
+  <tr class="{% cycle 'evenRow' 'oddRow' %}"  onclick="location.href='/event/{{ event.key.id }}'">
     <td>{{ event.start }}</td>
     <td>{{ event.end }}</td>
     <td>{{ event.name }}</td>

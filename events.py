@@ -1,7 +1,7 @@
 #!/usr/bin/python2.5
 
 """Application for tracking SLUG user group events."""
-
+ 
 import config
 
 import pprint

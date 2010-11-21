@@ -71,3 +71,11 @@ table {
 .response-header {
   font-size: 20pt;
 }
+
+.evenrow {
+  background-color: grey
+}
+
+.oddrow {
+  background-color: white
+}
