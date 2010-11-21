@@ -27,7 +27,7 @@ def GetResponses(event, user):
   elif len(responses) > 1:
     for response in responses:
       if not response.guest:
-        response = response.created_by
+        response = response
       else:
         guests.append(response)
 
@@ -87,9 +87,10 @@ class UpdateResponsePage(webapp.RequestHandler):
     ####################################################
 
     response, guests = GetResponses(event, current_user)
-    if not response:
-      response = models.Response(event=event, guest=False)
+    if response is not None:
+      response.delete()
 
+    response = models.Response(event=event, guest=False)
     response.attending = self.request.get('attending').lower() != 'no'
     response.put()
 
