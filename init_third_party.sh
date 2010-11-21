@@ -1,7 +1,7 @@
 #!/bin/bash
 
-git submodules init
-git submodules update
+git submodule init
+git submodule update
 
 cd third_party
 
