@@ -63,3 +63,11 @@ img, div, a, input {
                    gravatar-small.height + 2*gravatar-small.padding */
   height: 150px; /* .gravatar.height + 2*gravatar.padding */
 }
+
+table {
+  vertical-align: middle;
+}
+
+.response-header {
+  font-size: 20pt;
+}

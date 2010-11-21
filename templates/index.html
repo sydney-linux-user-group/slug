@@ -6,46 +6,175 @@
   <body>
     <img src="/images/logo.png">
 
-    <div class="rounded shadow border">
-      <h1>Are you coming?</h1>
-      <ul>
-        <li><img class="response" src="/images/tick.png"> Yes!
-        <li>
-          <div style="width: 64px; height: 48px;">
-            <img class="response" src="/images/tick.png"
-                 style="float: left; position:relative;">
-            <img class="response-small" src="/images/tick.png">
-            <img class="response-small" src="/images/tick.png">
-            <img class="response-small" src="/images/tick.png">
-          </div>
-          Yes, with friends!
-        <li><img class="response" src="/images/cross.png"> No :(
-      </ul>
-    </div>
+    <br>
+    <br>
 
     <div class="rounded shadow border">
-      <img class="response" src="/images/tick.png">
-      <h1>I'm attending!</h1>
-      <img class="gravatar-large" src="{{ gravatar }}" alt="Gravatar">
-      <h2>Change response</h2>
+      <table>
+        <tr>
+          <th colspan=2><span class="response-header">Are you coming?</span></th>
+        </tr>
+        <tr>
+          <td>
+            <img class="response" src="/images/tick.png">
+          </td>
+          <td>
+            Yes!
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <table>
+              <tr>
+                <td rowspan=3>
+                  <img class="response" src="/images/tick.png">
+                </td>
+                <td>
+                  <img class="response-small" src="/images/tick.png">
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <img class="response-small" src="/images/tick.png">
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <img class="response-small" src="/images/tick.png">
+                </td>
+              </tr>
+            </table>
+          </td>
+          <td>
+            Yes, with friends!
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <img class="response" src="/images/cross.png">
+          </td>
+          <td>
+            No :(
+          </td>
+        </tr>
+      </table>
     </div>
 
-    <div class="rounded shadow border">
-      <img class="response" src="/images/tick.png">
-      <h1>I'm attending with friends!</h1>
-      <div class="gravatar-n-friends">
-        <img class="gravatar-large" style="float: left; position: relative;" src="{{ gravatar }}" alt="Gravatar">
-        <img class="gravatar-small" src="/images/silhouette.png" alt="Friend A">
-        <img class="gravatar-small" src="/images/silhouette.png" alt="Friend B">
-        <img class="gravatar-small" src="/images/silhouette.png" alt="Friend C">
-      </div>
-      <h2>Change response</h2>
-    </div>
+    <br>
+    <br>
 
     <div class="rounded shadow border">
-      <img class="response" src="/images/cross.png">
-      <h1>I'm not attending :(</h1>
-      <h2>Change response</h2>
+      <table>
+        <tr>
+          <th>
+            <img class="response" src="/images/tick.png">
+          </th>
+          <th>
+            <span class="response-header">I'm attending!</span>
+          </th>
+        </tr>
+        <tr>
+          <td colspan=2>
+            <img class="gravatar-large" src="{{ gravatar }}" alt="Gravatar">
+          </td>
+        </tr>
+        <tr>
+          <td colspan=2>
+            <h2>Change response</h2>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <br>
+    <br>
+
+    <div class="rounded shadow border">
+      <table>
+        <tr>
+          <th>
+            <table>
+              <tr>
+                <td rowspan=3>
+                  <img class="response" src="/images/tick.png">
+                </td>
+                <td>
+                  <img class="response-small" src="/images/tick.png">
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <img class="response-small" src="/images/tick.png">
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <img class="response-small" src="/images/tick.png">
+                </td>
+              </tr>
+            </table>
+          </th>
+          <th>
+            <span class="response-header">I'm attending with friends!</span>
+          </th>
+        </tr>
+        <tr>
+          <td colspan=2>
+
+            <table class="gravatar-n-friends">
+              <tr>
+                <td rowspan=3>
+                  <img class="gravatar-large" src="{{ gravatar }}" alt="Gravatar">
+                </td>
+                <td>
+                  <img class="gravatar-small" src="/images/silhouette.png" alt="Friend A">
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <img class="gravatar-small" src="/images/silhouette.png" alt="Friend B">
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <img class="gravatar-small" src="/images/silhouette.png" alt="Friend C">
+                </td>
+              </tr>
+            </table>
+
+          </td>
+        <tr>
+          <td colspan=2>
+            <h2>Change response</h2>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <br>
+    <br>
+
+    <div class="rounded shadow border">
+      <table>
+        <tr>
+          <th>
+            <img class="response" src="/images/cross.png">
+          </th>
+          <th>
+            <span class="response-header">I'm not attending :(</span>
+          </th>
+        </tr>
+        <tr>
+          <td colspan=2>
+            <img class="gravatar-large" src="{{ gravatar }}" alt="Gravatar">
+          </td>
+        </tr>
+        <tr>
+          <td colspan=2>
+            <h2>Change response</h2>
+          </td>
+        </tr>
+      </table>
     </div>
   </body>
 </html>
