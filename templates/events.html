@@ -1,17 +1,13 @@
 <html>
   <head><title>Events</title></head>
   <body>
-  <form action="/events/" method="post">
-    <div>Event Name: <input type="text" name="name"/></div>
-    <div>Event Text: <input type="textarea" rows=30 cols=80 name="text"/></div>
-    <div><input type="submit"/>
-  </form>
   {% if current_events %}
     <h2>Events Ending Today</h2>
     <table>
     <tr><th>Start Date</th><th>End Date</th><th>Event Name</th><th>Event Text</th></tr>
     {% for event in current_events %}
-    <tr>
+    {{ event }}
+    <tr onclick="location.href='/event/{{ event.key.id }}'">
       <td>{{ event.start }}</td>
       <td>{{ event.end }}</td>
       <td>{{ event.name }}</td>
@@ -25,7 +21,7 @@
   <table>
   <tr><th>Start Date</th><th>End Date</th><th>Event Name</th><th>Event Text</th></tr>
   {% for event in future_events %}
-  <tr>
+  <tr onclick="location.href='/event/{{ event.key.id }}'">
     <td>{{ event.start }}</td>
     <td>{{ event.end }}</td>
     <td>{{ event.name }}</td>

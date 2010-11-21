@@ -17,6 +17,8 @@ from google.appengine.ext.webapp.util import run_wsgi_app
 import models
 import datetime
 
+import aeoid.middleware
+
 from utils.render import render as r
 
 class Add(webapp.RequestHandler):
