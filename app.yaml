@@ -17,5 +17,13 @@ handlers:
 - url: /js
   static_dir: static/js
 
+- url: /events/add
+  login: admin
+  script: addevents.py
+  
 - url: /.*
   script: handler.py
+
+skip_files:
+- third_party/
+- .git/

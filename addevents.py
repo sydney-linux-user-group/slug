@@ -17,6 +17,11 @@ from google.appengine.ext.webapp.util import run_wsgi_app
 import models
 import datetime
 
+import aeoid.middleware
+
+import dateutil
+import datetime_tz
+
 from utils.render import render as r
 
 class Add(webapp.RequestHandler):
@@ -26,13 +31,15 @@ class Add(webapp.RequestHandler):
     self.response.out.write(r('templates/addevents.html', {}))
 
   def post(self, urltail):
-   event = models.Event(name = self.request.get('name'),
-                        text = self.request.get('text'),
-                        start = datetime.datetime.now(),
-                        end = datetime.datetime.now(),
-                       )
-   event.put()
-   self.redirect('/event/%d' % event.key().id())
+    start_date = datetime_tz.smart_parse(self.request.get('start'))
+    end_date = datetime_tz.smart_parse(self.request.get('end'))
+    event = models.Event(name = self.request.get('name'),
+                         text = self.request.get('text'),
+                         start = start_date,
+                         end = end_date,
+                        )
+    event.put()
+    self.redirect('/event/%d' % event.key().id())
 
 application = webapp.WSGIApplication(
   [('/events/add', Add), ],

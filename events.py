@@ -16,6 +16,7 @@ from google.appengine.ext.webapp.util import login_required
 import models
 import datetime
 
+from utils.render import render as r
 
 class Event(webapp.RequestHandler):
   def get(self, id=None):
@@ -26,7 +27,7 @@ class Event(webapp.RequestHandler):
     event = models.Event.get_by_id(id)
 
     self.response.headers['Content-Type'] = 'text/html'
-    self.response.out.write(template.render(
+    self.response.out.write(r(
       'templates/event.html', { 'event': event}))
 
 class Events(webapp.RequestHandler):
@@ -47,7 +48,7 @@ class Events(webapp.RequestHandler):
       "ORDER BY end", now.year, now.month, now.day)
 
     self.response.headers['Content-Type'] = 'text/html'
-    self.response.out.write(template.render(
+    self.response.out.write(r(
       'templates/events.html', 
       {'future_events': future_events, 'current_events': current_events}))
 

@@ -1,2 +1,4 @@
 *.pyc
 *.swp
+third_party.zip
+third_party/*.tar.gz
