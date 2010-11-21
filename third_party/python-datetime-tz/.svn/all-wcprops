@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 22
+/svn/!svn/ver/24/trunk
+END
+datetime_tz.py
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/!svn/ver/24/trunk/datetime_tz.py
+END
+LICENSE
+K 25
+svn:wc:ra_dav:version-url
+V 29
+/svn/!svn/ver/2/trunk/LICENSE
+END
+test_localtime_sydney
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/2/trunk/test_localtime_sydney
+END
+pytz_abbr.py
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/svn/!svn/ver/24/trunk/pytz_abbr.py
+END
+setup.py
+K 25
+svn:wc:ra_dav:version-url
+V 30
+/svn/!svn/ver/2/trunk/setup.py
+END
+tests.py
+K 25
+svn:wc:ra_dav:version-url
+V 31
+/svn/!svn/ver/24/trunk/tests.py
+END
+README
+K 25
+svn:wc:ra_dav:version-url
+V 28
+/svn/!svn/ver/6/trunk/README
+END

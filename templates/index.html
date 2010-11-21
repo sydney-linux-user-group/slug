@@ -6,15 +6,20 @@
   <body>
 
     <div>
+      <img src="/images/logo.png">
+    </div>
+
+    <div>
+      <a href="/events/">List of Events</a>
+    </div>
+
+    <div>
       {% if openid_user %}
         <p>You are logged in as {{ openid_user.nickname }}.</p>
         <a href="{{ logout_url }}">Logout</a>
       {% else %}
         <a href="{{ login_url }}">Login</a>
       {% endif %}
-    </div>
-    <div>
-      <img src="/images/logo.png">
     </div>
 
   </body>

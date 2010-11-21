@@ -6,6 +6,7 @@ import config
 
 import pprint
 import logging
+import events
 
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
@@ -27,6 +28,8 @@ application = webapp.WSGIApplication(
   [('/', IndexPage),
    ('/response/show', response.ShowResponsePage),
    ('/response/add', response.AddResponsePage),
+   ('/events[/]?(?P<year>[^/]*)[/]?(?P<month>[^/]*)[/]?(?P<day>[^/]*)[/]?', events.Events),
+   ('/event[/]?(.*)', events.Event),
    ],
   debug=True)
 application = aeoid.middleware.AeoidMiddleware(application)
