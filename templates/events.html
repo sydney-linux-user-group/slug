@@ -1,6 +1,5 @@
-<html>
-  <head><title>Events</title></head>
-  <body>
+{% extends "base.html" %}
+{% block body %}
   {% if current_events %}
     <h2>Events Ending Today</h2>
     <table>
@@ -29,5 +28,5 @@
   </tr>
   {% endfor %}
   </table>
-  </body>
-</html>
+
+{% endblock %}
