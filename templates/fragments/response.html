@@ -1,0 +1,148 @@
+{% ifequal response None %}
+    <div class="rounded shadow border">
+      <table>
+        <tr>
+          <th colspan=2><span class="response-header">Are you coming?</span></th>
+        </tr>
+        <tr>
+          <td>
+            <img class="response" src="/images/tick.png">
+          </td>
+          <td>
+            Yes!
+          </td>
+        </tr>
+        <tr>
+          <td>
+            {% include "positive-multiple.html" %}
+          </td>
+          <td>
+            Yes, with friends!
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <img class="response" src="/images/cross.png">
+          </td>
+          <td>
+            No :(
+          </td>
+        </tr>
+      </table>
+    </div>
+{% else %}{% if response.attending %}
+  {% if guests %}
+    <div class="rounded shadow border">
+      <table>
+        <tr>
+          <th>
+            {% include "positive-multiple.html" %}
+          </th>
+          <th>
+            <span class="response-header">I'm attending with friends!</span>
+          </th>
+        </tr>
+        <tr>
+          <td colspan=2>
+
+            <table class="gravatar-n-friends">
+              <tr>
+                <td rowspan=3>
+                  <img class="gravatar-large"
+                    src="{{ response.created_by.email|gravatar:148 }}"
+                    alt="{{ response.created_by.nickname }}'s Gravatar">
+                </td>
+                {% for guest in guests %}
+                  {% if forloop.counter0|add:0|divisibleby:3 %}
+                  <td>
+                    <img class="gravatar-small"
+                      src="{{ guest.guest_email|gravatar:48 }}"
+                      alt="{{ guest.guest_name }}'s Gravatar">
+                  </td>
+                  {% endif %}
+                {% endfor %}
+              </tr>
+              <tr>
+                {% for guest in guests %}
+                  {% if forloop.counter0|add:1|divisibleby:3 %}
+                  <td>
+                    <img class="gravatar-small"
+                      src="{{ guest.guest_email|gravatar:48 }}"
+                      alt="{{ guest.guest_name }}'s Gravatar">
+                  </td>
+                  {% endif %}
+                {% endfor %}
+              </tr>
+              <tr>
+                {% for guest in guests %}
+                  {% if forloop.counter0|add:2|divisibleby:3 %}
+                  <td>
+                    <img class="gravatar-small"
+                      src="{{ guest.guest_email|gravatar:48 }}"
+                      alt="{{ guest.guest_name }}'s Gravatar">
+                  </td>
+                  {% endif %}
+                {% endfor %}
+              </tr>
+            </table>
+
+          </td>
+        <tr>
+          <td colspan=2>
+            {% include "fragments/change-response.html" %}
+          </td>
+        </tr>
+      </table>
+    </div>
+  {% else %}
+    <div class="rounded shadow border">
+      <table>
+        <tr>
+          <th>
+            <img class="response" src="/images/tick.png">
+          </th>
+          <th>
+            <span class="response-header">I'm attending!</span>
+          </th>
+        </tr>
+        <tr>
+          <td colspan=2>
+            <img class="gravatar-large"
+              src="{{ response.created_by.email|gravatar }}"
+              alt="{{ response.created_by.nickname }}'s Gravatar">
+          </td>
+        </tr>
+        <tr>
+          <td colspan=2>
+            {% include "fragments/change-response.html" %}
+          </td>
+        </tr>
+      </table>
+    </div>
+  {% endif %}
+{% else %}
+    <div class="rounded shadow border">
+      <table>
+        <tr>
+          <th>
+            <img class="response" src="/images/cross.png">
+          </th>
+          <th>
+            <span class="positive-header">I'm not attending :(</span>
+          </th>
+        </tr>
+        <tr>
+          <td colspan=2>
+            <img class="gravatar-large"
+              src="{{ response.created_by.email|gravatar }}"
+              alt="{{ response.created_by.nickname }}'s Gravatar">
+          </td>
+        </tr>
+        <tr>
+          <td colspan=2>
+            {% include "fragments/change-response.html" %}
+          </td>
+        </tr>
+      </table>
+    </div>
+{% endif %}{% endifequal %}
