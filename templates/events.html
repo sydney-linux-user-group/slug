@@ -3,7 +3,7 @@
   {% if current_events %}
     <h2>Events Ending Today</h2>
     <table>
-    <tr><th>Start Date</th><th>End Date</th><th>Event Name</th><th>Event Text</th></tr>
+    <tr><th>Start Date</th><th>End Date</th><th>Event Name</th><th>Event Text</th><th>Response</th></tr>
     {% for event in current_events %}
     {{ event }}
     <tr class="{% cycle 'evenRow' 'oddRow' %}" onclick="location.href='/event/{{ event.key.id }}'">
@@ -11,6 +11,11 @@
       <td>{{ event.end }}</td>
       <td>{{ event.name }}</td>
       <td>{{ event.text }}</td>
+      {% if openid_user %}
+      <td><iframe src="/event/{{ event.key.id }}/response/show"></td>
+      {% else %}
+      <td>Login to RSVP!</td>
+      {% endif %}
     </tr>
     {% endfor %}
     </table>
@@ -18,13 +23,18 @@
 
   <h2>Future Events</h2>
   <table>
-  <tr><th>Start Date</th><th>End Date</th><th>Event Name</th><th>Event Text</th></tr>
+  <tr><th>Start Date</th><th>End Date</th><th>Event Name</th><th>Event Text</th><th>Response</th></tr>
   {% for event in future_events %}
   <tr class="{% cycle 'evenRow' 'oddRow' %}"  onclick="location.href='/event/{{ event.key.id }}'">
     <td>{{ event.start }}</td>
     <td>{{ event.end }}</td>
     <td>{{ event.name }}</td>
     <td>{{ event.text }}</td>
+    {% if openid_user %}
+    <td><iframe src="/event/{{ event.key.id }}/response/show"></td>
+    {% else %}
+    <td>Login to RSVP!</td>
+    {% endif %}
   </tr>
   {% endfor %}
   </table>

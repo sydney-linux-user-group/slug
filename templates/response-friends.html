@@ -1,7 +1,7 @@
-{% extends "base.html" %}
+{% extends "blank.html" %}
 {% block body %}
 
-<form action="/response/update" method="post">
+<form action="/event/{{ event.key.id }}/response/update" method="post">
   <input type="hidden" name="attending" value="yes">
 
   {% for guest in guests %}

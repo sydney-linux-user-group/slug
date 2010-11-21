@@ -1,3 +1,6 @@
+{% extends "blank.html" %}
+{% block body %}
+
 {% ifequal response None %}
     <div class="rounded shadow border">
       <table>
@@ -6,36 +9,36 @@
         </tr>
         <tr>
           <td>
-            <a href="/response/update?attending=yes">
+            <a href="/event/{{ event.key.id }}/response/update?attending=yes">
               <img class="response" src="/images/tick.png">
             </a>
           </td>
           <td>
-            <a href="/response/update?attending=yes">
+            <a href="/event/{{ event.key.id }}/response/update?attending=yes">
               Yes!
             </a>
           </td>
         </tr>
         <tr>
           <td>
-            <a href="/response/friends">
-              {% include "positive-multiple.html" %}
+            <a href="/event/{{ event.key.id }}/response/friends">
+              {% include "fragments/positive-multiple.html" %}
             </a>
           </td>
           <td>
-            <a href="/response/friends">
+            <a href="/event/{{ event.key.id }}/response/friends">
               Yes, with friends!
             </a>
           </td>
         </tr>
         <tr>
           <td>
-            <a href="/response/update?attending=no">
+            <a href="/event/{{ event.key.id }}/response/update?attending=no">
               <img class="response" src="/images/cross.png">
             </a>
           </td>
           <td>
-            <a href="/response/update?attending=no">
+            <a href="/event/{{ event.key.id }}/response/update?attending=no">
               No :(
             </a>
           </td>
@@ -48,7 +51,7 @@
       <table>
         <tr>
           <th>
-            {% include "positive-multiple.html" %}
+            {% include "fragments/positive-multiple.html" %}
           </th>
           <th>
             <span class="response-header">I'm attending with friends!</span>
@@ -102,7 +105,7 @@
         </tr>
         <tr>
           <td colspan=2>
-            <a href="/response/friends">
+            <a href="/event/{{ event.key.id }}/response/friends">
               <table>
                 <tr>
                   <td><img class="response-small" src="/images/tick.png"></td>
@@ -115,7 +118,7 @@
         </tr>
         <tr>
           <td colspan=2>
-            <a href="/response/update?attending=no">
+            <a href="/event/{{ event.key.id }}/response/update?attending=no">
               <table>
                 <tr>
                   <td>
@@ -151,7 +154,7 @@
         </tr>
         <tr>
           <td colspan=2>
-            <a href="/response/friends">
+            <a href="/event/{{ event.key.id }}/response/friends">
               <table>
                 <tr>
                   <td><img class="response-small" src="/images/tick.png"></td>
@@ -164,7 +167,7 @@
         </tr>
         <tr>
           <td colspan=2>
-            <a href="/response/update?attending=no">
+            <a href="/event/{{ event.key.id }}/response/update?attending=no">
               <table>
                 <tr>
                   <td>
@@ -201,7 +204,7 @@
         </tr>
         <tr>
           <td colspan=2>
-            <a href="/response/update?attending=yes">
+            <a href="/event/{{ event.key.id }}/response/update?attending=yes">
               <table>
                 <tr>
                   <td>
@@ -218,3 +221,5 @@
       </table>
     </div>
 {% endif %}{% endifequal %}
+
+{% endblock %}

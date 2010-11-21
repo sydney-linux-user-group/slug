@@ -35,9 +35,11 @@ def GetResponses(event, user):
 
 
 class ShowResponsePage(webapp.RequestHandler):
-  def get(self):
+  def get(self, eventid):
     ####################################################
-    event = models.Event.get_by_id(1)
+    event = models.Event.get_by_id(long(eventid))
+    if not event:
+      self.redirect('/')
     current_user = openid_users.get_current_user()
     if not current_user:
       self.redirect('/')
@@ -48,22 +50,16 @@ class ShowResponsePage(webapp.RequestHandler):
 
     logging.warn("%s %s" % (response, guests))
 
-    self.response.out.write("""\
-<html>
-  <head>
-    <title>Response</title>
-    <link rel="StyleSheet" href="/css/base.css" type="text/css" media="screen">
-  </head>
-  <body>
-%s
-  </body>
-</html>""" % render('templates/fragments/response.html', locals()))
+    self.response.out.write(render(
+        'templates/response-show.html', locals()))
 
 
 class FriendsResponsePage(webapp.RequestHandler):
-  def get(self):
+  def get(self, eventid):
     ####################################################
-    event = models.Event.get_by_id(1)
+    event = models.Event.get_by_id(long(eventid))
+    if not event:
+      self.redirect('/')
     current_user = openid_users.get_current_user()
     if not current_user:
       self.redirect('/')
@@ -77,9 +73,11 @@ class FriendsResponsePage(webapp.RequestHandler):
 
 class UpdateResponsePage(webapp.RequestHandler):
 
-  def post(self):
+  def post(self, eventid):
     ####################################################
-    event = models.Event.get_by_id(1)
+    event = models.Event.get_by_id(long(eventid))
+    if not event:
+      self.redirect('/')
     current_user = openid_users.get_current_user()
     if not current_user:
       self.redirect('/')
@@ -114,6 +112,6 @@ class UpdateResponsePage(webapp.RequestHandler):
       response.guest_email = email
       response.put()
 
-    self.redirect('/response/show')
+    self.redirect('/event/%s/response/show' % event.key().id())
 
   get = post
