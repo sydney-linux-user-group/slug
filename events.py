@@ -28,7 +28,7 @@ class Event(webapp.RequestHandler):
 
     self.response.headers['Content-Type'] = 'text/html'
     self.response.out.write(r(
-      'templates/Event.html', { 'event': event}))
+      'templates/event.html', { 'event': event}))
 
 class Events(webapp.RequestHandler):
 
