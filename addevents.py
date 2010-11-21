@@ -20,7 +20,7 @@ import datetime
 import aeoid.middleware
 
 import dateutil
-import datetime_tz
+from datetime_tz import datetime_tz
 
 from utils.render import render as r
 
@@ -30,13 +30,13 @@ class Add(webapp.RequestHandler):
 
     self.response.out.write(r('templates/addevents.html', {}))
 
-  def post(self, urltail):
-    start_date = datetime_tz.smart_parse(self.request.get('start'))
-    end_date = datetime_tz.smart_parse(self.request.get('end'))
+  def post(self):
+    start_date = datetime_tz.smartparse(self.request.get('start'))
+    end_date = datetime_tz.smartparse(self.request.get('end'))
     event = models.Event(name = self.request.get('name'),
                          text = self.request.get('text'),
-                         start = start_date,
-                         end = end_date,
+                         start = start_date.asdatetime(),
+                         end = end_date.asdatetime(),
                         )
     event.put()
     self.redirect('/event/%d' % event.key().id())
