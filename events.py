@@ -31,19 +31,25 @@ class Event(webapp.RequestHandler):
 
 class Events(webapp.RequestHandler):
 
-  @login_required
   def get(self, year=None, month=None, day=None):
 
     now = datetime.datetime.now()
 
     future_events = db.GqlQuery(
       "SELECT * from Event " + 
-      "WHERE end >= DATE(:1, :2, :3) " + 
+      "WHERE start >= DATE(:1, :2, :3) " + 
+      "ORDER BY start", now.year, now.month, now.day)
+    
+    current_events = db.GqlQuery(
+      "SELECT * from Event " + 
+      "WHERE end >= DATETIME(:1, :2, :3, 00, 00, 00) " + 
+      "AND end <= DATETIME(:1, :2, :3, 23, 59, 59) " +
       "ORDER BY end", now.year, now.month, now.day)
 
     self.response.headers['Content-Type'] = 'text/html'
     self.response.out.write(template.render(
-      'templates/Events.html', {'future_events': future_events}))
+      'templates/Events.html', 
+      {'future_events': future_events, 'current_events': current_events}))
 
   def post(self, urltail):
    event = models.Event(name = self.request.get('name'),
