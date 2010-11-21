@@ -2,30 +2,42 @@
     <div class="rounded shadow border">
       <table>
         <tr>
-          <th colspan=2><span class="response-header">Are you coming?</span></th>
+          <th colspan=2><span class="response-header">Are you attending?</span></th>
         </tr>
         <tr>
           <td>
-            <img class="response" src="/images/tick.png">
+            <a href="/response/update?attending=yes">
+              <img class="response" src="/images/tick.png">
+            </a>
           </td>
           <td>
-            Yes!
-          </td>
-        </tr>
-        <tr>
-          <td>
-            {% include "positive-multiple.html" %}
-          </td>
-          <td>
-            Yes, with friends!
+            <a href="/response/update?attending=yes">
+              Yes!
+            </a>
           </td>
         </tr>
         <tr>
           <td>
-            <img class="response" src="/images/cross.png">
+            <a href="/response/friends">
+              {% include "positive-multiple.html" %}
+            </a>
           </td>
           <td>
-            No :(
+            <a href="/response/friends">
+              Yes, with friends!
+            </a>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <a href="/response/update?attending=no">
+              <img class="response" src="/images/cross.png">
+            </a>
+          </td>
+          <td>
+            <a href="/response/update?attending=no">
+              No :(
+            </a>
           </td>
         </tr>
       </table>
@@ -64,7 +76,7 @@
               </tr>
               <tr>
                 {% for guest in guests %}
-                  {% if forloop.counter0|add:1|divisibleby:3 %}
+                  {% if forloop.counter0|add:2|divisibleby:3 %}
                   <td>
                     <img class="gravatar-small"
                       src="{{ guest.guest_email|gravatar:48 }}"
@@ -75,7 +87,7 @@
               </tr>
               <tr>
                 {% for guest in guests %}
-                  {% if forloop.counter0|add:2|divisibleby:3 %}
+                  {% if forloop.counter0|add:1|divisibleby:3 %}
                   <td>
                     <img class="gravatar-small"
                       src="{{ guest.guest_email|gravatar:48 }}"
@@ -87,9 +99,34 @@
             </table>
 
           </td>
+        </tr>
         <tr>
           <td colspan=2>
-            {% include "fragments/change-response.html" %}
+            <a href="/response/friends">
+              <table>
+                <tr>
+                  <td><img class="response-small" src="/images/tick.png"></td>
+                  <td><img class="response-small" src="/images/tick.png"></td>
+                  <td>Update friends</td>
+                </tr>
+              </table>
+            </a>
+          </td>
+        </tr>
+        <tr>
+          <td colspan=2>
+            <a href="/response/update?attending=no">
+              <table>
+                <tr>
+                  <td>
+                    <img class="response-small" src="/images/cross.png">
+                  </td>
+                  <td>
+                    Can't make it :(
+                  </td>
+                </tr>
+              </table>
+            </a>
           </td>
         </tr>
       </table>
@@ -108,13 +145,37 @@
         <tr>
           <td colspan=2>
             <img class="gravatar-large"
-              src="{{ response.created_by.email|gravatar }}"
+              src="{{ response.created_by.email|gravatar:148 }}"
               alt="{{ response.created_by.nickname }}'s Gravatar">
           </td>
         </tr>
         <tr>
           <td colspan=2>
-            {% include "fragments/change-response.html" %}
+            <a href="/response/friends">
+              <table>
+                <tr>
+                  <td><img class="response-small" src="/images/tick.png"></td>
+                  <td><img class="response-small" src="/images/tick.png"></td>
+                  <td>Add friends!</td>
+                </tr>
+              </table>
+            </a>
+          </td>
+        </tr>
+        <tr>
+          <td colspan=2>
+            <a href="/response/update?attending=no">
+              <table>
+                <tr>
+                  <td>
+                    <img class="response-small" src="/images/cross.png">
+                  </td>
+                  <td>
+                    Can't make it :(
+                  </td>
+                </tr>
+              </table>
+            </a>
           </td>
         </tr>
       </table>
@@ -134,13 +195,24 @@
         <tr>
           <td colspan=2>
             <img class="gravatar-large"
-              src="{{ response.created_by.email|gravatar }}"
+              src="{{ response.created_by.email|gravatar:148 }}"
               alt="{{ response.created_by.nickname }}'s Gravatar">
           </td>
         </tr>
         <tr>
           <td colspan=2>
-            {% include "fragments/change-response.html" %}
+            <a href="/response/update?attending=yes">
+              <table>
+                <tr>
+                  <td>
+                    <img class="response-small" src="/images/tick.png">
+                  </td>
+                  <td>
+                    I'm attending!
+                  </td>
+                </tr>
+              </table>
+            </a>
           </td>
         </tr>
       </table>

@@ -27,7 +27,8 @@ class IndexPage(webapp.RequestHandler):
 application = webapp.WSGIApplication(
   [('/', IndexPage),
    ('/response/show', response.ShowResponsePage),
-   ('/response/add', response.AddResponsePage),
+   ('/response/friends', response.FriendsResponsePage),
+   ('/response/update', response.UpdateResponsePage),
    ('/events[/]?(?P<year>[^/]*)[/]?(?P<month>[^/]*)[/]?(?P<day>[^/]*)[/]?', events.Events),
    ('/event[/]?(.*)', events.Event),
    ],
