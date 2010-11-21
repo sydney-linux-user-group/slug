@@ -22,3 +22,4 @@ handlers:
 
 skip_files:
 - third_party/
+- .git/
