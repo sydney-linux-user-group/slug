@@ -1,0 +1,2 @@
+#!/bin/bash
+zip -r ../third_party.zip pytz/* aeoid/aeoid/ python-dateutil-1.5/dateutil python-datetime-tz/datetime_tz.py python-datetime-tz/pytz_abbr.py pytz/src
