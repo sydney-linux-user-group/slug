@@ -19,3 +19,6 @@ handlers:
   
 - url: /.*
   script: handler.py
+
+skip_files:
+- third_party/
