@@ -4,17 +4,24 @@
     <link rel="StyleSheet" href="/css/base.css" type="text/css" media="screen">
   </head>
   <body>
-    <span>
+    <div class="header">
       {% if openid_user %}
         You are logged in as {{ openid_user.nickname }}.
-        <a href="{{ logout_url }}">Logout</a>
+        <a href="{{ openid_logout_url }}">Logout</a>
       {% else %}
-        <a href="{{ login_url }}">Login</a>
+        <a href="{{ openid_login_url }}">Login</a>
       {% endif %}
-    </span>
-    <hr>
+    </div>
 
     {% block body %}{% endblock %}
 
+    <div class="footer">
+      {% if appengine_user %}
+      {% if appengine_admin %}
+        <span style="color: red;">Admin User</span>
+      {% endif %}
+      <a href="{{ appengine_logout_url }}">AppEngine Logout</a>
+      {% endif %}
+    </div>
   </body>
 </html>

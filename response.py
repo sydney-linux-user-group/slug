@@ -112,3 +112,5 @@ class UpdateResponsePage(webapp.RequestHandler):
       response.put()
 
     self.redirect('/')
+
+  get = post
