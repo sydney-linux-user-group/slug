@@ -25,8 +25,8 @@ class IndexPage(webapp.RequestHandler):
 
 application = webapp.WSGIApplication(
   [('/', IndexPage),
-   ('/event/(.*)', events.Event),
-   ('/events(.*)', events.Events),
+   ('/events[/]?(?P<year>[^/]*)[/]?(?P<month>[^/]*)[/]?(?P<day>[^/]*)[/]?', events.Events),
+   ('/event[/]?(.*)', events.Event),
    ],
   debug=True)
 

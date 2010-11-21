@@ -6,8 +6,32 @@
     <div>Event Text: <input type="textarea" rows=30 cols=80 name="text"/></div>
     <div><input type="submit"/>
   </form>
-  {% if urltail %}
-  URL Tail: {{ urltail }}
+  {% if current_events %}
+    <h2>Current Events</h2>
+    <table>
+    <tr><th>Start Date</th><th>End Date</th><th>Event Name</th><th>Event Text</th></tr>
+    {% for event in current_events %}
+    <tr>
+      <td>{{ event.start }}</td>
+      <td>{{ event.end }}</td>
+      <td>{{ event.name }}</td>
+      <td>{{ event.text }}</td>
+    </tr>
+    {% endfor %}
+    </table>
   {% endif %}
+
+  <h2>Future Events</h2>
+  <table>
+  <tr><th>Start Date</th><th>End Date</th><th>Event Name</th><th>Event Text</th></tr>
+  {% for event in future_events %}
+  <tr>
+    <td>{{ event.start }}</td>
+    <td>{{ event.end }}</td>
+    <td>{{ event.name }}</td>
+    <td>{{ event.text }}</td>
+  </tr>
+  {% endfor %}
+  </table>
   </body>
 </html>
