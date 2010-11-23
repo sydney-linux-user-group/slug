@@ -7,6 +7,8 @@ sys.path.insert(0, 'third_party.zip/python-dateutil-1.5')
 sys.path.insert(0, 'third_party.zip/python-datetime-tz')
 sys.path.insert(0, 'third_party.zip/pytz/src')
 
+import os
+os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 from google.appengine.dist import use_library
-use_library('django', '1.0')
+use_library('django', '1.1')
 
