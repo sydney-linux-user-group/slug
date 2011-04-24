@@ -13,4 +13,7 @@ bzr branch lp:pytz
 
 svn checkout http://python-datetime-tz.googlecode.com/svn/trunk/ python-datetime-tz
 
+curl -O http://pypi.python.org/packages/source/i/icalendar/icalendar-2.1.tar.gz
+tar -zxvf icalendar-2.1.tar.gz
+
 ./mkzip

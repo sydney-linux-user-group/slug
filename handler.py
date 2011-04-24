@@ -1,4 +1,4 @@
-#!/usr/bin/python2.5
+#!/usr/bin/python
 
 """Application for tracking SLUG user group events."""
 
@@ -15,6 +15,7 @@ import aeoid.middleware
 import index
 import response
 import events
+import ical
 
 application = webapp.WSGIApplication(
   [('/', index.Index),
@@ -24,6 +25,7 @@ application = webapp.WSGIApplication(
    ('/events[/]?(?P<year>[^/]*)[/]?(?P<month>[^/]*)[/]?(?P<day>[^/]*)[/]?', events.Events),
    ('/event[/]?(.*)', events.Event),
    ('/refresh', index.Refresh),
+   ('/ical', ical.iCal),
    ],
   debug=True)
 application = aeoid.middleware.AeoidMiddleware(application)

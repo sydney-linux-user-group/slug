@@ -1,0 +1,26 @@
+Initial Configuration
+~~~~~~~~~~~~~~~~~~~~~
+
+To get the code and dependencies::
+
+  git clone git@github.com:mithro/slug.git
+  cd slug
+  ./init_third_party.sh
+
+Installing django 1.2.5
+~~~~~~~~~~~~~~~~~~~~~~~
+
+We use django1.2.5, which is bundled with the SDK.
+
+You don't gots to do nothing.
+
+Running appserver on a mac
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+We need to use python2.6, not python2.7.
+
+You'll need to use::
+
+   /usr/bin/python2.6 /usr/local/bin/dev_appserver.py .
+
+to start the appserver.
