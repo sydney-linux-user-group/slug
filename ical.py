@@ -26,8 +26,8 @@ class iCal(webapp.RequestHandler):
 
         cal_event = icalendar.Event()
         cal_event.add('summary', event.name)
-        cal_event.add('dt_start', event.start)
-        cal_event.add('dt_end', event.end)
+        cal_event.add('dtstart', event.start)
+        cal_event.add('dtend', event.end)
         cal_event.add('dtstamp', event.created_on)
         cal_event.add('uid', event.key())
         cal_event.add('priority', 5)
