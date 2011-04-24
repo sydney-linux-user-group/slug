@@ -7,6 +7,7 @@ import config
 import pprint
 import logging
 import events
+import ical
 
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
@@ -31,6 +32,7 @@ application = webapp.WSGIApplication(
    ('/event/(.*)/response/update',  response.UpdateResponsePage),
    ('/events[/]?(?P<year>[^/]*)[/]?(?P<month>[^/]*)[/]?(?P<day>[^/]*)[/]?', events.Events),
    ('/event[/]?(.*)', events.Event),
+   ('/ical', ical.iCal),
    ],
   debug=True)
 application = aeoid.middleware.AeoidMiddleware(application)
