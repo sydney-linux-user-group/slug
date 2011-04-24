@@ -3,6 +3,7 @@
 """Application for tracking SLUG user group events."""
 
 import config
+config.setup()
 
 # AppEngine imports
 from google.appengine.ext import webapp

@@ -1,5 +1,6 @@
 
 import config
+config.setup()
 
 from google.appengine.ext import db
 

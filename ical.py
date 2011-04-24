@@ -3,6 +3,8 @@
 """Generate iCal feed based on events in database."""
 
 import config
+config.setup()
+
 import pprint
 import logging
 
