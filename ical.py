@@ -37,8 +37,8 @@ class iCal(webapp.RequestHandler):
 
     def get(self):
         cal = icalendar.Calendar()
-        cal.add('prodid', 'SLUG Event System//signup.slug.org.au//')
         cal.add('version', '2.0')
+        cal.add('prodid', 'SLUG Event System//signup.slug.org.au//')
 
         events = models.Event.all()
 
