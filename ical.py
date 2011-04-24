@@ -29,10 +29,10 @@ class iCal(webapp.RequestHandler):
         cal_event.add('dt_start', event.start)
         cal_event.add('dt_end', event.end)
         cal_event.add('dtstamp', event.created_on)
-        cal_event['uid'] = event.Key()
-        event.add('priority', 5)
+        cal_event['uid'] = event.key
+        cal_event.add('priority', 5)
 
-        cal.add_compenent(cal_event)
+        cal.add_component(cal_event)
 
 
     def get(self):
@@ -43,7 +43,7 @@ class iCal(webapp.RequestHandler):
         events = models.Event.all()
 
         for event in events:
-            addEventToCal(event, cal)
+            self.addEventToCal(event, cal)
 
-        self.response.out.write(r(cal.as_string()))
+        self.response.out.write(cal.as_string())
 
