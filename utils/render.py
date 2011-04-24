@@ -9,6 +9,7 @@ import gravatar
 def render(t, kw):
   extra = {
       'openid_user': openid_users.get_current_user(),
+      'openid_login_jsurl': openid_users.create_login_url('/refresh'),
       'openid_login_url': openid_users.create_login_url('/'),
       'openid_logout_url': openid_users.create_logout_url('/'),
       'appengine_user': appengine_users.get_current_user(),

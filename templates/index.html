@@ -1,8 +1,140 @@
 {% extends "base.html" %}
+{% block head %}
+<link rel="StyleSheet" href="/css/index.css" type="text/css" media="screen">
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+{% endblock %}
+{% block header %}
+
+<div id=navbar>
+  <ul>
+    <li><a href="">Home</a></li>
+    <li>|</li>
+    <li><a href="http://lists.slug.org.au/archives/slug/">Archives</a></li>
+    <li>|</li>
+    <li><a href="http://lists.slug.org.au/listinfo/">Mailing Lists</a></li>
+    <li>|</li>
+    <li>
+    {% if openid_user %}
+      <a href="{{ openid_logout_url }}">Logout</a>
+    {% else %}
+      <div id=login class=box style="display: none;">
+        <h2>Login with:</h2>
+        <iframe src="{{ openid_login_jsurl }}"></iframe>
+      </div>
+      <a id=logina href="{{ openid_login_url }}">Login</a>
+      {% endif %}
+    </li>
+  </ul>
+</div>
+
+{% endblock %}
+
 {% block body %}
 
-    <div>
-      <a href="/events/">List of Events</a>
-    </div>
+<div id=background>
+<img src="/images/background.png">
+</div>
+
+<div id=heading>
+  &nbsp; Sydney Linux User Group
+</div>
+
+<div id=wrapper>
+  <div id=more-wrapper>
+    <div id=body>
+      <h1>About Us</h1>
+      <div id=content class=box>
+The Sydney Linux User Group (SLUG) is a community of passionate freedom and
+technology lovers in Sydney, Australia.
+
+We are one of the largest and most active Linux users groups in the world,
+with a adiverse membership of users, developers, sysadminas and advocates.
+
+etc.
+      </div><!-- content -->
+    </div><!-- body -->
+  </div><!-- more-wrapper -->
+  <div id=leftbar>
+    {% if current_events %}
+    <div id=today class=box>
+      <h2>Events Today</h2>
+      <ul>
+        {% for event in current_events %}
+        <li>
+          <h3>{{ event.name }}</h3>
+          <span class=start>{{ event.start }}</span>
+          <div class=respond>
+            {% if openid_user %}
+            <iframe src="/event/{{ event.key.id }}/response/show"></iframe>
+            {% else %}
+            <a href="{{ openid_login_url }}">Login to RSVP!</a>
+            {% endif %}
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+    </div><!-- today -->
+    {% endif %}
+
+    <div id=future class=box>
+      <h2>Future Events</h2>
+      <ul>
+        {% for event in future_events %}
+        <li>
+          <h3>{{ event.name }}</h3>
+          <span class=start>{{ event.start }}</span>
+          <div class=respond>
+            {% if openid_user %}
+            <iframe src="/event/{{ event.key.id }}/response/show"></iframe>
+            {% else %}
+            <a href="{{ openid_login_url }}">Login to RSVP!</a>
+            {% endif %}
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+    </div><!-- future -->
+  </div><!-- leftbar -->
+</div><!-- wrapper -->
+
+<table id=footer>
+  <tr>
+    <td id=attend class=box>
+      <h2>
+        Attend
+      </h2>
+      <span class=minor>
+        Meeting last Friday of every month.
+      </span>
+    </td>
+    <td id=sponsor class=box>
+      <h2>
+        Sponsor
+      </h2>
+      <span class=minor>
+        An event or SLUG as a whole
+      </span>
+    </td>
+    <td id=speak class=box>
+      <h2>
+        Give a talk
+      </h2>
+      <span class=minor>
+        Educate your fellows
+      </span>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  function login() {
+    var l = $('#login');
+    l.show();
+    return false;
+  }
+$('#logina').click(login);
+</script>
+
+
 
 {% endblock %}

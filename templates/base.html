@@ -2,9 +2,12 @@
   <head>
     <title>Sydney Linux User Group</title>
     <link rel="StyleSheet" href="/css/base.css" type="text/css" media="screen">
+    {% block head %}
+    {% endblock %}
   </head>
   <body>
-    <div class="header">
+    {% block header %}
+    <div id="header">
       {% if openid_user %}
         You are logged in as {{ openid_user.nickname }}.
         <a href="{{ openid_logout_url }}">Logout</a>
@@ -12,10 +15,11 @@
         <a href="{{ openid_login_url }}">Login</a>
       {% endif %}
     </div>
+    {% endblock %}
 
     {% block body %}{% endblock %}
 
-    <div class="footer">
+    <div id="adminfooter">
       {% if appengine_user %}
       {% if appengine_admin %}
         <span style="color: red;">Admin User</span>

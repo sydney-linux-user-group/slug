@@ -1,7 +1,7 @@
 #!/usr/bin/python2.5
 
 """Application for tracking SLUG user group events."""
- 
+
 import config
 
 import pprint
@@ -30,33 +30,28 @@ class Event(webapp.RequestHandler):
     self.response.out.write(r(
       'templates/event.html', { 'event': event}))
 
+
 class Events(webapp.RequestHandler):
+  template = "templates/events.html"
 
-  def get(self, year=None, month=None, day=None):
-
+  def get(self):
     now = datetime.datetime.now()
 
     future_events = db.GqlQuery(
-      "SELECT * from Event " + 
-      "WHERE start >= DATE(:1, :2, :3) " + 
-      "ORDER BY start", now.year, now.month, now.day)
-    
+      "SELECT * from Event " +
+      "WHERE start > DATETIME(:1, :2, :3, 23, 59, 59) " +
+      "ORDER BY start", now.year, now.month, now.day).fetch(100)
+
     current_events = db.GqlQuery(
-      "SELECT * from Event " + 
-      "WHERE end >= DATETIME(:1, :2, :3, 00, 00, 00) " + 
+      "SELECT * from Event " +
+      "WHERE end >= DATETIME(:1, :2, :3, 00, 00, 00) " +
       "AND end <= DATETIME(:1, :2, :3, 23, 59, 59) " +
-      "ORDER BY end", now.year, now.month, now.day)
+      "ORDER BY end", now.year, now.month, now.day).fetch(5)
+
+    next_event = len(current_events) and current_events[0] or future_events[0]
 
     self.response.headers['Content-Type'] = 'text/html'
     self.response.out.write(r(
-      'templates/events.html', 
-      {'future_events': future_events, 'current_events': current_events}))
-
-  def post(self, urltail):
-   event = models.Event(name = self.request.get('name'),
-                        text = self.request.get('text'),
-                        start = datetime.datetime.now(),
-                        end = datetime.datetime.now(),
-                       )
-   event.put()
-   self.redirect('/event/%d' % event.key().id())
+      self.template,
+      {'future_events': future_events, 'current_events': current_events,
+       'next_event': next_event}))

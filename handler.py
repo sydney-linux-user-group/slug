@@ -4,33 +4,26 @@
 
 import config
 
-import pprint
-import logging
-import events
-
+# AppEngine imports
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 
-import models
-import response
-
-from utils.render import render as r
-
+# OpenID middleware
 import aeoid.middleware
 
-class IndexPage(webapp.RequestHandler):
-  def get(self):
-    self.response.headers['Content-Type'] = 'text/html'
-    self.response.out.write(r('templates/index.html', {}))
-
+# Import the actual handlers
+import index
+import response
+import events
 
 application = webapp.WSGIApplication(
-  [('/', IndexPage),
+  [('/', index.Index),
    ('/event/(.*)/response/show',    response.ShowResponsePage),
    ('/event/(.*)/response/friends', response.FriendsResponsePage),
    ('/event/(.*)/response/update',  response.UpdateResponsePage),
    ('/events[/]?(?P<year>[^/]*)[/]?(?P<month>[^/]*)[/]?(?P<day>[^/]*)[/]?', events.Events),
    ('/event[/]?(.*)', events.Event),
+   ('/refresh', index.Refresh),
    ],
   debug=True)
 application = aeoid.middleware.AeoidMiddleware(application)

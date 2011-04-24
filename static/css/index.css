@@ -1,0 +1,191 @@
+* {
+  -ms-box-sizing: border-box
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+
+  font-family: "Trebuchet MS", "Tahoma", "Verdana", "Arial", "Helvetica", sans-serif;
+}
+
+#background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
+}
+
+#background img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  height: 100%;
+}
+
+.box {
+  -ms-border-radius: 15px;
+  -moz-border-radius: 15px;
+  -webkit-border-radius: 15px;
+  border-radius: 15px;
+
+  border: 2px solid black;
+
+  text-align: center;
+}
+
+#login {
+  position: absolute;
+  left: 100px;
+  right: 100px;
+  top: 100px;
+  bottom: 100px;
+  background: white;
+}
+
+#login h2 {
+  text-align: left;
+  font-size: 12pt;
+  padding: 0;
+  margin: 0;
+  margin-top: 5px;
+  margin-left: 0.5em;
+  border: 0;
+}
+
+#login iframe {
+  border: 0;
+  padding: 0;
+  margin: 0;
+
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+#navbar {
+  float: right;
+}
+
+#navbar li {
+  float: left;
+  padding: 5px;
+}
+
+#heading {
+  font-size: 40pt;
+
+  float: left;
+}
+
+#wrapper {
+  float: left;
+  width: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+#leftbar {
+  width: 300px;
+
+  float: left;
+  margin-top: 5px;
+  margin-left: 5px;
+  padding-bottom: 10px;
+  margin-right: -315px;
+}
+
+
+#leftbar .box {
+  background: white;
+  margin: 5px;
+}
+
+#leftbar ul {
+  padding: 0;
+  maring: 0;
+}
+
+#leftbar h2 {
+  font-weight: bold;
+  font-size: 16pt;
+  padding: 5px;
+  margin: 0;
+}
+
+#leftbar h3 {
+  font-weight: bold;
+  font-size: 12pt;
+  padding: 0;
+  margin: 0;
+}
+
+#leftbar li {
+  display: block;
+  padding: 5px;
+}
+
+#leftbar iframe {
+  width: 100%;
+  height: 280px;
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+
+#more-wrapper {
+  width: 100%;
+  float: right;
+}
+
+#body {
+  margin-left: 310px;
+}
+
+#body h1 {
+  width: 100%;
+  text-align: right;
+  margin: 0;
+  padding-right: 0.5em;
+}
+
+#content {
+  background-color: #e69138;
+  padding: 5px;
+}
+
+#footer {
+  width: 100%;
+
+  border-spacing: 20px;
+}
+
+#footer .box {
+  color: white;
+  width: 30%;
+  padding: 20px;
+}
+
+#footer h2 {
+  font-weight: bold;
+  font-size: 22pt;
+  padding: 0;
+  margin: 0;
+}
+
+#footer .minor {
+  font-size: 12pt;
+}
+
+#footer #attend {
+  background: #009e0f;
+}
+#footer #sponsor {
+  background: #cf2a27;
+}
+#footer #speak {
+  background: #2b78e4;
+}

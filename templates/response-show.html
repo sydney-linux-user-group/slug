@@ -2,7 +2,7 @@
 {% block body %}
 
 {% ifequal response None %}
-    <div class="rounded shadow border">
+    <div>
       <table>
         <tr>
           <th colspan=2><span class="response-header">Are you attending?</span></th>
@@ -47,7 +47,7 @@
     </div>
 {% else %}{% if response.attending %}
   {% if guests %}
-    <div class="rounded shadow border">
+    <div>
       <table>
         <tr>
           <th>
@@ -135,7 +135,7 @@
       </table>
     </div>
   {% else %}
-    <div class="rounded shadow border">
+    <div>
       <table>
         <tr>
           <th>
@@ -185,7 +185,7 @@
     </div>
   {% endif %}
 {% else %}
-    <div class="rounded shadow border">
+    <div>
       <table>
         <tr>
           <th>
