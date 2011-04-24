@@ -20,7 +20,7 @@ class iCal(webapp.RequestHandler):
         """Takes a models.Event, addes it to the calendar/
 
         Arguments:
-        	event: a models.Event
+            event: a models.Event
             cal: an icalendar.Calendar
         """
 
@@ -29,7 +29,7 @@ class iCal(webapp.RequestHandler):
         cal_event.add('dt_start', event.start)
         cal_event.add('dt_end', event.end)
         cal_event.add('dtstamp', event.created_on)
-        cal_event['uid'] = event.key
+        cal_event.add('uid', event.key())
         cal_event.add('priority', 5)
 
         cal.add_component(cal_event)
