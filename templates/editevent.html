@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block head %}
+    <link rel="StyleSheet" href="/css/editevent.css" type="text/css" media="screen">
+{% endblock %}
+{% block body %}
+
+<form id=template>
+</form>
+  <form>
+    <select id=fridays>
+       <option value=""></option>
+       {% for friday in fridays %}
+       <option value="{{ friday }}">{{friday}}</option>
+       {% endfor %}
+    </select>
+  </form>
+
+  <form id=event action="/event/{{event.key.id}}/edit" method="post">
+    <div>
+        Event Name: <input type="text" name="name" value="{{event.name}}" />
+    </div>
+    <div>Start Time: <input type="text" name="start" value="{{event.start}}" /></div>
+    <div>End Time: <input type="text" name="end" value="{{event.end}}" /></div>
+
+    <div>
+      <table>
+        <tr>
+          <td colspan=2>
+            <textarea class=box rows="30" cols="80" name="input">{{event.input}}</textarea>
+          </td>
+        </tr>
+        <tr>
+          <td><div class=box><pre>{{event.email|safe}}</pre></td>
+          <td><div class=box>{{event.html|safe}}</td>
+        </tr>
+      </table>
+    <div>
+    <input type="submit"/>
+  </form>
+<script>
+
+$('#fridays').change(function () {
+  var value = $(this).val();
+  if (!value) {
+    $('input[name="start"]').val('');
+    $('input[name="end"]').val('');
+  } else {
+    $('input[name="start"]').val(value + ' 6:00pm');
+    $('input[name="end"]').val(value + ' 8:00pm');
+    var month = value.match(/[a-zA-z]*/);
+    var year = value.match(/[0-9][0-9][0-9][0-9]/);
+  }
+});
+
+</script>
+
+{% endblock %}

@@ -17,9 +17,13 @@ handlers:
 - url: /js
   static_dir: static/js
 
-- url: /events/add
+- url: /event/add
   login: admin
-  script: addevents.py
+  script: editevent.py
+
+- url: /event/[0-9]*/edit
+  login: admin
+  script: editevent.py
   
 - url: /.*
   script: handler.py

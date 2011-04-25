@@ -68,6 +68,10 @@
   margin: 0;
 }
 
+#footer .box {
+  text-align: center;
+}
+
 #footer .minor {
   font-size: 12pt;
 }
