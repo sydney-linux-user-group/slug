@@ -35,7 +35,7 @@ class Event(webapp.RequestHandler):
 class Events(webapp.RequestHandler):
   template = "templates/events.html"
 
-  def get(self):
+  def get(self, year=None, month=None, day=None):
     now = datetime.datetime.now()
 
     future_events = db.GqlQuery(

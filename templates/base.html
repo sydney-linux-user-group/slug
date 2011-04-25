@@ -1,31 +1,71 @@
 <html>
   <head>
-    <title>Sydney Linux User Group</title>
+    <title>{%block title%}Sydney Linux User Group{%endblock%}</title>
     <link rel="StyleSheet" href="/css/base.css" type="text/css" media="screen">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
     {% block head %}
     {% endblock %}
   </head>
   <body>
     {% block header %}
-    <div id="header">
-      {% if openid_user %}
-        You are logged in as {{ openid_user.nickname }}.
-        <a href="{{ openid_logout_url }}">Logout</a>
-      {% else %}
-        <a href="{{ openid_login_url }}">Login</a>
+<div id=navbar>
+  <ul>
+    <li><a href="">Home</a></li>
+    <li>|</li>
+    <li><a href="http://lists.slug.org.au/archives/slug/">Archives</a></li>
+    <li>|</li>
+    <li><a href="http://lists.slug.org.au/listinfo/">Mailing Lists</a></li>
+    <li>|</li>
+    <li>
+    {% if openid_user %}
+      <a href="{{ openid_logout_url }}">Logout</a>
+    {% else %}
+      <div id=login class=box style="display: none;">
+        <h2>Login with:</h2>
+        <iframe src="{{ openid_login_jsurl }}"></iframe>
+      </div>
+      <a id=logina href="{{ openid_login_url }}">Login</a>
       {% endif %}
-    </div>
+    </li>
+  </ul>
+</div>
+
+<script type="text/javascript">
+function login() {
+  var l = $('#login');
+  l.show();
+  return false;
+}
+$('#logina').click(login);
+</script>
+
+<div id=background>
+  <img src="/images/background.png">
+</div>
+
+<div id=heading>
+  &nbsp; Sydney Linux User Group
+</div>
     {% endblock %}
 
+<div id=wrapper>
+  <div id=more-wrapper>
+    <div id=body>
     {% block body %}{% endblock %}
+    </div><!-- body -->
+  </div><!-- more-wrapper -->
+    {% block leftbar %}{% endblock %}
+</div><!-- wrapper -->
 
+ {% block footer %}{% endblock %}
+
+    {% if appengine_user %}
     <div id="adminfooter">
-      {% if appengine_user %}
       {% if appengine_admin %}
         <span style="color: red;">Admin User</span>
       {% endif %}
       <a href="{{ appengine_logout_url }}">AppEngine Logout</a>
-      {% endif %}
+    {% endif %}
     </div>
   </body>
 </html>

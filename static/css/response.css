@@ -1,0 +1,43 @@
+.response-small {
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+.response {
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+.gravatar-large {
+  width: 148px;
+  height: 148px;
+  padding: 1px;
+  margin: 0;
+}
+
+.gravatar-small {
+  width: 48px;
+  height: 48px;
+  padding: 1px;
+  margin: 0;
+}
+
+.gravatar-n-friends {
+  width: 200px; /* gravatar.height + 2*gravatar.padding +
+                   gravatar-small.height + 2*gravatar-small.padding */
+  height: 150px; /* .gravatar.height + 2*gravatar.padding */
+}
+
+table {
+  vertical-align: middle;
+}
+
+.response-header {
+  font-size: 20pt;
+}

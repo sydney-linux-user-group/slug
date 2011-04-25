@@ -1,5 +1,11 @@
 {% extends "base.html" %}
+{% block head %}
+    <link rel="StyleSheet" href="/css/events.css" type="text/css" media="screen">
+{% endblock %}
 {% block body %}
+    <h1>SLUG Events</h1>
+    <div id=content class=box>
+
   {% if current_events %}
     <h2>Events Ending Today</h2>
     <table>
@@ -39,4 +45,5 @@
   {% endfor %}
   </table>
 
+    </div> <!-- content -->
 {% endblock %}

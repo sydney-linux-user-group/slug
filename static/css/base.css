@@ -1,4 +1,3 @@
-
 * {
   -moz-box-sizing: border-box;
   -ms-box-sizing: border-box;
@@ -20,88 +19,32 @@ body {
   padding: 0;
   margin: 0;
   border: 5px solid white;
-}
 
+  font-family: "Trebuchet MS", "Tahoma", "Verdana", "Arial", "Helvetica", sans-serif;
+}
 
 /* Fix PNG transparence in older IE browsers. */
 img, div, a, input {
   behavior: url(/css/resources/iepngfix.htc);
 }
 
-/* CSS only rounded corners, even in IE! */
-.rounded {
-  behavior: url(/css/htc/border-radius.htc);
+#background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 
-  -moz-border-radius: 20px;
-  -webkit-border-radius: 20px;
-  -khtml-border-radius: 20px;
-  border-radius: 20px;
-
-  padding: 10px;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
 }
 
-/* CSS only drop shadow */
-.shadow {
-  -moz-box-shadow: 5px 5px 5px black;
-  -webkit-box-shadow: 5px 5px 5px black;
-  box-shadow: 5px 5px 5px black;
-}
-
-.border {
-  border: 1px solid gray;
-}
-
-.response-small {
-  width: 16px;
-  height: 16px;
-  padding: 0;
-  margin: 0;
-  border: 0;
-}
-
-.response {
-  width: 48px;
-  height: 48px;
-  padding: 0;
-  margin: 0;
-  border: 0;
-}
-
-
-.gravatar-large {
-  width: 148px;
-  height: 148px;
-  padding: 1px;
-  margin: 0;
-}
-
-.gravatar-small {
-  width: 48px;
-  height: 48px;
-  padding: 1px;
-  margin: 0;
-}
-
-.gravatar-n-friends {
-  width: 200px; /* gravatar.height + 2*gravatar.padding +
-                   gravatar-small.height + 2*gravatar-small.padding */
-  height: 150px; /* .gravatar.height + 2*gravatar.padding */
-}
-
-table {
-  vertical-align: middle;
-}
-
-.response-header {
-  font-size: 20pt;
-}
-
-.evenrow {
-  background-color: grey
-}
-
-.oddrow {
-  background-color: white
+#background img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  height: 100%;
 }
 
 #adminfooter {
@@ -111,7 +54,85 @@ table {
   padding-right: 10px;
 }
 
-.header {
-  top: 0;
-  padding-top: 5px;
+.box {
+  behavior: url(/css/htc/border-radius.htc);
+
+  -ms-border-radius: 15px;
+  -moz-border-radius: 15px;
+  -webkit-border-radius: 15px;
+  border-radius: 15px;
+
+  border: 2px solid black;
+
+  text-align: center;
+}
+
+#heading {
+  font-size: 40pt;
+
+  float: left;
+}
+
+#navbar {
+  float: right;
+}
+
+#navbar li {
+  float: left;
+  padding: 5px;
+}
+
+#login {
+  position: absolute;
+  left: 100px;
+  right: 100px;
+  top: 100px;
+  bottom: 100px;
+  background: white;
+}
+
+#login h2 {
+  text-align: left;
+  font-size: 12pt;
+  padding: 0;
+  margin: 0;
+  margin-top: 5px;
+  margin-left: 0.5em;
+  border: 0;
+}
+
+#login iframe {
+  border: 0;
+  padding: 0;
+  margin: 0;
+
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+#wrapper {
+  float: left;
+  width: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+#more-wrapper {
+  width: 100%;
+  float: right;
+}
+
+#body h1 {
+  width: 100%;
+  text-align: right;
+  margin: 0;
+  padding-right: 0.5em;
+}
+
+#content {
+  clear: both;
+  background-color: #e69138;
+  padding: 5px;
+  text-align: left;
 }

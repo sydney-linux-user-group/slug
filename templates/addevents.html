@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 
 {% block body %}
+
+<form id=template>
+</form>
+
+
   <form action="/events/add" method="post">
     <div>Event Name: <input type="text" name="name"/></div>
     <div>Start Time: <input type="text" name="start"/></div>

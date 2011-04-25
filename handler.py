@@ -26,6 +26,7 @@ application = webapp.WSGIApplication(
    ('/events[/]?(?P<year>[^/]*)[/]?(?P<month>[^/]*)[/]?(?P<day>[^/]*)[/]?', events.Events),
    ('/event[/]?(.*)', events.Event),
    ('/refresh', index.Refresh),
+   ('/map', index.Map),
    ('/ical', ical.iCal),
    ],
   debug=True)
