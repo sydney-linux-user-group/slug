@@ -1,6 +1,9 @@
 #!/usr/bin/python
+#
+# -*- coding: utf-8 -*-
+# vim: set ts=4 sw=4 et sts=4 ai:
 
-"""Application for tracking SLUG user group events."""
+"""Default handler."""
 
 import config
 config.setup()
@@ -23,7 +26,8 @@ application = webapp.WSGIApplication(
    ('/event/(.*)/response/show',    response.ShowResponsePage),
    ('/event/(.*)/response/friends', response.FriendsResponsePage),
    ('/event/(.*)/response/update',  response.UpdateResponsePage),
-   ('/events[/]?(?P<year>[^/]*)[/]?(?P<month>[^/]*)[/]?(?P<day>[^/]*)[/]?', events.Events),
+   ('/events[/]?(?P<year>[^/]*)[/]?(?P<month>[^/]*)[/]?(?P<day>[^/]*)[/]?',
+        events.Events),
    ('/event[/]?(.*)', events.Event),
    ('/refresh', index.Refresh),
    ('/map', index.Map),

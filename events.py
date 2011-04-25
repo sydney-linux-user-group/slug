@@ -1,18 +1,15 @@
 #!/usr/bin/python
+#
+# -*- coding: utf-8 -*-
+# vim: set ts=4 sw=4 et sts=4 ai:
 
-"""Application for tracking SLUG user group events."""
+"""Module for viewing the events."""
 
 import config
 config.setup()
 
-import pprint
-import logging
-
-from google.appengine.api import users
 from google.appengine.ext import db
 from google.appengine.ext import webapp
-from google.appengine.ext.webapp import template
-from google.appengine.ext.webapp.util import login_required
 
 import models
 import datetime
@@ -20,39 +17,48 @@ import datetime
 from utils.render import render as r
 
 class Event(webapp.RequestHandler):
-  def get(self, id=None):
-    if not id:
-      id = self.request.get('id')
+    """Handler for display a single event."""
 
-    id = long(id)
-    event = models.Event.get_by_id(id)
+    def get(self, key=None):
+        if not key:
+            key = self.request.get('id')
 
-    self.response.headers['Content-Type'] = 'text/html'
-    self.response.out.write(r(
-      'templates/event.html', { 'event': event}))
+        key = long(key)
+        event = models.Event.get_by_id(key)
+
+        self.response.headers['Content-Type'] = 'text/html'
+        self.response.out.write(r(
+            'templates/event.html', { 'event': event}))
 
 
 class Events(webapp.RequestHandler):
-  template = "templates/events.html"
+    """Handler for display a table of events."""
 
-  def get(self, year=None, month=None, day=None):
-    now = datetime.datetime.now()
+    template = "templates/events.html"
 
-    future_events = db.GqlQuery(
-      "SELECT * from Event " +
-      "WHERE start > DATETIME(:1, :2, :3, 23, 59, 59) " +
-      "ORDER BY start", now.year, now.month, now.day).fetch(100)
+    def get(self, year=None, month=None, day=None):
+        now = datetime.datetime.now()
 
-    current_events = db.GqlQuery(
-      "SELECT * from Event " +
-      "WHERE end >= DATETIME(:1, :2, :3, 00, 00, 00) " +
-      "AND end <= DATETIME(:1, :2, :3, 23, 59, 59) " +
-      "ORDER BY end", now.year, now.month, now.day).fetch(5)
+        year = self.request.get('year', now.year)
+        month = self.request.get('month', now.month)
+        day = self.request.get('day', now.day)
 
-    next_event = len(current_events) and current_events[0] or future_events[0]
+        future_events = db.GqlQuery(
+            "SELECT * from Event " +
+            "WHERE start > DATETIME(:1, :2, :3, 23, 59, 59) " +
+            "ORDER BY start", year, month, day).fetch(100)
 
-    self.response.headers['Content-Type'] = 'text/html'
-    self.response.out.write(r(
-      self.template,
-      {'future_events': future_events, 'current_events': current_events,
-       'next_event': next_event}))
+        current_events = db.GqlQuery(
+            "SELECT * from Event " +
+            "WHERE end >= DATETIME(:1, :2, :3, 00, 00, 00) " +
+            "AND end <= DATETIME(:1, :2, :3, 23, 59, 59) " +
+            "ORDER BY end", year, month, day).fetch(5)
+
+        next_event = (len(current_events) and current_events[0]
+                      or future_events[0])
+
+        self.response.headers['Content-Type'] = 'text/html'
+        self.response.out.write(r(
+            self.template,
+            {'future_events': future_events, 'current_events': current_events,
+             'next_event': next_event}))

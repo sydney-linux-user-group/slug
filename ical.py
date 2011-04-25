@@ -1,27 +1,30 @@
 #!/usr/bin/python
+#
+# -*- coding: utf-8 -*-
+# vim: set ts=4 sw=4 et sts=4 ai:
 
 """Generate iCal feed based on events in database."""
 
 import config
 config.setup()
 
-import pprint
-import logging
-
-from google.appengine.ext import db
+# AppEngine Imports
 from google.appengine.ext import webapp
-from google.appengine.ext.webapp import template
 
+# Third Party imports
 from pytz.gae import pytz
-
-import datetime
-import models
 import vobject
 
-class iCal(webapp.RequestHandler):
+# Our App imports
+import models
 
-    def addEventToCal(self, event, cal):
-        """Takes a models.Event, addes it to the calendar/
+
+# pylint: disable-msg=C0103
+class iCal(webapp.RequestHandler):
+    """Handler which outputs an iCal feed."""
+
+    def add_event(self, event, cal):
+        """Takes a models.Event, adds it to the calendar.
 
         Arguments:
             event: a models.Event
@@ -40,10 +43,10 @@ class iCal(webapp.RequestHandler):
     def get(self):
         cal = vobject.iCalendar()
 
+        # FIXME: Should this show *all* events of all time?
         events = models.Event.all()
 
         for event in events:
-            self.addEventToCal(event, cal)
+            self.add_event(event, cal)
 
         self.response.out.write(cal.serialize())
-
