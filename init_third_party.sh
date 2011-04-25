@@ -14,8 +14,7 @@ rsync -Pa gaepytz-2011c/pytz/ ../pytz/
 
 svn checkout http://python-datetime-tz.googlecode.com/svn/trunk/ python-datetime-tz
 
-curl -O http://pypi.python.org/packages/source/i/icalendar/icalendar-2.1.tar.gz
-tar -zxvf icalendar-2.1.tar.gz
+svn checkout -r 217 http://svn.osafoundation.org/vobject/trunk/ vobject
 
 curl -O http://pypi.python.org/packages/source/M/Markdown/Markdown-2.0.3.tar.gz
 tar -zxvf Markdown-2.0.3.tar.gz
