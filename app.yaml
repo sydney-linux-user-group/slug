@@ -27,7 +27,6 @@ handlers:
 skip_files:
 - third_party/python-dateutil-1.5/
 - third_party/python-datetime-tz/
-- third_party/pytz/
 - third_party/icalendar-2.1/
 - third_party/*.tar.gz
 - third_party/mkzip

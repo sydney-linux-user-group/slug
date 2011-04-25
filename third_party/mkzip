@@ -1,2 +1,2 @@
 #!/bin/bash
-zip -r ../third_party.zip gaepytz/src python-dateutil-1.5/dateutil python-datetime-tz/datetime_tz.py python-datetime-tz/pytz_abbr.py icalendar-2.1/src
+zip -r ../third_party.zip python-dateutil-1.5/dateutil python-datetime-tz/datetime_tz.py python-datetime-tz/pytz_abbr.py icalendar-2.1/src

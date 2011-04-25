@@ -10,6 +10,7 @@ tar -zxvf python-dateutil-1.5.tar.gz
 
 curl -O http://pypi.python.org/packages/source/g/gaepytz/gaepytz-2011c.tar.gz
 tar -zxvf gaepytz-2011c.tar.gz
+rsync -Pa gaepytz-2011c/pytz/ ../pytz/
 
 svn checkout http://python-datetime-tz.googlecode.com/svn/trunk/ python-datetime-tz
 

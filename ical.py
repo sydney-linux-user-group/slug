@@ -10,9 +10,10 @@ from google.appengine.ext import db
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import template
 
-import models
 import datetime
 import icalendar
+import models
+from pytz.gae import pytz
 
 class iCal(webapp.RequestHandler):
 
@@ -23,12 +24,13 @@ class iCal(webapp.RequestHandler):
             event: a models.Event
             cal: an icalendar.Calendar
         """
+        syd = pytz.timezone('Australia/Sydney')
 
         cal_event = icalendar.Event()
         cal_event.add('summary', event.name)
-        cal_event.add('dtstart', event.start)
-        cal_event.add('dtend', event.end)
-        cal_event.add('dtstamp', event.created_on)
+        cal_event.add('dtstart', syd.localize(event.start))
+        cal_event.add('dtend', syd.localize(event.end))
+        cal_event.add('dtstamp', syd.localize(event.created_on))
         cal_event.add('uid', event.key())
         cal_event.add('priority', 5)
 
