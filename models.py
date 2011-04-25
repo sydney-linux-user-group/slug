@@ -1,5 +1,6 @@
 
 import config
+config.setup()
 
 from google.appengine.ext import db
 
@@ -14,7 +15,9 @@ class Event(db.Model):
   created_on = db.DateTimeProperty(auto_now_add=True, required=True)
 
   name = db.StringProperty(required=True)
-  text = db.StringProperty(multiline=True)
+  input = db.StringProperty(multiline=True)
+  email = db.StringProperty(multiline=True)
+  html = db.BlobProperty()
 
   start = db.DateTimeProperty(required=True)
   end = db.DateTimeProperty(required=True)

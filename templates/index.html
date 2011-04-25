@@ -1,47 +1,9 @@
 {% extends "base.html" %}
 {% block head %}
-<link rel="StyleSheet" href="/css/index.css" type="text/css" media="screen">
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
-{% endblock %}
-{% block header %}
-
-<div id=navbar>
-  <ul>
-    <li><a href="">Home</a></li>
-    <li>|</li>
-    <li><a href="http://lists.slug.org.au/archives/slug/">Archives</a></li>
-    <li>|</li>
-    <li><a href="http://lists.slug.org.au/listinfo/">Mailing Lists</a></li>
-    <li>|</li>
-    <li>
-    {% if openid_user %}
-      <a href="{{ openid_logout_url }}">Logout</a>
-    {% else %}
-      <div id=login class=box style="display: none;">
-        <h2>Login with:</h2>
-        <iframe src="{{ openid_login_jsurl }}"></iframe>
-      </div>
-      <a id=logina href="{{ openid_login_url }}">Login</a>
-      {% endif %}
-    </li>
-  </ul>
-</div>
-
+    <link rel="StyleSheet" href="/css/index.css" type="text/css" media="screen">
 {% endblock %}
 
 {% block body %}
-
-<div id=background>
-<img src="/images/background.png">
-</div>
-
-<div id=heading>
-  &nbsp; Sydney Linux User Group
-</div>
-
-<div id=wrapper>
-  <div id=more-wrapper>
-    <div id=body>
       <h1>About Us</h1>
       <div id=content class=box>
 The Sydney Linux User Group (SLUG) is a community of passionate freedom and
@@ -52,8 +14,9 @@ with a adiverse membership of users, developers, sysadminas and advocates.
 
 etc.
       </div><!-- content -->
-    </div><!-- body -->
-  </div><!-- more-wrapper -->
+{% endblock %}
+
+{% block leftbar %}
   <div id=leftbar>
     {% if current_events %}
     <div id=today class=box>
@@ -95,8 +58,9 @@ etc.
       </ul>
     </div><!-- future -->
   </div><!-- leftbar -->
-</div><!-- wrapper -->
+{% endblock %}
 
+{% block footer %}
 <table id=footer>
   <tr>
     <td id=attend class=box>
@@ -125,16 +89,4 @@ etc.
     </td>
   </tr>
 </table>
-
-<script type="text/javascript">
-  function login() {
-    var l = $('#login');
-    l.show();
-    return false;
-  }
-$('#logina').click(login);
-</script>
-
-
-
 {% endblock %}

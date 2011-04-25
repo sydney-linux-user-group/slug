@@ -3,6 +3,7 @@
 """Application for tracking SLUG user group events."""
 
 import config
+config.setup()
 
 # AppEngine imports
 from google.appengine.ext import webapp
@@ -25,6 +26,7 @@ application = webapp.WSGIApplication(
    ('/events[/]?(?P<year>[^/]*)[/]?(?P<month>[^/]*)[/]?(?P<day>[^/]*)[/]?', events.Events),
    ('/event[/]?(.*)', events.Event),
    ('/refresh', index.Refresh),
+   ('/map', index.Map),
    ('/ical', ical.iCal),
    ],
   debug=True)

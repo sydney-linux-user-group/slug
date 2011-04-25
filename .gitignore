@@ -7,3 +7,4 @@ third_party/python-dateutil-1.5
 pytz
 third_party/gaepytz-2011c
 third_party/icalendar*
+third_party/Markdown*

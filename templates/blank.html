@@ -1,9 +1,12 @@
 <html>
   <head>
-    <title>Sydney Linux User Group</title>
+    <title>{%block title%}Sydney Linux User Group{%endblock%}</title>
     <link rel="StyleSheet" href="/css/base.css" type="text/css" media="screen">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+    {% block head %}
+    {% endblock %}
   </head>
-  <body style="background-color: white;">
+  <body>
     {% block body %}{% endblock %}
   </body>
 </html>

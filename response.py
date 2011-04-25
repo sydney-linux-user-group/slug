@@ -1,5 +1,6 @@
 
 import config
+config.setup()
 
 import datetime
 import logging
