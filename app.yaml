@@ -29,9 +29,7 @@ handlers:
   script: handler.py
 
 skip_files:
-- third_party/python-dateutil-1.5/
-- third_party/python-datetime-tz/
-- third_party/icalendar-2.1/
-- third_party/*.tar.gz
+- third_party/((?!aeoid).*)/
+- third_party/aeoid/demo
 - third_party/mkzip
 - (.*/)*.git/
