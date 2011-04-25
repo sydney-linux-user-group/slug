@@ -16,4 +16,7 @@ svn checkout http://python-datetime-tz.googlecode.com/svn/trunk/ python-datetime
 curl -O http://pypi.python.org/packages/source/i/icalendar/icalendar-2.1.tar.gz
 tar -zxvf icalendar-2.1.tar.gz
 
+curl -O http://pypi.python.org/packages/source/M/Markdown/Markdown-2.0.3.tar.gz
+tar -zxvf Markdown-2.0.3.tar.gz
+
 ./mkzip

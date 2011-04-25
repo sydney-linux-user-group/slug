@@ -12,6 +12,7 @@ def setup():
 	sys_path_insert('third_party.zip/python-datetime-tz')
 	sys_path_insert('third_party.zip/pytz/src')
 	sys_path_insert('third_party.zip/icalendar-2.1/src')
+	sys_path_insert('third_party.zip/Markdown-2.0.3')
 
 	import os
 	os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
