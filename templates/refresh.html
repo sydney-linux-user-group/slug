@@ -1,4 +1,9 @@
 {% extends "base.html" %}
+
+{% block head %}
+<meta http-equiv="refresh" content="5;url=/">
+{% endblock %}
+
 {% block body %}
 <script>
   window.opener.location.reload(true);
