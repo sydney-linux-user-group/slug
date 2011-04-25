@@ -44,7 +44,7 @@ class EditEvent(webapp.RequestHandler):
                 event = models.Event.get_by_id(key)
                 assert event
             # pylint: disable-msg=W0702
-            except:
+            except (AssertionError, ValueError):
                 self.redirect('/events')
                 return
         else:
@@ -63,7 +63,7 @@ class EditEvent(webapp.RequestHandler):
                 key = long(key)
                 event = models.Event.get_by_id(key)
             # pylint: disable-msg=W0702
-            except:
+            except (AssertionError, ValueError):
                 self.redirect('/events')
                 return
         else:

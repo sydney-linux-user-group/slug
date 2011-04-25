@@ -20,23 +20,33 @@
     {% if openid_user %}
       <a href="{{ openid_logout_url }}">Logout</a>
     {% else %}
-      <div id=login class=box style="display: none;">
-        <h2>Login with:</h2>
-        <iframe src="{{ openid_login_jsurl }}"></iframe>
-      </div>
-      <a id=logina href="{{ openid_login_url }}">Login</a>
-      {% endif %}
+      <a id=login href="{{ openid_login_url }}">Login</a>
+    {% endif %}
     </li>
   </ul>
 </div>
 
 <script type="text/javascript">
 function login() {
-  var l = $('#login');
-  l.show();
+  var url = '{{ openid_login_jsurl }}';
+  var width  = 300;
+  var height = 200;
+  var left   = (screen.width  - width)/2;
+  var top    = (screen.height - height)/2;
+  var params = 'width='+width+', height='+height;
+  params += ', top='+top+', left='+left;
+  params += ', directories=no';
+  params += ', location=no';
+  params += ', menubar=no';
+  params += ', resizable=no';
+  params += ', scrollbars=no';
+  params += ', status=no';
+  params += ', toolbar=no';
+  newwin=window.open(url,'login', params);
+  if (window.focus) {newwin.focus()}
   return false;
 }
-$('#logina').click(login);
+$('#login').click(login);
 </script>
 
 <div id=background>
