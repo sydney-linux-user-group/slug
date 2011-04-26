@@ -1,11 +1,20 @@
 {% extends "base.html" %}
+{% block title %} {{ event.name }} {% endblock %}
+
 {% block body %}
-    <div class='eventID'>EventID: {{ event.key.id }}</div>
-    <div class='eventName'>Event Name: {{ event.name }}</div>
-    <div class='eventText'> 
-        {% autoescape off %}
-        	{{ event.html }}
-        {% endautoescape %}
+    <h3>{{ event.name }}</h3>
+    <div id=content class=box style="float: left;">
+      <div class='eventBody'> {{ event.html|safe }} </div>
+    </div>
+    <div class='box'>
+      <span class=start>{{ event.start }}</span>
+      <div class=respond >
+        {% if openid_user %}
+        <iframe src="/event/{{ event.key.id }}/response/show" style="height: 300;"/>
+        {% else %}
+        <a href="{{ openid_login_url }}">Login to RSVP!</a>
+        {% endif %}
+      </div>
     </div>
 
 {% endblock %}
