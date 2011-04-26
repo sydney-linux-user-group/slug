@@ -108,15 +108,15 @@ class EditEvent(webapp.RequestHandler):
 
         # We can't do this template subsitution until we have saved the event.
         try:
-            email = str(template.Template(inputtext).render(
+            plaintext = str(template.Template(inputtext).render(
                 template.Context({'event': event})))
-            html = markdown.markdown(email, extensions).encode('utf-8')
-            event.email = email
+            html = markdown.markdown(plaintext, extensions).encode('utf-8')
+            event.plaintext = plaintext
             event.html = html
         except Exception, e:
             sio = StringIO.StringIO()
             traceback.print_exc(file=sio)
-            event.email = sio.getvalue()
+            event.plaintext = sio.getvalue()
 
         event.put()
 

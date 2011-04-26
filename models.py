@@ -25,7 +25,7 @@ class Event(db.Model):
 
     name = db.StringProperty(required=True)
     input = db.TextProperty()
-    email = db.TextProperty()
+    plaintext = db.TextProperty()
     html = db.BlobProperty()
 
     start = db.DateTimeProperty(required=True)
