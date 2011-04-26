@@ -92,7 +92,7 @@ update: third_party.zip
 	${APPENGINE_SDK}/appcfg.py update .
 
 serve: third_party.zip
-	${APPENGINE_SDK}/dev_appserver.py .
+	python2.6 ${APPENGINE_SDK}/dev_appserver.py .
 
 clean:
 	$(MAKE) -C third_party clean
