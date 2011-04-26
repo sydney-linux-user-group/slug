@@ -9,3 +9,15 @@ lint:
 		--disable-msg=W0221 \
 		--disable-msg=R0904 \
 		--const-rgx='[a-z_][a-z0-9_]{2,30}$$' *.py
+
+3p: third_party.zip
+
+third-party: third_party.zip
+
+third_party.zip: init_third_party.sh third_party/mkzip
+	./init_third_party.sh
+
+upload: update
+
+update: third_party.zip
+	appcfg.py update .
