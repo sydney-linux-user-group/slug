@@ -12,6 +12,7 @@ doing anything else, *including imports*!
 """
 
 import sys
+import os
 
 
 paths = [
@@ -52,8 +53,15 @@ def setup():
 
 def lint_setup():
     """Setup called to make pylint work."""
-    sys_path_insert('../google_appengine')
-    for ipath in paths:
+    if not "APPENGINE_SDK" in os.environ:
+        print "Please set $APPENGINE_SDK to the location of the appengine SDK."
+        return 1
+
+    print "APPENGINE_SDK at ", os.environ["APPENGINE_SDK"]
+    sys_path_insert(os.environ["APPENGINE_SDK"])
+
+    for ipath in paths[:-1]:
         sys_path_insert(ipath.replace('.zip', ''))
 
     setup_django()
+
