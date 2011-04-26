@@ -89,6 +89,7 @@ third_party.zip.d: third_party
 	@echo '' >> $(TPT)
 	@echo 'third_party.zip: third_party.zip.d $$(THIRD_PARTY_here)' >> $(TPT)
 	@echo '	cd third_party; zip -r ../third_party.zip $$(THIRD_PARTY_files)' >> $(TPT)
+	@if [ ! -e $@ ]; then touch $@; fi
 	@if [ `md5sum $@ | sed -e's/ .*//'` != `md5sum $(TPT) | sed -e's/ .*//'` ]; then \
 		echo "third_party.zip.d has changed!"; \
 		mv $(TPT) $@; \
