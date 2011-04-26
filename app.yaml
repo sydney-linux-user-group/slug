@@ -24,7 +24,7 @@ handlers:
 - url: /event/[0-9]*/edit
   login: admin
   script: editevent.py
-  
+
 - url: /.*
   script: handler.py
 
