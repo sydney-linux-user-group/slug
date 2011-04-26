@@ -29,6 +29,10 @@ to start the appserver.
  - run third-party/mkzip
  - edit config.py to include the library in the sys.path
 
+# I'm getting weird errors about modules not existing
+
+You probably need to run ``init-third-party`` to update your third-party libraries
+
 # Pushing to appengine
 
  - If neccessary, increment version number in app.cfg to make sure you don't trample on the currently-live version of the app
