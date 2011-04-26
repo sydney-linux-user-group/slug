@@ -54,7 +54,9 @@ endif
 lint:
 	@# R0904 - Disable "Too many public methods" warning
 	@# W0221 - Disable "Arguments differ from parent", as get and post will.
-	@python -c "import config; config.lint_setup(); import sys; from pylint import lint; lint.Run(sys.argv[1:])" \
+	@python \
+		-W "ignore:disable-msg is:DeprecationWarning:pylint.lint" \
+		-c "import config; config.lint_setup(); import sys; from pylint import lint; lint.Run(sys.argv[1:])" \
 		--reports=n \
 		--include-ids=y \
 		--no-docstring-rgx "(__.*__)|(get)|(post)|(main)" \
