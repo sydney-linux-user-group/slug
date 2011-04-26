@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 {% block body %}
-  <div class='eventID'>EventID: {{ event.key.id }}</div>
-  <div class='eventName'>Event Name: {{ event.name }}</div>
-  <div class='eventText'> {{ event.email }} </div>
+    <div class='eventID'>EventID: {{ event.key.id }}</div>
+    <div class='eventName'>Event Name: {{ event.name }}</div>
+    <div class='eventText'> 
+        {% autoescape off %}
+        	{{ event.html }}
+        {% endautoescape %}
+    </div>
+
 {% endblock %}
