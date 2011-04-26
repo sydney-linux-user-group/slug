@@ -32,13 +32,16 @@ class rss(webapp.RequestHandler):
         """
         syd = pytz.timezone('Australia/Sydney')
 
-        cal_event = cal.add('vevent')
-        cal_event.add('summary').value = event.name
-        cal_event.add('dtstart').value = syd.localize(event.start)
-        cal_event.add('dtend').value = syd.localize(event.end)
-        cal_event.add('dtstamp').value = syd.localize(event.created_on)
-        cal_event.add('description').value = event.input
-        cal_event.add('uid').value = str(event.key())
+        event_url = "http://signup.slug.org.au/event/" + event.id
+
+        item = rss_gen.RSSItem()
+        item.title = event.name
+        item.link = event_url
+        item.description = event.email
+		guid = event.key()
+        pubDate = syd.localize(event.created_on)
+
+        rss.items.extend(item)
 
 
     def get(self):
@@ -56,4 +59,4 @@ class rss(webapp.RequestHandler):
         for event in events:
             self.add_event(event, rss)
 
-        self.response.out.write(cal.serialize())
+        self.response.out.write(rss.to_xml())
