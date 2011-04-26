@@ -22,6 +22,7 @@ paths = [
     'third_party.zip/icalendar-2.1/src',
     'third_party.zip/vobject',
     'third_party.zip/Markdown-2.0.3',
+    'third_party.zip'
 ]
 
 

@@ -8,3 +8,4 @@ pytz
 third_party/gaepytz-2011c
 third_party/vobject
 third_party/Markdown*
+third_party/PyRSS2Gen-1.0.0
