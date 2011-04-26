@@ -42,10 +42,13 @@ $(error "Please install pylint\nOn Ubuntu/Debian run:\n    sudo apt-get install 
 endif
 PYLINT_VERSION=$(shell pylint --version | head -1 | sed -e's/pylint //' -e's/,//')
 
-ifeq "${PYLINT_VERSION}" "0.22.0"
-PYLINT_DISABLE="--disable-msg"
-else
+# Newer versions of pylint uses --disable rather then --disable-msg
+PYLINT_NEW=$(shell python -c "from pylint import lint; import sys; print cmp(tuple(int(x) for x in lint.version.split('.')), (0,20,0))")
+
+ifeq "${PYLINT_NEW}" "1"
 PYLINT_DISABLE="--disable"
+else
+PYLINT_DISABLE="--disable-msg"
 endif
 ###############################################################################
 ###############################################################################
