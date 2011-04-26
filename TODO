@@ -1,6 +1,5 @@
-RSS Feed (polleyj)
-  - First, have per-event pages working and displaying something useful
-  - So that each item in the RSS can link back to that event's page
+Markdown templates for events (tansell)
+Process markdown -> display as HTML (tansell)
 Announcement email to announce list (polleyj)
 Export attendees list for organisers (polleyj)
 Track number of confirmed attendees
@@ -8,3 +7,4 @@ Display number of confirmed attendees somewhere interesting
 Subscribe to announce list while registering for event
 Share buttons - fbook, twitter, etc
 Twitter widget - recent tweets
+
