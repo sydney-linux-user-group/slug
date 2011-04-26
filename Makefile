@@ -70,11 +70,11 @@ third_party.zip: init_third_party.sh third_party/mkzip
 	./init_third_party.sh
 
 upload: update
-deply: update
+deploy: update
 update: third_party.zip
-	$$APPENGINE_SDK/appcfg.py update .
+	${APPENGINE_SDK}/appcfg.py update .
 
 serve: third_party.zip
-	$$APPENGINE_SDK/dev_appserver.py .
+	${APPENGINE_SDK}/dev_appserver.py .
 
 .PHONY = lint sdk serve deploy
