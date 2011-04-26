@@ -50,8 +50,6 @@ PYLINT_DISABLE="--disable"
 else
 PYLINT_DISABLE="--disable-msg"
 endif
-###############################################################################
-###############################################################################
 
 lint:
 	@# R0904 - Disable "Too many public methods" warning
@@ -65,12 +63,28 @@ lint:
 		${PYLINT_DISABLE}=R0904 \
 		--const-rgx='[a-z_][a-z0-9_]{2,30}$$' *.py
 
-3p: third_party.zip
+###############################################################################
+# Third Party Zip file creation
+###############################################################################
+THIRD_PARTY=python-dateutil-1.5/dateutil \
+	python-datetime-tz/datetime_tz.py \
+	python-datetime-tz/pytz_abbr.py \
+	Markdown-2.0.3/markdown \
+	vobject/vobject/*.py \
+	PyRSS2Gen-1.0.0/PyRSS2Gen.py
 
-third-party: third_party.zip
+THIRD_PARTY_here=$(addprefix third_party/, $(THIRD_PARTY))
 
-third_party.zip: init_third_party.sh third_party/mkzip
-	./init_third_party.sh
+$(THIRD_PARTY_here):
+	$(MAKE) -C third_party
+
+third_party.zip: $(THIRD_PARTY_here)
+	cd third_party; \
+	zip -r ../third_party.zip \
+		$(THIRD_PARTY)
+
+###############################################################################
+###############################################################################
 
 upload: update
 deploy: update
@@ -80,4 +94,7 @@ update: third_party.zip
 serve: third_party.zip
 	${APPENGINE_SDK}/dev_appserver.py .
 
-.PHONY = lint sdk serve deploy
+clean:
+	$(MAKE) -C third_party clean
+
+.PHONY = lint upload deploy serve clean
