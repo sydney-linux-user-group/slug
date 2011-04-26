@@ -67,8 +67,10 @@ class EditEvent(webapp.RequestHandler):
                 self.redirect('/events')
                 return
         else:
-            event = models.Event(name='', text='', html='',
-                                 start=datetime.now(), end=datetime.now())
+			#name is a required field; must populate now. Rest comes later.
+            event = models.Event(name=self.request.get('name'),
+                                 text='', html='', start=datetime.now(),
+                                 end=datetime.now())
 
         inputtext = self.request.get('input')
         email = str(template.Template(inputtext).render(
@@ -78,7 +80,6 @@ class EditEvent(webapp.RequestHandler):
         start_date = datetime_tz.smartparse(self.request.get('start'))
         end_date = datetime_tz.smartparse(self.request.get('end'))
 
-        event.name = self.request.get('name')
         event.input = inputtext
         event.email = email
         event.html = html
