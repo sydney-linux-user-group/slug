@@ -1,4 +1,4 @@
-application: sydney-linux-user-group
+application: sydney-linux-user-group-hr
 version: 2
 runtime: python
 api_version: 1
