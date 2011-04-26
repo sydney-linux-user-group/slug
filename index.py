@@ -34,8 +34,8 @@ class Refresh(webapp.RequestHandler):
 
 class StaticTemplate(webapp.RequestHandler):
     """Handler which shows a map of how to get to slug."""
-    def get(self, f):
-        template = 'templates/%s.html' % f
+    def get(self, filename):
+        template = 'templates/%s.html' % filename
         if os.path.exists(template):
             self.response.headers['Content-Type'] = 'text/html'
             self.response.out.write(r(template, {}))

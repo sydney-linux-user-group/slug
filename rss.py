@@ -20,7 +20,7 @@ import models
 import datetime
 
 # pylint: disable-msg=C0103
-class rss(webapp.RequestHandler):
+class RSSHandler(webapp.RequestHandler):
     """Handler which outputs an iCal feed."""
 
     def add_event(self, event, rss):

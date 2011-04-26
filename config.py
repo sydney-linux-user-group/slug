@@ -36,7 +36,6 @@ def sys_path_insert(ipath):
 
 def setup_django():
     """Setup the django settings."""
-    import os
     os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
     from google.appengine.dist import use_library
     use_library('django', '1.2')
