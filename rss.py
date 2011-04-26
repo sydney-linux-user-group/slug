@@ -37,7 +37,7 @@ class rss(webapp.RequestHandler):
         item = rss_gen.RSSItem(title=event.name)
         item.title = event.name
         item.link = event_url
-        item.description = event.email
+        item.description = event.html
         item.guid = str(event.key())
         item.pubDate = syd.localize(event.created_on)
 
