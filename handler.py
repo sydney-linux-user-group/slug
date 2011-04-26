@@ -32,6 +32,7 @@ application = webapp.WSGIApplication(
    ('/refresh', index.Refresh),
    ('/map', index.Map),
    ('/ical', ical.iCal),
+   ('/rss', rss.rss),
    ],
   debug=True)
 application = aeoid.middleware.AeoidMiddleware(application)
