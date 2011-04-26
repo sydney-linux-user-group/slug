@@ -13,6 +13,15 @@
        <option value="{{ friday }}">{{friday}}</option>
        {% endfor %}
     </select>
+    <select id=templates>
+       <option value=""></option>
+       {% for name, template in templates %}
+       <option value="{{ name }}">{{ name }}</option>
+       {% endfor %}
+    </select>
+    {% for name, template in templates %}
+       <textarea id={{name}} style="display: none;">{{template|safe}}</textarea>
+    {% endfor %}
   </form>
 
   <form id=event action="/event/{{event.key.id}}/edit" method="post">
@@ -52,6 +61,21 @@ $('#fridays').change(function () {
   }
 });
 
+$('#templates').change(function () {
+  var name = $(this).val();
+  if (name.replace(/\W+/, '') == '') {
+     return;
+  }
+  var template = $('#'+name).val();
+ 
+  var input = $('textarea[name="input"]');
+  console.log(input);
+  if (input.val().replace(/\W+/,'') == '') {
+     input.val(template);
+  } else {
+     alert('Please make the input empty before selecting a template.');
+  }
+});
 </script>
 
 {% endblock %}

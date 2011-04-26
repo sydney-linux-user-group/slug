@@ -64,7 +64,6 @@ python-datetime-tz:
 	svn checkout http://python-datetime-tz.googlecode.com/svn/trunk/ python-datetime-tz
 
 datetime-tz: python-datetime-tz
-	@echo "Getting datetime-tz\n"
 
 datetime-tz-clean:
 	rm -rf python-datetime-tz
@@ -73,16 +72,20 @@ datetime-tz-clean:
 # Markdown parser
 ###############################################################################
 MARKDOWN=Markdown-2.0.3
+MARKDOWN_EXT=$(shell find markdown-extensions -type f -name *.py)
 
 # Download the tar.gz
 $(MARKDOWN).tar.gz:
 	curl -O http://pypi.python.org/packages/source/M/Markdown/$(MARKDOWN).tar.gz
 
 # Extract the tar.gz
-$(MARKDOWN): $(MARKDOWN).tar.gz
-	tar -zxvf $^
+$(MARKDOWN): $(MARKDOWN).tar.gz $(MARKDOWN_EXT)
+	tar -zxvf $(MARKDOWN).tar.gz
 	@# Update modtime on tar.gz to match directory so we don't continually rebuild
 	@touch -m $^ -r $@
+	for f in $(MARKDOWN_EXT); do \
+		cp $$f $(MARKDOWN)/markdown/extensions/; \
+	done
 
 # Human name target
 markdown: $(MARKDOWN)

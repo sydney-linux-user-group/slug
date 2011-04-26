@@ -54,7 +54,9 @@ endif
 lint:
 	@# R0904 - Disable "Too many public methods" warning
 	@# W0221 - Disable "Arguments differ from parent", as get and post will.
-	@python -c "import config; config.lint_setup(); import sys; from pylint import lint; lint.Run(sys.argv[1:])" \
+	@python \
+		-W "ignore:disable-msg is:DeprecationWarning:pylint.lint" \
+		-c "import config; config.lint_setup(); import sys; from pylint import lint; lint.Run(sys.argv[1:])" \
 		--reports=n \
 		--include-ids=y \
 		--no-docstring-rgx "(__.*__)|(get)|(post)|(main)" \
@@ -66,11 +68,12 @@ lint:
 ###############################################################################
 # Third Party Zip file creation
 ###############################################################################
-THIRD_PARTY=python-dateutil-*/dateutil \
+FILES=-type f -name \*.py
+THIRD_PARTY=$(shell cd third_party; find python-dateutil-*/dateutil $(FILES))\
 	python-datetime-tz/datetime_tz.py \
 	python-datetime-tz/pytz_abbr.py \
-	Markdown-*/markdown \
-	vobject/vobject/*.py \
+	$(shell cd third_party; find Markdown-*/markdown $(FILES)) \
+	$(shell cd third_party; find vobject/vobject/ $(FILES)) \
 	PyRSS2Gen-*/PyRSS2Gen.py
 
 THIRD_PARTY_here=$(addprefix third_party/, $(THIRD_PARTY))
@@ -96,5 +99,6 @@ serve: third_party.zip
 
 clean:
 	$(MAKE) -C third_party clean
+	git clean -f -d
 
 .PHONY = lint upload deploy serve clean
