@@ -31,9 +31,9 @@ application = webapp.WSGIApplication(
         events.Events),
    ('/event[/]?(.*)', events.Event),
    ('/refresh', index.Refresh),
-   ('/map', index.Map),
    ('/ical', ical.iCal),
    ('/rss', rss.rss),
+   ('/(.*)', index.StaticTemplate),
    ],
   debug=True)
 application = aeoid.middleware.AeoidMiddleware(application)

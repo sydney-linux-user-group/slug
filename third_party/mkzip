@@ -1,5 +1,0 @@
-#!/bin/bash
-echo
-echo "Creating third_party.zip file" `date`
-echo "---------------------------------------------------"
-zip -r ../third_party.zip python-dateutil-1.5/dateutil python-datetime-tz/datetime_tz.py python-datetime-tz/pytz_abbr.py Markdown-2.0.3/markdown vobject/vobject/*.py PyRSS2Gen-1.0.0/PyRSS2Gen.py
