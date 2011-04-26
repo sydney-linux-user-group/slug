@@ -19,5 +19,10 @@ third_party.zip: init_third_party.sh third_party/mkzip
 
 upload: update
 
+deply: update
+
 update: third_party.zip
 	appcfg.py update .
+
+serve: third_party.zip
+	python2.6 $(which dev_appserver.py) .

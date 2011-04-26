@@ -26,4 +26,4 @@ We need to use python2.6, not python2.7. ``make server`` will start the dev apps
 # Pushing to appengine
 
  - If neccessary, increment version number in app.cfg to make sure you don't trample on the currently-live version of the app
- - run ``make update`` to push to server
+ - run ``make deploy`` to push to server
