@@ -89,25 +89,29 @@ class EditEvent(webapp.RequestHandler):
                 self.redirect('/events')
                 return
         else:
-			#name is a required field; must populate now. Rest comes later.
+            #name is a required field; must populate now. Rest comes later.
             event = models.Event(name=self.request.get('name'),
                                  text='', html='', start=datetime.now(),
                                  end=datetime.now())
 
         inputtext = self.request.get('input')
-        email = str(template.Template(inputtext).render(
-            template.Context({'event': event})))
-        html = markdown.markdown(email, extensions).encode('utf-8')
 
         start_date = datetime_tz.smartparse(self.request.get('start'))
         end_date = datetime_tz.smartparse(self.request.get('end'))
 
         event.input = inputtext
-        event.email = email
-        event.html = html
         event.start = start_date.asdatetime()
         event.end = end_date.asdatetime()
         event.put()
+
+        # We can't do this template subsitution until we have saved the event.
+        email = str(template.Template(inputtext).render(
+            template.Context({'event': event})))
+        html = markdown.markdown(email, extensions).encode('utf-8')
+        event.email = email
+        event.html = html
+        event.put()
+
         if not key:
             key = event.key().id()
 
