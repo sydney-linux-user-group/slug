@@ -55,7 +55,7 @@ class Events(webapp.RequestHandler):
             "ORDER BY end", year, month, day).fetch(5)
 
         next_event = (len(current_events) and current_events[0]
-                      or future_events[0])
+                      or (len(future_events) and future_events[0]))
 
         self.response.headers['Content-Type'] = 'text/html'
         self.response.out.write(r(
