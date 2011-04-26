@@ -25,4 +25,4 @@ update: third_party.zip
 	appcfg.py update .
 
 serve: third_party.zip
-	python2.6 $(which dev_appserver.py) .
+	python2.6 `which dev_appserver.py` .
