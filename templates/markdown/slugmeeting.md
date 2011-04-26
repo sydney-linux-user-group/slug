@@ -1,4 +1,4 @@
-====== {{event.start.month}} {{event.start.year}} SLUG Meeting ======
+====== {{event.start|date:"F"}} {{event.start.year}} SLUG Meeting ======
 
 SLUG meetings run on a last Friday of the month schedule. The date of the
 next meeting is, {{event.start}}.

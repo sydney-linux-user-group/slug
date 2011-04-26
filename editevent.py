@@ -11,6 +11,8 @@ config.setup()
 # Python Imports
 import os
 import os.path
+import traceback
+import cStringIO as StringIO
 from datetime import datetime
 
 # AppEngine Imports
@@ -105,11 +107,17 @@ class EditEvent(webapp.RequestHandler):
         event.put()
 
         # We can't do this template subsitution until we have saved the event.
-        email = str(template.Template(inputtext).render(
-            template.Context({'event': event})))
-        html = markdown.markdown(email, extensions).encode('utf-8')
-        event.email = email
-        event.html = html
+        try:
+            email = str(template.Template(inputtext).render(
+                template.Context({'event': event})))
+            html = markdown.markdown(email, extensions).encode('utf-8')
+            event.email = email
+            event.html = html
+        except Exception, e:
+            sio = StringIO.StringIO()
+            traceback.print_exc(file=sio)
+            event.email = sio.getvalue()
+
         event.put()
 
         if not key:

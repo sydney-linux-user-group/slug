@@ -69,7 +69,6 @@ $('#templates').change(function () {
   var template = $('#'+name).val();
  
   var input = $('textarea[name="input"]');
-  console.log(input);
   if (input.val().replace(/\W+/,'') == '') {
      input.val(template);
   } else {
