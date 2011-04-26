@@ -10,7 +10,7 @@
       <span class=start>{{ event.start }}</span>
       <div class=respond >
         {% if openid_user %}
-        <iframe src="/event/{{ event.key.id }}/response/show" style="height: 300;"/>
+        <iframe src="/event/{{ event.key.id }}/response/show"/>
         {% else %}
         <a href="{{ openid_login_url }}">Login to RSVP!</a>
         {% endif %}
