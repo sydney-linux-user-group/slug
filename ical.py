@@ -37,6 +37,7 @@ class iCal(webapp.RequestHandler):
         cal_event.add('dtstart').value = syd.localize(event.start)
         cal_event.add('dtend').value = syd.localize(event.end)
         cal_event.add('dtstamp').value = syd.localize(event.created_on)
+        cal_event.add('description').value = event.input
         cal_event.add('uid').value = str(event.key())
 
 
