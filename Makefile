@@ -66,11 +66,12 @@ lint:
 ###############################################################################
 # Third Party Zip file creation
 ###############################################################################
-THIRD_PARTY=python-dateutil-*/dateutil \
+FILES=-type f -name \*.py
+THIRD_PARTY=$(shell cd third_party; find python-dateutil-*/dateutil $(FILES))\
 	python-datetime-tz/datetime_tz.py \
 	python-datetime-tz/pytz_abbr.py \
-	Markdown-*/markdown \
-	vobject/vobject/*.py \
+	$(shell cd third_party; find Markdown-*/markdown $(FILES)) \
+	$(shell cd third_party; find vobject/vobject/ $(FILES)) \
 	PyRSS2Gen-*/PyRSS2Gen.py
 
 THIRD_PARTY_here=$(addprefix third_party/, $(THIRD_PARTY))
@@ -96,5 +97,6 @@ serve: third_party.zip
 
 clean:
 	$(MAKE) -C third_party clean
+	git clean -f -d
 
 .PHONY = lint upload deploy serve clean

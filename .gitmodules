@@ -1,3 +1,9 @@
 [submodule "third_party/aeoid"]
 	path = third_party/aeoid
 	url = git://github.com/mithro/aeoid.git
+[submodule "third_party/markdown-extensions/subscript"]
+	path = third_party/markdown-extensions/subscript
+	url = https://github.com/sgraber/markdown.subscript.git
+[submodule "third_party/markdown-extensions/superscript"]
+	path = third_party/markdown-extensions/superscript
+	url = https://github.com/sgraber/markdown.superscript.git

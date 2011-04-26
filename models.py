@@ -24,8 +24,8 @@ class Event(db.Model):
             auto_now_add=True, required=True)
 
     name = db.StringProperty(required=True)
-    input = db.StringProperty(multiline=True)
-    email = db.StringProperty(multiline=True)
+    input = db.TextProperty()
+    email = db.TextProperty()
     html = db.BlobProperty()
 
     start = db.DateTimeProperty(required=True)
