@@ -32,7 +32,7 @@ class SlugHeaderExtension(markdown.Extension):
 
     def extendMarkdown(self, md, md_globals):
         """ Replace subscript with SlugHeaderPattern """
-        md.inlinePatterns['subscript'] = SlugHeaderPattern(SH_RE, md)
+        md.inlinePatterns['slugheader'] = SlugHeaderPattern(SH_RE, md)
 
 def makeExtension(configs=None):
     return SlugHeaderExtension(configs=configs)

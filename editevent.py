@@ -31,7 +31,7 @@ from utils.render import render as r
 
 # We don't want to wrap this line as we use a grep to extract the details
 # pylint: disable-msg=C0301
-extensions = ['abbr', 'footnotes', 'def_list', 'fenced_code', 'tables', 'subscript', 'superscript', 'slugheader']
+extensions = ['abbr', 'footnotes', 'def_list', 'fenced_code', 'tables', 'subscript', 'superscript', 'slugheader', 'anyurl']
 
 
 def lastfridays():
