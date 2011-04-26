@@ -66,12 +66,12 @@ lint:
 ###############################################################################
 # Third Party Zip file creation
 ###############################################################################
-THIRD_PARTY=python-dateutil-1.5/dateutil \
+THIRD_PARTY=python-dateutil-*/dateutil \
 	python-datetime-tz/datetime_tz.py \
 	python-datetime-tz/pytz_abbr.py \
-	Markdown-2.0.3/markdown \
+	Markdown-*/markdown \
 	vobject/vobject/*.py \
-	PyRSS2Gen-1.0.0/PyRSS2Gen.py
+	PyRSS2Gen-*/PyRSS2Gen.py
 
 THIRD_PARTY_here=$(addprefix third_party/, $(THIRD_PARTY))
 
