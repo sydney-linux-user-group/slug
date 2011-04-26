@@ -19,7 +19,7 @@ third_party.zip: init_third_party.sh third_party/mkzip
 
 upload: update
 
-deply: update
+deploy: update
 
 update: third_party.zip
 	appcfg.py update .
