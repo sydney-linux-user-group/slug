@@ -6,7 +6,7 @@
 """Module which setups our configuration environment.
 
 **
-Everything code should import this module and run the setup function before
+Everything should import this module and run the setup function before
 doing anything else, *including imports*!
 **
 """
@@ -16,6 +16,7 @@ import sys
 
 paths = [
     'third_party/aeoid',
+    'third_party/gaepytz-2011c',
     'third_party.zip/python-dateutil-1.5',
     'third_party.zip/python-datetime-tz',
     'third_party.zip/icalendar-2.1/src',
