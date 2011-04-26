@@ -40,10 +40,10 @@ PYLINT=$(shell which pylint)
 ifeq ($(strip $(PYLINT)),)
 $(error "Please install pylint\nOn Ubuntu/Debian run:\n    sudo apt-get install pylint\n")
 endif
-PYLINT_VERSION=$(shell pylint --version | head -1 | sed -e's/pylint //' -e's/,//')
+PYLINT_VERSION=$(shell pylint --version 2>/dev/null | head -1 | sed -e's/pylint //' -e's/,//')
 
 # Newer versions of pylint uses --disable rather then --disable-msg
-PYLINT_NEW=$(shell python -c "from pylint import lint; import sys; print cmp(tuple(int(x) for x in lint.version.split('.')), (0,20,0))")
+PYLINT_NEW=$(shell python -c "from pylint import lint; import sys; print cmp(tuple(int(x) for x in lint.version.split('.')), (0,20,0))" 2>/dev/null)
 
 ifeq "${PYLINT_NEW}" "1"
 PYLINT_DISABLE="--disable"
@@ -68,23 +68,36 @@ lint:
 ###############################################################################
 # Third Party Zip file creation
 ###############################################################################
-FILES=-type f -name \*.py
-THIRD_PARTY=$(shell cd third_party; find python-dateutil-*/dateutil $(FILES))\
-	python-datetime-tz/datetime_tz.py \
-	python-datetime-tz/pytz_abbr.py \
-	$(shell cd third_party; find Markdown-*/markdown $(FILES)) \
-	$(shell cd third_party; find vobject/vobject/ $(FILES)) \
-	PyRSS2Gen-*/PyRSS2Gen.py
+FINDARGS=-type f -name \*.py -printf "	%p \\\\\\n"
+TP=cd third_party;
+TPT=third_party.zip.d.tmp
 
-THIRD_PARTY_here=$(addprefix third_party/, $(THIRD_PARTY))
+third_party:
+	make -C third_party
 
-$(THIRD_PARTY_here):
-	$(MAKE) -C third_party
+third_party.zip.d: third_party
+	@echo "Generating a third_party.zip dependency file."
+	@echo "THIRD_PARTY_files=\\" >> $(TPT)
+	@$(TP) find python-dateutil-*/dateutil $(FINDARGS) >> ../$(TPT)
+	@$(TP) find python-datetime-tz/datetime_tz.py $(FINDARGS) >> ../$(TPT)
+	@$(TP) find python-datetime-tz/pytz_abbr.py $(FINDARGS) >> ../$(TPT)
+	@$(TP) find Markdown-*/markdown $(FINDARGS) >> ../$(TPT)
+	@$(TP) find vobject/vobject/ $(FINDARGS) >> ../$(TPT)
+	@$(TP) find PyRSS2Gen-*/PyRSS2Gen.py $(FINDARGS) >> ../$(TPT)
+	@echo '' >> $(TPT)
+	@echo 'THIRD_PARTY_here=$$(addprefix third_party/,$$(THIRD_PARTY_files)) ' >> $(TPT)
+	@echo '' >> $(TPT)
+	@echo 'third_party.zip: third_party.zip.d $$(THIRD_PARTY_here)' >> $(TPT)
+	@echo '	cd third_party; zip -r ../third_party.zip $$(THIRD_PARTY_files)' >> $(TPT)
+	@if [ `md5sum $@ | sed -e's/ .*//'` != `md5sum $(TPT) | sed -e's/ .*//'` ]; then \
+		echo "third_party.zip.d has changed!"; \
+		mv $(TPT) $@; \
+	else \
+		rm $(TPT); \
+	fi
 
-third_party.zip: $(THIRD_PARTY_here)
-	cd third_party; \
-	zip -r ../third_party.zip \
-		$(THIRD_PARTY)
+
+include third_party.zip.d
 
 ###############################################################################
 ###############################################################################
@@ -101,4 +114,4 @@ clean:
 	$(MAKE) -C third_party clean
 	git clean -f -d
 
-.PHONY = lint upload deploy serve clean
+.PHONY : lint third_party upload deploy serve clean

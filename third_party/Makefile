@@ -1,6 +1,6 @@
 #!/bin/bash
 
-TARGETS=dateutil pytz datetime-tz markdown pyrss vobject
+TARGETS=dateutil pytz datetime-tz markdown pyrss python-vobject
 TARGETS_CLEAN=$(addsuffix -clean,$(TARGETS))
 
 all: git $(TARGETS)
@@ -124,5 +124,7 @@ vobject:
 vobject-clean:
 	rm -rf vobject
 
+python-vobject: vobject
+
 ###############################################################################
-.PHONY=all clean git $(TARGETS) $(TARGETS_CLEAN)
+.PHONY : all clean git $(TARGETS) $(TARGETS_CLEAN)
