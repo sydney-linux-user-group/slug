@@ -17,7 +17,7 @@ import PyRSS2Gen as rss_gen
 
 # Our App imports
 import models
-
+import datetime
 
 # pylint: disable-msg=C0103
 class rss(webapp.RequestHandler):
@@ -32,29 +32,28 @@ class rss(webapp.RequestHandler):
         """
         syd = pytz.timezone('Australia/Sydney')
 
-        event_url = "http://signup.slug.org.au/event/" + event.id
+        event_url = "http://signup.slug.org.au/event/%s" % event.key().id()
 
-        item = rss_gen.RSSItem()
+        item = rss_gen.RSSItem(title=event.name)
         item.title = event.name
         item.link = event_url
         item.description = event.email
-		guid = event.key()
-        pubDate = syd.localize(event.created_on)
+        item.guid = str(event.key())
+        item.pubDate = syd.localize(event.created_on)
 
-        rss.items.extend(item)
+        rss.items.append(item)
 
 
     def get(self):
-        rss = rss_gen.RSS2()
+        rss = rss_gen.RSS2(title="Slug Meetings",
+                link="http://signup.slug.org.au",
+                description="SLUG's Meetings")
 
-		rss.title = "SLUG Meetings"
-        rss.link = "http://signup.slug.org.au"
-        rss.description = "Details of SLUG's Meetings"
         rss.lastBuildDate = datetime.datetime.utcnow()
         rss.items = []
 
         # FIXME: Should this show *all* events of all time?
-		events = models.Event.all()
+        events = models.Event.all().order("created_on")
 
         for event in events:
             self.add_event(event, rss)

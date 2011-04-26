@@ -20,6 +20,7 @@ import index
 import response
 import events
 import ical
+import rss
 
 application = webapp.WSGIApplication(
   [('/', index.Index),
