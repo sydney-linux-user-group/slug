@@ -1,11 +1,11 @@
 #leftbar {
   width: 300px;
 
-  float: left;
   margin-top: 5px;
   margin-left: 5px;
   padding-bottom: 10px;
   margin-right: -315px;
+  display: table-cell;
 }
 
 #leftbar .box {
@@ -15,7 +15,7 @@
 
 #leftbar ul {
   padding: 0;
-  maring: 0;
+  margin: 0;
 }
 
 #leftbar h2 {
@@ -50,15 +50,18 @@
 }
 
 #footer {
+  position: fixed;
+  bottom: 15;
   width: 100%;
-
   border-spacing: 20px;
+  display: table-row;
 }
 
 #footer .box {
   color: white;
   width: 30%;
   padding: 20px;
+  display: table-cell;
 }
 
 #footer h2 {

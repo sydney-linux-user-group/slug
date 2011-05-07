@@ -70,13 +70,13 @@ $('#login').click(login);
     {% endblock %}
 
 <div id=wrapper>
+  {% block leftbar %}{% endblock %}
   <div id=more-wrapper>
     <div id=body>
     {% block body %}{% endblock %}
     </div><!-- body -->
-  </div><!-- more-wrapper -->
-   {% block leftbar %}{% endblock %}
    {% block footer %}{% endblock %}
+  </div><!-- more-wrapper -->
 </div><!-- wrapper -->
 
 
