@@ -46,7 +46,6 @@
 }
 
 #body {
-  margin-left: 310px;
 }
 
 #footer {
@@ -87,4 +86,8 @@
 }
 #footer #speak {
   background: #2b78e4;
+}
+
+#twitter {
+  display: table-cell
 }
