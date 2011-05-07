@@ -23,9 +23,9 @@ vim: set ts=2 sw=2 et sts=2 ai:
           <td>{{ event.start }}</td>
           <td>{{ event.end }}</td>
           <td><a href="{{ event.get_url }}">{{ event.name }}</a></td>
-          <td><div style="height: 250px; overflow: scroll;">{{ event.html|safe }}</div></td>
+          <td><div class=event-html>{{ event.html|safe }}</div></td>
           {% if openid_user %}
-            <td><iframe src="{{ event.get_url }}/response/show"/></iframe></td>
+            <td><iframe class=response src="{{ event.get_url }}/response/show"/></iframe></td>
           {% else %}
             <td><a href="{{ openid_login_url }}">Login to RSVP!</a></td>
           {% endif %}
@@ -62,9 +62,9 @@ vim: set ts=2 sw=2 et sts=2 ai:
             <td>{{ event.start }}</td>
             <td>{{ event.end }}</td>
             <td><a href="{{ event.get_url }}">{{ event.name }}</a></td>
-            <td><div style="height: 250px; overflow: scroll;">{{ event.html|safe }}</div></td>
+            <td><div class=event-html>{{ event.html|safe }}</div></td>
             {% if openid_user %}
-              <td><iframe src="{{ event.get_url }}/response/show"></iframe></td>
+              <td><iframe class=response src="{{ event.get_url }}/response/show"></iframe></td>
             {% else %}
               <td><a href="{{ openid_login_url }}">Login to RSVP!</a></td>
             {% endif %}

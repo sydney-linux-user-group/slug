@@ -54,8 +54,11 @@ $(document).ready(function(){
       <h2>Events Today</h2>
       <ul>
         {% for event in current_events %}
-        <li>
-        <h3><a href="{{ event.get_url }}">{{ event.name }}</a></h3>
+        <li class=eventitem>
+        <h3><a class=eventname href="{{ event.get_url }}">{{ event.name }}</a></h3>
+          {% if appengine_admin %}
+            <div class=editlink><a href="{{ event.get_url }}/edit">Edit</a></div>
+          {% endif %}
           <span class=start>{{ event.start }}</span>
           <div class=event-icons>
             <div class="ical-link"><a href="{{ event.get_url }}.ics" title="Add this event to your iCalendar"><img src="/images/ical16x16.gif" alt="Add event to iCalendar"></a></div>
@@ -78,8 +81,11 @@ $(document).ready(function(){
       <h2>Future Events</h2>
       <ul>
         {% for event in future_events %}
-        <li>
-        <h3><a href="{{ event.get_url }}">{{ event.name }}</a></h3>
+        <li class=eventitem>
+        <h3><a class=eventname href="{{ event.get_url }}">{{ event.name }}</a></h3>
+          {% if appengine_admin %}
+            <div class=editlink><a href="{{ event.get_url }}/edit">Edit</a></div>
+          {% endif %}
           <span class=start>{{ event.start }}</span>
           <div class=event-icons>
             <div class="ical-link"><a href="{{ event.get_url }}.ics" title="Add this event to your iCalendar"><img src="/images/ical16x16.gif" alt="Add event to iCalendar"></a></div>

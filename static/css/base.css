@@ -109,5 +109,22 @@ img, div, a, input {
 }
 
 .event-icons {
-  float: right;
+  display: table-cell;
+}
+
+#eventright {
+  display: table
+  padding: 5px;
+}
+
+#eventright .start {
+  display: table-row;
+}
+
+#eventright .respond {
+  display: table-row;
+}
+
+#eventright .editlink {
+  display: table-row;
 }

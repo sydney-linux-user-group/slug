@@ -98,3 +98,24 @@
 #twitter {
   display: table-cell
 }
+
+.eventitem {
+  display: table
+}
+
+.eventitem .start {
+  display: table-row;
+}
+.eventitem .editlink {
+  display: table-cell;
+  float: right;
+}
+
+.eventitem .eventname {
+  display: table-cell;
+}
+
+.eventitem .event-icons {
+  display: table-cell;
+  float: right;
+}

@@ -14,3 +14,12 @@
   cursor: pointer;
 }
 
+.event-html {
+  height: 250px;
+  overflow: scroll
+}
+
+.response {
+  height: 250px;
+  overflow: scroll;
+}

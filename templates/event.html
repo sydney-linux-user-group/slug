@@ -10,11 +10,14 @@ vim: set ts=2 sw=2 et sts=2 ai:
     <div id=content class=box style="float: left;">
       <div class='eventBody'> {{ event.html|safe }} </div>
     </div>
-    <div class='box'>
+    <div id=eventright class='box'>
       <span class=start>{{ event.start }}</span>
+        {% if appengine_admin %}
+        <div class=editlink</div><a href="{{ event.get_url }}/edit">Edit</a></div>
+        {% endif %}
       <div class=respond >
         {% if openid_user %}
-        <iframe src="/event/{{ event.key.id }}/response/show"/>
+        <iframe src="{{ event.get_url }}/response/show"/>
         {% else %}
         <a href="{{ openid_login_url }}">Login to RSVP!</a>
         {% endif %}
