@@ -14,18 +14,17 @@ doing anything else, *including imports*!
 import sys
 import os
 
+def getpaths():
+    """Get the extra third_party paths we need."""
+    paths = set()
+    for line in file('third_party.paths', 'r'):
+        if line.startswith('#'):
+            continue
+        paths.add(line.strip().split(' ', 1)[0])
 
-paths = [
-    'third_party/aeoid',
-    'third_party/gaepytz-2011c',
-    'third_party.zip/python-dateutil-1.5',
-    'third_party.zip/python-datetime-tz',
-    'third_party.zip/icalendar-2.1/src',
-    'third_party.zip/vobject',
-    'third_party.zip/Markdown-2.0.3',
-    'third_party.zip/PyRSS2Gen-1.0.0',
-    'third_party.zip'
-]
+    paths = list(paths)
+    paths.sort()
+    return paths
 
 
 def sys_path_insert(ipath):
@@ -45,7 +44,7 @@ def setup():
     """Setup our configuration environment."""
 
     # Add our extra modules to sys.path
-    for ipath in paths:
+    for ipath in getpaths():
         sys_path_insert(ipath)
 
     setup_django()
@@ -60,8 +59,11 @@ def lint_setup():
     print "APPENGINE_SDK at ", os.environ["APPENGINE_SDK"]
     sys_path_insert(os.environ["APPENGINE_SDK"])
 
-    for ipath in paths[:-1]:
+    for ipath in getpaths():
         sys_path_insert(ipath.replace('.zip', ''))
 
     setup_django()
 
+if __name__ == "__main__":
+    for path in getpaths():
+        print path
