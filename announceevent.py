@@ -16,7 +16,8 @@ import cStringIO as StringIO
 from datetime import datetime
 
 # AppEngine Imports
-from google.appengine.ext import mail
+from google.appengine.api import mail
+from google.appengine.api import users
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 
@@ -68,7 +69,7 @@ class AnnounceEvent(webapp.RequestHandler):
 
 
 application = webapp.WSGIApplication(
-     ('/event/(.*)/announce', AnnounceEvent)],
+     [('/event/(.*)/announce', AnnounceEvent)],
     debug=True)
 application = aeoid.middleware.AeoidMiddleware(application)
 

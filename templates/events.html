@@ -33,7 +33,14 @@ vim: set ts=2 sw=2 et sts=2 ai:
             <div class=event-icons> <div class="ical-link"><a href="{{ event.get_url }}.ics" title="Add this event to your iCalendar"><img src="/images/ical16x16.gif" alt="Add event to iCalendar"></a></div> </div>
           </td>
           {% if appengine_admin %}
-            <td><a href="{{ event.get_url }}/edit">Edit</a></td>
+            <td>
+              <a href="{{ event.get_url }}/edit">Edit</a>
+              <div id=announceform>
+                <form name="announce" action="{{ event.get_url }}/announce" method="post">
+                  <input type="submit" value="Send announcement email">
+                </form>
+              </div>
+            </td>
           {% endif %}
         </tr>
       {% endfor %}
@@ -65,7 +72,14 @@ vim: set ts=2 sw=2 et sts=2 ai:
               <div class=event-icons> <div class="ical-link"><a href="{{ event.get_url }}.ics" title="Add this event to your iCalendar"><img src="/images/ical16x16.gif" alt="Add event to iCalendar"></a></div> </div>
             </td>
             {% if appengine_admin %}
-              <td><a href="{{ event.get_url }}/edit">Edit</a></td>
+              <td>
+                <a href="{{ event.get_url }}/edit">Edit</a>
+                <div id=announceform>
+                  <form name="announce" action="{{ event.get_url }}/announce" method="post">
+                    <input type="submit" value="Send announcement email">
+                  </form>
+                </div>
+              </td>
             {% endif %}
           </tr>
         {% endfor %}
