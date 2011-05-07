@@ -38,7 +38,7 @@ endif
 ###############################################################################
 
 ifndef MD5SUM
-ifeq "$(shell md5sum 2>1 > /dev/null && echo -n 'Found')" "Found"
+ifeq "$(shell md5sum >& /dev/null && echo -n 'Found')" "Found"
 MD5SUM=md5sum
 else
 #Maybe we're on a mac
@@ -102,7 +102,7 @@ third_party.zip.d: third_party
 	@$(TP) find python-datetime-tz/datetime_tz.py $(FINDARGS) >> ../$(TPT)
 	@$(TP) find python-datetime-tz/pytz_abbr.py $(FINDARGS) >> ../$(TPT)
 	@$(TP) find Markdown-*/markdown $(FINDARGS) >> ../$(TPT)
-	@$(TP) find vobject/vobject/ $(FINDARGS) >> ../$(TPT)
+	@$(TP) find vobject/vobject $(FINDARGS) >> ../$(TPT)
 	@$(TP) find PyRSS2Gen-*/PyRSS2Gen.py $(FINDARGS) >> ../$(TPT)
 	@echo '' >> $(TPT)
 	@echo 'THIRD_PARTY_here=$$(addprefix third_party/,$$(THIRD_PARTY_files)) ' >> $(TPT)
@@ -129,7 +129,7 @@ update: third_party.zip
 	${APPENGINE_SDK}/appcfg.py update .
 
 serve: third_party.zip
-	python2.6 ${APPENGINE_SDK}/dev_appserver.py .
+	python2.6 ${APPENGINE_SDK}/dev_appserver.py -d .
 
 clean:
 	$(MAKE) -C third_party clean
