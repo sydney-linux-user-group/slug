@@ -19,6 +19,8 @@ import PyRSS2Gen as rss_gen
 import models
 import datetime
 
+from utils import events_helper as e
+
 # pylint: disable-msg=C0103
 class RSSHandler(webapp.RequestHandler):
     """Handler which outputs an RSS feed."""
@@ -52,10 +54,12 @@ class RSSHandler(webapp.RequestHandler):
         rss.lastBuildDate = datetime.datetime.utcnow()
         rss.items = []
 
-        # FIXME: Should this show *all* events of all time?
-        events = models.Event.all().order("created_on")
+        future_events = e.get_future_events()
+        current_events = e.get_current_events()
 
-        for event in events:
+        for event in future_events:
+            self.add_event(event, rss)
+        for event in current_events:
             self.add_event(event, rss)
 
         self.response.out.write(rss.to_xml())

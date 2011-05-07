@@ -18,6 +18,7 @@ import vobject
 # Our App imports
 import models
 
+from utils import events_helper as e
 
 # pylint: disable-msg=C0103
 class iCal(webapp.RequestHandler):
@@ -48,13 +49,16 @@ class iCal(webapp.RequestHandler):
         cal = vobject.iCalendar()
 
         if key:
-          event = models.Event.get_by_id(int(key))
-          self.add_event(event, cal)
+            event = models.Event.get_by_id(int(key))
+            self.add_event(event, cal)
         else:
-          # FIXME: Should this show *all* events of all time?
-          events = models.Event.all()
-          for event in events:
-              self.add_event(event, cal)
+            future_events = e.get_future_events()
+            current_events = e.get_current_events()
+
+            for event in current_events:
+                self.add_event(event, cal)
+            for event in future_events:
+                self.add_event(event, cal)
 
         self.response.headers['Content-Type'] = 'text/x-vCalendar'
         self.response.out.write(cal.serialize())
