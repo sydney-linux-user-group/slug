@@ -22,17 +22,22 @@ with a adiverse membership of users, developers, sysadminas and advocates.
 etc.
       </div><!-- content -->
       <div id=twitter class=box>
-        <div id=tweet></div>
+        <div class=tweet></div>
       </div><!-- twitter -->
 <script>
 $(document).ready(function(){
-  $("#tweet").tweet({
+  $(".tweet").tweet({
     join_text: "auto",
     query: "#sydlug",
     avatar_size: 32,
     count: 5,
     loading_text: "loading tweets...",
-    refresh_interval: 10
+    refresh_interval: 10,
+    auto_join_text_default: "",
+    auto_join_text_ed: "",
+    auto_join_text_ing: "",
+    auto_join_text_reply: "",
+    auto_join_text_url: ""
   }).bind("empty", function() {
     $(this).empty();
     $(this).append("No matching tweets found");
