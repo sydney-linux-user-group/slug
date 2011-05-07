@@ -50,7 +50,7 @@ $(document).ready(function(){
       <ul>
         {% for event in current_events %}
         <li>
-          <h3>{{ event.name }}</h3>
+        <h3><a href="{{ event.get_url }}">{{ event.name }}</a></h3>
           <span class=start>{{ event.start }}</span>
           <div class=respond>
             {% if openid_user %}
@@ -70,7 +70,7 @@ $(document).ready(function(){
       <ul>
         {% for event in future_events %}
         <li>
-          <h3>{{ event.name }}</h3>
+        <h3><a href="{{ event.get_url }}">{{ event.name }}</a></h3>
           <span class=start>{{ event.start }}</span>
           <div class=respond>
             {% if openid_user %}
