@@ -17,6 +17,11 @@ from aeoid import users as openid
 
 
 class Event(db.Model):
+
+    def get_url(self):
+        """Return the canonical url for an event."""
+        return "/event/%s" % self.key().id()
+
     """An event."""
     created_by = appengine.UserProperty(
             auto_current_user_add=True, required=True)
