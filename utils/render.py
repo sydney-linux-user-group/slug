@@ -17,7 +17,7 @@ def render(t, kw):
       'appengine_logout_url': appengine_users.create_logout_url('/'),
       }
 
-  # Check people havn't accidently log
+  # Don't let people trample on these variables
   common = set(extra.keys()).intersection(kw.keys())
   if common:
     raise SystemError('The following keys are reserved %s' % common)
