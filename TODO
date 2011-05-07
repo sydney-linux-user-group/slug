@@ -1,6 +1,4 @@
 Polleyj:
-- RSS icon for all events - somewhere prominent + metadata
-- Move future/current/next events code into model
 - Send announcement email to announce list
   - For now, just stick a button on /events for admins
   - Later, we want automation.
