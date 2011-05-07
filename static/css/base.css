@@ -70,6 +70,10 @@ img, div, a, input {
   float: left;
 }
 
+#heading:hover {
+  cursor: pointer;
+}
+
 #navbar {
   float: right;
 }

@@ -17,6 +17,11 @@ import models
 from utils.render import render as r
 from utils import events_helper as e
 
+class Next(webapp.RequestHandler):
+    """Figure out the next event, then redirect to it."""
+    def get(self):
+        self.redirect(e.get_next_event().get_url())
+
 class Event(webapp.RequestHandler):
     """Handler for display a single event."""
 

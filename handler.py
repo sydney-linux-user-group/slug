@@ -24,6 +24,7 @@ import rss
 
 application = webapp.WSGIApplication(
   [('/', index.Index),
+    ('/event/next', events.Next),
    ('/event/(.*)/response/show',    response.ShowResponsePage),
    ('/event/(.*)/response/friends', response.FriendsResponsePage),
    ('/event/(.*)/response/update',  response.UpdateResponsePage),

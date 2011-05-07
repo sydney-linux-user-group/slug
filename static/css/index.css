@@ -91,6 +91,10 @@
   opacity: 0.9;
 }
 
+#attend:hover {
+  cursor: pointer;
+}
+
 #twitter {
   display: table-cell
 }

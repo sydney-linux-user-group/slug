@@ -2,6 +2,15 @@
   background-color: grey
 }
 
+.evenrow:hover {
+  cursor: pointer;
+}
+
 .oddrow {
   background-color: white
 }
+
+.oddrow:hover {
+  cursor: pointer;
+}
+
