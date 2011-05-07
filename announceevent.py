@@ -65,7 +65,7 @@ class AnnounceEvent(webapp.RequestHandler):
 
         message.send()
 
-        self.redirect('%s/edit' % event.get_url())
+        self.redirect('/events')
 
 
 application = webapp.WSGIApplication(
