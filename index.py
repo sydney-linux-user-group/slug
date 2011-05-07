@@ -18,6 +18,7 @@ from utils.render import render as r
 
 class Index(events.Events):
     """Handler for index page."""
+
     template = "templates/index.html"
 
 

@@ -11,8 +11,8 @@ config.setup()
 from google.appengine.ext import db
 from google.appengine.ext import webapp
 
-import models
 import datetime
+import models
 
 from utils.render import render as r
 
