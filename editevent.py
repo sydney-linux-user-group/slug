@@ -43,7 +43,7 @@ def lastfridays():
          dtstart=datetime.now()))
 
 
-def templates():
+def get_templates():
     """Get all the markdown templates."""
     ret = []
 
@@ -75,9 +75,11 @@ class EditEvent(webapp.RequestHandler):
             event = None
 
         fridays = lastfridays()
+        templates = get_templates()
 
         self.response.out.write(r(
-            'templates/editevent.html', locals()))
+            'templates/editevent.html', locals()
+            ))
 
     def post(self, key=None):
         if key:
@@ -90,7 +92,7 @@ class EditEvent(webapp.RequestHandler):
                 return
         else:
             #name is a required field; must populate now. Rest comes later.
-            event = models.Event(name=
+            event = models.Event(name=self.request.get('name'),
                                  text='', html='', start=datetime.now(),
                                  end=datetime.now())
 
@@ -107,7 +109,7 @@ class EditEvent(webapp.RequestHandler):
         # We can't do this template subsitution until we have saved the event.
         try:
             plaintext = str(template.Template(inputtext).render(
-                template.Context({'event': event})))
+                            template.Context({'event': event, 'req': self.request}), ))
             html = markdown.markdown(plaintext, extensions).encode('utf-8')
             event.plaintext = plaintext
             event.html = html
