@@ -24,14 +24,16 @@ import rss
 
 application = webapp.WSGIApplication(
   [('/', index.Index),
+    ('/event/next', events.Next),
    ('/event/(.*)/response/show',    response.ShowResponsePage),
    ('/event/(.*)/response/friends', response.FriendsResponsePage),
    ('/event/(.*)/response/update',  response.UpdateResponsePage),
    ('/events[/]?(?P<year>[^/]*)[/]?(?P<month>[^/]*)[/]?(?P<day>[^/]*)[/]?',
         events.Events),
+   ('/ical[/]?(?P<key>[^\.]*)(?:.ics)?', ical.iCal),
+   ('/event[/]?(?P<key>[^\.]*)(?:.ics)', ical.iCal),
    ('/event[/]?(.*)', events.Event),
    ('/refresh', index.Refresh),
-   ('/ical', ical.iCal),
    ('/rss', rss.RSSHandler),
    ('/(.*)', index.StaticTemplate),
    ],

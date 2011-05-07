@@ -2,9 +2,9 @@
 
 To get the code and dependencies::
 
-  git clone git@github.com:mithro/slug.git
+  git clone git://github.com/sydney-linux-user-group/slug.git
   cd slug
-  ./init_third_party.sh
+  make third_party
 
 # Installing django 1.2.5
 
@@ -14,14 +14,13 @@ You don't gots to do nothing.
 
 # Running appserver on a mac
 
-We need to use python2.6, not python2.7. ``make server`` will start the dev appserver using python2.6 for you.
+We need to use python2.6, not python2.7. ``make serve`` will start the dev appserver using python2.6 for you.
 
 # Adding third-party libraries
 
- - Edit the init-third-party script to download and unpack your library
- - edit third-party/mkzip to include the neccessary portions of the unpacked library in the zip
- - edit config.py to include the library in the sys.path
- - run ``make 3p`` to update ``third_party.zip`` using your updated scripts
+- First, edit ``third_party/Makefile`` to tell Make how to download the dependency (and how to tell if it's already downloaded). We have existing examples that fetch tarfiles and svn checkouts.
+- Then, edit ``third_party.paths`` to list the directorys/files to add to sys.path/the third_party.zip file.
+- Finally, a "make third_party" should rebuild the zipfile for you. You don't need to do this manually - "make serve" or "make deploy" will rebuild this if needed.
 
 # Pushing to appengine
 

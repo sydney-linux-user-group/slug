@@ -67,8 +67,11 @@ img, div, a, input {
 
 #heading {
   font-size: 40pt;
-
   float: left;
+}
+
+#heading:hover {
+  cursor: pointer;
 }
 
 #navbar {
@@ -81,27 +84,47 @@ img, div, a, input {
 }
 
 #wrapper {
-  float: left;
-  width: 100%;
   padding-top: 20px;
   padding-bottom: 20px;
+  display: table;
+  width: 100%;
 }
 
 #more-wrapper {
-  width: 100%;
-  float: right;
+  display: table-cell;
 }
 
 #body h1 {
   width: 100%;
-  text-align: right;
   margin: 0;
   padding-right: 0.5em;
 }
 
 #content {
-  clear: both;
+  display: table-cell;
   background-color: #e69138;
   padding: 5px;
   text-align: left;
+  opacity: .9;
+}
+
+.event-icons {
+  display: table-cell;
+}
+
+#eventright {
+  display: table
+  padding: 5px;
+}
+
+#eventright .start {
+  display: table-row;
+}
+
+#eventright .respond {
+  display: table-row;
+}
+
+#eventright .editlink {
+  display: table-row;
 }

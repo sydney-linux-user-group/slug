@@ -19,9 +19,11 @@ import PyRSS2Gen as rss_gen
 import models
 import datetime
 
+from utils import events_helper as e
+
 # pylint: disable-msg=C0103
 class RSSHandler(webapp.RequestHandler):
-    """Handler which outputs an iCal feed."""
+    """Handler which outputs an RSS feed."""
 
     def add_event(self, event, rss):
         """Takes a models.Event, adds it to the calendar.
@@ -32,7 +34,7 @@ class RSSHandler(webapp.RequestHandler):
         """
         syd = pytz.timezone('Australia/Sydney')
 
-        event_url = "http://signup.slug.org.au/event/%s" % event.key().id()
+        event_url = "%s%s" % ( self.request.host_url, event.get_url() )
 
         item = rss_gen.RSSItem(title=event.name)
         item.title = event.name
@@ -46,16 +48,18 @@ class RSSHandler(webapp.RequestHandler):
 
     def get(self):
         rss = rss_gen.RSS2(title="Slug Meetings",
-                link="http://signup.slug.org.au",
+                link=self.request.host_url,
                 description="SLUG's Meetings")
 
         rss.lastBuildDate = datetime.datetime.utcnow()
         rss.items = []
 
-        # FIXME: Should this show *all* events of all time?
-        events = models.Event.all().order("created_on")
+        future_events = e.get_future_events()
+        current_events = e.get_current_events()
 
-        for event in events:
+        for event in future_events:
+            self.add_event(event, rss)
+        for event in current_events:
             self.add_event(event, rss)
 
         self.response.out.write(rss.to_xml())

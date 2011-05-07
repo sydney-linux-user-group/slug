@@ -52,16 +52,23 @@ etc.
       <h2>Events Today</h2>
       <ul>
         {% for event in current_events %}
-        <li>
-        <h3><a href="{{ event.get_url }}">{{ event.name }}</a></h3>
+        <li class=eventitem>
+        <h3><a class=eventname href="{{ event.get_url }}">{{ event.name }}</a></h3>
+          {% if appengine_admin %}
+            <div class=editlink><a href="{{ event.get_url }}/edit">Edit</a></div>
+          {% endif %}
           <span class=start>{{ event.start }}</span>
+          <div class=event-icons>
+            <div class="ical-link"><a href="{{ event.get_url }}.ics" title="Add this event to your iCalendar"><img src="/images/ical16x16.gif" alt="Add event to iCalendar"></a></div>
+          </div>
           <div class=respond>
             {% if openid_user %}
-            <iframe src="/event/{{ event.key.id }}/response/show"></iframe>
+            <iframe src="{{ event.get_url }}/response/show"></iframe>
             {% else %}
             <a href="{{ openid_login_url }}">Login to RSVP!</a>
             {% endif %}
           </div>
+
         </li>
         {% endfor %}
       </ul>
@@ -72,12 +79,18 @@ etc.
       <h2>Future Events</h2>
       <ul>
         {% for event in future_events %}
-        <li>
-        <h3><a href="{{ event.get_url }}">{{ event.name }}</a></h3>
+        <li class=eventitem>
+        <h3><a class=eventname href="{{ event.get_url }}">{{ event.name }}</a></h3>
+          {% if appengine_admin %}
+            <div class=editlink><a href="{{ event.get_url }}/edit">Edit</a></div>
+          {% endif %}
           <span class=start>{{ event.start }}</span>
+          <div class=event-icons>
+            <div class="ical-link"><a href="{{ event.get_url }}.ics" title="Add this event to your iCalendar"><img src="/images/ical16x16.gif" alt="Add event to iCalendar"></a></div>
+          </div>
           <div class=respond>
             {% if openid_user %}
-            <iframe src="/event/{{ event.key.id }}/response/show"></iframe>
+            <iframe src="{{ event.get_url }}/response/show"></iframe>
             {% else %}
             <a href="{{ openid_login_url }}">Login to RSVP!</a>
             {% endif %}
@@ -90,34 +103,20 @@ etc.
 {% endblock %}
 
 {% block footer %}
-<table id=footer>
-  <tr>
-    <td id=attend class=box>
-      <h2>
-        Attend
-      </h2>
-      <span class=minor>
-        Meeting last Friday of every month.
-      </span>
-    </td>
-    <td id=sponsor class=box>
-      <h2>
-        Sponsor
-      </h2>
-      <span class=minor>
-        An event or SLUG as a whole
-      </span>
-    </td>
-    <td id=speak class=box>
-      <h2>
-        Give a talk
-      </h2>
-      <span class=minor>
-        Educate your fellows
-      </span>
-    </td>
-  </tr>
-</table>
+<div id=footer>
+  <div id=attend class=box onclick="location.href='/event/next'">
+    <h2> Attend </h2>
+    <span class=minor>the next meeting</span>
+  </div>
+  <div id=sponsor class=box>
+    <h2> Sponsor </h2>
+    <span class=minor> An event or SLUG as a whole </span>
+  </div>
+  <div id=speak class=box>
+    <h2> Give a talk </h2>
+    <span class=minor> Educate your fellows </span>
+  </div>
+</div>
 {% endblock %}
 
 

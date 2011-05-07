@@ -1,11 +1,11 @@
 #leftbar {
   width: 300px;
 
-  float: left;
   margin-top: 5px;
   margin-left: 5px;
   padding-bottom: 10px;
   margin-right: -315px;
+  display: table-cell;
 }
 
 #leftbar .box {
@@ -15,7 +15,7 @@
 
 #leftbar ul {
   padding: 0;
-  maring: 0;
+  margin: 0;
 }
 
 #leftbar h2 {
@@ -46,19 +46,21 @@
 }
 
 #body {
-  margin-left: 310px;
 }
 
 #footer {
+  position: fixed;
+  bottom: 15;
   width: 100%;
-
   border-spacing: 20px;
+  display: table-row;
 }
 
 #footer .box {
   color: white;
   width: 30%;
   padding: 20px;
+  display: table-cell;
 }
 
 #footer h2 {
@@ -78,12 +80,44 @@
 
 #footer #attend {
   background: #009e0f;
+  opacity: 0.9;
 }
 #footer #sponsor {
   background: #cf2a27;
+  opacity: 0.9;
 }
 #footer #speak {
   background: #2b78e4;
+  opacity: 0.9;
+}
+
+#attend:hover {
+  cursor: pointer;
+}
+
+#twitter {
+  display: table-cell
+}
+
+.eventitem {
+  display: table
+}
+
+.eventitem .start {
+  display: table-row;
+}
+.eventitem .editlink {
+  display: table-cell;
+  float: right;
+}
+
+.eventitem .eventname {
+  display: table-cell;
+}
+
+.eventitem .event-icons {
+  display: table-cell;
+  float: right;
 }
 
 #twitter {

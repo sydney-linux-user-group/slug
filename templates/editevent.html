@@ -42,13 +42,16 @@ vim: set ts=2 sw=2 et sts=2 ai:
             <textarea class=box rows="30" cols="80" name="input">{{event.input}}</textarea>
           </td>
         </tr>
+        <tr colspam=2>
+          <td>
+            <input type="submit"/>
+          </td>
         <tr>
           <td><div class=box><pre>{{event.plaintext|safe}}</pre></td>
           <td><div class=box>{{event.html|safe}}</td>
         </tr>
       </table>
     <div>
-    <input type="submit"/>
   </form>
 <script>
 

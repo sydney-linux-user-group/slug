@@ -18,6 +18,7 @@ import vobject
 # Our App imports
 import models
 
+from utils import events_helper as e
 
 # pylint: disable-msg=C0103
 class iCal(webapp.RequestHandler):
@@ -37,17 +38,27 @@ class iCal(webapp.RequestHandler):
         cal_event.add('dtstart').value = syd.localize(event.start)
         cal_event.add('dtend').value = syd.localize(event.end)
         cal_event.add('dtstamp').value = syd.localize(event.created_on)
-        cal_event.add('description').value = event.plaintext or ''
+        cal_event.add('description').value = event.plaintext or \
+          'See %s%s for details' % ( self.request.host_url, event.get_url() )
         cal_event.add('uid').value = str(event.key())
 
 
-    def get(self):
+    def get(self, key=None):
+        """If a key is passed, return just that Event, else whole calendar."""
+
         cal = vobject.iCalendar()
 
-        # FIXME: Should this show *all* events of all time?
-        events = models.Event.all()
-
-        for event in events:
+        if key:
+            event = models.Event.get_by_id(int(key))
             self.add_event(event, cal)
+        else:
+            future_events = e.get_future_events()
+            current_events = e.get_current_events()
 
+            for event in current_events:
+                self.add_event(event, cal)
+            for event in future_events:
+                self.add_event(event, cal)
+
+        self.response.headers['Content-Type'] = 'text/x-vCalendar'
         self.response.out.write(cal.serialize())

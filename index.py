@@ -18,6 +18,7 @@ from utils.render import render as r
 
 class Index(events.Events):
     """Handler for index page."""
+
     template = "templates/index.html"
 
 
@@ -29,7 +30,7 @@ class Refresh(webapp.RequestHandler):
     """
     def get(self):
         self.response.headers['Content-Type'] = 'text/html'
-        self.response.out.write(r('templates/refresh.html', {}))
+        self.response.out.write(r('templates/refresh.html', locals()))
 
 
 class StaticTemplate(webapp.RequestHandler):
@@ -38,6 +39,6 @@ class StaticTemplate(webapp.RequestHandler):
         template = 'templates/%s.html' % filename
         if os.path.exists(template):
             self.response.headers['Content-Type'] = 'text/html'
-            self.response.out.write(r(template, {}))
+            self.response.out.write(r(template, locals()))
         else:
             self.redirect('/')

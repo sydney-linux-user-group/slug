@@ -8,8 +8,8 @@ next meeting is, {{event.start}}.
  * Date: Friday, {{event.start}}
  * Start: Arrive at 6pm for a 6:30pm start
  * Format: ***PUT FORMAT HERE***
- * RSVP: http://signup.slug.org.au/event/{{event.key.id}}
- * Suggest or sign up for a talk at http://signup.slug.org.au/talks
+ * RSVP: {{ req.host_url }}{{event.get_url}}
+ * Suggest or sign up for a talk at {{ req.host_url }}/talks
 
 ==== Details ====
 
@@ -27,7 +27,7 @@ next meeting is, {{event.start}}.
 -- Getting there --
 
 The Google office is the big black building marked "Accenture" opposite
-Star City's main steps.
+Star City Pirrama Road facade.
 
 If using the trains, you can go either get off at;
 
@@ -35,14 +35,13 @@ If using the trains, you can go either get off at;
    footbridge and then follow Pirrama Road towards Star city.
  * Central station, then follow the light rail instructions.
 
-If using the buses, the route 443, route 448, route 690 all stop right out
-front of the building.
+If using the buses, the route 443 stops right out front of the building.
 
 If using the light rail, get off at Star City station and walk across the
 street.
 
 If you drive, then you can look for parking on the suburban streets around
-the office, and then walk from there.
+the office (or pay for parking at the Casino), and then walk from there.
 
 === Afterwards ===
 

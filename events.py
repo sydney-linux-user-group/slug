@@ -11,10 +11,16 @@ config.setup()
 from google.appengine.ext import db
 from google.appengine.ext import webapp
 
-import models
 import datetime
+import models
 
 from utils.render import render as r
+from utils import events_helper as e
+
+class Next(webapp.RequestHandler):
+    """Figure out the next event, then redirect to it."""
+    def get(self):
+        self.redirect(e.get_next_event().get_url())
 
 class Event(webapp.RequestHandler):
     """Handler for display a single event."""
@@ -28,7 +34,7 @@ class Event(webapp.RequestHandler):
 
         self.response.headers['Content-Type'] = 'text/html'
         self.response.out.write(r(
-            'templates/event.html', { 'event': event}))
+            'templates/event.html', locals()))
 
 
 class Events(webapp.RequestHandler):
@@ -43,22 +49,11 @@ class Events(webapp.RequestHandler):
         month = self.request.get('month', now.month)
         day = self.request.get('day', now.day)
 
-        future_events = db.GqlQuery(
-            "SELECT * from Event " +
-            "WHERE start > DATETIME(:1, :2, :3, 23, 59, 59) " +
-            "ORDER BY start", year, month, day).fetch(100)
+        future_events = e.get_future_events(year, month, day)
+        current_events = e.get_current_events(year, month, day)
+        next_event = e.get_next_event(year, month, day)
 
-        current_events = db.GqlQuery(
-            "SELECT * from Event " +
-            "WHERE end >= DATETIME(:1, :2, :3, 00, 00, 00) " +
-            "AND end <= DATETIME(:1, :2, :3, 23, 59, 59) " +
-            "ORDER BY end", year, month, day).fetch(5)
-
-        next_event = (len(current_events) and current_events[0]
-                      or (len(future_events) and future_events[0]))
 
         self.response.headers['Content-Type'] = 'text/html'
         self.response.out.write(r(
-            self.template,
-            {'future_events': future_events, 'current_events': current_events,
-             'next_event': next_event}))
+            self.template, locals()))
