@@ -75,10 +75,10 @@ $('#login').click(login);
     {% block body %}{% endblock %}
     </div><!-- body -->
   </div><!-- more-wrapper -->
-    {% block leftbar %}{% endblock %}
+   {% block leftbar %}{% endblock %}
+   {% block footer %}{% endblock %}
 </div><!-- wrapper -->
 
- {% block footer %}{% endblock %}
 
     {% if appengine_user %}
     <div id="adminfooter">
@@ -88,5 +88,3 @@ $('#login').click(login);
       <a href="{{ appengine_logout_url }}">AppEngine Logout</a>
     {% endif %}
     </div>
-  </body>
-</html>
