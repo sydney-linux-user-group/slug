@@ -9,11 +9,11 @@ APPENGINE_SDK=../google_appengine
 else
 
 # which dev_appserver.py
-APPENGINE_SDK=$(dir $(shell which dev_appserver.py))
+APPENGINE_SDK=$(dir $(realpath $(shell which dev_appserver.py)))
 ifeq ($(strip $(APPENGINE_SDK)),)
 
 # which dev_appserver
-APPENGINE_SDK=$(dir $(shell which dev_appserver))
+APPENGINE_SDK=$(dir $(realpath $(shell which dev_appserver)))
 ifeq ($(strip $(APPENGINE_SDK)),)
 
 # FIXME: Put the next location to search here.
@@ -23,15 +23,35 @@ endif # which dev_appserver.py
 endif # ../google_appengine
 endif # ndef APPENGINE_SDK
 
-ifeq "$(shell [ -x ${APPENGINE_SDK} ] && echo -n 'Found')" "Found"
-$(info Found AppEngine SDK at ${APPENGINE_SDK})
-else
+#ifeq "$(shell [ -x ${APPENGINE_SDK} ] && echo -n 'Found')" "Found"
+ifndef APPENGINE_SDK
 $(error Could not find AppEngine SDK, please set $$APPENGINE_SDK)
+else
+$(info Found AppEngine SDK at ${APPENGINE_SDK})
 endif
 
+###############################################################################
+###############################################################################
+
+###############################################################################
+## How do we calculate md5s?
+###############################################################################
+
+ifndef MD5SUM
+ifeq "$(shell md5sum 2>1 > /dev/null && echo -n 'Found')" "Found"
+MD5SUM=md5sum
+else
+#Maybe we're on a mac
+ifeq "$(shell md5 -q -s Found)" "5d695cc28c6a7ea955162fbdd0ae42b9" #md5sum of Found
+MD5SUM=md5 -r
+endif # md5
+endif #md5sum
+endif #ndef MD5SUM
+
+###############################################################################
+# Export the configuration to sub-makes
+###############################################################################
 export
-###############################################################################
-###############################################################################
 
 ###############################################################################
 ## Look at pylint
@@ -67,8 +87,8 @@ lint:
 
 ###############################################################################
 # Third Party Zip file creation
-###############################################################################
-FINDARGS=-type f -name \*.py -printf "	%p \\\\\\n"
+##############################################################################
+FINDARGS=-type f -name \*.py -exec  echo "	{} \\" \;
 TP=cd third_party;
 TPT=third_party.zip.d.tmp
 
@@ -90,7 +110,7 @@ third_party.zip.d: third_party
 	@echo 'third_party.zip: third_party.zip.d $$(THIRD_PARTY_here)' >> $(TPT)
 	@echo '	cd third_party; zip -r ../third_party.zip $$(THIRD_PARTY_files)' >> $(TPT)
 	@if [ ! -e $@ ]; then touch $@; fi
-	@if [ `md5sum $@ | sed -e's/ .*//'` != `md5sum $(TPT) | sed -e's/ .*//'` ]; then \
+	@if [ `${MD5SUM} $@ | sed -e's/ .*//'` != `${MD5SUM} $(TPT) | sed -e's/ .*//'` ]; then \
 		echo "third_party.zip.d has changed!"; \
 		mv $(TPT) $@; \
 	else \
