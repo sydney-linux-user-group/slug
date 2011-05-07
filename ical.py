@@ -37,7 +37,8 @@ class iCal(webapp.RequestHandler):
         cal_event.add('dtstart').value = syd.localize(event.start)
         cal_event.add('dtend').value = syd.localize(event.end)
         cal_event.add('dtstamp').value = syd.localize(event.created_on)
-        cal_event.add('description').value = event.plaintext or ''
+        cal_event.add('description').value = event.plaintext or \
+          'See %s%s for details' % ( self.request.host_url, event.get_url() )
         cal_event.add('uid').value = str(event.key())
 
 

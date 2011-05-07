@@ -8,7 +8,7 @@ next meeting is, {{event.start}}.
  * Date: Friday, {{event.start}}
  * Start: Arrive at 6pm for a 6:30pm start
  * Format: ***PUT FORMAT HERE***
- * RSVP: http://signup.slug.org.au/event/{{event.key.id}}
+ * RSVP: http://signup.slug.org.au{{event.get_url}
  * Suggest or sign up for a talk at http://signup.slug.org.au/talks
 
 ==== Details ====
