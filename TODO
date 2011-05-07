@@ -1,5 +1,4 @@
 Polleyj:
-- Put iCal icons in each event - per event/all events
 - RSS icon for all events - somewhere prominent + metadata
 - Move future/current/next events code into model
 - Send announcement email to announce list
