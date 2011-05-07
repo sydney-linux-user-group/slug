@@ -23,7 +23,7 @@ vim: set ts=2 sw=2 et sts=2 ai:
           <td>{{ event.start }}</td>
           <td>{{ event.end }}</td>
           <td><a href="{{ event.get_url }}">{{ event.name }}</a></td>
-          <td>{{ event.text }}</td>
+          <td>{{ event.plaintext }}</td>
           {% if openid_user %}
             <td><iframe src="{{ event.get_url }}/response/show"/></iframe></td>
           {% else %}
@@ -55,7 +55,7 @@ vim: set ts=2 sw=2 et sts=2 ai:
             <td>{{ event.start }}</td>
             <td>{{ event.end }}</td>
             <td><a href="{{ event.get_url }}">{{ event.name }}</a></td>
-            <td>{{ event.text }}</td>
+            <td>{{ event.plaintext }}</td>
             {% if openid_user %}
               <td><iframe src="{{ event.get_url }}/response/show"></iframe></td>
             {% else %}
