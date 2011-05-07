@@ -77,9 +77,7 @@ class EditEvent(webapp.RequestHandler):
         fridays = lastfridays()
 
         self.response.out.write(r(
-            'templates/editevent.html',
-            {'event': event, 'fridays': fridays, 'templates': templates()}
-            ))
+            'templates/editevent.html', locals()))
 
     def post(self, key=None):
         if key:
@@ -92,7 +90,7 @@ class EditEvent(webapp.RequestHandler):
                 return
         else:
             #name is a required field; must populate now. Rest comes later.
-            event = models.Event(name=self.request.get('name'),
+            event = models.Event(name=
                                  text='', html='', start=datetime.now(),
                                  end=datetime.now())
 

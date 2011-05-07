@@ -28,7 +28,7 @@ class Event(webapp.RequestHandler):
 
         self.response.headers['Content-Type'] = 'text/html'
         self.response.out.write(r(
-            'templates/event.html', { 'event': event}))
+            'templates/event.html', locals()))
 
 
 class Events(webapp.RequestHandler):
@@ -59,6 +59,4 @@ class Events(webapp.RequestHandler):
 
         self.response.headers['Content-Type'] = 'text/html'
         self.response.out.write(r(
-            self.template,
-            {'future_events': future_events, 'current_events': current_events,
-             'next_event': next_event}))
+            self.template, locals()))
