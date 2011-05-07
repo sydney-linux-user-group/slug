@@ -7,6 +7,7 @@ vim: set ts=2 sw=2 et sts=2 ai:
     <title>{%block title%}Sydney Linux User Group{%endblock%}</title>
     <link rel="StyleSheet" href="/css/base.css" type="text/css" media="screen">
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+    <link type="application/rss+xml" rel="alternate" title="SLUG Events RSS" href="/rss"/> 
     {% block head %}
     {% endblock %}
   </head>
@@ -14,11 +15,17 @@ vim: set ts=2 sw=2 et sts=2 ai:
     {% block header %}
 <div id=navbar>
   <ul>
+    <li>|</li>
     <li><a href="/">Home</a></li>
     <li>|</li>
     <li><a href="http://lists.slug.org.au/archives/slug/">Archives</a></li>
     <li>|</li>
     <li><a href="http://lists.slug.org.au/listinfo/">Mailing Lists</a></li>
+    <li>|</li>
+    <li id="feed-icons">
+      <a href="webcal://signup.slug.org.au/ical" title="iCal feed of all events"><img src="/images/ical16x16.gif" alt="iCal feed of all events"></a>
+      <a href="/rss" title="RSS Feed of all events"><img src="/images/feed-icon-14x14.png" alt="RSS Feed of all events"></a>
+    </li>
     <li>|</li>
     <li>
     {% if openid_user %}
@@ -81,6 +88,5 @@ $('#login').click(login);
       <a href="{{ appengine_logout_url }}">AppEngine Logout</a>
     {% endif %}
     </div>
-    <div class="ical-link"><a href="webcal://signup.slug.org.au/ical" title="Add this calendar to your iCalendar"><img src="/images/ical16x16.gif" alt="Add to iCalendar"></a></div>
   </body>
 </html>
