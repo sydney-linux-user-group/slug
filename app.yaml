@@ -32,6 +32,10 @@ handlers:
   login: admin
   script: announceevent.py
 
+- url: /events/admin
+  login: admin
+  script: adminevents.py
+
 - url: /.*
   script: handler.py
 
