@@ -1,206 +1,125 @@
 /*
- * YoutubeCloud - jQuery plugin 2.0
+ * -*- coding: utf-8 -*-
+ * vim: set ts=2 sw=2 et sts=2 ai:
  *
- * Copyleft (c) 2011 Alvaro Montoro Dominguez
+ * YoutubeCloud - jQuery plugin
  *
- * Licensed under the GPL license:
- *   http://www.gnu.org/licenses/gpl.html
- *
- */		
- 
-// global variables, my programming professor would kill me if he sees this code
-var arrayVideoIds = [];
-var numVideos = 0;
+ * Based on the idea at http://alvaromontoro.com/youtubeCloud/ but using the
+ * new HTML5 compatible API.
+ */
 
-// this is a Youtube API function. If you are using this API already, you may want to redefine
-function onYouTubePlayerReady(playerId) {
-	// get the player
-	var ytplayer = document.getElementById(playerId);
-	
-	// add some additional information
-	if (!ytplayer.information) { ytplayer.information = { 'videoID':arrayVideoIds[playerId] } }
-	
-	// load the video, set the quality and mute it
-	ytplayer.loadVideoById(ytplayer.information.videoID);
-	ytplayer.mute();
-	ytplayer.setPlaybackQuality(settings.quality);
-	
-	// add the event listener for that particular video
-	ytplayer.addEventListener("onStateChange", "onytplayerStateChange");
-}
+var yt_zindex = 0;
 
-// this is another Youtube API function. Video event listenet onStateChange, you may want to redefine if you are using the API already.
-function onytplayerStateChange(newState) {
-	var aux = 0;
-	// we don't know who is the caller, so we iterate through all the videos updating state if necessary
-	while (document.getElementById('ytc_player'+aux)) {
-		var player = document.getElementById('ytc_player'+aux);
-		// if the video has finished, we restart it
-		if (player.getPlayerState() == 0) { player.seekTo(0, true); }
-		aux++;
-	}
-}
+(function ($) {
 
-// this function mutes ALL the videos on the page (that are from a youtubecloud div
-function ytc_mute_all_videos() {
-	var aux = 0;
-	while (document.getElementById('ytc_player'+aux)) {
-		var player = document.getElementById('ytc_player'+aux);
-		player.mute();
-		aux++;
-	}
-}
-		
-;(function ($) {
+	$.fn.youtubecloud=function (playerVars) {
 
-	$.fn.youtubecloud=function (options) {
+    var defaultVars = {
+      loop: 1, 
+      controls: 0
+    };
+    if (!playerVars) {
+      playerVars = defaultVars;
+    }
 
-		settings = {
-			'width':600,
-			'height':400,
-			'videoWidth': 100,
-			'proportion': 0.75,
-			'grow':2,
-			'flashVersion': 8,
-			'quality':'small',
-			'speed': 1000,
-			'pause': false,
-			'borderSize': 5,
-			'borderStyle': 'solid',
-			'borderColor': '#800000'
-		};
-		    
-		return this.each(function () {
-		
-			// extend the default settings
-			if ( options ) { $.extend( settings, options ); };
-            
-			arrayVideos = [];
-			arrayVideoIds = [];
-			numVideos = 0;
-			ytc_exit = 0;
+    // We need this parameter otherwise it won't work.
+		playerVars.allowScriptAccess = "always";
+    playerVars.enablejsapi = 1;
 
-			$(this).find("span").each(function() {
-		
-				function ytc_calculate_collisions(posX, posY, arrVids, sett) {
-					
-					if (posX/1+sett.videoWidth/1 > sett.width) { return 1; }
-					if (posY/1+sett.videoWidth*sett.proportion > sett.height) { return 1; }
-					
-					var x = 0;
-					
-					for (x=0; x<arrVids.length;x++) {
-						
-						var a1=arrVids[x][0];
-	                    var a2=arrVids[x][1];
-	                    var b1=posX;
-	                    var b2=posY;
-	                    var awidth=arrVids[x][2];
-	                    var aheight=arrVids[x][3];
-	                    var bwidth=sett.videoWidth;
-	                    var bheight=sett.videoWidth*sett.proportion;
-	                    
-	                    if (eval("b1>=a1 && b1<=a1+awidth+15 && b2>=a2 && b2<=a2+aheight+15")) { return 1; }
-	                    if (eval("a1>=b1 && a1<=b1+bwidth+15 && a2>=b2 && a2<=b2+bheight+15")) { return 1; }
-	                    if (eval("b1>=a1 && b1<=a1+awidth+15 && a2>=b2 && a2<=b2+bheight+15")) { return 1; }
-	                    if (eval("a1>=b1 && a1<=b1+bwidth+15 && b2>=a2 && b2<=a2+aheight+15")) { return 1; }
-						
-					}
-					
-					return 0;
-					
-				}
-				
-				var divID = "ytc_frame" + numVideos
-				var videoID  = $(this).text().replace("http://www.youtube.com/watch?v=","");
-				var playerID = "ytc_player" + numVideos;
-				var params = { allowScriptAccess: "always" };
-				var atts = { id: playerID };
-				var divVideo = $(this);
+    var parent_width = $(this).width();
+    var parent_height = $(this).height();
 
-				arrayVideoIds[playerID] = videoID;
-				
-				$(this).attr("id", divID);
-				$(this).css({border:"5px solid #800000",backgroundColor:settings.borderColor,width:100,height:75 });
-				
-				// CALCULATE POSITIONS!!!
-				if (numVideos == 0) {
-					ytc_posX = 0;
-					ytc_posY = 0;
-					var videoType = [ytc_posX, ytc_posY, settings.videoWidth, settings.videoWidth*settings.proportion];
-					arrayVideos.push(videoType);
-				} else {
-					
-					ytc_exit = 0;
-					ytc_attempts = 0;
-					
-					while (ytc_exit == 0 && ytc_attempts < 1000) {
-						ytc_posX = Math.floor(Math.random() * (settings.width-settings.videoWidth));
-						ytc_posY = Math.floor(Math.random() * (settings.height-settings.videoWidth*settings.proportion));
-						
-						if (ytc_calculate_collisions(ytc_posX, ytc_posY, arrayVideos, settings)==0) {
-							var videoType = [ytc_posX, ytc_posY, settings.videoWidth, settings.videoWidth*settings.proportion];
-							arrayVideos.push(videoType);
-							ytc_exit = 1;
-						} else {
-							ytc_attempts++;
-						}
-					}
-				}
-				// END CALCULATE POSITIONS
-				
-				$(this).parent().prepend("<div class='ytc_video' id='ytc_video" + numVideos + "' style='position:absolute;top:" + ytc_posY + "px;left:" + ytc_posX + "px;background-color:" + settings.borderColor + " !important;border:" + settings.borderSize + "px " + settings.borderStyle + " " + settings.borderColor + ";width:" + settings.videoWidth + "px;height:" + Math.round(settings.videoWidth * settings.proportion) + "px;'></div>");
-				$("#ytc_video" + numVideos).append(divVideo);
-				//alert(swfobject);
-				swfobject.embedSWF("http://www.youtube.com/apiplayer?enablejsapi=1&version=3&playerapiid="+playerID,
-	                        divID, settings.videoWidth, settings.videoWidth*settings.proportion, "8", null, null, params, atts);
-			
-	            numVideos++;
-            	
-			});
-			
-			$(".ytc_video").mouseenter(function() {
-				var auxID = $(this).find("object").attr("id");
-				ytplayer = document.getElementById(auxID);
-				var elem = $(this);
-				var elemTop = $(this).css("top").replace("px","");
-				var elemLeft = $(this).css("left").replace("px","");
-				if (!this.animObj) { this.animObj = { size:0, top:$(elem).css("top").replace("px",""), left:$(elem).css("left").replace("px","") } }
-				$(this.animObj).stop().animate({
-							size:100
-						},{
-							duration:settings.speed,
-							step:function(now,fx){
-									ytc_mute_all_videos();
-									$(elem).css({zIndex:1000,top:Math.floor(elemTop/1-now/2),left:Math.floor(elemLeft/1-now/2),width:settings.videoWidth+now*settings.grow,height:Math.round(settings.videoWidth*settings.proportion)+now*settings.grow*settings.proportion}).find("object").attr("width", settings.videoWidth+now*settings.grow).attr("height", Math.round(settings.videoWidth*settings.proportion)+now*settings.grow*settings.proportion).css("zIndex",1000);
-									ytplayer.setVolume(now);
-									ytplayer.playVideo();
-								},
-							complete:function() {
-								
-							}
-						});
-			}).mouseleave(function() {
-				var elem = $(this);
-				var elemTop = this.animObj.top;
-				var elemLeft = this.animObj.left;
-				var auxID = $(this).find("object").attr("id");
-				ytplayer = document.getElementById(auxID);
-				$(this.animObj).stop().animate({
-							size:0
-						},{
-							duration:settings.speed,
-							step:function(now,fx){
-									$(elem).css({zIndex:900,top:Math.floor(elemTop/1-now/2),left:Math.floor(elemLeft/1-now/2),width:settings.videoWidth+now*settings.grow,height:Math.round(settings.videoWidth*settings.proportion)+now*settings.grow*settings.proportion}).find("object").attr("width", settings.videoWidth+now*settings.grow).attr("height", Math.round(settings.videoWidth*settings.proportion)+now*settings.grow*settings.proportion).css("zIndex",900);
-									if (settings.pause) { ytplayer.pauseVideo(); }
-									ytplayer.setVolume(now);
-								},
-							complete:function() {
-								
-							}
-						});
-			});
+    $(this).find("div").each(function(index, div) {
+      var playerID = "ytc_player" + index;
+      
+      var div = $(div);
+      div.attr("id", playerID);
+      // Save the div properties for later
+      var orig_width = div.width();
+      var orig_height = div.height();
 
-		});
-	};
+      // Put the divs in random locations inside their parent.
+      var new_top = Math.round(Math.random()*(parent_height-orig_height));
+      var new_left = Math.round(Math.random()*(parent_width-orig_width));
+      div.css('position', 'absolute');
+      div.css('top', new_top+'px');
+      div.css('left', new_left+'px');
+
+      div.css('display', 'none');
+      var player = new YT.Player(playerID, {
+        width: "100%",
+        height: "100%",
+        videoId: div.attr("data"),
+        playerVars: playerVars,
+        events: {
+          'onReady': function(event) {
+            div.css('display', '');
+            // Mute doesn't work on HTML5 videos
+            event.target.setVolume(0); 
+            event.target.playVideo();
+          },
+        }
+	    }); // YT.Player
+
+      window.setTimeout(function() {
+        if (div.css('display') == "none") {
+          console.log('YouTube ' + playerID + ' was unable to load ' + div.attr('data') + ' ' + div.css('display'));
+        } else {
+          console.log('YouTube ' + playerID + ' loaded ' + div.attr('data') + ' fine!');
+        }
+      }, 15000);
+
+      function volume (now, fx) {
+        if (fx.prop == 'width') {
+          player.setVolume((now-orig_width)/parent_width*100);
+        }
+      }
+
+      // Make it bigger!
+      div.mouseenter(function() {
+        // Clear any animation
+        div.stop();
+
+        // Make us ontop
+        yt_zindex++;
+        div.css('z-index', yt_zindex);
+
+        // We need to calculate the duration as we might be half way through an
+        // animation.
+        var duration = (parent_width - div.width())/parent_width * 4000;
+
+        // Animate!
+        div.animate({
+          top: 0,
+          left: 0,
+          width: parent_width,
+          height: parent_height,
+        }, {
+          duration: duration,
+          step: volume
+        })
+      }); // div.onmouseenter
+
+      // Make it smaller
+      div.mouseleave(function() {
+        // Clear any animation
+        div.stop();
+
+        // We need to calculate the duration as we might be half way through an
+        // animation.
+        var duration = (1-(parent_width - div.width())/parent_width) * 4000;
+
+        // Animate!
+        div.animate({
+          top: new_top,
+          left: new_left,
+          width: orig_width,
+          height: orig_height,
+        }, {
+          duration: duration,
+          step: volume
+        });
+      }); // div.onmouseleave
+    }); // each
+  }; // youtubecloud
 })(jQuery);

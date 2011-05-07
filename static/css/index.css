@@ -85,3 +85,32 @@
 #footer #speak {
   background: #2b78e4;
 }
+
+#twitter {
+  width: 200px;
+}
+
+#twitter-show {
+  text-align: center;
+}
+
+#twitter-show a {
+  font-size: 80%;
+  color: #085258;
+  text-decoration: none;
+}
+
+#youtube {
+  background: black;
+  padding: 5px;
+  min-width: 200px;
+}
+#youtube-wrapper {
+  position: relative;
+  height: 280px;
+}
+#youtube-wrapper div {
+  width: 200px;
+  height: 115px;
+  float: left;
+}

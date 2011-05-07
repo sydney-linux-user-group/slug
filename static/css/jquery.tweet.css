@@ -1,0 +1,23 @@
+/* -*- coding: utf-8 -*-
+ * vim: set ts=2 sw=2 et sts=2 ai:
+ *
+ * Customising the look of the tweet box.
+ */
+.tweet, .query {
+  font-family: Georgia, serif;
+  font-size: 80%;
+  color: #085258; 
+}
+
+.tweet_time {
+  font-style: italic;
+  display: block;
+  text-align: right;
+}
+.tweet_time a {
+  text-decoration: none;
+}
+
+.tweet_text {
+  display: table-cell;
+}
