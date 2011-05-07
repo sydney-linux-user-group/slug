@@ -31,7 +31,7 @@ application = webapp.WSGIApplication(
         events.Events),
    ('/event[/]?(.*)', events.Event),
    ('/refresh', index.Refresh),
-   ('/ical', ical.iCal),
+   ('/ical[/]?(?P<key>[^\.]*)(?:.ical)?', ical.iCal),
    ('/rss', rss.RSSHandler),
    ('/(.*)', index.StaticTemplate),
    ],

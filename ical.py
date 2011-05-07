@@ -42,13 +42,18 @@ class iCal(webapp.RequestHandler):
         cal_event.add('uid').value = str(event.key())
 
 
-    def get(self):
+    def get(self, key=None):
+        """If a key is passed, return just that Event, else whole calendar."""
+
         cal = vobject.iCalendar()
 
-        # FIXME: Should this show *all* events of all time?
-        events = models.Event.all()
-
-        for event in events:
-            self.add_event(event, cal)
+        if key:
+          event = models.Event.get_by_id(int(key))
+          self.add_event(event, cal)
+        else:
+          # FIXME: Should this show *all* events of all time?
+          events = models.Event.all()
+          for event in events:
+              self.add_event(event, cal)
 
         self.response.out.write(cal.serialize())
