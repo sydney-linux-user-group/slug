@@ -34,6 +34,7 @@ $(document).ready(function(){
     loading_text: "loading tweets...",
     refresh_interval: 10
   }).bind("empty", function() {
+    $(this).empty();
     $(this).append("No matching tweets found");
   });
 });
