@@ -56,4 +56,5 @@ class iCal(webapp.RequestHandler):
           for event in events:
               self.add_event(event, cal)
 
+        self.response.headers['Content-Type'] = 'text/x-vCalendar'
         self.response.out.write(cal.serialize())
