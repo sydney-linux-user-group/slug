@@ -24,6 +24,10 @@ vim: set ts=2 sw=2 et sts=2 ai:
     <li>|</li>
     <li><a href="http://lists.slug.org.au/listinfo/">Mailing Lists</a></li>
     <li>|</li>
+    {% if appengine_admin %}
+      <li><a href="/event/add">Add Event</a></li>
+      <li>|</li>
+    {% endif %}
     <li id="feed-icons">
       <a href="webcal://{{ req.host }}/ical" title="iCal feed of all events"><img src="/images/ical16x16.gif" alt="iCal feed of all events"></a>
       <a href="/rss" title="RSS Feed of all events"><img src="/images/feed-icon-14x14.png" alt="RSS Feed of all events"></a>
