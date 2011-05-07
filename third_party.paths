@@ -1,0 +1,8 @@
+third_party/aeoid
+third_party/gaepytz-2011c
+# Directory to add to sys.path, things to include in third_party.zip
+third_party.zip/python-dateutil-1.5 dateutil
+third_party.zip/python-datetime-tz datetime_tz.py pytz_abbr.py
+third_party.zip/vobject
+third_party.zip/Markdown-2.0.3 markdown
+third_party.zip/PyRSS2Gen-1.0.0 PyRSS2Gen.py

@@ -17,6 +17,9 @@ handlers:
 - url: /js
   static_dir: static/js
 
+- url: /third_party
+  static_dir: static/third_party
+
 - url: /event/add
   login: admin
   script: editevent.py

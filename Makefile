@@ -36,14 +36,15 @@ endif
 ###############################################################################
 ## How do we calculate md5s?
 ###############################################################################
-
 ifndef MD5SUM
-ifeq "$(shell md5sum >& /dev/null && echo -n 'Found')" "Found"
+ifeq "$(shell echo -n 'Found' | md5sum 2>&1)" "5d695cc28c6a7ea955162fbdd0ae42b9  -"
 MD5SUM=md5sum
 else
 #Maybe we're on a mac
-ifeq "$(shell md5 -q -s Found)" "5d695cc28c6a7ea955162fbdd0ae42b9" #md5sum of Found
+ifeq "$(shell md5 -q -s Found 2>&1)" "5d695cc28c6a7ea955162fbdd0ae42b9" #md5sum of Found
 MD5SUM=md5 -r
+else
+$(error "Please install md5sum\nOn Ubuntu/Debian run:\n    sudo apt-get install md5sum\n")
 endif # md5
 endif #md5sum
 endif #ndef MD5SUM
@@ -71,7 +72,7 @@ else
 PYLINT_DISABLE="--disable-msg"
 endif
 
-lint:
+lint: third_party.zip
 	@# R0904 - Disable "Too many public methods" warning
 	@# W0221 - Disable "Arguments differ from parent", as get and post will.
 	@python \
@@ -95,25 +96,28 @@ TPT=third_party.zip.d.tmp
 third_party:
 	make -C third_party
 
-third_party.zip.d: third_party
+third_party.zip.d: third_party third_party.paths
 	@echo "Generating a third_party.zip dependency file."
 	@echo "THIRD_PARTY_files=\\" >> $(TPT)
-	@$(TP) find python-dateutil-*/dateutil $(FINDARGS) >> ../$(TPT)
-	@$(TP) find python-datetime-tz/datetime_tz.py $(FINDARGS) >> ../$(TPT)
-	@$(TP) find python-datetime-tz/pytz_abbr.py $(FINDARGS) >> ../$(TPT)
-	@$(TP) find Markdown-*/markdown $(FINDARGS) >> ../$(TPT)
-	@$(TP) find vobject/vobject $(FINDARGS) >> ../$(TPT)
-	@$(TP) find PyRSS2Gen-*/PyRSS2Gen.py $(FINDARGS) >> ../$(TPT)
+	@cd third_party; \
+	 cat ../third_party.paths | grep ^third_party.zip | sed -e's-third_party.zip/--' | (while read LINE; do \
+		PREFIX=$${LINE%% *}; \
+		for SUFFIX in $${LINE#* }; do \
+			find $$PREFIX/$$SUFFIX $(FINDARGS) >> ../$(TPT); \
+		done; \
+	 done)
 	@echo '' >> $(TPT)
 	@echo 'THIRD_PARTY_here=$$(addprefix third_party/,$$(THIRD_PARTY_files)) ' >> $(TPT)
 	@echo '' >> $(TPT)
 	@echo 'third_party.zip: third_party.zip.d $$(THIRD_PARTY_here)' >> $(TPT)
-	@echo '	cd third_party; zip -r ../third_party.zip $$(THIRD_PARTY_files)' >> $(TPT)
+	@echo '	@echo Changed files: $$?' >> $(TPT)
+	@echo '	@cd third_party; rm ../third_party.zip; zip -r ../third_party.zip $$(THIRD_PARTY_files)' >> $(TPT)
 	@if [ ! -e $@ ]; then touch $@; fi
 	@if [ `${MD5SUM} $@ | sed -e's/ .*//'` != `${MD5SUM} $(TPT) | sed -e's/ .*//'` ]; then \
 		echo "third_party.zip.d has changed!"; \
 		mv $(TPT) $@; \
 	else \
+		echo "third_party.zip.d has not changed!"; \
 		rm $(TPT); \
 	fi
 
