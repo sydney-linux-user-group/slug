@@ -59,7 +59,7 @@ class AnnounceEvent(webapp.RequestHandler):
 
         message = mail.EmailMessage()
         message.sender = user.email()
-        message.to = "slug-sysadmins@groups.google.com"
+        message.to = "committee@slug.org.au"
         message.body = event.plaintext
         message.subject = event.name
 
