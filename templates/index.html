@@ -57,15 +57,15 @@ $(document).ready(function(){
         <li>
         <h3><a href="{{ event.get_url }}">{{ event.name }}</a></h3>
           <span class=start>{{ event.start }}</span>
+          <div class=event-icons>
+            <div class="ical-link"><a href="{{ event.get_url }}.ics" title="Add this event to your iCalendar"><img src="/images/ical16x16.gif" alt="Add event to iCalendar"></a></div>
+          </div>
           <div class=respond>
             {% if openid_user %}
             <iframe src="{{ event.get_url }}/response/show"></iframe>
             {% else %}
             <a href="{{ openid_login_url }}">Login to RSVP!</a>
             {% endif %}
-          </div>
-          <div class=event-icons>
-            <div class="ical-link"><a href="{{ event.get_url }}.ics" title="Add this event to your iCalendar"><img src="/images/ical16x16.gif" alt="Add event to iCalendar"></a></div>
           </div>
 
         </li>
@@ -81,15 +81,15 @@ $(document).ready(function(){
         <li>
         <h3><a href="{{ event.get_url }}">{{ event.name }}</a></h3>
           <span class=start>{{ event.start }}</span>
+          <div class=event-icons>
+            <div class="ical-link"><a href="{{ event.get_url }}.ics" title="Add this event to your iCalendar"><img src="/images/ical16x16.gif" alt="Add event to iCalendar"></a></div>
+          </div>
           <div class=respond>
             {% if openid_user %}
             <iframe src="{{ event.get_url }}/response/show"></iframe>
             {% else %}
             <a href="{{ openid_login_url }}">Login to RSVP!</a>
             {% endif %}
-          </div>
-          <div class=event-icons>
-            <div class="ical-link"><a href="{{ event.get_url }}.ics" title="Add this event to your iCalendar"><img src="/images/ical16x16.gif" alt="Add event to iCalendar"></a></div>
           </div>
         </li>
         {% endfor %}
