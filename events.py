@@ -13,14 +13,14 @@ from google.appengine.ext import webapp
 
 import datetime
 import models
+import event_lists
 
 from utils.render import render as r
-from utils import events_helper as e
 
 class Next(webapp.RequestHandler):
     """Figure out the next event, then redirect to it."""
     def get(self):
-        self.redirect(e.get_next_event().get_url())
+        self.redirect(event_lists.get_next_event().get_url())
 
 class Event(webapp.RequestHandler):
     """Handler for display a single event."""
@@ -49,9 +49,9 @@ class Events(webapp.RequestHandler):
         month = self.request.get('month', now.month)
         day = self.request.get('day', now.day)
 
-        future_events = e.get_future_events(year, month, day)
-        current_events = e.get_current_events(year, month, day)
-        next_event = e.get_next_event(year, month, day)
+        future_events = event_lists.get_future_events(year, month, day)
+        current_events = event_lists.get_current_events(year, month, day)
+        next_event = event_lists.get_next_event(year, month, day)
 
 
         self.response.headers['Content-Type'] = 'text/html'

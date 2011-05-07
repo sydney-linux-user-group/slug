@@ -18,8 +18,8 @@ import PyRSS2Gen as rss_gen
 # Our App imports
 import models
 import datetime
+import event_lists
 
-from utils import events_helper as e
 
 # pylint: disable-msg=C0103
 class RSSHandler(webapp.RequestHandler):
@@ -54,8 +54,8 @@ class RSSHandler(webapp.RequestHandler):
         rss.lastBuildDate = datetime.datetime.utcnow()
         rss.items = []
 
-        future_events = e.get_future_events()
-        current_events = e.get_current_events()
+        future_events = event_lists.get_future_events()
+        current_events = event_lists.get_current_events()
 
         for event in future_events:
             self.add_event(event, rss)

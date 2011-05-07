@@ -17,8 +17,8 @@ import vobject
 
 # Our App imports
 import models
+import event_lists
 
-from utils import events_helper as e
 
 # pylint: disable-msg=C0103
 class iCal(webapp.RequestHandler):
@@ -52,8 +52,8 @@ class iCal(webapp.RequestHandler):
             event = models.Event.get_by_id(int(key))
             self.add_event(event, cal)
         else:
-            future_events = e.get_future_events()
-            current_events = e.get_current_events()
+            future_events = event_lists.get_future_events()
+            current_events = event_lists.get_current_events()
 
             for event in current_events:
                 self.add_event(event, cal)
