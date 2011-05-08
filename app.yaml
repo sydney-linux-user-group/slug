@@ -3,6 +3,9 @@ version: 3
 runtime: python
 api_version: 1
 
+builtins:
+- datastore_admin: on
+
 handlers:
 - url: /favicon.ico
   static_files: static/images/favicon.png
@@ -35,6 +38,10 @@ handlers:
 - url: /events/admin
   login: admin
   script: adminevents.py
+
+- url: /admin/.*
+  script: $PYTHON_LIB/google/appengine/ext/admin
+  login: admin
 
 - url: /.*
   script: handler.py
