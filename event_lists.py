@@ -26,7 +26,7 @@ def get_future_events(year=None, month=None, day=None):
         "WHERE start > DATETIME(:1, :2, :3, 23, 59, 59) " +
         "ORDER BY start", year, month, day).fetch(100)
 
-    return future_events
+    return EventList(future_events, "Coming soon")
 
 
 def get_current_events(year=None, month=None, day=None):
@@ -43,18 +43,18 @@ def get_current_events(year=None, month=None, day=None):
         "AND end <= DATETIME(:1, :2, :3, 23, 59, 59) " +
         "ORDER BY end", year, month, day).fetch(5)
 
-    return current_events
+    return EventList(current_events, "Happening today")
 
-def get_next_event(year=None, month=None, day=None):
+def get_next_event(year=None, month=None, day=None, hour=None, minute=None,
+        second=None):
     now = datetime.datetime.now()
 
     year = year or now.year
     month = month or now.month
     day = day or now.day
-    hour = now.hour
-    minute = now.minute
-    second = now.second
-
+    hour = hour or now.hour
+    minute = minute or now.minute
+    second = second or now.second
 
     next_event = db.GqlQuery(
         "SELECT * from Event " +
@@ -63,3 +63,22 @@ def get_next_event(year=None, month=None, day=None):
 
     return next_event
 
+def get_event_lists(year=None, month=None, day=None, hour=None, minute=None,
+        second=None):
+
+    event_lists = []
+    event_lists.append(get_current_events(year, month, day))
+    event_lists.append(get_future_events(year, month, day))
+
+    return event_lists
+
+class EventList():
+    """A named list of events.
+
+    Arguments:
+        events: list of events
+        name: a name """
+
+    def __init__(self, events, name):
+        self.events = events
+        self.name = name

@@ -78,10 +78,10 @@ $('#login').click(login);
 <div id=wrapper>
   {% block leftbar %}{% endblock %}
   <div id=more-wrapper>
+ {% block footer %}{% endblock %}
     <div id=body>
     {% block body %}{% endblock %}
     </div><!-- body -->
-   {% block footer %}{% endblock %}
   </div><!-- more-wrapper -->
 </div><!-- wrapper -->
 
@@ -94,7 +94,6 @@ $('#login').click(login);
       <a href="{{ appengine_logout_url }}">AppEngine Logout</a>
     {% endif %}
     </div>
-    <div class="ical-link"><a href="webcal://signup.slug.org.au/ical" title="Add this calendar to your iCalendar"><img src="/images/ical16x16.gif" alt="Add to iCalendar"></a></div>
   </body>
 {% block script %}
 {% endblock %}

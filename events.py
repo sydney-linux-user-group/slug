@@ -45,14 +45,8 @@ class Events(webapp.RequestHandler):
     def get(self, year=None, month=None, day=None):
         now = datetime.datetime.now()
 
-        year = self.request.get('year', now.year)
-        month = self.request.get('month', now.month)
-        day = self.request.get('day', now.day)
-
-        future_events = event_lists.get_future_events(year, month, day)
-        current_events = event_lists.get_current_events(year, month, day)
-        next_event = event_lists.get_next_event(year, month, day)
-
+        events_lists = event_lists.get_event_lists()
+        next_event = event_lists.get_next_event()
 
         self.response.headers['Content-Type'] = 'text/html'
         self.response.out.write(r(
