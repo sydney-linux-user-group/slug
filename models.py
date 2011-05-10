@@ -33,6 +33,10 @@ class Event(db.Model):
     plaintext = db.TextProperty()
     html = db.BlobProperty()
 
+    published = db.BooleanProperty(default=False)
+    published_by = appengine.UserProperty()
+    published_on = db.DateTimeProperty()
+
     start = db.DateTimeProperty(required=True)
     end = db.DateTimeProperty(required=True)
 

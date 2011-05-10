@@ -8,10 +8,12 @@
 import config
 config.setup()
 
+from google.appengine.api import users
 from google.appengine.ext import db
 from google.appengine.ext import webapp
 
 import datetime
+import logging
 import models
 import event_lists
 
@@ -45,8 +47,14 @@ class Events(webapp.RequestHandler):
     def get(self, year=None, month=None, day=None):
         now = datetime.datetime.now()
 
-        events_lists = event_lists.get_event_lists()
+        if users.is_current_user_admin():
+            events_lists = event_lists.get_event_lists(published=False)
+        else:
+            events_lists = event_lists.get_event_lists()
+
         next_event = event_lists.get_next_event()
+
+        logging.debug("events_lists: %s", events_lists)
 
         self.response.headers['Content-Type'] = 'text/html'
         self.response.out.write(r(

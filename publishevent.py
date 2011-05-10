@@ -37,7 +37,7 @@ from utils.render import render as r
 extensions = ['abbr', 'footnotes', 'def_list', 'fenced_code', 'tables', 'subscript', 'superscript', 'slugheader', 'anyurl']
 
 
-class AnnounceEvent(webapp.RequestHandler):
+class PublishEvent(webapp.RequestHandler):
     def post(self, key=None):
         user = users.get_current_user()
         if user is None:
@@ -63,13 +63,19 @@ class AnnounceEvent(webapp.RequestHandler):
         message.body = event.plaintext
         message.subject = event.name
 
+        event.published = True
+        event.published_by = user
+        event.published_on = datetime.now()
+
         message.send()
+        event.put()
 
         self.redirect('/events')
 
 
+
 application = webapp.WSGIApplication(
-     [('/event/(.*)/announce', AnnounceEvent)],
+     [('/event/(.*)/publish', PublishEvent)],
     debug=True)
 application = aeoid.middleware.AeoidMiddleware(application)
 

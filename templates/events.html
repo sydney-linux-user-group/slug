@@ -36,9 +36,13 @@ vim: set ts=2 sw=2 et sts=2 ai:
             {% if appengine_admin %}
               <td>
                 <a href="{{ event.get_url }}/edit">Edit</a>
-                <div id=announceform>
-                  <form name="announce" action="{{ event.get_url }}/announce" method="post">
-                    <input type="submit" value="Send announcement email">
+                <div id=publishform>
+                  <form name="publish" action="{{ event.get_url }}/publish" method="post">
+                    {% if event.published %}
+                      <input type="submit" value="Re-publish event">
+                    {% else %}
+                      <input type="submit" value="Publish event">
+                    {% endif %}
                   </form>
                 </div>
               </td>
