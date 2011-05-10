@@ -55,9 +55,9 @@ class iCal(webapp.RequestHandler):
             future_events = event_lists.get_future_events()
             current_events = event_lists.get_current_events()
 
-            for event in current_events:
+            for event in current_events.events:
                 self.add_event(event, cal)
-            for event in future_events:
+            for event in future_events.events:
                 self.add_event(event, cal)
 
         self.response.headers['Content-Type'] = 'text/x-vCalendar'
