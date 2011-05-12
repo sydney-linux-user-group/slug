@@ -44,7 +44,12 @@ vim: set ts=2 sw=2 et sts=2 ai:
                 <div id=publishform>
                   <form name="publish" action="{{ event.get_url }}/publish" method="post">
                     {% if event.published %}
-                      <input type="submit" value="Re-publish event">
+                      {% ifnotequal event.html event.announcement.html %}
+                        <input type="submit" value="Re-publish event">
+                      {% else %}
+                        <p>Already published</p>
+                      {% endifnotequal %}
+
                     {% else %}
                       <input type="submit" value="Publish event">
                     {% endif %}
