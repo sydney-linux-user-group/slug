@@ -36,11 +36,11 @@ class RSSHandler(webapp.RequestHandler):
 
         event_url = "%s%s" % ( self.request.host_url, event.get_url() )
 
-        item = rss_gen.RSSItem(title=event.name)
-        item.title = event.name
+        item = rss_gen.RSSItem(title=event.announcement.name)
+        item.title = event.announcement.name
         item.link = event_url
-        item.description = event.html
-        item.guid = str(event.key())
+        item.description = event.announcement.html
+        item.guid = str(event.announcement.key())
         item.pubDate = syd.localize(event.created_on)
 
         rss.items.append(item)

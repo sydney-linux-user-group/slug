@@ -16,6 +16,23 @@ from google.appengine.ext import db as appengine
 from aeoid import users as openid
 
 
+class Announcement(db.Model):
+    """An announcement for an event."""
+    created_by = openid.UserProperty(
+            auto_current_user_add=True, required=True)
+    created_on = db.DateTimeProperty(
+            auto_now_add=True, required=True)
+
+    name = db.StringProperty(required=True)
+    plaintext = db.TextProperty()
+    html = db.BlobProperty()
+
+    published_by = appengine.UserProperty(
+            auto_current_user_add=True, required=True)
+    published_on = db.DateTimeProperty(
+            auto_now_add=True, required=True)
+
+
 class Event(db.Model):
 
     def get_url(self):
@@ -34,27 +51,10 @@ class Event(db.Model):
     html = db.BlobProperty()
 
     published = db.BooleanProperty(default=False)
-    published_by = appengine.UserProperty()
-    published_on = db.DateTimeProperty()
+    announcement = db.ReferenceProperty(Announcement)
 
     start = db.DateTimeProperty(required=True)
     end = db.DateTimeProperty(required=True)
-
-
-class Announcement(db.Model):
-    """An announcement for an event."""
-    created_by = openid.UserProperty(
-            auto_current_user_add=True, required=True)
-    created_on = db.DateTimeProperty(
-            auto_now_add=True, required=True)
-
-    name = db.StringProperty(required=True)
-    text = db.StringProperty(multiline=True)
-
-    valid_until = db.DateTimeProperty(required=True)
-
-    # If a approver exists, then it is approved.
-    approver = appengine.UserProperty()
 
 
 class LightningTalk(db.Model):

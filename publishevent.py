@@ -63,10 +63,16 @@ class PublishEvent(webapp.RequestHandler):
         message.body = event.plaintext
         message.subject = event.name
 
-        event.published = True
-        event.published_by = user
-        event.published_on = datetime.now()
+        if event.published:
+            #This is a re-publishing, so make a new announcement
+            announcement = models.Announcement(
+                    name=event.name,
+                    plaintext=event.plaintext,
+                    html = event.html)
 
+            event.announcement = announcement.put()
+
+        event.published = True
         message.send()
         event.put()
 

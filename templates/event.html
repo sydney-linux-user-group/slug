@@ -3,12 +3,12 @@
 -*- coding: utf-8 -*-
 vim: set ts=2 sw=2 et sts=2 ai:
 {% endcomment %}
-{% block title %} {{ event.name }} {% endblock %}
+{% block title %} {{ event.announcement.name }} {% endblock %}
 
 {% block body %}
-    <h3>{{ event.name }}</h3>
+    <h3>{{ event.announcement.name }}</h3>
     <div id=content class=box style="float: left;">
-      <div class='eventBody'> {{ event.html|safe }} </div>
+      <div class='eventBody'> {{ event.announcement.html|safe }} </div>
     </div>
     <div id=eventright class='box'>
       <span class=start>{{ event.start }}</span>
