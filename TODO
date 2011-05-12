@@ -1,16 +1,5 @@
 Polleyj:
-- Fix "publishing"
- - Don't just set a flag to "published" - create an "announcement" object with the text/html at time of announcement
- - event model has an "announcement" field which stores the key of most recent announcement
- - so that website can easily get at the most recent announcement for any given event
- - Allows admins to edit and get things right before re-publishing
- - RSS - use guid of announcement, so a re-publish means it shows up in feeds again
- - ical - use guid of event; ical programs will notice changed description. I think.
 - Export attendees list for organisers (polleyj)
-
-BUGS:
- - event/<<id>>/edit page should *not* display list of future dates.
- - but should have "create another event" button.
 
 - Automate announcement/reminder emails
 Track number of confirmed attendees
