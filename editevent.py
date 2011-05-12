@@ -128,7 +128,8 @@ class EditEvent(webapp.RequestHandler):
             #After publishing, don't - only update the announcement when we
             #republish
             if event.announcement:
-                event.announcement.name = event.name
+                announcement = event.announcement
+                announcement.name = event.name
             else:
                 announcement = models.Announcement(name=event.name)
             announcement.plaintext = event.plaintext

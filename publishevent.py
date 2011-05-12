@@ -61,7 +61,12 @@ class PublishEvent(webapp.RequestHandler):
         message.sender = user.email()
         message.to = "committee@slug.org.au"
         message.body = event.plaintext
-        message.subject = event.name
+        if event.published:
+            ## This is an update
+            message.subject = "Updated: %s " % event.name
+        else:
+            ##First publication
+            message.subject = event.name
 
         if event.published:
             #This is a re-publishing, so make a new announcement
