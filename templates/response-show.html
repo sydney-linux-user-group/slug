@@ -1,47 +1,19 @@
 {% ifequal response None %}
-    <div>
-      <table>
-        <tr>
-          <th colspan=2><span class="response-header">Are you attending?</span></th>
-        </tr>
-        <tr>
-          <td>
-            <a href="/event/{{ event.key.id }}/response/update?attending=yes">
-              <img class="response" src="/images/tick.png">
-            </a>
-          </td>
-          <td>
-            <a href="/event/{{ event.key.id }}/response/update?attending=yes">
-              Yes!
-            </a>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <a href="/event/{{ event.key.id }}/response/friends">
-              {% include "fragments/positive-multiple.html" %}
-            </a>
-          </td>
-          <td>
-            <a href="/event/{{ event.key.id }}/response/friends">
-              Yes, with friends!
-            </a>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <a href="/event/{{ event.key.id }}/response/update?attending=no">
-              <img class="response" src="/images/cross.png">
-            </a>
-          </td>
-          <td>
-            <a href="/event/{{ event.key.id }}/response/update?attending=no">
-              No :(
-            </a>
-          </td>
-        </tr>
-      </table>
-    </div>
+  <div class=response-table>
+    <div class="response-header">Are you attending?</div>
+    <a class="response-answer" href="/event/{{ event.key.id }}/response/update?attending=yes">
+      <img class="response-image" src="/images/tick.png">
+      <div class="response-text">Yes!</div>
+    </a>
+    <a class="response-answer" href="/event/{{ event.key.id }}/response/friends">
+      {% include "fragments/positive-multiple.html" %}
+      <div class="response-text">Yes, with friends!</div>
+    </a>
+    <a class="response-answer" href="/event/{{ event.key.id }}/response/update?attending=no">
+      <img class="response-image" src="/images/cross.png">
+      <div class="response-text">No :(</div>
+    </a>
+  </div> <!-- response answer -->
 {% else %}{% if response.attending %}
   {% if guests %}
     <div>
@@ -136,7 +108,7 @@
       <table>
         <tr>
           <th>
-            <img class="response" src="/images/tick.png">
+            <img class="response-image" src="/images/tick.png">
           </th>
           <th>
             <span class="response-header">I'm attending!</span>
@@ -186,7 +158,7 @@
       <table>
         <tr>
           <th>
-            <img class="response" src="/images/cross.png">
+            <img class="response-image" src="/images/cross.png">
           </th>
           <th>
             <span class="positive-header">I'm not attending :(</span>
