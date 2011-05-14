@@ -6,6 +6,10 @@
   background-color: #C08080;
 }
 
+.evenrow.altered {
+  background-color: #DF7401;
+}
+
 .evenrow:hover {
   cursor: pointer;
 }
@@ -14,8 +18,12 @@
   background-color: white
 }
 
-.oddrow {
+.oddrow.unpublished {
   background-color: #FFB9B9;
+}
+
+.oddrow.altered {
+  background-color: #F7BE81;
 }
 
 .oddrow:hover {
