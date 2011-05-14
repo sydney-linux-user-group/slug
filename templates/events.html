@@ -20,7 +20,7 @@ vim: set ts=2 sw=2 et sts=2 ai:
           {% endif %}
         </tr>
         {% for event in event_list.events %}
-          <tr class="{% cycle 'evenRow' 'oddRow' %}" onclick="location.href='{{ event.get_url }}'">
+        <tr class="{% cycle 'evenRow' 'oddRow' %}{% if appengine_admin and not event.published %} unpublished{% endif %}{% if appengine_admin and event.html != event.announcement.html %} altered{% endif %}" onclick="location.href='{{ event.get_url }}'">
             <td>{{ event.start }}</td>
             <td>{{ event.end }}</td>
             <td><a href="{{ event.get_url }}">
