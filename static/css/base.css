@@ -144,3 +144,89 @@ img {
 #eventright .editlink {
   display: table-row;
 }
+
+.response-table {
+    display: inline-table;
+}
+
+.response-header {
+    display: table-row;
+}
+
+.response-answer {
+    display: table-row;
+}
+
+.response-text {
+    display: table-cell;
+}
+
+.response-images-small {
+  display: inline-table;
+}
+
+.response-image-small {
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  display: block;
+}
+
+.response-image {
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  display: table-cell;
+}
+
+.gravatar-large {
+  width: 148px;
+  height: 148px;
+  padding: 1px;
+  margin: 0;
+}
+
+.gravatar-small {
+  width: 48px;
+  height: 48px;
+  padding: 1px;
+  margin: 0;
+}
+
+.gravatar-n-friends {
+  width: 200px; /* gravatar.height + 2*gravatar.padding +
+                   gravatar-small.height + 2*gravatar-small.padding */
+  height: 150px; /* .gravatar.height + 2*gravatar.padding */
+}
+
+.response-text {
+  vertical-align: middle;
+}
+
+.response-header {
+  font-size: 20pt;
+  display: table-row;
+}
+
+.respond body {
+  border: 0px;
+}
+
+.positive-multiple {
+    display: table-cell;
+    max-width: 76px;
+}
+
+.positive-multiple .response-image {
+  display: inline;
+}
+
+.positive-multiple-images {
+  table-layout: fixed;
+  display: inline-table;
+  max-width: 76px;
+}

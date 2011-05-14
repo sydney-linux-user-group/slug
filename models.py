@@ -80,7 +80,7 @@ class Response(db.Model):
     created_on = db.DateTimeProperty(
             auto_now_add=True, required=True)
 
-    event = db.ReferenceProperty(Event)
+    event = db.ReferenceProperty(Event, collection_name="responses")
 
     attending = db.BooleanProperty(required=True, default=True)
 
