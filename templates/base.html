@@ -26,8 +26,10 @@ vim: set ts=2 sw=2 et sts=2 ai:
 
   <ul id=config>
     {% if appengine_admin %}
+      <li><span style="color: red;">Admin User</span></li>
       <li><a href="/event/add">Add Event</a></li>
       <li>|</li>
+      <li><a href="{{ appengine_logout_url }}">AppEngine Logout</a></li>
     {% endif %}
     <li id="feed-icons">
       <a href="webcal://{{ req.host }}/ical" title="iCal feed of all events"><img src="/images/ical16x16.gif" alt="iCal feed of all events"></a>
@@ -41,12 +43,6 @@ vim: set ts=2 sw=2 et sts=2 ai:
       <a class=openid_login href="{{ openid_login_url }}">Login</a>
     {% endif %}
 
-    {% if appengine_user %}
-      {% if appengine_admin %}
-        <li><span style="color: red;">Admin User</span></li>
-      {% endif %}
-      <li><a href="{{ appengine_logout_url }}">AppEngine Logout</a></li>
-    {% endif %}
     </li>
   </ul>
 </div>
