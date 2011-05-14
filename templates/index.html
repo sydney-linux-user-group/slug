@@ -153,10 +153,10 @@ $(document).ready(function(){
   tag.src = "http://gdata.youtube.com/feeds/api/playlists/F6073A99A735F849?v=2&alt=jsonc&callback=youtube_playlist_callback";
   firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-  // Load the jquery plugin...
+  /* // Load the jquery plugin...
   var tag = document.createElement('script');
   tag.src = "/third_party/jquery.youtubecloud/jquery.youtubecloud.js";
-  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag); */
 
   // Load the You Tube iFrame API...
   var tag = document.createElement('script');
@@ -171,19 +171,42 @@ function onYouTubePlayerAPIReady() {
 }
 
 var youtube_playlist_ready = false;
+var youtube_playlist = [];
 function youtube_playlist_callback(data) {
   youtube_playlist_ready = true;
   var container = $('#youtube-wrapper');
-  console.log('playlist_callback', data.data.items);
   $.each(data.data.items, function(index, item) {
-    container.append($('<div>').attr('data', item.video.id));
+    youtube_playlist.push(item.video.id);
+    //container.append($('<div>').attr('data', item.video.id));
   });
   youtube_setup();
 }
 
 function youtube_setup() {
   if (youtube_playlist_ready && youtube_api_ready) {
-    $("#youtube-wrapper").youtubecloud();
+    var videoid = youtube_playlist[Math.floor(Math.random()*youtube_playlist.length)];
+
+    var playerVars = {};
+		playerVars.allowScriptAccess = "always";
+    playerVars.enablejsapi = 1;
+
+
+    // Choose a random video to show
+    console.log(youtube_playlist);    
+    var player = new YT.Player("youtube-wrapper", {
+        width: "100%",
+        height: "100%",
+        videoId: videoid,
+        playerVars: playerVars,
+        events: {
+          'onReady': function(event) {
+            $("youtube-wrapper").fadeIn();
+            // Mute doesn't work on HTML5 videos
+            event.target.setVolume(0); 
+            event.target.playVideo();
+          },
+        }
+	    }); // YT.Player */
   }
 }
 </script>
