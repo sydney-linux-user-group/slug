@@ -60,6 +60,8 @@
   width: 30%;
   padding: 20px;
   display: table-cell;
+  text-align: center;
+  bottom: 5px;
 }
 
 #footer h2 {
@@ -67,10 +69,6 @@
   font-size: 22pt;
   padding: 0;
   margin: 0;
-}
-
-#footer .box {
-  text-align: center;
 }
 
 #footer .minor {
