@@ -58,11 +58,11 @@ vim: set ts=2 sw=2 et sts=2 ai:
                 <div class="ical-link"><a href="{{ event.get_url }}.ics" title="Add this event to your iCalendar"><img src="/images/ical16x16.gif" alt="Add event to iCalendar"></a></div>
               </div>
               <span class=start>{{ event.start }}</span>
-              <div class=respond>
+              <div class=respond id="respond-{{ event.key.id }}">
                 {% if openid_user %}
                   <iframe src="{{ event.get_url }}/response/show"></iframe>
                 {% else %}
-                  <a href="{{ openid_login_url }}">Login to RSVP!</a>
+                  <a class=openid_login href="{{ openid_login_url }}">Login to RSVP!</a>
                 {% endif %}
               </div>
             </li>
