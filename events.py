@@ -12,6 +12,8 @@ from google.appengine.api import users
 from google.appengine.ext import db
 from google.appengine.ext import webapp
 
+from aeoid import users as openid_users
+
 import datetime
 import logging
 import models
@@ -48,13 +50,16 @@ class Events(webapp.RequestHandler):
         now = datetime.datetime.now()
 
         if users.is_current_user_admin():
-            events_lists = event_lists.get_event_lists(published=False)
+            published_only=False
         else:
-            events_lists = event_lists.get_event_lists()
+            published_only=True
+
+        current_user = openid_users.get_current_user()
+
+        events_lists = event_lists.get_event_lists(
+                published_only=published_only, user=current_user)
 
         next_event = event_lists.get_next_event()
-
-        logging.debug("events_lists: %s", events_lists)
 
         self.response.headers['Content-Type'] = 'text/html'
         self.response.out.write(r(

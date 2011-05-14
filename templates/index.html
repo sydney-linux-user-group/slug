@@ -62,19 +62,8 @@ vim: set ts=2 sw=2 et sts=2 ai:
           </td> <!-- footer -->
         </tr>
       </table>
-
-  <script type="text/javascript">
-    function handle_response() {
-      event.preventDefault();
-      url=this.href;
-      alert(url);
-      return false;
-    }
-    $('.respond a').click(handle_response);
-  </script>
 {% endblock %}
 
-<<<<<<< HEAD
 {% block rightbar %}
   {% for event_list in events_lists %}
     {% if event_list.events %}
@@ -125,6 +114,15 @@ vim: set ts=2 sw=2 et sts=2 ai:
 {% endblock %}
 
 {% block script %}
+<script type="text/javascript">
+  function handle_response() {
+    event.preventDefault();
+    url=this.href;
+    alert(url);
+    return false;
+  }
+  $('.respond a').click(handle_response);
+</script>
 <script>
 
 var tweet_loading = '';

@@ -10,7 +10,10 @@ config.setup()
 
 from google.appengine.ext import db
 
+from aeoid import users as openid_users
+
 import datetime
+import logging
 import models
 
 
@@ -20,10 +23,14 @@ def get_event_responses(event_list, user):
         response = None
         guests = []
         if user:
-            responses = event.responses.filter("created_by = ", user).order(
-                    "created_on")
+            logging.debug('got user %s', user.email() )
+            logging.debug('user %s', user._user_info_key )
+            responses = event.responses.filter("created_by = ",
+                    user._user_info_key).order( "created_on")
             for resp in responses:
-                if not response.guest:
+                logging.debug('got response %s. guest is %s', resp,
+                        resp.guest)
+                if not resp.guest:
                     response = resp
                 else:
                     guests.append(response)
@@ -32,7 +39,8 @@ def get_event_responses(event_list, user):
     return events
 
 def get_future_events(
-        year=None, month=None, day=None, published=True, count=100, user=None):
+        year=None, month=None, day=None, published_only=True, user=None,
+        count=100):
     now = datetime.datetime.now()
 
     year = year or now.year
@@ -41,7 +49,7 @@ def get_future_events(
 
     q = "SELECT * from Event " \
         "WHERE start > DATETIME(:1, :2, :3, 23, 59, 59) "
-    if published:
+    if published_only:
         q += "AND published = True "
     q += "ORDER BY start"
 
@@ -51,7 +59,8 @@ def get_future_events(
 
 
 def get_current_events(
-        year=None, month=None, day=None, published=True, count=5, user=None):
+        year=None, month=None, day=None, published_only=True, user=None,
+        count=5):
     now = datetime.datetime.now()
 
     year = year or now.year
@@ -61,9 +70,11 @@ def get_current_events(
     q = "SELECT * from Event " \
         "WHERE end >= DATETIME(:1, :2, :3, 00, 00, 00) " \
         "AND end <= DATETIME(:1, :2, :3, 23, 59, 59) "
-    if published:
+    if published_only:
         q += "AND published = True "
     q += "ORDER BY end"
+
+    logging.debug('count %d', count)
 
     current_events = db.GqlQuery(q, year, month, day).fetch(count)
 
@@ -88,11 +99,13 @@ def get_next_event(year=None, month=None, day=None, hour=None, minute=None,
     return next_event
 
 def get_event_lists(year=None, month=None, day=None, hour=None, minute=None,
-        second=None, published=True):
+        second=None, published_only=True, user=None):
 
     event_lists = []
-    event_lists.append(get_current_events(year, month, day, published))
-    event_lists.append(get_future_events(year, month, day, published))
+    event_lists.append(
+        get_current_events(year, month, day, published_only, user))
+    event_lists.append(
+        get_future_events(year, month, day, published_only, user))
 
     return event_lists
 

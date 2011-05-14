@@ -24,3 +24,9 @@ indexes:
   properties:
   - name: published
   - name: start
+
+- kind: Response
+  properties:
+  - name: created_by
+  - name: event
+  - name: created_on

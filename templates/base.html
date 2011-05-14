@@ -40,7 +40,7 @@ vim: set ts=2 sw=2 et sts=2 ai:
     {% if openid_user %}
       <a href="{{ openid_logout_url }}">Logout</a>
     {% else %}
-      <a class=openid_login href="{{ openid_login_url }}">Login</a>
+      <a class="openid_login" href="{{ openid_login_url }}">Login</a>
     {% endif %}
 
     </li>
@@ -82,7 +82,7 @@ function openid_login() {
   if (window.focus) {newwin.focus()}
   return false;
 }
-$('#login').click(openid_login);
+$('.openid_login').click(openid_login);
 </script>
 {% block script %}
 {% endblock %}
