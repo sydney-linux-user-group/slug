@@ -41,3 +41,8 @@ table {
 .response-header {
   font-size: 20pt;
 }
+
+body {
+  border: 0px;
+}
+

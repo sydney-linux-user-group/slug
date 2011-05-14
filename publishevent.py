@@ -37,7 +37,7 @@ from utils.render import render as r
 extensions = ['abbr', 'footnotes', 'def_list', 'fenced_code', 'tables', 'subscript', 'superscript', 'slugheader', 'anyurl']
 
 
-class AnnounceEvent(webapp.RequestHandler):
+class PublishEvent(webapp.RequestHandler):
     def post(self, key=None):
         user = users.get_current_user()
         if user is None:
@@ -61,15 +61,32 @@ class AnnounceEvent(webapp.RequestHandler):
         message.sender = user.email()
         message.to = "committee@slug.org.au"
         message.body = event.plaintext
-        message.subject = event.name
+        if event.published:
+            ## This is an update
+            message.subject = "Updated: %s " % event.name
+        else:
+            ##First publication
+            message.subject = event.name
 
+        if event.published:
+            #This is a re-publishing, so make a new announcement
+            announcement = models.Announcement(
+                    name=event.name,
+                    plaintext=event.plaintext,
+                    html = event.html)
+
+            event.announcement = announcement.put()
+
+        event.published = True
         message.send()
+        event.put()
 
         self.redirect('/events')
 
 
+
 application = webapp.WSGIApplication(
-     [('/event/(.*)/announce', AnnounceEvent)],
+     [('/event/(.*)/publish', PublishEvent)],
     debug=True)
 application = aeoid.middleware.AeoidMiddleware(application)
 

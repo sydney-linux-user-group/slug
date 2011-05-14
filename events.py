@@ -8,19 +8,21 @@
 import config
 config.setup()
 
+from google.appengine.api import users
 from google.appengine.ext import db
 from google.appengine.ext import webapp
 
 import datetime
+import logging
 import models
+import event_lists
 
 from utils.render import render as r
-from utils import events_helper as e
 
 class Next(webapp.RequestHandler):
     """Figure out the next event, then redirect to it."""
     def get(self):
-        self.redirect(e.get_next_event().get_url())
+        self.redirect(event_lists.get_next_event().get_url())
 
 class Event(webapp.RequestHandler):
     """Handler for display a single event."""
@@ -45,14 +47,14 @@ class Events(webapp.RequestHandler):
     def get(self, year=None, month=None, day=None):
         now = datetime.datetime.now()
 
-        year = self.request.get('year', now.year)
-        month = self.request.get('month', now.month)
-        day = self.request.get('day', now.day)
+        if users.is_current_user_admin():
+            events_lists = event_lists.get_event_lists(published=False)
+        else:
+            events_lists = event_lists.get_event_lists()
 
-        future_events = e.get_future_events(year, month, day)
-        current_events = e.get_current_events(year, month, day)
-        next_event = e.get_next_event(year, month, day)
+        next_event = event_lists.get_next_event()
 
+        logging.debug("events_lists: %s", events_lists)
 
         self.response.headers['Content-Type'] = 'text/html'
         self.response.out.write(r(

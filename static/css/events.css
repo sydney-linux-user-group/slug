@@ -16,10 +16,11 @@
 
 .event-html {
   height: 250px;
-  overflow: scroll
+  overflow-y: scroll
 }
 
 .response {
   height: 250px;
   overflow: scroll;
+  border: 0px;
 }

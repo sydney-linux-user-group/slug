@@ -1,7 +1,10 @@
 application: sydney-linux-user-group-hr
-version: 3
+version: 4
 runtime: python
 api_version: 1
+
+builtins:
+- datastore_admin: on
 
 handlers:
 - url: /favicon.ico
@@ -28,13 +31,17 @@ handlers:
   login: admin
   script: editevent.py
 
-- url: /event/[0-9]*/announce
+- url: /event/[0-9]*/publish
   login: admin
-  script: announceevent.py
+  script: publishevent.py
 
 - url: /events/admin
   login: admin
   script: adminevents.py
+
+- url: /admin/.*
+  script: $PYTHON_LIB/google/appengine/ext/admin
+  login: admin
 
 - url: /.*
   script: handler.py

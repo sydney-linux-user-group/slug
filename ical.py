@@ -17,8 +17,8 @@ import vobject
 
 # Our App imports
 import models
+import event_lists
 
-from utils import events_helper as e
 
 # pylint: disable-msg=C0103
 class iCal(webapp.RequestHandler):
@@ -34,13 +34,13 @@ class iCal(webapp.RequestHandler):
         syd = pytz.timezone('Australia/Sydney')
 
         cal_event = cal.add('vevent')
-        cal_event.add('summary').value = event.name
+        cal_event.add('summary').value = event.announcement.name
         cal_event.add('dtstart').value = syd.localize(event.start)
         cal_event.add('dtend').value = syd.localize(event.end)
         cal_event.add('dtstamp').value = syd.localize(event.created_on)
-        cal_event.add('description').value = event.plaintext or \
+        cal_event.add('description').value = event.announcement.plaintext or \
           'See %s%s for details' % ( self.request.host_url, event.get_url() )
-        cal_event.add('uid').value = str(event.key())
+        cal_event.add('uid').value = str(event.announcement.key())
 
 
     def get(self, key=None):
@@ -52,12 +52,12 @@ class iCal(webapp.RequestHandler):
             event = models.Event.get_by_id(int(key))
             self.add_event(event, cal)
         else:
-            future_events = e.get_future_events()
-            current_events = e.get_current_events()
+            future_events = event_lists.get_future_events()
+            current_events = event_lists.get_current_events()
 
-            for event in current_events:
+            for event in current_events.events:
                 self.add_event(event, cal)
-            for event in future_events:
+            for event in future_events.events:
                 self.add_event(event, cal)
 
         self.response.headers['Content-Type'] = 'text/x-vCalendar'

@@ -14,3 +14,13 @@ indexes:
   properties:
   - name: end
   - name: start
+
+- kind: Event
+  properties:
+  - name: published
+  - name: end
+
+- kind: Event
+  properties:
+  - name: published
+  - name: start

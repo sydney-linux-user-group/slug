@@ -1,17 +1,7 @@
 Polleyj:
-- Send announcement email to announce list
-  - For now, just stick a button on /events for admins
-  - Later, we want automation.
-- Add "Published" status to Events
-  - future/current/next events should only return published events by default
-  - optionally return all events - only for admins
-  - clicking button to send "announce" email changes state to "published"
+- Export attendees list for organisers (polleyj)
 
-BUGS:
- - event/<<id>>/edit page should *not* display list of future dates.
- - but should have "create another event" button.
-
-Export attendees list for organisers (polleyj)
+- Automate announcement/reminder emails
 Track number of confirmed attendees
 Display number of confirmed attendees somewhere interesting
 Subscribe to announce list while registering for event

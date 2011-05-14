@@ -49,8 +49,7 @@
 }
 
 #footer {
-  position: fixed;
-  bottom: 15;
+  bottom: 5;
   width: 100%;
   border-spacing: 20px;
   display: table-row;
@@ -146,3 +145,5 @@
   background: black;
   padding: 5px;
 }
+
+#

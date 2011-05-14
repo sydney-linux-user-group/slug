@@ -47,58 +47,34 @@ etc.
 
 {% block leftbar %}
   <div id=leftbar>
-    {% if current_events %}
-    <div id=today class=box>
-      <h2>Events Today</h2>
-      <ul>
-        {% for event in current_events %}
-        <li class=eventitem>
-        <h3><a class=eventname href="{{ event.get_url }}">{{ event.name }}</a></h3>
-          {% if appengine_admin %}
-            <div class=editlink><a href="{{ event.get_url }}/edit">Edit</a></div>
-          {% endif %}
-          <span class=start>{{ event.start }}</span>
-          <div class=event-icons>
-            <div class="ical-link"><a href="{{ event.get_url }}.ics" title="Add this event to your iCalendar"><img src="/images/ical16x16.gif" alt="Add event to iCalendar"></a></div>
-          </div>
-          <div class=respond>
-            {% if openid_user %}
-            <iframe src="{{ event.get_url }}/response/show"></iframe>
-            {% else %}
-            <a href="{{ openid_login_url }}">Login to RSVP!</a>
-            {% endif %}
-          </div>
-
-        </li>
-        {% endfor %}
-      </ul>
-    </div><!-- today -->
-    {% endif %}
-
-    <div id=future class=box>
-      <h2>Future Events</h2>
-      <ul>
-        {% for event in future_events %}
-        <li class=eventitem>
-        <h3><a class=eventname href="{{ event.get_url }}">{{ event.name }}</a></h3>
-          {% if appengine_admin %}
-            <div class=editlink><a href="{{ event.get_url }}/edit">Edit</a></div>
-          {% endif %}
-          <span class=start>{{ event.start }}</span>
-          <div class=event-icons>
-            <div class="ical-link"><a href="{{ event.get_url }}.ics" title="Add this event to your iCalendar"><img src="/images/ical16x16.gif" alt="Add event to iCalendar"></a></div>
-          </div>
-          <div class=respond>
-            {% if openid_user %}
-            <iframe src="{{ event.get_url }}/response/show"></iframe>
-            {% else %}
-            <a href="{{ openid_login_url }}">Login to RSVP!</a>
-            {% endif %}
-          </div>
-        </li>
-        {% endfor %}
-      </ul>
-    </div><!-- future -->
+    {% for event_list in events_lists %}
+      {% if event_list.events %}
+      <div id=event_list class=box>
+        <h2>{{ event_list.name }}</h2>
+        <ul>
+          {% for event in event_list.events %}
+            <li class=eventitem>
+              {% if appengine_admin %}
+                <div class=editlink><a href="{{ event.get_url }}/edit">Edit</a></div>
+              {% endif %}
+              <h3><a class=eventname href="{{ event.get_url }}">{{ event.announcement.name }}</a></h3>
+              <div class=event-icons>
+                <div class="ical-link"><a href="{{ event.get_url }}.ics" title="Add this event to your iCalendar"><img src="/images/ical16x16.gif" alt="Add event to iCalendar"></a></div>
+              </div>
+              <span class=start>{{ event.start }}</span>
+              <div class=respond>
+                {% if openid_user %}
+                  <iframe src="{{ event.get_url }}/response/show"></iframe>
+                {% else %}
+                  <a href="{{ openid_login_url }}">Login to RSVP!</a>
+                {% endif %}
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+    {% endfor %}
   </div><!-- leftbar -->
 {% endblock %}
 

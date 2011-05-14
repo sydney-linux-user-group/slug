@@ -6,65 +6,32 @@ vim: set ts=2 sw=2 et sts=2 ai:
 {% block head %}
     <link rel="StyleSheet" href="/css/events.css" type="text/css" media="screen">
 {% endblock %}
-{% block body %}
-    <h1>SLUG Events</h1>
-    <div id=content class=box>
 
-  {% if current_events %}
-    <h2>Events Ending Today</h2>
-    <table>
-      <tr><th>Start Date</th><th>End Date</th><th>Event Name</th><th>Event Text</th><th>Response</th><th>iCal</th>
-        {% if appengine_admin %}
-          <th>Actions</th>
-        {% endif %}
-      </tr>
-      {% for event in current_events %}
-        <tr class="{% cycle 'evenRow' 'oddRow' %}" onclick="location.href='{{ event.get_url }}'">
-          <td>{{ event.start }}</td>
-          <td>{{ event.end }}</td>
-          <td><a href="{{ event.get_url }}">{{ event.name }}</a></td>
-          <td><div class=event-html>{{ event.html|safe }}</div></td>
-          {% if openid_user %}
-            <td><iframe class=response src="{{ event.get_url }}/response/show"/></iframe></td>
-          {% else %}
-            <td><a href="{{ openid_login_url }}">Login to RSVP!</a></td>
-          {% endif %}
-          <td>
-            <div class=event-icons> <div class="ical-link"><a href="{{ event.get_url }}.ics" title="Add this event to your iCalendar"><img src="/images/ical16x16.gif" alt="Add event to iCalendar"></a></div> </div>
-          </td>
+{% block body %}
+  <h1>SLUG Events</h1>
+  <div id=content class=box>
+    {% for event_list in events_lists %}
+      {% if event_list.events %}
+      <h2>{{ event_list.name }}</h2>
+      <table>
+        <tr><th>Start Date</th><th>End Date</th><th>Event Name</th><th>Event Text</th><th>Response</th><th>iCal</th>
           {% if appengine_admin %}
-            <td>
-              <a href="{{ event.get_url }}/edit">Edit</a>
-              <div id=announceform>
-                <form name="announce" action="{{ event.get_url }}/announce" method="post">
-                  <input type="submit" value="Send announcement email">
-                </form>
-              </div>
-            </td>
+            <th>Actions</th>
           {% endif %}
         </tr>
-      {% endfor %}
-    </table>
-  {% endif %}
-
-  <h2>Future Events</h2>
-    <table>
-      <thead>
-      <tr><th>Start Date</th><th>End Date</th><th>Event Name</th><th>Event Text</th><th>Response</th><th>iCal</th>
-        {% if appengine_admin %}
-          <th>Actions</th>
-        {% endif %}
-      </tr>
-      </thead>
-      <tbody>
-        {% for event in future_events %}
+        {% for event in event_list.events %}
           <tr class="{% cycle 'evenRow' 'oddRow' %}" onclick="location.href='{{ event.get_url }}'">
             <td>{{ event.start }}</td>
             <td>{{ event.end }}</td>
-            <td><a href="{{ event.get_url }}">{{ event.name }}</a></td>
+            <td><a href="{{ event.get_url }}">
+                {% if appengine_admin %}
+                  {{ event.name }}
+                {% else %}
+                {{ event.announcement.name }}
+                {% endif %}</a></td>
             <td><div class=event-html>{{ event.html|safe }}</div></td>
             {% if openid_user %}
-              <td><iframe class=response src="{{ event.get_url }}/response/show"></iframe></td>
+              <td><iframe class=response src="{{ event.get_url }}/response/show"/></iframe></td>
             {% else %}
               <td><a href="{{ openid_login_url }}">Login to RSVP!</a></td>
             {% endif %}
@@ -74,17 +41,27 @@ vim: set ts=2 sw=2 et sts=2 ai:
             {% if appengine_admin %}
               <td>
                 <a href="{{ event.get_url }}/edit">Edit</a>
-                <div id=announceform>
-                  <form name="announce" action="{{ event.get_url }}/announce" method="post">
-                    <input type="submit" value="Send announcement email">
+                <div id=publishform>
+                  <form name="publish" action="{{ event.get_url }}/publish" method="post">
+                    {% if event.published %}
+                      {% ifnotequal event.html event.announcement.html %}
+                        <input type="submit" value="Re-publish event">
+                      {% else %}
+                        <p>Already published</p>
+                      {% endifnotequal %}
+
+                    {% else %}
+                      <input type="submit" value="Publish event">
+                    {% endif %}
                   </form>
                 </div>
               </td>
-            {% endif %}
+            {% endif %} <!--appengine_admin -->
           </tr>
-        {% endfor %}
-      </tbody>
+        {% endfor %} <!--event-->
     </table>
+    {% endif %} <!--event_list.events -->
+  {% endfor %} <!-- event_list-->
 
-    </div> <!-- content -->
+  </div> <!-- content -->
 {% endblock %}

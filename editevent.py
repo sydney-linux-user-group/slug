@@ -25,6 +25,7 @@ import aeoid.middleware
 from dateutil import rrule
 from datetime_tz import datetime_tz
 import markdown
+import logging
 
 # Our App imports
 import models
@@ -82,19 +83,20 @@ class EditEvent(webapp.RequestHandler):
             ))
 
     def post(self, key=None):
+        event_name = self.request.get('name')
         if key:
             try:
                 key = long(key)
                 event = models.Event.get_by_id(key)
+                event.name = event_name
             # pylint: disable-msg=W0702
             except (AssertionError, ValueError):
                 self.redirect('/events')
                 return
         else:
             #name is a required field; must populate now. Rest comes later.
-            event = models.Event(name=self.request.get('name'),
-                                 text='', html='', start=datetime.now(),
-                                 end=datetime.now())
+            event = models.Event(name=event_name, text='', html='',
+                    start=datetime.now(), end=datetime.now())
 
         inputtext = self.request.get('input')
 
@@ -104,6 +106,7 @@ class EditEvent(webapp.RequestHandler):
         event.input = inputtext
         event.start = start_date.asdatetime()
         event.end = end_date.asdatetime()
+
         event.put()
 
         # We can't do this template subsitution until we have saved the event.
@@ -118,12 +121,24 @@ class EditEvent(webapp.RequestHandler):
             traceback.print_exc(file=sio)
             event.plaintext = sio.getvalue()
 
+        logging.debug("e.a %s, e.n %s", event.announcement, event.name)
+
+        if not event.published:
+            #Until event is published, keep event and announcement in sync
+            #After publishing, don't - only update the announcement when we
+            #republish
+            if event.announcement:
+                announcement = event.announcement
+                announcement.name = event.name
+            else:
+                announcement = models.Announcement(name=event.name)
+            announcement.plaintext = event.plaintext
+            announcement.html = event.html
+            event.announcement = announcement.put()
+
         event.put()
 
-        if not key:
-            key = event.key().id()
-
-        self.redirect('/event/%d/edit' % key)
+        self.redirect('%s/edit' % event.get_url())
 
 
 application = webapp.WSGIApplication(
