@@ -8,7 +8,21 @@
  * new HTML5 compatible API.
  */
 
-var yt_zindex = 0;
+var ytcloud_zindex = 0;
+
+function inside(value, min, max) {
+  return (value <= max) && (value >= min);
+}
+function collide(a, b) {
+  var padding = 5;
+  var left_overlap = 
+    inside(a.left, b.left, b.left + b.width + padding) || 
+    inside(b.left, a.left, a.left + a.width + padding);
+  var top_overlap = 
+    inside(a.top, b.top, b.top + b.height + padding) || 
+    inside(b.top, a.top, a.top + a.height + padding);
+  return left_overlap && top_overlap;
+}
 
 (function ($) {
 
@@ -29,21 +43,52 @@ var yt_zindex = 0;
     var parent_width = $(this).width();
     var parent_height = $(this).height();
 
-    $(this).find("div").each(function(index, div) {
+    var already_positioned = [];
+    var divs = $(this).find("div");
+    divs.each(function(index, div) {
       var playerID = "ytc_player" + index;
       
       var div = $(div);
       div.attr("id", playerID);
+      div.attr("class", "box");
       // Save the div properties for later
       var orig_width = div.width();
       var orig_height = div.height();
 
       // Put the divs in random locations inside their parent.
-      var new_top = Math.round(Math.random()*(parent_height-orig_height));
-      var new_left = Math.round(Math.random()*(parent_width-orig_width));
+      var attempts = 0;
+			while (attempts < 1000) {
+        var new_height = Math.round(Math.random()*(parent_width*0.20)+(parent_width*0.05));
+        var new_width = Math.round(new_height*(4.0/3));
+        var new_top = Math.round(Math.random()*(parent_height-new_height));
+        var new_left = Math.round(Math.random()*(parent_width-new_width));
+
+        var collisions = false;
+        $.each(already_positioned, function(index, other_div) {
+          collisions = collisions || collide(
+            {top: new_top, left: new_left, width: new_width, height: new_height},
+            other_div);
+        });
+
+        if (collisions) {
+          attempts++;
+          continue;
+        }
+
+        already_positioned.push({
+          height: new_height,
+          width: new_width,
+          top: new_top,
+          left: new_left
+        });
+        break;
+      }
+      console.log('Found a position after', attempts, 'iterations');
       div.css('position', 'absolute');
       div.css('top', new_top+'px');
       div.css('left', new_left+'px');
+      div.css('width', new_width+'px');
+      div.css('height', new_height+'px');
 
       div.css('display', 'none');
       var player = new YT.Player(playerID, {
@@ -53,7 +98,7 @@ var yt_zindex = 0;
         playerVars: playerVars,
         events: {
           'onReady': function(event) {
-            div.css('display', '');
+            div.fadeIn();
             // Mute doesn't work on HTML5 videos
             event.target.setVolume(0); 
             event.target.playVideo();
@@ -81,8 +126,8 @@ var yt_zindex = 0;
         div.stop();
 
         // Make us ontop
-        yt_zindex++;
-        div.css('z-index', yt_zindex);
+        ytcloud_zindex++;
+        div.css('z-index', ytcloud_zindex);
 
         // We need to calculate the duration as we might be half way through an
         // animation.
@@ -92,12 +137,12 @@ var yt_zindex = 0;
         div.animate({
           top: 0,
           left: 0,
-          width: parent_width,
-          height: parent_height,
+          width: '+='+(parent_width-div.width()),
+          height: '+='+(parent_height-div.height()),
         }, {
           duration: duration,
           step: volume
-        })
+        });
       }); // div.onmouseenter
 
       // Make it smaller
@@ -113,8 +158,8 @@ var yt_zindex = 0;
         div.animate({
           top: new_top,
           left: new_left,
-          width: orig_width,
-          height: orig_height,
+          width: new_width,
+          height: new_height,
         }, {
           duration: duration,
           step: volume

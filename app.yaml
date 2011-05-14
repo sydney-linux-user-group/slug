@@ -52,3 +52,5 @@ skip_files:
 - third_party/aeoid/demo
 - third_party/mkzip
 - (.*/)*.git/
+- .*/\..*
+- .*/README
