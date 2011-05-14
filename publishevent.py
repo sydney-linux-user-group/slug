@@ -25,7 +25,6 @@ from google.appengine.ext.webapp.util import run_wsgi_app
 import aeoid.middleware
 from dateutil import rrule
 from datetime_tz import datetime_tz
-import markdown
 
 # Our App imports
 import models
