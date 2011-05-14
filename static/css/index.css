@@ -167,6 +167,15 @@
   border: 0;
   height: 15px;
   font-size: 15px;
+  z-index: 100;
+}
+
+#youtube h3.left {
+  left: 0;
+}
+
+#youtube h3.right {
+  right: 0;
 }
 
 #youtube-wrapper {
