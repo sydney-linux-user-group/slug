@@ -6,7 +6,7 @@ vim: set ts=2 sw=2 et sts=2 ai:
   <head>
     <title>{%block title%}Sydney Linux User Group{%endblock%}</title>
     <link rel="StyleSheet" href="/css/base.css" type="text/css" media="screen">
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.0/jquery.min.js"></script>
     <link type="application/rss+xml" rel="alternate" title="SLUG Events RSS" href="/rss"/> 
     {% block head %}
     {% endblock %}
@@ -14,8 +14,7 @@ vim: set ts=2 sw=2 et sts=2 ai:
   <body>
     {% block header %}
 <div id=navbar>
-  <ul>
-    <li>|</li>
+  <ul id=links>
     <li><a href="/">Home</a></li>
     <li>|</li>
     <li><a href="/events">Events</a></li>
@@ -23,7 +22,9 @@ vim: set ts=2 sw=2 et sts=2 ai:
     <li><a href="http://lists.slug.org.au/archives/slug/">Archives</a></li>
     <li>|</li>
     <li><a href="http://lists.slug.org.au/listinfo/">Mailing Lists</a></li>
-    <li>|</li>
+  </ul>
+
+  <ul id=config>
     {% if appengine_admin %}
       <li><a href="/event/add">Add Event</a></li>
       <li>|</li>
@@ -39,9 +40,31 @@ vim: set ts=2 sw=2 et sts=2 ai:
     {% else %}
       <a id=login href="{{ openid_login_url }}">Login</a>
     {% endif %}
+
+    {% if appengine_user %}
+      {% if appengine_admin %}
+        <li><span style="color: red;">Admin User</span></li>
+      {% endif %}
+      <li><a href="{{ appengine_logout_url }}">AppEngine Logout</a></li>
+    {% endif %}
     </li>
   </ul>
 </div>
+
+    {% endblock %}
+
+<table id=main>
+  <tr>
+    <td id=body>
+      {% block body %}{% endblock %}
+    </td>
+    <td id=rightbar>
+     {% block rightbar %}{% endblock %}
+    </td>
+  </tr>
+</table>
+
+  </body>
 
 <script type="text/javascript">
 function login() {
@@ -65,36 +88,6 @@ function login() {
 }
 $('#login').click(login);
 </script>
-
-<div id=background>
-  <img src="/images/background.png">
-</div>
-
-<div id=heading onclick="location.href='/'">
-  Sydney Linux User Group
-</div>
-    {% endblock %}
-
-<div id=wrapper>
-  {% block leftbar %}{% endblock %}
-  <div id=more-wrapper>
-    <div id=body>
-    {% block body %}{% endblock %}
-    </div><!-- body -->
-   {% block footer %}{% endblock %}
-  </div><!-- more-wrapper -->
-</div><!-- wrapper -->
-
-
-    {% if appengine_user %}
-    <div id="adminfooter">
-      {% if appengine_admin %}
-        <span style="color: red;">Admin User</span>
-      {% endif %}
-      <a href="{{ appengine_logout_url }}">AppEngine Logout</a>
-    {% endif %}
-    </div>
-  </body>
 {% block script %}
 {% endblock %}
 </html>

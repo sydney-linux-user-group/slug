@@ -28,6 +28,14 @@ img, div, a, input {
   behavior: url(/css/resources/iepngfix.htc);
 }
 
+a {
+  text-decoration: 0;
+}
+
+img {
+  border: 0;
+}
+
 #background {
   position: absolute;
   top: 0;
@@ -75,33 +83,41 @@ img, div, a, input {
 }
 
 #navbar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  border-bottom: 1px solid black;
+}
+
+#navbar ul {
+  display: block;
+  padding: 0;
+  margin: 0;
+}
+
+#navbar #links {
+  float: left;
+}
+
+#navbar #config {
   float: right;
 }
 
 #navbar li {
-  float: left;
-  padding: 5px;
+  display: inline;
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
-#wrapper {
+#main {
   padding-top: 20px;
-  padding-bottom: 20px;
-  display: table;
+  padding-bottom: 0;
   width: 100%;
-}
-
-#more-wrapper {
-  display: table-cell;
-}
-
-#body h1 {
-  width: 100%;
-  margin: 0;
-  padding-right: 0.5em;
+  height: 100%;
 }
 
 #content {
-  display: table-cell;
   background-color: #e69138;
   padding: 5px;
   text-align: left;
