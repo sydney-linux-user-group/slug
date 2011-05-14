@@ -70,7 +70,7 @@ img, div, a, input {
   float: left;
 }
 
-#heading:hover {
+.hover:hover {
   cursor: pointer;
 }
 

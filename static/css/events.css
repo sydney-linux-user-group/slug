@@ -10,10 +10,6 @@
   background-color: #DF7401;
 }
 
-.evenrow:hover {
-  cursor: pointer;
-}
-
 .oddrow {
   background-color: white
 }
@@ -24,10 +20,6 @@
 
 .oddrow.altered {
   background-color: #F7BE81;
-}
-
-.oddrow:hover {
-  cursor: pointer;
 }
 
 .event-html {
