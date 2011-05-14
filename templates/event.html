@@ -10,6 +10,8 @@ vim: set ts=2 sw=2 et sts=2 ai:
     <div id=content class=box style="float: left;">
       <div class='eventBody'> {{ event.announcement.html|safe }} </div>
     </div>
+{% endblock %}
+{% block rightbar %}
     <div id=eventright class='box'>
       <span class=start>{{ event.start }}</span>
         {% if appengine_admin %}
@@ -23,5 +25,4 @@ vim: set ts=2 sw=2 et sts=2 ai:
         {% endif %}
       </div>
     </div>
-
-{% endblock %}
+{% endblock %} 
