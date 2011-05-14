@@ -13,8 +13,26 @@ from google.appengine.ext import db
 import datetime
 import models
 
+
+def get_event_responses(event_list, user):
+    events = []
+    for event in event_list:
+        response = None
+        guests = []
+        if user:
+            responses = event.responses.filter("created_by = ", user).order(
+                    "created_on")
+            for resp in responses:
+                if not response.guest:
+                    response = resp
+                else:
+                    guests.append(response)
+        events.append( (event, response, guests) )
+
+    return events
+
 def get_future_events(
-        year=None, month=None, day=None, published=True, count=100):
+        year=None, month=None, day=None, published=True, count=100, user=None):
     now = datetime.datetime.now()
 
     year = year or now.year
@@ -29,11 +47,11 @@ def get_future_events(
 
     future_events = db.GqlQuery(q, year, month, day).fetch(count)
 
-    return EventList(future_events, "Coming soon")
+    return EventList(get_event_responses(future_events, user), "Coming soon")
 
 
 def get_current_events(
-        year=None, month=None, day=None, published=True, count=5):
+        year=None, month=None, day=None, published=True, count=5, user=None):
     now = datetime.datetime.now()
 
     year = year or now.year
@@ -49,7 +67,7 @@ def get_current_events(
 
     current_events = db.GqlQuery(q, year, month, day).fetch(count)
 
-    return EventList(current_events, "Happening today")
+    return EventList(get_event_responses(current_events, user), "Happening today")
 
 def get_next_event(year=None, month=None, day=None, hour=None, minute=None,
         second=None):

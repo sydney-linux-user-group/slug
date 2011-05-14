@@ -48,7 +48,7 @@ vim: set ts=2 sw=2 et sts=2 ai:
       <div id=event_list class=box>
         <h2>{{ event_list.name }}</h2>
         <ul>
-          {% for event in event_list.events %}
+          {% for event, response, guests in event_list.events %}
             <li class=eventitem>
               {% if appengine_admin %}
                 <div class=editlink><a href="{{ event.get_url }}/edit">Edit</a></div>
@@ -60,7 +60,7 @@ vim: set ts=2 sw=2 et sts=2 ai:
               <span class=start>{{ event.start }}</span>
               <div class=respond id="respond-{{ event.key.id }}">
                 {% if openid_user %}
-                  <iframe src="{{ event.get_url }}/response/show"></iframe>
+                  {% include "response-show.html" %}
                 {% else %}
                   <a class=openid_login href="{{ openid_login_url }}">Login to RSVP!</a>
                 {% endif %}
@@ -89,6 +89,17 @@ vim: set ts=2 sw=2 et sts=2 ai:
     <span class=minor> Educate your fellows </span>
   </div>
 </div>
+
+<script type="text/javascript">
+  function handle_response() {
+    event.preventDefault();
+    url=this.href;
+    alert(url);
+    return false;
+  }
+  $('.respond a').click(handle_response);
+</script>
+
 {% endblock %}
 
 

@@ -1,13 +1,3 @@
-{% extends "blank.html" %}
-{% comment %}
--*- coding: utf-8 -*-
-vim: set ts=2 sw=2 et sts=2 ai:
-{% endcomment %}
-{% block head %}
-    <link rel="StyleSheet" href="/css/response.css" type="text/css" media="screen">
-{% endblock %}
-{% block body %}
-
 {% ifequal response None %}
     <div>
       <table>
@@ -228,5 +218,3 @@ vim: set ts=2 sw=2 et sts=2 ai:
       </table>
     </div>
 {% endif %}{% endifequal %}
-
-{% endblock %}

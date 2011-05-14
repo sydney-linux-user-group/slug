@@ -128,3 +128,18 @@ img, div, a, input {
 #eventright .editlink {
   display: table-row;
 }
+
+.response-table {
+    display: inline-table;
+}
+
+.response-header {
+    display: table-row;
+}
+
+.response-answer {
+    display: table-row;
+}
+.response-answer img, .response-answer p {
+    display: table-cell
+}
