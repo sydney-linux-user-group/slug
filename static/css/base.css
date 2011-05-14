@@ -149,10 +149,6 @@ img {
     display: inline-table;
 }
 
-.response-header {
-    display: table-row;
-}
-
 .response-answer {
     display: table-row;
 }
@@ -223,14 +219,17 @@ img {
   border: 0px;
 }
 
+.response-details {
+  display: table;
+}
+
 .positive-multiple {
     display: table-cell;
+    vertical-align: top;
 }
 
 .positive-multiple-images {
-  table-layout: fixed;
   display: inline-table;
-  max-width: 76px;
 }
 
 #rightbar {
