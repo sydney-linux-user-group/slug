@@ -37,34 +37,11 @@ vim: set ts=2 sw=2 et sts=2 ai:
     {% if openid_user %}
       <a href="{{ openid_logout_url }}">Logout</a>
     {% else %}
-      <a id=login href="{{ openid_login_url }}">Login</a>
+      <a class=openid_login href="{{ openid_login_url }}">Login</a>
     {% endif %}
     </li>
   </ul>
 </div>
-
-<script type="text/javascript">
-function login() {
-  var url = '{{ openid_login_jsurl }}';
-  var width  = 300;
-  var height = 200;
-  var left   = (screen.width  - width)/2;
-  var top    = (screen.height - height)/2;
-  var params = 'width='+width+', height='+height;
-  params += ', top='+top+', left='+left;
-  params += ', directories=no';
-  params += ', location=no';
-  params += ', menubar=no';
-  params += ', resizable=no';
-  params += ', scrollbars=no';
-  params += ', status=no';
-  params += ', toolbar=no';
-  newwin=window.open(url,'login', params);
-  if (window.focus) {newwin.focus()}
-  return false;
-}
-$('#login').click(login);
-</script>
 
 <div id=background>
   <img src="/images/background.png">
@@ -94,6 +71,29 @@ $('#login').click(login);
       <a href="{{ appengine_logout_url }}">AppEngine Logout</a>
     {% endif %}
     </div>
+
+<script type="text/javascript">
+function openid_login() {
+  var url = '{{ openid_login_jsurl }}';
+  var width  = 300;
+  var height = 200;
+  var left   = (screen.width  - width)/2;
+  var top    = (screen.height - height)/2;
+  var params = 'width='+width+', height='+height;
+  params += ', top='+top+', left='+left;
+  params += ', directories=no';
+  params += ', location=no';
+  params += ', menubar=no';
+  params += ', resizable=no';
+  params += ', scrollbars=no';
+  params += ', status=no';
+  params += ', toolbar=no';
+  newwin=window.open(url,'login', params);
+  if (window.focus) {newwin.focus()}
+  return false;
+}
+$('.openid_login').click(openid_login);
+</script>
   </body>
 {% block script %}
 {% endblock %}
