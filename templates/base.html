@@ -38,7 +38,7 @@ vim: set ts=2 sw=2 et sts=2 ai:
     {% if openid_user %}
       <a href="{{ openid_logout_url }}">Logout</a>
     {% else %}
-      <a id=login href="{{ openid_login_url }}">Login</a>
+      <a class=openid_login href="{{ openid_login_url }}">Login</a>
     {% endif %}
 
     {% if appengine_user %}
@@ -67,7 +67,7 @@ vim: set ts=2 sw=2 et sts=2 ai:
   </body>
 
 <script type="text/javascript">
-function login() {
+function openid_login() {
   var url = '{{ openid_login_jsurl }}';
   var width  = 300;
   var height = 200;
@@ -86,7 +86,7 @@ function login() {
   if (window.focus) {newwin.focus()}
   return false;
 }
-$('#login').click(login);
+$('#login').click(openid_login);
 </script>
 {% block script %}
 {% endblock %}
