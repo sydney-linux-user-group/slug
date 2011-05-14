@@ -1,15 +1,15 @@
 {% ifequal response None %} <!-- No response yet -->
   <div class=response-table>
     <div class="response-header">Are you attending?</div>
-    <a class="response-answer" href="/event/{{ event.key.id }}/response/update?attending=yes">
+    <a class="response-answer" href="{{ event.get_url }}//response/update?attending=yes">
       <img class="response-image" src="/images/tick.png">
       <div class="response-text">Yes!</div>
     </a>
-    <a class="response-answer" href="/event/{{ event.key.id }}/response/friends">
+    <a class="response-answer" href="{{ event.get_url }}//response/friends">
       {% include "fragments/positive-multiple.html" %}
       <div class="response-text">Yes, with friends!</div>
     </a>
-    <a class="response-answer" href="/event/{{ event.key.id }}/response/update?attending=no">
+    <a class="response-answer" href="{{ event.get_url }}//response/update?attending=no">
       <img class="response-image" src="/images/cross.png">
       <div class="response-text">No :(</div>
     </a>
@@ -47,7 +47,7 @@
           <img class="response-image-small" src="/images/tick.png">
           <div class="response-text">Update friends</div>
         </a>
-        <a href="/event/{{ event.key.id }}/response/update?attending=no">
+        <a class="response-answer" href="{{ event.get_url }}//response/update?attending=no">
           <img class="response-image-small" src="/images/cross.png">
           <div class="response-text">Can't make it :(</div>
         </a>
@@ -64,14 +64,14 @@
           <img class="gravatar-large" src="{{response.created_by.email|gravatar:148 }}"
             alt="{{ response.created_by.nickname }}'s Gravatar">
         </div>
-        <a class="response-answer" href="/event/{{ event.key.id }}/response/friends">
+        <a class="response-answer" href="{{ event.get_url }}//response/friends">
           <div class="response-images-small">
              <img class="response-image-small" src="/images/tick.png">
              <img class="response-image-small" src="/images/tick.png">
            </div>
            <div class="response-text">Add friends!</div>
          </a>
-         <a class="response-answer" href="/event/{{ event.key.id }}/response/update?attending=no">
+         <a class="response-answer" href="{{ event.get_url }}//response/update?attending=no">
            <img class="response-image-small" src="/images/cross.png">
            <div class="response-text">Can't make it :(</div>
          </a>
@@ -89,7 +89,7 @@
           src="{{ response.created_by.email|gravatar:148 }}"
           alt="{{ response.created_by.nickname }}'s Gravatar">
       <div class="response-details">
-        <a class="response-answer" href="/event/{{ event.key.id }}/response/update?attending=yes">
+        <a class="response-answer" href="{{ event.get_url }}//response/update?attending=yes">
           <img class="response-image-small" src="/images/tick.png">
           <div class="response-text">I'm attending!</div>
         </a>
