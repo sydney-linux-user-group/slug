@@ -128,11 +128,11 @@ img {
   display: table-cell;
 }
 
+
 #eventright {
   display: table
   padding: 5px;
 }
-
 #eventright .start {
   display: table-row;
 }
@@ -188,6 +188,7 @@ img {
   height: 148px;
   padding: 1px;
   margin: 0;
+  display: table-cell;
 }
 
 .gravatar-small {
@@ -195,12 +196,18 @@ img {
   height: 48px;
   padding: 1px;
   margin: 0;
+  display: table-cell;
 }
 
 .gravatar-n-friends {
   width: 200px; /* gravatar.height + 2*gravatar.padding +
                    gravatar-small.height + 2*gravatar-small.padding */
   height: 150px; /* .gravatar.height + 2*gravatar.padding */
+  display: table-row;
+}
+
+.gravatar-column {
+  display: inline-table;
 }
 
 .response-text {
@@ -218,15 +225,15 @@ img {
 
 .positive-multiple {
     display: table-cell;
-    max-width: 76px;
-}
-
-.positive-multiple .response-image {
-  display: inline;
 }
 
 .positive-multiple-images {
   table-layout: fixed;
   display: inline-table;
   max-width: 76px;
+}
+
+#rightbar {
+  vertical-align: top;
+  overflow-y: scroll;
 }

@@ -1,4 +1,4 @@
-{% ifequal response None %}
+{% ifequal response None %} <!-- No response yet -->
   <div class=response-table>
     <div class="response-header">Are you attending?</div>
     <a class="response-answer" href="/event/{{ event.key.id }}/response/update?attending=yes">
@@ -14,179 +14,75 @@
       <div class="response-text">No :(</div>
     </a>
   </div> <!-- response answer -->
-{% else %}{% if response.attending %}
+  {% else %}{% if response.attending %} <!-- Attending, with guests -->
   {% if guests %}
-    <div>
-      <table>
-        <tr>
-          <th>
-            {% include "fragments/positive-multiple.html" %}
-          </th>
-          <th>
-            <span class="response-header">I'm attending with friends!</span>
-          </th>
-        </tr>
-        <tr>
-          <td colspan=2>
-
-            <table class="gravatar-n-friends">
-              <tr>
-                <td rowspan=3>
-                  <img class="gravatar-large"
-                    src="{{ response.created_by.email|gravatar:148 }}"
+    <div class=response-table>
+      {% include "fragments/positive-multiple.html" %}
+      <div class="response-header">I'm attending with friends!</div>
+      <div class="gravatar-n-friends">
+        <img class="gravatar-large" src="{{ response.created_by.email|gravatar:148 }}"
                     alt="{{ response.created_by.nickname }}'s Gravatar">
-                </td>
-                {% for guest in guests %}
-                  {% if forloop.counter0|add:0|divisibleby:3 %}
-                  <td>
-                    <img class="gravatar-small"
-                      src="{{ guest.guest_email|gravatar:48 }}"
-                      alt="{{ guest.guest_name }}'s Gravatar">
-                  </td>
-                  {% endif %}
-                {% endfor %}
-              </tr>
-              <tr>
-                {% for guest in guests %}
-                  {% if forloop.counter0|add:2|divisibleby:3 %}
-                  <td>
-                    <img class="gravatar-small"
-                      src="{{ guest.guest_email|gravatar:48 }}"
-                      alt="{{ guest.guest_name }}'s Gravatar">
-                  </td>
-                  {% endif %}
-                {% endfor %}
-              </tr>
-              <tr>
-                {% for guest in guests %}
-                  {% if forloop.counter0|add:1|divisibleby:3 %}
-                  <td>
-                    <img class="gravatar-small"
-                      src="{{ guest.guest_email|gravatar:48 }}"
-                      alt="{{ guest.guest_name }}'s Gravatar">
-                  </td>
-                  {% endif %}
-                {% endfor %}
-              </tr>
-            </table>
-
-          </td>
-        </tr>
-        <tr>
-          <td colspan=2>
-            <a href="/event/{{ event.key.id }}/response/friends">
-              <table>
-                <tr>
-                  <td><img class="response-small" src="/images/tick.png"></td>
-                  <td><img class="response-small" src="/images/tick.png"></td>
-                  <td>Update friends</td>
-                </tr>
-              </table>
-            </a>
-          </td>
-        </tr>
-        <tr>
-          <td colspan=2>
-            <a href="/event/{{ event.key.id }}/response/update?attending=no">
-              <table>
-                <tr>
-                  <td>
-                    <img class="response-small" src="/images/cross.png">
-                  </td>
-                  <td>
-                    Can't make it :(
-                  </td>
-                </tr>
-              </table>
-            </a>
-          </td>
-        </tr>
-      </table>
+        <div class="positive-multiple">
+          {% for guest in guests %}
+            {% if forloop.counter0|divisibleby:3 %}
+              <div class="gravatar-column">
+            {% endif %}
+              <img class="gravatar-small"
+                src="{{ guest.guest_email|gravatar:48 }}"
+                alt="{{ guest.guest_name }}'s Gravatar">
+            {% if forloop.counter0|add:1|divisibleby:3 %}
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+      <a class="response-answer" href="{{ event.get_url }}/response/friends">
+        <img class="response-image-small" src="/images/tick.png">
+        <img class="response-image-small" src="/images/tick.png">
+        <div class="response-text">Update friends</div>
+      </a>
+      <a href="/event/{{ event.key.id }}/response/update?attending=no">
+        <img class="response-image-small" src="/images/cross.png">
+        Mdiv class="response-text">Can't make it :(</div>
+      </a>
     </div>
-  {% else %}
-    <div>
-      <table>
-        <tr>
-          <th>
-            <img class="response-image" src="/images/tick.png">
-          </th>
-          <th>
-            <span class="response-header">I'm attending!</span>
-          </th>
-        </tr>
-        <tr>
-          <td colspan=2>
-            <img class="gravatar-large"
-              src="{{ response.created_by.email|gravatar:148 }}"
-              alt="{{ response.created_by.nickname }}'s Gravatar">
-          </td>
-        </tr>
-        <tr>
-          <td colspan=2>
-            <a href="/event/{{ event.key.id }}/response/friends">
-              <table>
-                <tr>
-                  <td><img class="response-small" src="/images/tick.png"></td>
-                  <td><img class="response-small" src="/images/tick.png"></td>
-                  <td>Add friends!</td>
-                </tr>
-              </table>
-            </a>
-          </td>
-        </tr>
-        <tr>
-          <td colspan=2>
-            <a href="/event/{{ event.key.id }}/response/update?attending=no">
-              <table>
-                <tr>
-                  <td>
-                    <img class="response-small" src="/images/cross.png">
-                  </td>
-                  <td>
-                    Can't make it :(
-                  </td>
-                </tr>
-              </table>
-            </a>
-          </td>
-        </tr>
-      </table>
+  {% else %} <!-- attending, no guests yet -->
+    <div class=response-table>
+      <div class="gravatar-n-friends">
+        <div class="response-header">
+          <img class="response-image" src="/images/tick.png">
+          <div class="response-text">I'm attending!</div>
+        </div>
+        <img class="gravatar-large" src="{{response.created_by.email|gravatar:148 }}"
+          alt="{{ response.created_by.nickname }}'s Gravatar">
+      </div>
+      <a href="/event/{{ event.key.id }}/response/friends">
+        <div class="response-images-small">
+           <img class="response-image-small" src="/images/tick.png">
+           <img class="response-image-small" src="/images/tick.png">
+         </div>
+         <div class="response-text">Add friends!</div>
+       </a>
+       <a href="/event/{{ event.key.id }}/response/update?attending=no">
+         <img class="response-image-small" src="/images/cross.png">
+         <div class="response-text">Can't make it :(</div>
+       </a>
     </div>
-  {% endif %}
-{% else %}
-    <div>
-      <table>
-        <tr>
-          <th>
-            <img class="response-image" src="/images/cross.png">
-          </th>
-          <th>
-            <span class="positive-header">I'm not attending :(</span>
-          </th>
-        </tr>
-        <tr>
-          <td colspan=2>
-            <img class="gravatar-large"
-              src="{{ response.created_by.email|gravatar:148 }}"
-              alt="{{ response.created_by.nickname }}'s Gravatar">
-          </td>
-        </tr>
-        <tr>
-          <td colspan=2>
-            <a href="/event/{{ event.key.id }}/response/update?attending=yes">
-              <table>
-                <tr>
-                  <td>
-                    <img class="response-small" src="/images/tick.png">
-                  </td>
-                  <td>
-                    I'm attending!
-                  </td>
-                </tr>
-              </table>
-            </a>
-          </td>
-        </tr>
-      </table>
+  {% endif %} <!-- end is-attending -->
+{% else %} <!-- Has responded, not attending -->
+  <div class=response-table>
+    <div class="gravatar-n-friends">
+      <div class="response-header">
+        <img class="response-image" src="/images/cross.png">
+        <div class="response-text">I'm not attending :(</div>
+      </div>
+      <img class="gravatar-large"
+        src="{{ response.created_by.email|gravatar:148 }}"
+        alt="{{ response.created_by.nickname }}'s Gravatar">
     </div>
+    <a href="/event/{{ event.key.id }}/response/update?attending=yes">
+      <img class="response-image-small" src="/images/tick.png">
+      <div class="response-text">I'm attending!</div>
+    </a>
+  </div>
 {% endif %}{% endifequal %}
