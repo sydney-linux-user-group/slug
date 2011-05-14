@@ -2,12 +2,20 @@
   background-color: grey
 }
 
+.evenrow.unpublished {
+  background-color: #C08080;
+}
+
 .evenrow:hover {
   cursor: pointer;
 }
 
 .oddrow {
   background-color: white
+}
+
+.oddrow {
+  background-color: #FFB9B9;
 }
 
 .oddrow:hover {
@@ -24,3 +32,4 @@
   overflow: scroll;
   border: 0px;
 }
+
