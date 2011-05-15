@@ -43,11 +43,12 @@ class Events(webapp.RequestHandler):
     """Handler for display a table of events."""
 
     template = "templates/events.html"
+    published_only = False
 
     def get(self, year=None, month=None, day=None):
         now = datetime.datetime.now()
 
-        if users.is_current_user_admin():
+        if users.is_current_user_admin() and not self.published_only:
             events_lists = event_lists.get_event_lists(published=False)
         else:
             events_lists = event_lists.get_event_lists()
