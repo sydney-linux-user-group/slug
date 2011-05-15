@@ -45,6 +45,7 @@ class Events(webapp.RequestHandler):
     """Handler for display a table of events."""
 
     template = "templates/events.html"
+    published_only = False
 
     def get(self, year=None, month=None, day=None):
         now = datetime.datetime.now()
