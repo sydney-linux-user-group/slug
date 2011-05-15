@@ -10,3 +10,6 @@
 [submodule "third_party/jquery.tweet"]
 	path = third_party/jquery.tweet
 	url = git://github.com/seaofclouds/tweet.git
+[submodule "third_party/jquery.form"]
+	path = third_party/jquery.form
+	url = https://github.com/malsup/form.git

@@ -7,6 +7,7 @@ vim: set ts=2 sw=2 et sts=2 ai:
     <title>{%block title%}Sydney Linux User Group{%endblock%}</title>
     <link rel="StyleSheet" href="/css/base.css" type="text/css" media="screen">
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.0/jquery.min.js"></script>
+    <script type="text/javascript" src="/third_party/jquery.form/jquery.form.js"></script>
     <link type="application/rss+xml" rel="alternate" title="SLUG Events RSS" href="/rss"/> 
     {% block head %}
     {% endblock %}
@@ -60,8 +61,37 @@ vim: set ts=2 sw=2 et sts=2 ai:
   </tr>
 </table>
 
+  <script type="text/javascript">
+    function handleSuccess(responseText, statusText, xhr, $form) {
+      target = $form.closest('.respond');
+      window.console.log('success: ' + target);
+      targetid = target.attr('id');
+      target.html(responseText);
+      $('#' + targetid + ' .response-answer').ajaxForm({
+        data: { returnfragment: 'yes' },
+        dataType: 'html',
+        success: handleSuccess
+        });
+    };
+    function ajaxifyforms () {
+      window.console.log('ajaxify');
+      $('.response-answer').ajaxForm({
+        data: { returnfragment: 'yes' },
+        dataType: 'html',
+        success: handleSuccess
+        });
+    };
+    $(ajaxifyforms);
+
+  </script>
+
   </body>
 
+</head>
+
+<body>
+</body>
+</html>
 <script type="text/javascript">
 function openid_login() {
   var url = '{{ openid_login_jsurl }}';

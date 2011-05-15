@@ -19,22 +19,23 @@ vim: set ts=2 sw=2 et sts=2 ai:
             <th>Actions</th>
           {% endif %}
         </tr>
-        {% for event, _, _ in event_list.events %}
-        <tr class="hover {% cycle 'evenRow' 'oddRow' %}{% if appengine_admin and not event.published %} unpublished{% endif %}{% if appengine_admin and event.html != event.announcement.html %} altered{% endif %}" onclick="location.href='{{ event.get_url }}'">
+        {% for event, response, guests in event_list.events %}
+        <tr class="hover {% cycle 'evenRow' 'oddRow' %}{% if appengine_admin and not event.published %} unpublished{% endif %}{% if appengine_admin and event.html != event.announcement.html %} altered{% endif %}">
             <td>{{ event.start }}</td>
             <td>{{ event.end }}</td>
             <td><a href="{{ event.get_url }}">
                 {% if appengine_admin %}
                   {{ event.name }}
                 {% else %}
-                {{ event.announcement.name }}
+                  {{ event.announcement.name }}
                 {% endif %}</a></td>
             <td><div class=event-html>{{ event.html|safe }}</div></td>
-            {% if openid_user %}
-              <td><iframe class=response src="{{ event.get_url }}/response/show"/></iframe></td>
-            {% else %}
-            <td><a class="openid_login_url "href="{{ openid_login_url }}">Login to RSVP!</a></td>
-            {% endif %}
+            <td><div class=respond id="respond-{{ event.key.id}}">
+              {% if openid_user %}
+                {% include "response-show.html" %}
+              {% else %}
+                <a class=openid_login  href="{{ openid_login_url }}">Login to RSVP!</a>
+              {% endif %}
             <td>
               <div class=event-icons> <div class="ical-link"><a href="{{ event.get_url }}.ics" title="Add this event to your iCalendar"><img src="/images/ical16x16.gif" alt="Add event to iCalendar"></a></div> </div>
             </td>
@@ -64,4 +65,5 @@ vim: set ts=2 sw=2 et sts=2 ai:
   {% endfor %} <!-- event_list-->
 
   </div> <!-- content -->
+
 {% endblock %}

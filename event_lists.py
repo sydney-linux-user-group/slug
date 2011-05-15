@@ -13,27 +13,27 @@ from google.appengine.ext import db
 from aeoid import users as openid_users
 
 import datetime
-import logging
 import models
 
 
-def get_event_responses(event_list, user):
+def get_event_responses(event, user):
+    response = None
+    guests = []
+    if user:
+        responses = event.responses.filter("created_by = ",
+                user._user_info_key).order( "created_on")
+        for resp in responses:
+            if not resp.guest:
+                response = resp
+            else:
+                guests.append(response)
+    return response, guests
+
+
+def get_eventlist_responses(event_list, user):
     events = []
     for event in event_list:
-        response = None
-        guests = []
-        if user:
-            logging.debug('got user %s', user.email() )
-            logging.debug('user %s', user._user_info_key )
-            responses = event.responses.filter("created_by = ",
-                    user._user_info_key).order( "created_on")
-            for resp in responses:
-                logging.debug('got response %s. guest is %s', resp,
-                        resp.guest)
-                if not resp.guest:
-                    response = resp
-                else:
-                    guests.append(response)
+        response, guests = get_eventlist_responses(event, user)
         events.append( (event, response, guests) )
 
     return events
@@ -55,7 +55,8 @@ def get_future_events(
 
     future_events = db.GqlQuery(q, year, month, day).fetch(count)
 
-    return EventList(get_event_responses(future_events, user), "Coming soon")
+    return EventList(get_eventlist_responses(
+        future_events, user), "Coming soon")
 
 
 def get_current_events(
@@ -74,11 +75,10 @@ def get_current_events(
         q += "AND published = True "
     q += "ORDER BY end"
 
-    logging.debug('count %d', count)
-
     current_events = db.GqlQuery(q, year, month, day).fetch(count)
 
-    return EventList(get_event_responses(current_events, user), "Happening today")
+    return EventList(get_eventlist_responses(
+        current_events, user), "Happening today")
 
 def get_next_event(year=None, month=None, day=None, hour=None, minute=None,
         second=None):
