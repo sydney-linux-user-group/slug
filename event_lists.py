@@ -33,7 +33,7 @@ def get_event_responses(event, user):
 def get_eventlist_responses(event_list, user):
     events = []
     for event in event_list:
-        response, guests = get_eventlist_responses(event, user)
+        response, guests = get_event_responses(event, user)
         events.append( (event, response, guests) )
 
     return events
