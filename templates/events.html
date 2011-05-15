@@ -20,7 +20,7 @@ vim: set ts=2 sw=2 et sts=2 ai:
           {% endif %}
         </tr>
         {% for event, response, guests in event_list.events %}
-        <tr class="hover {% cycle 'evenRow' 'oddRow' %}{% if appengine_admin and not event.published %} unpublished{% endif %}{% if appengine_admin and event.html != event.announcement.html %} altered{% endif %}" onclick="location.href='{{ event.get_url }}'">
+        <tr class="hover {% cycle 'evenRow' 'oddRow' %}{% if appengine_admin and not event.published %} unpublished{% endif %}{% if appengine_admin and event.html != event.announcement.html %} altered{% endif %}">
             <td>{{ event.start }}</td>
             <td>{{ event.end }}</td>
             <td><a href="{{ event.get_url }}">
@@ -30,7 +30,7 @@ vim: set ts=2 sw=2 et sts=2 ai:
                   {{ event.announcement.name }}
                 {% endif %}</a></td>
             <td><div class=event-html>{{ event.html|safe }}</div></td>
-            <td><div class=respond>
+            <td><div class=respond id="respond-{{ event.key.id}}" onclick="">
               {% if openid_user %}
                 {% include "response-show.html" %}
               {% else %}
@@ -65,4 +65,5 @@ vim: set ts=2 sw=2 et sts=2 ai:
   {% endfor %} <!-- event_list-->
 
   </div> <!-- content -->
+
 {% endblock %}

@@ -13,7 +13,6 @@ from google.appengine.ext import db
 from aeoid import users as openid_users
 
 import datetime
-import logging
 import models
 
 
@@ -23,13 +22,9 @@ def get_event_responses(event_list, user):
         response = None
         guests = []
         if user:
-            logging.debug('got user %s', user.email() )
-            logging.debug('user %s', user._user_info_key )
             responses = event.responses.filter("created_by = ",
                     user._user_info_key).order( "created_on")
             for resp in responses:
-                logging.debug('got response %s. guest is %s', resp,
-                        resp.guest)
                 if not resp.guest:
                     response = resp
                 else:
@@ -73,8 +68,6 @@ def get_current_events(
     if published_only:
         q += "AND published = True "
     q += "ORDER BY end"
-
-    logging.debug('count %d', count)
 
     current_events = db.GqlQuery(q, year, month, day).fetch(count)
 

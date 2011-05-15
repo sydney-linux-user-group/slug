@@ -114,5 +114,3 @@ class UpdateResponsePage(webapp.RequestHandler):
             response.put()
 
         self.redirect('/event/%s/response/show' % event.key().id())
-
-    get = post

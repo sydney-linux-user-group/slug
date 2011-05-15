@@ -1,16 +1,16 @@
 {% ifequal response None %} <!-- No response yet -->
   <div class=response-table>
     <div class="response-header">Are you attending?</div>
-    <form class="response-answer" action="{{ event.get_url }}/response/updates">
+    <form class="response-answer" method=post action="{{ event.get_url }}/response/updates">
       <input type=hidden name=attending value="yes">
       <img class="response-image" src="/images/tick.png">
       <div class="response-text"><input type=submit value="Yes!"</div>
     </a>
-    <form class="response-answer" action="{{ event.get_url }}/response/friends">
+    <form class="response-answer" method=post action="{{ event.get_url }}/response/friends">
       {% include "fragments/positive-multiple.html" %}
       <div class="response-text">Yes, with friends!</div>
     </form>
-    <form class="response-answer" href="{{ event.get_url }}//response/update?attending=no">
+    <form class="response-answer" method=post action="{{ event.get_url }}/response/update">
       <input type=hidden name=attending value="no">
       <img class="response-image" src="/images/cross.png">
       <div class="response-text"><input type=submit value="No :("></div>
@@ -44,12 +44,12 @@
         </div>
       </div>
       <div class="response-answers">
-        <form class="response-answer" action="{{ event.get_url }}/response/friends">
+        <form class="response-answer" method=post action="{{ event.get_url }}/response/friends">
           <img class="response-image-small" src="/images/tick.png">
           <img class="response-image-small" src="/images/tick.png">
           <div class="response-text"><input type=submit value="Update friends"></div>
         </form>
-        <form class="response-answer" href="{{ event.get_url }}//response/update?attending=no">
+        <form class="response-answer" method=post action="{{ event.get_url }}/response/update">
           <input type=hidden name="attending" value="no">
           <img class="response-image-small" src="/images/cross.png">
           <div class="response-text"><input type=submit value="Can't make it :("></div>
@@ -67,14 +67,14 @@
           <img class="gravatar-large" src="{{response.created_by.email|gravatar:148 }}"
             alt="{{ response.created_by.nickname }}'s Gravatar">
         </div>
-        <form class="response-answer" action="{{ event.get_url }}/response/friends">
+        <form class="response-answer" method=post action="{{ event.get_url }}/response/friends">
           <div class="response-images-small">
              <img class="response-image-small" src="/images/tick.png">
              <img class="response-image-small" src="/images/tick.png">
            </div>
            <div class="response-text"><input type=submit value="Add friends!"></div>
          </form>
-         <form class="response-answer" href="{{ event.get_url }}//response/update?attending=no">
+         <form class="response-answer" method=post action="{{ event.get_url }}/response/update">
            <input type=hidden name="attending" value="no">
            <img class="response-image-small" src="/images/cross.png">
            <div class="response-text"><input type=submit value="Can't make it :("></div>
@@ -93,7 +93,7 @@
           src="{{ response.created_by.email|gravatar:148 }}"
           alt="{{ response.created_by.nickname }}'s Gravatar">
       <div class="response-details">
-        <form class="response-answer" action="{{ event.get_url }}/response/update">
+        <form class="response-answer" method=post action="{{ event.get_url }}/response/update">
           <input type=hidden name="attending" value="yes">
           <img class="response-image-small" src="/images/tick.png">
           <div class="response-text"><input type=submit value="I'm attending!"></div>
