@@ -1,11 +1,15 @@
+{% comment %}
+-*- coding: utf-8 -*-
+vim: set ts=2 sw=2 et sts=2 ai:
+{% endcomment %}
 {% ifequal response None %} <!-- No response yet -->
   <div class=response-table>
     <div class="response-header">Are you attending?</div>
     <form class="response-answer" method=post action="{{ event.get_url }}/response/updates">
       <input type=hidden name=attending value="yes">
       <img class="response-image" src="/images/tick.png">
-      <div class="response-text"><input type=submit value="Yes!"</div>
-    </a>
+      <div class="response-text"><input type=submit value="Yes!"></div>
+    </form>
     <form class="response-answer" method=post action="{{ event.get_url }}/response/friends">
       {% include "fragments/positive-multiple.html" %}
       <div class="response-text">Yes, with friends!</div>
@@ -15,11 +19,11 @@
       <img class="response-image" src="/images/cross.png">
       <div class="response-text"><input type=submit value="No :("></div>
     </form>
-  </div> <!-- response answer -->
-  {% else %}{% if response.attending %} <!-- Attending, with guests -->
-  {% if guests %}
-    <div class=response-table>
-      <div class="gravatar-n-friends">
+  </div> <!-- response table -->
+{% else %}{% if response.attending %} <!-- Attending, with guests -->
+{% if guests %}
+  <div class=response-table>
+    <div class="gravatar-n-friends">
       <div class="response-header">
         {% include "fragments/positive-multiple.html" %}
         <div class="response-text">I'm attending with friends!</div>
@@ -37,12 +41,12 @@
                 src="{{ guest.guest_email|gravatar:48 }}"
                 alt="{{ guest.guest_name }}'s Gravatar">
             {% if forloop.counter0|add:1|divisibleby:3 or forloop.last %}
-              </div>
-            </div>
+              </div><!-- gravatar-column -->
+            </div><!-- positive-multiple -->
             {% endif %}
           {% endfor %}
-        </div>
-      </div>
+        </div><!-- positive-multiple -->
+      </div><!-- response-details -->
       <div class="response-answers">
         <form class="response-answer" method=post action="{{ event.get_url }}/response/friends">
           <img class="response-image-small" src="/images/tick.png">
@@ -54,7 +58,7 @@
           <img class="response-image-small" src="/images/cross.png">
           <div class="response-text"><input type=submit value="Can't make it :("></div>
         </form>
-      </div>
+      </div><!-- response-answers -->
     </div>
   {% else %} <!-- attending, no guests yet -->
     <div class=response-table>
@@ -69,17 +73,17 @@
         </div>
         <form class="response-answer" method=post action="{{ event.get_url }}/response/friends">
           <div class="response-images-small">
-             <img class="response-image-small" src="/images/tick.png">
-             <img class="response-image-small" src="/images/tick.png">
-           </div>
-           <div class="response-text"><input type=submit value="Add friends!"></div>
-         </form>
-         <form class="response-answer" method=post action="{{ event.get_url }}/response/update">
-           <input type=hidden name="attending" value="no">
-           <img class="response-image-small" src="/images/cross.png">
-           <div class="response-text"><input type=submit value="Can't make it :("></div>
-         </form>
-       </div>
+            <img class="response-image-small" src="/images/tick.png">
+            <img class="response-image-small" src="/images/tick.png">
+          </div>
+          <div class="response-text"><input type=submit value="Add friends!"></div>
+        </form>
+        <form class="response-answer" method=post action="{{ event.get_url }}/response/update">
+          <input type=hidden name="attending" value="no">
+          <img class="response-image-small" src="/images/cross.png">
+          <div class="response-text"><input type=submit value="Can't make it :("></div>
+        </form>
+      </div>
     </div>
   {% endif %} <!-- end is-attending -->
 {% else %} <!-- Has responded, not attending -->
