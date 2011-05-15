@@ -36,6 +36,11 @@ class Event(webapp.RequestHandler):
         key = long(key)
         event = models.Event.get_by_id(key)
 
+        current_user = openid_users.get_current_user()
+        response, guests = event_lists.get_event_responses(event, current_user)
+
+
+
         self.response.headers['Content-Type'] = 'text/html'
         self.response.out.write(r(
             'templates/event.html', locals()))

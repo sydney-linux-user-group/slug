@@ -30,11 +30,11 @@ vim: set ts=2 sw=2 et sts=2 ai:
                   {{ event.announcement.name }}
                 {% endif %}</a></td>
             <td><div class=event-html>{{ event.html|safe }}</div></td>
-            <td><div class=respond id="respond-{{ event.key.id}}" onclick="">
+            <td><div class=respond id="respond-{{ event.key.id}}">
               {% if openid_user %}
                 {% include "response-show.html" %}
               {% else %}
-                <a class="openid_login_url "href="{{ openid_login_url }}">Login to RSVP!</a>
+                <a class=openid_login  href="{{ openid_login_url }}">Login to RSVP!</a>
               {% endif %}
             <td>
               <div class=event-icons> <div class="ical-link"><a href="{{ event.get_url }}.ics" title="Add this event to your iCalendar"><img src="/images/ical16x16.gif" alt="Add event to iCalendar"></a></div> </div>

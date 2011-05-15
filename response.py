@@ -58,7 +58,7 @@ class ShowResponsePage(webapp.RequestHandler):
 class FriendsResponsePage(webapp.RequestHandler):
     """Showing an RSVP (for when you have a guests)."""
 
-    def get(self, eventid):
+    def post(self, eventid):
         ####################################################
         event = models.Event.get_by_id(long(eventid))
         if not event:
