@@ -57,8 +57,8 @@ class PublishEvent(webapp.RequestHandler):
             event = None
 
         message = mail.EmailMessage()
-        message.sender = user.email()
-        message.to = "committee@slug.org.au"
+        message.sender = "committee@slug.org.au"
+        message.to = "announce@slug.org.au"
         message.body = event.plaintext
         if event.published:
             ## This is an update
