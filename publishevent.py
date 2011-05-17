@@ -35,50 +35,65 @@ from utils.render import render as r
 # pylint: disable-msg=C0301
 extensions = ['abbr', 'footnotes', 'def_list', 'fenced_code', 'tables', 'subscript', 'superscript', 'slugheader', 'anyurl']
 
+def prep_values(key=None):
+    user = users.get_current_user()
+    if user is None:
+        login_url = users.create_login_url(self.request.path)
+        self.redirect(login_url)
+        return
 
-class PublishEvent(webapp.RequestHandler):
-    def post(self, key=None):
-        user = users.get_current_user()
-        if user is None:
-            login_url = users.create_login_url(self.request.path)
-            self.redirect(login_url)
+    if key:
+        try:
+            key = long(key)
+            event = models.Event.get_by_id(key)
+            assert event
+        # pylint: disable-msg=W0702
+        except (AssertionError, ValueError):
+            self.redirect('/events')
             return
+    else:
+        event = None
 
-        if key:
-            try:
-                key = long(key)
-                event = models.Event.get_by_id(key)
-                assert event
-            # pylint: disable-msg=W0702
-            except (AssertionError, ValueError):
-                self.redirect('/events')
-                return
-        else:
-            event = None
+    return user, event
+
+
+class SendEmailAboutEvent(webapp.RequestHandler):
+    def post(self, key=None):
+        user, event = prep_values(key)
+
+        if not event.published:
+            self.redirect('/event')
 
         message = mail.EmailMessage()
         message.sender = "committee@slug.org.au"
         message.to = "announce@slug.org.au"
         message.body = event.plaintext
         message.html = event.html
-        if event.published:
-            ## This is an update
+
+        if event.emailed:
+            # This is an update
             message.subject = "Updated: %s " % event.name
         else:
-            ##First publication
             message.subject = event.name
 
-        if event.published:
-            #This is a re-publishing, so make a new announcement
-            announcement = models.Announcement(
-                    name=event.name,
-                    plaintext=event.plaintext,
-                    html = event.html)
+        message.send()
+        event.put()
 
-            event.announcement = announcement.put()
+        self.redirect("/events")
+
+class PublishEvent(webapp.RequestHandler):
+    def post(self, key=None):
+
+        user, event = prep_values(key)
+
+        announcement = models.Announcement(
+                name=event.name,
+                plaintext=event.plaintext,
+                html = event.html)
+
+        event.announcement = announcement.put()
 
         event.published = True
-        message.send()
         event.put()
 
         self.redirect('/events')
@@ -86,7 +101,8 @@ class PublishEvent(webapp.RequestHandler):
 
 
 application = webapp.WSGIApplication(
-     [('/event/(.*)/publish', PublishEvent)],
+     [('/event/(.*)/publish', PublishEvent),
+      ('/event/(.*)/email', SendEmailAboutEvent)],
     debug=True)
 application = aeoid.middleware.AeoidMiddleware(application)
 

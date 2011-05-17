@@ -53,6 +53,8 @@ class Event(db.Model):
     published = db.BooleanProperty(default=False)
     announcement = db.ReferenceProperty(Announcement)
 
+    emailed = db.BooleanProperty(default=False)
+
     start = db.DateTimeProperty(required=True)
     end = db.DateTimeProperty(required=True)
 

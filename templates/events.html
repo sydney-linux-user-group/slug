@@ -24,12 +24,19 @@ vim: set ts=2 sw=2 et sts=2 ai:
             <td>{{ event.start }}</td>
             <td>{{ event.end }}</td>
             <td><a href="{{ event.get_url }}">
-                {% if appengine_admin %}
-                  {{ event.name }}
-                {% else %}
-                  {{ event.announcement.name }}
-                {% endif %}</a></td>
-            <td><div class=event-html>{{ event.html|safe }}</div></td>
+              {% if appengine_admin %}
+                {{ event.name }}
+              {% else %}
+                {{ event.announcement.name }}
+              {% endif %}
+            </a></td>
+            <td><div class=event-html>
+              {% if appengine_admin %}
+                {{ event.html|safe }}
+              {% else %}
+                {{ event.announcement.html|safe }}
+              {% endif %}
+            </div></td>
             <td><div class=respond id="respond-{{ event.key.id}}">
               {% if openid_user %}
                 {% include "response-show.html" %}
@@ -43,18 +50,21 @@ vim: set ts=2 sw=2 et sts=2 ai:
               <td>
                 <a href="{{ event.get_url }}/edit">Edit</a>
                 <div id=publishform>
-                  <form name="publish" action="{{ event.get_url }}/publish" method="post">
-                    {% if event.published %}
-                      {% ifnotequal event.html event.announcement.html %}
-                        <input type="submit" value="Re-publish event">
-                      {% else %}
-                        <p>Already published</p>
-                      {% endifnotequal %}
-
-                    {% else %}
+                  {% ifnotequal event.html event.announcement.html %}
+                    <form name="publish" action="{{ event.get_url }}/publish" method="post">
+                    {% if event.published %} <!-- Event was published, then changed"-->
+                      <input type="submit" value="Re-publish event">
+                      <p>Cannot send announcement email until after republishing.</p>
+                    {% else %} <!-- event not ever published -->
                       <input type="submit" value="Publish event">
                     {% endif %}
-                  </form>
+                    </form>
+                  {% else %} <!-- No change -->
+                    <p>Already published</p>
+                    <form name="sendemail" action="{{ event.get_url }}/email" method=post>
+                      <input type="submit" value="Announce event via email">
+                    </form>
+                  {% endifnotequal %} <!-- No change -->
                 </div>
               </td>
             {% endif %} <!--appengine_admin -->

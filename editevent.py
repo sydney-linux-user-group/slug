@@ -123,19 +123,6 @@ class EditEvent(webapp.RequestHandler):
 
         logging.debug("e.a %s, e.n %s", event.announcement, event.name)
 
-        if not event.published:
-            #Until event is published, keep event and announcement in sync
-            #After publishing, don't - only update the announcement when we
-            #republish
-            if event.announcement:
-                announcement = event.announcement
-                announcement.name = event.name
-            else:
-                announcement = models.Announcement(name=event.name)
-            announcement.plaintext = event.plaintext
-            announcement.html = event.html
-            event.announcement = announcement.put()
-
         event.put()
 
         self.redirect('%s/edit' % event.get_url())
