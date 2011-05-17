@@ -1,10 +1,10 @@
 # Initial Configuration
 
-To get the code and dependencies::
+To get the code and dependencies:
 
-  git clone git://github.com/sydney-linux-user-group/slug.git
-  cd slug
-  make third_party
+> git clone https://github.com/sydney-linux-user-group/slug.git
+> cd slug
+> make third_party
 
 # Installing django 1.2.5
 
