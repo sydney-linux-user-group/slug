@@ -1,19 +1,16 @@
 ====== {{event.start|date:"F"}} {{event.start.year}} SLUG Meeting ======
 
-SLUG meetings run on a last Friday of the month schedule. The date of the
-next meeting is, {{event.start}}.
-
 ====Summary====
 
  * Date: Friday, {{event.start}}
  * Start: Arrive at 6pm for a 6:30pm start
- * Format: ***PUT FORMAT HERE***
+ * Format: TBA
  * RSVP: {{ req.host_url }}{{event.get_url}}
  * Suggest or sign up for a talk at {{ req.host_url }}/talks
 
 ==== Details ====
 
-**PUT DETAILS HERE**
+TBA
 
 ====Location====
 
@@ -22,7 +19,7 @@ next meeting is, {{event.start}}.
   48 Pirrama Road
   Pyrmont, NSW
 
- Map: http://slug.org.au/map
+ Map: http://signup.slug.org.au/map
 
 -- Getting there --
 
