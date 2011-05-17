@@ -60,6 +60,7 @@ class PublishEvent(webapp.RequestHandler):
         message.sender = "committee@slug.org.au"
         message.to = "announce@slug.org.au"
         message.body = event.plaintext
+        message.html = event.html
         if event.published:
             ## This is an update
             message.subject = "Updated: %s " % event.name
