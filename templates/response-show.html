@@ -12,7 +12,7 @@ vim: set ts=2 sw=2 et sts=2 ai:
     </form>
     <form class="response-answer" method=post action="{{ event.get_url }}/response/friends">
       {% include "fragments/positive-multiple.html" %}
-      <div class="response-text"><input type=submit value="Yes, with friends!"<a></div>
+      <div class="response-text"><input type=submit value="Yes, with friends!"></div>
     </form>
     <form class="response-answer" method=post action="{{ event.get_url }}/response/update">
       <input type=hidden name=attending value="no">
