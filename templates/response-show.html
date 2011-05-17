@@ -5,14 +5,14 @@ vim: set ts=2 sw=2 et sts=2 ai:
 {% ifequal response None %} <!-- No response yet -->
   <div class=response-table>
     <div class="response-header">Are you attending?</div>
-    <form class="response-answer" method=post action="{{ event.get_url }}/response/updates">
+    <form class="response-answer" method=post action="{{ event.get_url }}/response/update">
       <input type=hidden name=attending value="yes">
       <img class="response-image" src="/images/tick.png">
       <div class="response-text"><input type=submit value="Yes!"></div>
     </form>
     <form class="response-answer" method=post action="{{ event.get_url }}/response/friends">
       {% include "fragments/positive-multiple.html" %}
-      <div class="response-text">Yes, with friends!</div>
+      <div class="response-text"><input type=submit value="Yes, with friends!"<a></div>
     </form>
     <form class="response-answer" method=post action="{{ event.get_url }}/response/update">
       <input type=hidden name=attending value="no">
