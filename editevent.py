@@ -99,7 +99,6 @@ class EditEvent(webapp.RequestHandler):
                     start=datetime.now(), end=datetime.now())
 
         inputtext = self.request.get('input')
-        logging.debug('i: %s', inputtext)
 
         start_date = datetime_tz.smartparse(self.request.get('start'))
         end_date = datetime_tz.smartparse(self.request.get('end'))

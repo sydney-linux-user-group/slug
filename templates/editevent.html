@@ -27,6 +27,7 @@ vim: set ts=2 sw=2 et sts=2 ai:
        <textarea id={{name}} style="display: none;">{{template|safe}}</textarea>
     {% endfor %}
   </form>
+</div>
 
 <form id="templateEdit" class="clearfix" action="/event/{{event.key.id}}/edit" method="post">
   <ul class="eventData">
@@ -35,17 +36,14 @@ vim: set ts=2 sw=2 et sts=2 ai:
     <li>End Time: <input type="text" name="end" value="{{event.end}}" /></li>
     <li><input type="submit"/></li>
   </ul>
+  <textarea class="box eventInput" rows="30" cols="80" name="input">{{event.input}} </textarea>
   <div id="tabs">
     <ul class="tablist">
-      <li><a href="#source">Source</a></li>
       <li><a href="#plaintext">Formatted plaintext</a></li>
       <li><a href="#formatted">HTML</a></li>
     </ul>
-    <div id="source">
-      <textarea class="box eventInput" rows="30" cols="80" name="input">{{event.input}} </textarea>
-    </div>
     <div id="plaintext" class="eventOutput">
-      <pre class="box eventOutput">{{event.plaintext|safe}}</pre>
+      <div class="box"><pre class="eventOutput">{{event.plaintext|safe}}</pre></div>
     </div>
     <div id="formatted" class="eventOutput">
       <div class="box">{{event.html|safe}}</div>
@@ -53,6 +51,24 @@ vim: set ts=2 sw=2 et sts=2 ai:
   </div>  <!--tabs-->
 </form>
 <script>
+
+  $(function() {
+    var fancyinput = "<pre class='box eventInput' name='input' contentEditable='true'></pre>";
+    var boringinput = $('textarea.eventInput');
+    var rawcontent = boringinput.html();
+    boringinput.after(fancyinput);
+    boringinput.hide();
+    fancyinput = $('pre.eventInput');
+    fancyinput.text(rawcontent);
+  });
+
+  $('.templateEdit').ajaxForm({
+    beforeserialize: function () {
+      var fancyinput = $('pre.eventInput');
+      var boringinput = $('textarea.eventInput');
+      boringinput.text(fancyinput.text());
+    }
+  });
 
   $(function() {
     $( "#tabs" ).tabs();
@@ -77,7 +93,7 @@ vim: set ts=2 sw=2 et sts=2 ai:
        return;
     }
     var template = $('#'+name).val();
-
+   
     var input = $('textarea[name="input"]');
     if (input.val().replace(/\W+/,'') == '') {
        input.val(template);
