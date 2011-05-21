@@ -8,7 +8,7 @@ vim: set ts=2 sw=2 et sts=2 ai:
 {% endblock %}
 {% block body %}
 
-  <form id=templateOptions>
+  <form>
     <label for="fridays">Fridays</label>
     <select id=fridays>
        <option value=""></option>
@@ -27,29 +27,48 @@ vim: set ts=2 sw=2 et sts=2 ai:
        <textarea id={{name}} style="display: none;">{{template|safe}}</textarea>
     {% endfor %}
   </form>
+</div>
 
-  <form id=event action="/event/{{event.key.id}}/edit" method="post">
-    <ul class="eventData">
-      <li>Event Name: <input type="text" name="name" value="{{event.name}}"/></li>
-      <li>Start Time: <input type="text" name="start" value="{{event.start}}"/></li>
-      <li>End Time: <input type="text" name="end" value="{{event.end}}" /></li>
-      <input type="submit"/>
+<form id="templateEdit" class="clearfix" action="/event/{{event.key.id}}/edit" method="post">
+  <ul class="eventData">
+    <li>Event Name: <input type="text" name="name" value="{{event.name}}"/></li>
+    <li>Start Time: <input type="text" name="start" value="{{event.start}}"/></li>
+    <li>End Time: <input type="text" name="end" value="{{event.end}}" /></li>
+    <li><input type="submit"/></li>
+  </ul>
+  <textarea class="box eventInput" rows="30" cols="80" name="input">{{event.input}} </textarea>
+  <div id="tabs">
+    <ul class="tablist">
+      <li><a href="#plaintext">Formatted plaintext</a></li>
+      <li><a href="#formatted">HTML</a></li>
     </ul>
-    <textarea class=box rows="30" cols="80" name="input">{{event.input}}</textarea>
-    <div id="tabs">
-      <ul>
-        <li><a href="#plaintext">Formatted plaintext</a></li>
-        <li><a href="#formatted">HTML</a></li>
-      </ul>
-      <div id="plaintext">
-        <div class="box"><pre>{{event.plaintext|safe}}</pre></div>
-      </div>
-      <div id="formatted">
-        <div class="box tabs">{{event.html|safe}}</div>
-      </div>
+    <div id="plaintext" class="eventOutput">
+      <div class="box"><pre class="eventOutput">{{event.plaintext|safe}}</pre></div>
     </div>
-  </form>
+    <div id="formatted" class="eventOutput">
+      <div class="box">{{event.html|safe}}</div>
+    </div>
+  </div>  <!--tabs-->
+</form>
 <script>
+
+  $(function() {
+    var fancyinput = "<pre class='box eventInput' name='input' contentEditable='true'></pre>";
+    var boringinput = $('textarea.eventInput');
+    var rawcontent = boringinput.html();
+    boringinput.after(fancyinput);
+    boringinput.hide();
+    fancyinput = $('pre.eventInput');
+    fancyinput.text(rawcontent);
+  });
+
+  $('.templateEdit').ajaxForm({
+    beforeserialize: function () {
+      var fancyinput = $('pre.eventInput');
+      var boringinput = $('textarea.eventInput');
+      boringinput.text(fancyinput.text());
+    }
+  });
 
   $(function() {
     $( "#tabs" ).tabs();
