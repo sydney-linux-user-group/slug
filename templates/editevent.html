@@ -8,15 +8,15 @@ vim: set ts=2 sw=2 et sts=2 ai:
 {% endblock %}
 {% block body %}
 
-<form id=template>
-</form>
-  <form>
+  <form id=templateOptions>
+    <label for="fridays">Fridays</label>
     <select id=fridays>
        <option value=""></option>
        {% for friday in fridays %}
        <option value="{{ friday }}">{{friday}}</option>
        {% endfor %}
     </select>
+    <label for="templates">Templates</label>
     <select id=templates>
        <option value=""></option>
        {% for name, template in templates %}
@@ -29,59 +29,59 @@ vim: set ts=2 sw=2 et sts=2 ai:
   </form>
 
   <form id=event action="/event/{{event.key.id}}/edit" method="post">
-    <div>
-        Event Name: <input type="text" name="name" value="{{event.name}}" />
+    <ul class="eventData">
+      <li>Event Name: <input type="text" name="name" value="{{event.name}}"/></li>
+      <li>Start Time: <input type="text" name="start" value="{{event.start}}"/></li>
+      <li>End Time: <input type="text" name="end" value="{{event.end}}" /></li>
+      <input type="submit"/>
+    </ul>
+    <textarea class=box rows="30" cols="80" name="input">{{event.input}}</textarea>
+    <div id="tabs">
+      <ul>
+        <li><a href="#plaintext">Formatted plaintext</a></li>
+        <li><a href="#formatted">HTML</a></li>
+      </ul>
+      <div id="plaintext">
+        <div class="box"><pre>{{event.plaintext|safe}}</pre></div>
+      </div>
+      <div id="formatted">
+        <div class="box tabs">{{event.html|safe}}</div>
+      </div>
     </div>
-    <div>Start Time: <input type="text" name="start" value="{{event.start}}" /></div>
-    <div>End Time: <input type="text" name="end" value="{{event.end}}" /></div>
-
-    <div>
-      <table>
-        <tr>
-          <td colspan=2>
-            <textarea class=box rows="30" cols="80" name="input">{{event.input}}</textarea>
-          </td>
-        </tr>
-        <tr colspam=2>
-          <td>
-            <input type="submit"/>
-          </td>
-        <tr>
-          <td><div class=box><pre>{{event.plaintext|safe}}</pre></td>
-          <td><div class=box>{{event.html|safe}}</td>
-        </tr>
-      </table>
-    <div>
   </form>
 <script>
 
-$('#fridays').change(function () {
-  var value = $(this).val();
-  if (!value) {
-    $('input[name="start"]').val('');
-    $('input[name="end"]').val('');
-  } else {
-    $('input[name="start"]').val(value + ' 6:00pm');
-    $('input[name="end"]').val(value + ' 8:00pm');
-    var month = value.match(/[a-zA-z]*/);
-    var year = value.match(/[0-9][0-9][0-9][0-9]/);
-  }
-});
+  $(function() {
+    $( "#tabs" ).tabs();
+  });
 
-$('#templates').change(function () {
-  var name = $(this).val();
-  if (name.replace(/\W+/, '') == '') {
-     return;
-  }
-  var template = $('#'+name).val();
- 
-  var input = $('textarea[name="input"]');
-  if (input.val().replace(/\W+/,'') == '') {
-     input.val(template);
-  } else {
-     alert('Please make the input empty before selecting a template.');
-  }
-});
+  $('#fridays').change(function () {
+    var value = $(this).val();
+    if (!value) {
+      $('input[name="start"]').val('');
+      $('input[name="end"]').val('');
+    } else {
+      $('input[name="start"]').val(value + ' 6:00pm');
+      $('input[name="end"]').val(value + ' 8:00pm');
+      var month = value.match(/[a-zA-z]*/);
+      var year = value.match(/[0-9][0-9][0-9][0-9]/);
+    }
+  });
+
+  $('#templates').change(function () {
+    var name = $(this).val();
+    if (name.replace(/\W+/, '') == '') {
+       return;
+    }
+    var template = $('#'+name).val();
+   
+    var input = $('textarea[name="input"]');
+    if (input.val().replace(/\W+/,'') == '') {
+       input.val(template);
+    } else {
+       alert('Please make the input empty before selecting a template.');
+    }
+  });
 </script>
 
 {% endblock %}
