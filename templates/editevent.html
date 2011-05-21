@@ -36,12 +36,15 @@ vim: set ts=2 sw=2 et sts=2 ai:
     <li>End Time: <input type="text" name="end" value="{{event.end}}" /></li>
     <li><input type="submit"/></li>
   </ul>
-  <textarea class="box eventInput" rows="30" cols="80" name="input">{{event.input}} </textarea>
   <div id="tabs">
     <ul class="tablist">
+      <li><a href="#source">Source</a></li>
       <li><a href="#plaintext">Formatted plaintext</a></li>
       <li><a href="#formatted">HTML</a></li>
     </ul>
+    <div id="source">
+      <textarea class="box eventInput" rows="30" cols="80" name="input">{{event.input}} </textarea>
+    </div>
     <div id="plaintext" class="eventOutput">
       <div class="box"><pre class="eventOutput">{{event.plaintext|safe}}</pre></div>
     </div>

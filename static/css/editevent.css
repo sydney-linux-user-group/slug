@@ -1,3 +1,7 @@
 #rightbar{
   display: none;
 }
+
+#main {
+  width: 100%;
+}
