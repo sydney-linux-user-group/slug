@@ -1,5 +1,16 @@
+#body {
+    width: 70%;
+}
+
+#live-content {
+ max-height: 70%;
+}
+
 #rightbar {
-  width: 300px;
+  vertical-align: top;
+  overflow-y: auto;
+  float: right;
+  max-width: 300px;
 }
 
 #rightbar .box {
@@ -31,70 +42,47 @@
   padding: 5px;
 }
 
-#rightbar iframe {
-  width: 100%;
-  height: 280px;
-  border: 0;
-  padding: 0;
-  margin: 0;
-}
-
 #attend:hover {
   cursor: pointer;
 }
 
 #header {
- height: 40px;
+ margin-bottom: 0.4em ;
 }
 
 #header h1 {
-  padding: 0;
-  margin: 0;
-  height: 40px;
+    margin-top: 0.1em;
+    margin-bottom: 0.1em;
 }
 
-#content {
-  height: 5%;
-}
-
-#twitter, #youtube {
-  height: 95%;
-}
-
-#body table {
-  width: 100%;
-  height: 100%;
-  padding: 0;
-  margin: 0;
-  border-spacing: 1px;
+#youtube {
+  margin-left: 1em;
+  width: 70%;
+  float: left;
 }
 
 #footer {
+  clear: left;
   height: 70px;
-}
-
-#footer table {
   width: 100%;
-  height: 100%;
-  border-spacing: 5px;
 }
 
 #footer .box {
   color: white;
-  width: 30%;
-  padding: 10px;
+  width: 31%;
+  /*padding: .4em;*/
+  margin: .2em;
   text-align: center;
+  float: left;
 }
 
-#footer h2 {
+#footer major {
   font-weight: bold;
-  font-size: 22pt;
-  padding: 0;
-  margin: 0;
+  font-size: larger;
 }
 
 #footer .minor {
-  font-size: 12pt;
+  font-size: smaller;
 }
 
 #footer #attend {
@@ -110,11 +98,8 @@
   opacity: 0.9;
 }
 
-#twitter {
-}
-
 #event_list {
-  height: 100%;
+  height: 95%%;
   overflow: auto;
 }
 
@@ -140,7 +125,9 @@
 }
 
 #twitter {
-  width: 200px;
+  max-width: 200px;
+  width: 27%;
+  float: left;
 }
 
 #twitter-show {
@@ -153,32 +140,23 @@
   text-decoration: none;
 }
 
-#youtube div {
-  position: relative;
-  height: 100%;
-  width: 100%;
+#youtube p{
+  font-size: smaller;
+  vertical-align: text-bottom;
 }
 
-#youtube h3 {
-  position: absolute;
-  top: 0;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  height: 15px;
-  font-size: 15px;
-  z-index: 100;
+#youtube .left {
+  float: left;
 }
 
-#youtube h3.left {
-  left: 0;
-}
-
-#youtube h3.right {
-  right: 0;
+#youtube .right {
+    float: right;
 }
 
 #youtube-wrapper {
-  height: 100%;
-  padding-top: 18px;
+  height: 85%;
+}
+
+#youtube-wrapper iframe {
+    height: 75% !important;
 }

@@ -75,7 +75,6 @@ html {
 }
 
 body {
-  width: 100%;
   padding-top: 0px;
   padding-right: 0.4em;
   padding-left: 0.4em;
@@ -119,22 +118,15 @@ img {
   height: 100%;
 }
 
-#adminfooter {
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  padding-right: 10px;
-}
-
 .box {
   behavior: url(/css/htc/border-radius.htc);
 
-  -ms-border-radius: 15px;
-  -moz-border-radius: 15px;
-  -webkit-border-radius: 15px;
-  border-radius: 15px;
+  -ms-border-radius: 1em;
+  -moz-border-radius: 1em;
+  -webkit-border-radius: 1em;
+  border-radius: 1em;
   border: 2px solid black;
-  padding: 9px;
+  padding: .4em;
 }
 
 #heading {
@@ -172,6 +164,11 @@ img {
 
 #main {
   border-collapse: separate;
+}
+
+#body {
+  float: left;
+  height: 98%;
 }
 
 #content {
@@ -289,31 +286,13 @@ img {
   display: inline-table;
 }
 
-#rightbar {
-  vertical-align: top;
-  overflow-y: scroll;
-}
-
 .eventData li {
   display: inline;
   margin-bottom: .5em;
 }
 
-.eventInput {
-  float: left;
-  height: 100%
-  max-width: 50%;
-  overflow: auto;
-}
-
-#tabs {
-  max-width: 50%;
-  margin-left: 1em;
-  float: left;
-}
-
-.eventOutput {
+#source,.eventOutput {
   padding: 0.4em !important;
+  font-size: 16px !important;
 }
-
 

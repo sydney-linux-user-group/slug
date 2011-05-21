@@ -11,62 +11,48 @@ vim: set ts=2 sw=2 et sts=2 ai:
 {% endblock %}
 
 {% block body %}
-      <table>
-        <tr>
-          <td colspan=2 id=header>
-            <h1>Sydney Linux User Group</h1>
-          </td>
-        </tr><tr>
-          <td colspan=2 id=content class=box>
-            The Sydney Linux Users Group (SLUG) is a community of passionate freedom and technology lovers in Sydney, Australia.
+<div id=body>
+  <div id="header">
+    <h1 >Sydney Linux User Group</h1>
+    <div id=content class=box>
+      <p>The Sydney Linux Users Group (SLUG) is a community of passionate freedom and technology lovers in Sydney, Australia. We are one of the largest and most active <a href="http://www.linux.org.au/linux">Linux</a> <a href="http://en.wikipedia.org/wiki/Linux_user_group">users groups</a> in the world, with a <a href="http://planet.slug.org.au/">diverse membership</a> of users, developers, sysadmins, and advocates.</p>
+    </div>
+  </div>
+  <div id=live-content class=clearfix>
+    <div id=twitter>
+      <div id="twitter-show">
+        <a id="twitter-hash"href="#" >#sydlug</a>
+        <a id="twitter-user" href="#">@slugupdates</a>
+        <a id="twitter-both" href="#">both</a>
+      </div>
+      <div class=tweet>
+        <ul class='tweet_list'>
+          <li class='tweet_first tweet_odd'>Loading tweets...</li>
+        </ul>
+      </div>
+    </div><!-- twitter -->
+    <div id=youtube>
+      <h3 class=left>Previously at SLUG....</h3><p class=left> (more on <a href="http://www.youtube.com/user/GoogleFOSSSydney#grid/user/F6073A99A735F849">YouTube</a>)</p><p class=right><a href="http://www.youtube.com/html5">Enabled HTML5 Video!</a></p>
+      <div id="youtube-wrapper"></div>
+    </div><!-- youtube -->
+  </div>
+  <div id=footer>
+    <div id=attend class=box onclick="location.href='/event/next'">
+      <p class=major>Attend</p>
+      <span class=minor>the next meeting</span>
+    </div>
+    <div id=sponsor class="box hover" onclick="location. href='mailto:committee@slug.org.au&subject=Sponsoring%20SLUG'">
+        <p class=major> Sponsor</p>
+        <span class=minor> An event or SLUG as a whole </span>
+      </div>
+      <div id=speak class="box hover" onclick="location.href='mailto:activities@slug.org.au&subject=Talk%20suggestion'">
+        <p class=major> Give a talk</p>
+      <span class=minor> Educate your fellows </span>
+    </div>
+  </div>
+</div><!--body-->
 
-            We are one of the largest and most active <a href="http://www.linux.org.au/linux">Linux</a> <a href="http://en.wikipedia.org/wiki/Linux_user_group">users groups</a> in the world, with a <a href="http://planet.slug.org.au/">diverse membership</a> of users, developers, sysadmins, and advocates.
-          </td><!-- content -->
-        </tr><tr>
-          <td id=twitter>
-            <div id="twitter-show">
-              <a id="twitter-hash"href="#" >#sydlug</a>
-              <a id="twitter-user" href="#">@slugupdates</a>
-              <a id="twitter-both" href="#">both</a>
-            </div>
-            <div class=tweet>
-              <ul class='tweet_list'>
-                <li class='tweet_first tweet_odd'>Loading tweets...</li>
-              </ul>
-            </div>
-          </td><!-- twitter -->
-          <td id=youtube>
-            <div>
-              <h3 class=left>Previously at SLUG.... (more on <a href="http://www.youtube.com/user/GoogleFOSSSydney#grid/user/F6073A99A735F849">YouTube</a>)</h3><a href="http://www.youtube.com/html5"><h3 class=right>Enabled HTML5 Video!</h3></a>
-              <div id="youtube-wrapper"></div>
-            </div>
-          </td><!-- youtube -->
-        </tr><tr>
-          <td id=footer colspan=2>
-            <table>
-              <tr>
-                <td id=attend class=box onclick="location.href='/event/next'">
-                  <h2> Attend </h2>
-                  <span class=minor>the next meeting</span>
-                </td>
-                <td id=sponsor class="box hover" onclick="location. href='mailto:committee@slug.org.au&subject=Sponsoring%20SLUG'">
-                  <h2> Sponsor </h2>
-                  <span class=minor> An event or SLUG as a whole </span>
-                  </a>
-                </td>
-                <td id=speak class="box hover" onclick="location.href='mailto:activities@slug.org.au&subject=Talk%20suggestion'">
-                  <h2> Give a talk </h2>
-                  <span class=minor> Educate your fellows </span>
-                </a>
-                </td>
-              <tr>
-            </table>
-          </td> <!-- footer -->
-        </tr>
-      </table>
-{% endblock %}
-
-{% block rightbar %}
+<div id=rightbar>
   {% for event_list in events_lists %}
     {% if event_list.events %}
     <div id=event_list class=box>
@@ -95,7 +81,9 @@ vim: set ts=2 sw=2 et sts=2 ai:
     </div>
     {% endif %}
   {% endfor %}
+</div>
 {% endblock %}
+
 
 {% block footer %}
 <div id=footer>

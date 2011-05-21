@@ -55,16 +55,9 @@ vim: set ts=2 sw=2 et sts=2 ai:
 
     {% endblock %}
 
-<table id=main>
-  <tr>
-    <td id=body>
-      {% block body %}{% endblock %}
-    </td>
-    <td id=rightbar>
-     {% block rightbar %}{% endblock %}
-    </td>
-  </tr>
-</table>
+<div id=main class="clearfix">
+    {% block body %}{% endblock %}
+</div>
 
   <script type="text/javascript">
     function handleSuccess(responseText, statusText, xhr, $form) {
@@ -79,7 +72,6 @@ vim: set ts=2 sw=2 et sts=2 ai:
         });
     };
     function ajaxifyforms () {
-      window.console.log('ajaxify');
       $('.response-answer').ajaxForm({
         data: { returnfragment: 'yes' },
         dataType: 'html',
