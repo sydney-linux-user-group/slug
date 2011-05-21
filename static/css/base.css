@@ -1,4 +1,4 @@
-#YUI Reset CSS
+/*YUI Reset CSS */
 body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td { 
   margin:0;
   padding:0;
@@ -16,6 +16,7 @@ address,caption,cite,code,dfn,em,strong,th,var {
 }
 ol,ul {
   list-style:none;
+  margin-bottom: 0.5em;
 }
 caption,th {
   text-align:left;
@@ -28,6 +29,34 @@ q:before,q:after {
   content:'';
 }
 abbr,acronym { border:0;
+}
+
+/* End Reset */
+
+/* Set some defaults */
+
+h1 {
+  margin-top: .4em;
+  font-size: 2em;
+  margin-bottom: .2em;
+}
+
+h2 {
+  font-size: 1.5em;
+}
+
+h3 {
+  font-size: 1.17em;
+}
+
+/* From http://css-tricks.com/snippets/css/clear-fix/ */
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
 }
 
 * {
@@ -47,12 +76,15 @@ html {
 
 body {
   width: 100%;
-  height: 100%;
-  padding: 0;
-  margin: 0;
-  border: 5px solid white;
+  padding-top: 0px;
+  padding-right: 0.4em;
+  padding-left: 0.4em;
 
   font-family: "Trebuchet MS", "Tahoma", "Verdana", "Arial", "Helvetica", sans-serif;
+}
+
+form {
+  margin-top: 0.4em;
 }
 
 /* Fix PNG transparence in older IE browsers. */
@@ -101,8 +133,8 @@ img {
   -moz-border-radius: 15px;
   -webkit-border-radius: 15px;
   border-radius: 15px;
-
   border: 2px solid black;
+  padding: 9px;
 }
 
 #heading {
@@ -115,17 +147,13 @@ img {
 }
 
 #navbar {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
   border-bottom: 1px solid black;
 }
 
 #navbar ul {
   display: block;
-  padding: 0;
-  margin: 0;
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 
 #navbar #links {
@@ -143,10 +171,6 @@ img {
 }
 
 #main {
-  padding-top: 20px;
-  padding-bottom: 0;
-  width: 100%;
-  height: 100%;
   border-collapse: separate;
 }
 
@@ -272,6 +296,24 @@ img {
 
 .eventData li {
   display: inline;
+  margin-bottom: .5em;
 }
 
-  
+.eventInput {
+  float: left;
+  height: 100%
+  max-width: 50%;
+  overflow: auto;
+}
+
+#tabs {
+  max-width: 50%;
+  margin-left: 1em;
+  float: left;
+}
+
+.eventOutput {
+  padding: 0.4em !important;
+}
+
+
