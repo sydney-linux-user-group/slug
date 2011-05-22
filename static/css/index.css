@@ -6,7 +6,8 @@
   background: white;
   margin: 5px;
   margin-bottom: 0px;
-  padding-bottom: 0px;
+  padding: 0px;
+  padding-bottom: 9px;
 }
 
 #rightbar ul {
