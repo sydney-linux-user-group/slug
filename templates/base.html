@@ -69,7 +69,6 @@ vim: set ts=2 sw=2 et sts=2 ai:
   <script type="text/javascript">
     function handleSuccess(responseText, statusText, xhr, $form) {
       target = $form.closest('.respond');
-      window.console.log('success: ' + target);
       targetid = target.attr('id');
       target.html(responseText);
       $('#' + targetid + ' .response-answer').ajaxForm({
@@ -86,7 +85,6 @@ vim: set ts=2 sw=2 et sts=2 ai:
         });
     };
     $(ajaxifyforms);
-
   </script>
 
   </body>

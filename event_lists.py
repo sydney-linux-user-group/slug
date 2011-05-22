@@ -26,7 +26,7 @@ def get_event_responses(event, user):
             if not resp.guest:
                 response = resp
             else:
-                guests.append(response)
+                guests.append(resp)
     return response, guests
 
 

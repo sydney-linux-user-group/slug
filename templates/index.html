@@ -8,6 +8,8 @@ vim: set ts=2 sw=2 et sts=2 ai:
     <link rel="StyleSheet" href="/css/index.css" type="text/css" media="screen">
     <link rel="StyleSheet" href="/css/jquery.tweet.css" type="text/css" />
     <script src="/third_party/jquery.tweet/jquery.tweet.js" type="text/javascript"></script>
+    <script src="/third_party/jquery.gravatar/md5.js" type="text/javascript"></script>
+    <script src="/third_party/jquery.gravatar/jquery.gravatar.js" type="text/javascript"></script>
 {% endblock %}
 
 {% block body %}
@@ -25,7 +27,7 @@ vim: set ts=2 sw=2 et sts=2 ai:
         </tr><tr>
           <td id=twitter>
             <div id="twitter-show">
-              <a id="twitter-hash"href="#" >#sydlug</a>
+              <a id="twitter-hash" href="#">#sydlug</a>
               <a id="twitter-user" href="#">@slugupdates</a>
               <a id="twitter-both" href="#">both</a>
             </div>
@@ -79,15 +81,15 @@ vim: set ts=2 sw=2 et sts=2 ai:
             {% endif %}
             <h3><a class=eventname href="{{ event.get_url }}">{{ event.announcement.name }}</a></h3>
             <div class=event-icons>
-              <div class="ical-link"><a href="{{ event.get_url }}.ics" title="Add this event to your iCalendar"><img src="/images/ical16x16.gif" alt="Add event to iCalendar"></a></div>
+              <div class="ical-link">
+                <a href="{{ event.get_url }}.ics" title="Add this event to your iCalendar">
+                  <img src="/images/ical16x16.gif" alt="Add event to iCalendar">
+                </a>
+              </div>
             </div>
             <span class=start>{{ event.start }}</span>
             <div class=respond id="respond-{{ event.key.id }}">
-              {% if openid_user %}
-                {% include "response-show.html" %}
-              {% else %}
-                <a class="openid_login" href="{{ openid_login_url }}">Login to RSVP!</a>
-              {% endif %}
+              {% include "response-show.html" %}
             </div>
           </li>
         {% endfor %}

@@ -34,12 +34,12 @@ class Announcement(db.Model):
 
 
 class Event(db.Model):
+    """An event."""
 
     def get_url(self):
         """Return the canonical url for an event."""
         return "/event/%s" % self.key().id()
 
-    """An event."""
     created_by = appengine.UserProperty(
             auto_current_user_add=True, required=True)
     created_on = db.DateTimeProperty(
@@ -85,6 +85,9 @@ class Response(db.Model):
     event = db.ReferenceProperty(Event, collection_name="responses")
 
     attending = db.BooleanProperty(required=True, default=True)
+
+    # Should the response be hidden from everyone?
+    #hide = db.BoolenProperty(required=False, default=False)
 
     # If this is a guest, then we store their details here, otherwise we just
     # use the creater's details.

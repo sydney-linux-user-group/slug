@@ -14,6 +14,8 @@ doing anything else, *including imports*!
 import sys
 import os
 
+HOST=None
+
 def getpaths():
     """Get the extra third_party paths we need."""
     paths = set()
@@ -40,8 +42,14 @@ def setup_django():
     use_library('django', '1.2')
 
 
-def setup():
+def setup(host=None):
     """Setup our configuration environment."""
+    global HOST
+    if HOST is None:
+        if host is None:
+            HOST = 'signup.slug.org.au'
+        else:
+            HOST = host
 
     # Add our extra modules to sys.path
     for ipath in getpaths():

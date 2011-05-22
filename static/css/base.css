@@ -1,3 +1,10 @@
+/**
+ * CSS which is common throughout the whole site.
+ *
+ * -*- coding: utf-8 -*-
+ * vim: set ts=2 sw=2 et sts=2 ai:
+ */
+
 /*YUI Reset CSS */
 body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td { 
   margin:0;
@@ -187,6 +194,11 @@ img {
   opacity: .9;
 }
 
+#rightbar {
+  vertical-align: top;
+  overflow-y: auto;
+}
+
 .event-icons {
   display: table-cell;
 }
@@ -199,127 +211,108 @@ img {
 #eventright .start {
   display: table-row;
 }
-
 #eventright .respond {
   display: table-row;
 }
-
 #eventright .editlink {
   display: table-row;
 }
 
-.response-table {
-    display: inline-table;
-}
-
-.response-answer {
-    display: table-row;
-}
-
-.response-text {
-    display: table-cell;
-}
-
-.response-images-small {
-  display: inline-table;
-}
-
-.response-image-small {
-  width: 16px;
-  height: 16px;
+.gravatar {
+  width: 34px;
+  height: 34px;
   padding: 0;
-  margin: 0;
   border: 0;
-  display: block;
-}
-
-.response-image {
-  width: 48px;
-  height: 48px;
-  padding: 0;
   margin: 0;
-  border: 0;
-  display: table-cell;
-}
-
-.gravatar-large {
-  width: 148px;
-  height: 148px;
-  padding: 1px;
-  margin: 0;
-  display: table-cell;
-}
-
-.gravatar-small {
-  width: 48px;
-  height: 48px;
-  padding: 1px;
-  margin: 0;
-  display: block;
-}
-
-.gravatar-n-friends {
-  width: 200px; /* gravatar.height + 2*gravatar.padding +
-                   gravatar-small.height + 2*gravatar-small.padding */
-  height: 150px; /* .gravatar.height + 2*gravatar.padding */
-  display: table-row;
-}
-
-.gravatar-column {
-  display: inline-table;
-}
-
-.response-text {
-  vertical-align: middle;
-}
-
-.response-header {
-  font-size: 20px;
-  display: table-row;
-}
-
-.respond body {
-  border: 0px;
-}
-
-.response-details {
-  display: table;
-}
-
-.positive-multiple {
-    display: table-cell;
-    vertical-align: top;
-}
-
-.positive-multiple-images {
-  display: inline-table;
-}
-
-#rightbar {
-  vertical-align: top;
-  overflow-y: auto;
-}
-
-.eventData li {
-  display: inline;
-  margin-bottom: .5em;
-}
-
-.eventInput {
+  margin-left: 1px;
   float: left;
-  height: 100%
-  overflow: auto;
-  width: 100%;
+
+  -ms-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
 }
 
-#tabs {
-  width: 100%;
-  margin-left: 1em;
-  float: left;
+.gravatar-you {
+  border: 1px solid blue;
 }
 
-div.eventOutput, #source {
-  padding: 0.4em !important;
+.gravatar-friend {
+  border: 1px solid red;
+}
+
+.gravatar-friend:hover {
+  background-image: url('/images/cross-small.png');
 }
 
 
+.response-button {
+  height: 32px; /* 30px + 2px border */
+  width: 8.5em;
+
+  border: 1px solid #aaaaaa;
+  -ms-border-radius: 15px;
+  -moz-border-radius: 15px;
+  -webkit-border-radius: 15px;
+  border-radius: 15px;
+
+  padding: 4px;
+  padding-right: 8px;
+  font-size: 16px;
+
+  background: #999;
+  background-repeat: no-repeat;
+}
+
+.response-button:hover {
+  border: 1px solid black;
+}
+
+.response-yes {
+  padding-left: 34px;
+  background-image: url('/images/tick-small-button.png');
+}
+
+.response-no {
+  padding-left: 34px;
+  background-image: url('/images/cross-small-button.png');
+}
+
+.response-friends {
+  width: 1.5em;
+}
+
+.response-change {
+  border-spacing: 2px;
+}
+
+.response-button-small {
+  height: 22px; /* 20px + 2px border */
+
+  border: 1px solid #aaaaaa;
+  -ms-border-radius: 8px;
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
+  border-radius: 8px;
+
+  padding-right: 5px;
+}
+
+.response-button-small:hover {
+  border: 1px solid black;
+}
+
+.response-addfriends-small {
+  padding-left: 25px;
+  background-image: url('/images/multi-tiny-button.png');
+}
+
+.response-yes-small {
+  padding-left: 20px;
+  background-image: url('/images/tick-tiny-button.png');
+}
+
+.response-no-small {
+  padding-left: 20px;
+  background-image: url('/images/cross-tiny-button.png');
+}

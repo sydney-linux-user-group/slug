@@ -21,10 +21,12 @@ import event_lists
 
 from utils.render import render as r
 
+
 class Next(webapp.RequestHandler):
     """Figure out the next event, then redirect to it."""
     def get(self):
         self.redirect(event_lists.get_next_event().get_url())
+
 
 class Event(webapp.RequestHandler):
     """Handler for display a single event."""
@@ -38,8 +40,6 @@ class Event(webapp.RequestHandler):
 
         current_user = openid_users.get_current_user()
         response, guests = event_lists.get_event_responses(event, current_user)
-
-
 
         self.response.headers['Content-Type'] = 'text/html'
         self.response.out.write(r(
