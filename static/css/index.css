@@ -5,6 +5,8 @@
 #rightbar .box {
   background: white;
   margin: 5px;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
 }
 
 #rightbar ul {
