@@ -7,23 +7,54 @@ vim: set ts=2 sw=2 et sts=2 ai:
 <form class="response-answer" action="{{ event.get_url }}/response/update" method="post">
   <input type="hidden" name="attending" value="yes">
 
+<table>
   {% for guest in guests %}
-  <div>Guest Name:
-    <input type="text" name="guest_name"
-    value="{{ guest.guest_name }}">
-  </div>
-  <div>Guest Email:
-    <input type="text" name="guest_email"
-    value="{{ guest.guest_email }}">
-  </div>
+  <tr class="row{{forloop.counter0}}">
+    <td>
+      Name:
+    </td><td>
+      <input class="" type="text" name="guest_name" value="{{ guest.guest_name }}">
+    </td>
+    <td rowspan=2>
+      <img class="gravatar" src='{{ guest.guest_email|gravatar:32 }}'
+        onClick="$('.row{{forloop.counter0}}').remove();">
+    </td>
+  </tr>
+  <tr class="row{{forloop.counter0}}">
+    <td>
+      Email:
+    </td><td>
+      <input type="text" name="guest_email" value="{{ guest.guest_email }}">
+    </td>
+  </tr>
   {% endfor %}
-  <div>Guest Name:
-    <input type="text" name="guest_name" value="">
-  </div>
-  <div>Guest Email:
-    <input type="text" name="guest_email" value="">
-  </div>
-  <div><input type="submit"/>
+
+  {% for i in extra_guests %}
+  <tr>
+    <td>
+      Name:
+    </td><td>
+      <input type="text" name="guest_name" value="{{ guest.guest_name }}">
+    </td>
+    <td rowspan=2>
+      <img class="extra{{i}}" src="/images/silhouette-small.png">
+    </td>
+  </tr><tr>
+    <td>
+      Email:
+    </td><td>
+      <input type="text" name="guest_email" value="{{ guest.guest_email }}"
+        onChange="$('.extra{{i}}').gravatar($(this).val());">
+    </td>
+  </tr>
+  {% endfor %}
+  <tr>
+    <td>
+      <input type="submit"/>
+    </td>
+  </tr>
+</table>
+
 </form>
 
 {% endblock %}

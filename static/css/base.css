@@ -1,3 +1,10 @@
+/**
+ * CSS which is common throughout the whole site.
+ *
+ * -*- coding: utf-8 -*-
+ * vim: set ts=2 sw=2 et sts=2 ai:
+ */
+
 /*YUI Reset CSS */
 body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td { 
   margin:0;
@@ -201,32 +208,104 @@ img {
   display: table-row;
 }
 
-.response-image-small {
-  width: 21px;
-  height: 16px;
+.gravatar {
+  width: 34px;
+  height: 34px;
   padding: 0;
-  margin: 0;
   border: 0;
-  display: block;
+  margin: 0;
+  margin-left: 1px;
+  float: left;
+
+  -ms-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
 }
 
-.response-image {
-  width: 63px;
-  height: 48px;
-  padding: 0;
-  margin: 0;
-  border: 0;
+.gravatar-you {
+  border: 1px solid blue;
+}
+
+.gravatar-friend {
+  border: 1px solid red;
+}
+
+.gravatar-friend:hover {
+  background-image: url('/images/cross-small.png');
+}
+
+
+.response-button {
+  height: 32px; /* 30px + 2px border */
+
+  border: 1px solid #aaaaaa;
+  -ms-border-radius: 15px;
+  -moz-border-radius: 15px;
+  -webkit-border-radius: 15px;
+  border-radius: 15px;
+
+  padding: 4px;
+  font-size: 16px;
+
+  background: #999;
+  background-repeat: no-repeat;
+}
+
+.response-button:hover {
+  border: 1px solid black;
+}
+
+.response-yes {
+  padding-left: 34px;
+  background-image: url('/images/tick-small-button.png');
+}
+
+.response-no {
+  padding-left: 34px;
+  background-image: url('/images/cross-small-button.png');
 }
 
 .response-friends {
   width: 1.5em;
 }
 
-.gravatar {
-  width: 32px;
-  height: 32px;
-  padding: 0;
-  border: 0;
-  margin: 0;
-  float: left;
+.response-change {
+  border-spacing: 2px;
+}
+
+.response-button-small {
+  height: 22px; /* 20px + 2px border */
+
+  border: 1px solid #aaaaaa;
+  -ms-border-radius: 8px;
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
+  border-radius: 8px;
+
+  padding: 2px;
+  font-size: 12px;
+
+  background: #ddd;
+  background: -webkit-gradient(linear, left top, left bottom, from(#ddd), to(#000));
+  background-repeat: no-repeat;
+}
+
+.response-button-small:hover {
+  border: 1px solid black;
+}
+
+.response-addfriends-small {
+  padding-left: 25px;
+  background-image: url('/images/multi-tiny-button.png');
+}
+
+.response-yes-small {
+  padding-left: 20px;
+  background-image: url('/images/tick-tiny-button.png');
+}
+
+.response-no-small {
+  padding-left: 20px;
+  background-image: url('/images/cross-tiny-button.png');
 }

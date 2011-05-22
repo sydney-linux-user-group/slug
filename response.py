@@ -12,29 +12,8 @@ from google.appengine.ext import webapp
 from aeoid import users as openid_users
 
 import models
+import event_lists
 from utils.render import render
-
-def get_responses(event, user):
-    query = models.Response.gql(
-            "WHERE created_by = :user AND event = :event",
-            user = user._user_info_key,
-            event = event,
-            )
-
-    responses = query.fetch(100)
-
-    response = None
-    guests = []
-    if len(responses) == 1:
-        response = responses[0]
-    elif len(responses) > 1:
-        for response in responses:
-            if not response.guest:
-                response = response
-            else:
-                guests.append(response)
-
-    return response, guests
 
 
 class ShowResponsePage(webapp.RequestHandler):
@@ -50,28 +29,9 @@ class ShowResponsePage(webapp.RequestHandler):
             return
         ####################################################
 
-        response, guests = get_responses(event, current_user)
+        response, guests = event_lists.get_event_responses(event, current_user)
         self.response.out.write(render(
                 'templates/response-show.html', locals()))
-
-
-class FriendsResponsePage(webapp.RequestHandler):
-    """Showing an RSVP (for when you have a guests)."""
-
-    def post(self, eventid):
-        ####################################################
-        event = models.Event.get_by_id(long(eventid))
-        if not event:
-            self.redirect('/')
-        current_user = openid_users.get_current_user()
-        if not current_user:
-            self.redirect('/')
-            return
-        ####################################################
-
-        response, guests = get_responses(event, current_user)
-        self.response.out.write(render(
-                'templates/response-friends.html', locals()))
 
 
 class UpdateResponsePage(webapp.RequestHandler):
@@ -87,10 +47,22 @@ class UpdateResponsePage(webapp.RequestHandler):
             return
         ####################################################
 
-        response, guests = get_responses(event, current_user)
+        response, guests = event_lists.get_event_responses(event, current_user)
+        
+        # Check if the person is trying to add friends
+        try:
+            extra_guests = range(0, int(self.request.get('friends', '0'))-len(guests))
+        except ValueError:
+            extra_guests = []
+
+        if extra_guests:
+            self.response.out.write(render(
+                    'templates/response-friends.html', locals()))
+            return
+    
+        # Remove the current information
         if response is not None:
             response.delete()
-
         for guest in guests:
             guest.delete()
 

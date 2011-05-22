@@ -2,29 +2,42 @@
 -*- coding: utf-8 -*-
 vim: set ts=2 sw=2 et sts=2 ai:
 {% endcomment %}
-
 <table class="response">
   <tr>
     <td colspan=2>
-      <!-- People Attending carousel -->
       <div>
-        <!-- {{ event.key.id }} -->
-      {% for other_response in event.responses %}
-        <!-- {{ other_response.key.id }} -->
-        {% if other_response.attending %}
-          {% if other_response.guest %}
-          <img src="{{ other_response.guest_email|gravatar:32 }}"
-              title="{{ other_response.guest_name }}'s Gravatar ({{ other_response.created_by.nickname }}'s guest)"
-              class="gravatar">
-          {% else %}
-          <img src="{{ other_response.created_by.email|gravatar:32 }}"
-              title="{{ other_response.created_by.nickname }}'s Gravatar"
-              class="gravatar">
-          {% endif %}
-       {% else %}
-        <!-- Not attending! -->
-       {% endif %}
-      {% endfor %}
+        <form class="response-answer" method=post action="{{ event.get_url }}/response/update">
+          <input type=hidden name=attending value="yes">
+          {% for other_response in event.responses %}
+            {% ifequal other_response.created_by.user_id response.created_by.user_id %}
+              {% if response.attending %}
+                {% if other_response.guest %}
+                  <input type="hidden" name="guest_name" value="{{ other_response.guest_name }}">
+                  <input id="{{other_response.key}}" type="hidden" name="guest_email" value="{{ other_response.guest_email }}">
+                  <img class="gravatar gravatar-friend"
+                    style="background-image: url('{{ other_response.guest_email|gravatar:32 }}');"
+                    src="/images/blank.png" 
+                    onMouseOver="this.src='/images/cross-gravatar.png';"
+                    onMouseOut="this.src='/images/blank.png';"
+                    onClick="$('#{{other_response.key}}').val(''); $(this.parentNode).submit();">
+                {% else %}
+                  <!-- you're responses -->
+                  <img src="{{ other_response.created_by.email|gravatar:32 }}"
+                      title="{{ other_response.created_by.nickname }}"
+                      class="gravatar gravatar-you">
+                {% endif %}
+              {% endif %}
+            {% else %}
+              {% if not other_response.guest and other_response.attending %}
+                <img src="{{ other_response.created_by.email|gravatar:32 }}"
+                    title="{{ other_response.created_by.nickname }}"
+                    class="gravatar">
+              {% else %}
+                <!-- not attending or guest -->
+              {% endif %}
+            {% endifequal %}
+          {% endfor %}
+        </form>
       </div>
     </td>
   </tr>
@@ -36,53 +49,72 @@ vim: set ts=2 sw=2 et sts=2 ai:
     <td colspan=2>Why don't you attend too?</td>
   </tr><tr>
     <td>
-      I'll attend, and I'll be bringing 
-      <input class="response-friends" type=text name=friends value=0> friends!
-    </td><td>
-      <img class="response-image" src="/images/tick-small.png">
+      <form class="response-answer" method=post action="{{ event.get_url }}/response/update">
+        <input type=hidden name=attending value="yes">
+        <input class="response-button response-yes" type=submit value="I can attend">
+        and I'll be bringing
+        <input class="response-friends" type=text name=friends value=0>
+        friends!
+      </form>
     </td>
   </tr><tr>
     <td>
-      Sorry, I can't attend.
-    </td><td>
-      <img class="response-image" src="/images/cross-small.png">
+      <form class="response-answer" method=post action="{{ event.get_url }}/response/update">
+        <input type=hidden name=attending value="no">
+        <input class="response-button response-no" type=submit value="I can't attend">
+      </form>
     </td>
   </tr>  
 {% else %}
   <!-- Has responded. -->
   <tr>
     <td>
-    {% if response.attending %}
-      Yes, I'm attending!
-    {% else %}
-      I'm not attending!
-    {% endif %}
-    </td><td>
-    {% if response.attending %}
-      {% if guests %}
-        <img class="response-image" src="/images/multi-small.png">
+      {% if response.attending %}
+        {% if guests %}
+          <img class="response-image" src="/images/multi-small.png">
+        {% else %}
+          <img class="response-image" src="/images/tick-small.png">
+        {% endif %}
       {% else %}
-        <img class="response-image" src="/images/tick-small.png">
+          <img class="response-image" src="/images/cross-small.png">
       {% endif %}
-    {% else %}
-        <img class="response-image" src="/images/cross-small.png">
-    {% endif %}
+    </td><td>
+      {% if response.attending %}
+        Yes, I'm attending!
+      {% else %}
+        I'm not attending!
+      {% endif %}
     </td><td rowspan=2>
       <!-- Share widget goes here! -->
     </td>
   </tr><tr>
     <td colspan=2>
-      <!-- Your gravatar -->
-      <img src="{{ response.created_by.email|gravatar:32 }}"
-          alt="{{ response.created_by.nickname }}'s Gravatar"
-          class="gravatar">
-      <!-- Your friends gravatars -->
-      {% for guest in guests %}
-      <img src="{{ guest.guest_email|gravatar:32 }}"
-          alt="{{ guest.guest_name }}'s Gravatar"
-          class="gravatar">
-      {% endfor %}
-      <!-- Change response widget goes here -->
+      <table class="response-change">
+        <tr>
+          {% if response.attending %}
+          <td>
+            <form class="response-answer" method=post action="{{ event.get_url }}/response/update">
+              <input type=hidden name=attending value="yes">
+              <input type=hidden name=friends value="{{ guests|length|add:5 }}">
+              <input class="response-button-small response-addfriends-small" type=submit value="Add more friends">
+            </form>
+          </td>
+          <td>
+            <form class="response-answer" method=post action="{{ event.get_url }}/response/update">
+              <input type=hidden name=attending value="no">
+              <input class="response-button-small response-no-small" type=submit value="I can't attend">
+            </form>
+          </td>
+          {% else %}
+          <td>
+            <form class="response-answer" method=post action="{{ event.get_url }}/response/update">
+              <input type=hidden name=attending value="yes">
+              <input class="response-button-small response-yes-small" type=submit value="I can attend">
+            </form>
+          </td>
+          {% endif %}
+        </tr>
+      </table>
     </td>
   </tr>
 {% endifequal %}

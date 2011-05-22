@@ -5,8 +5,9 @@
 
 """Default handler."""
 
+import os
 import config
-config.setup()
+config.setup(os.environ.get('HTTP_HOST', None))
 
 # AppEngine imports
 from google.appengine.ext import webapp
@@ -26,7 +27,6 @@ application = webapp.WSGIApplication(
   [('/', index.Index),
     ('/event/next', events.Next),
    ('/event/(.*)/response/show',    response.ShowResponsePage),
-   ('/event/(.*)/response/friends', response.FriendsResponsePage),
    ('/event/(.*)/response/update',  response.UpdateResponsePage),
    ('/events[/]?(?P<year>[^/]*)[/]?(?P<month>[^/]*)[/]?(?P<day>[^/]*)[/]?',
         events.Events),
