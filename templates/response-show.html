@@ -2,107 +2,96 @@
 -*- coding: utf-8 -*-
 vim: set ts=2 sw=2 et sts=2 ai:
 {% endcomment %}
-{% ifequal response None %} <!-- No response yet -->
-  <div class=response-table>
-    <div class="response-header">Are you attending?</div>
-    <form class="response-answer" method=post action="{{ event.get_url }}/response/update">
-      <input type=hidden name=attending value="yes">
-      <img class="response-image" src="/images/tick.png">
-      <div class="response-text"><input type=submit value="Yes!"></div>
-    </form>
-    <form class="response-answer" method=post action="{{ event.get_url }}/response/friends">
-      {% include "fragments/positive-multiple.html" %}
-      <div class="response-text"><input type=submit value="Yes, with friends!"></div>
-    </form>
-    <form class="response-answer" method=post action="{{ event.get_url }}/response/update">
-      <input type=hidden name=attending value="no">
-      <img class="response-image" src="/images/cross.png">
-      <div class="response-text"><input type=submit value="No :("></div>
-    </form>
-  </div> <!-- response table -->
-{% else %}{% if response.attending %} <!-- Attending, with guests -->
-{% if guests %}
-  <div class=response-table>
-    <div class="gravatar-n-friends">
-      <div class="response-header">
-        {% include "fragments/positive-multiple.html" %}
-        <div class="response-text">I'm attending with friends!</div>
+
+<table class="response">
+  <tr>
+    <td colspan=2>
+      <!-- People Attending carousel -->
+      <div>
+        <!-- {{ event.key.id }} -->
+      {% for other_response in event.responses %}
+        <!-- {{ other_response.key.id }} -->
+        {% if other_response.attending %}
+          {% if other_response.guest %}
+          <img src="{{ other_response.guest_email|gravatar:32 }}"
+              title="{{ other_response.guest_name }}'s Gravatar ({{ other_response.created_by.nickname }}'s guest)"
+              class="gravatar">
+          {% else %}
+          <img src="{{ other_response.created_by.email|gravatar:32 }}"
+              title="{{ other_response.created_by.nickname }}'s Gravatar"
+              class="gravatar">
+          {% endif %}
+       {% else %}
+        <!-- Not attending! -->
+       {% endif %}
+      {% endfor %}
       </div>
-      <div class="response-details">
-        <img class="gravatar-large" src="{{ response.created_by.email|gravatar:148 }}"
-                    alt="{{ response.created_by.nickname }}'s Gravatar">
-        <div class="positive-multiple">
-          {% for guest in guests %}
-            {% if forloop.counter0|divisibleby:3 %}
-            <div class="positive-multiple">
-              <div class="gravatar-column">
-            {% endif %}
-              <img class="gravatar-small"
-                src="{{ guest.guest_email|gravatar:48 }}"
-                alt="{{ guest.guest_name }}'s Gravatar">
-            {% if forloop.counter0|add:1|divisibleby:3 or forloop.last %}
-              </div><!-- gravatar-column -->
-            </div><!-- positive-multiple -->
-            {% endif %}
-          {% endfor %}
-        </div><!-- positive-multiple -->
-      </div><!-- response-details -->
-      <div class="response-answers">
-        <form class="response-answer" method=post action="{{ event.get_url }}/response/friends">
-          <img class="response-image-small" src="/images/tick.png">
-          <img class="response-image-small" src="/images/tick.png">
-          <div class="response-text"><input type=submit value="Update friends"></div>
-        </form>
-        <form class="response-answer" method=post action="{{ event.get_url }}/response/update">
-          <input type=hidden name="attending" value="no">
-          <img class="response-image-small" src="/images/cross.png">
-          <div class="response-text"><input type=submit value="Can't make it :("></div>
-        </form>
-      </div><!-- response-answers -->
-    </div>
-  {% else %} <!-- attending, no guests yet -->
-    <div class=response-table>
-      <div class="gravatar-n-friends">
-        <div class="response-header">
-          <img class="response-image" src="/images/tick.png">
-          <div class="response-text">I'm attending!</div>
-        </div>
-        <div class="response-details">
-          <img class="gravatar-large" src="{{response.created_by.email|gravatar:148 }}"
-            alt="{{ response.created_by.nickname }}'s Gravatar">
-        </div>
-        <form class="response-answer" method=post action="{{ event.get_url }}/response/friends">
-          <div class="response-images-small">
-            <img class="response-image-small" src="/images/tick.png">
-            <img class="response-image-small" src="/images/tick.png">
-          </div>
-          <div class="response-text"><input type=submit value="Add friends!"></div>
-        </form>
-        <form class="response-answer" method=post action="{{ event.get_url }}/response/update">
-          <input type=hidden name="attending" value="no">
-          <img class="response-image-small" src="/images/cross.png">
-          <div class="response-text"><input type=submit value="Can't make it :("></div>
-        </form>
-      </div>
-    </div>
-  {% endif %} <!-- end is-attending -->
-{% else %} <!-- Has responded, not attending -->
-  <div class=response-table>
-    <div class="gravatar-n-friends">
-      <div class="response-header">
-        <img class="response-image" src="/images/cross.png">
-        <div class="response-text">I'm not attending :(</div>
-      </div>
-        <img class="gravatar-large"
-          src="{{ response.created_by.email|gravatar:148 }}"
-          alt="{{ response.created_by.nickname }}'s Gravatar">
-      <div class="response-details">
-        <form class="response-answer" method=post action="{{ event.get_url }}/response/update">
-          <input type=hidden name="attending" value="yes">
-          <img class="response-image-small" src="/images/tick.png">
-          <div class="response-text"><input type=submit value="I'm attending!"></div>
-        </form>
-      </div>
-    </div>
-  </div>
-{% endif %}{% endifequal %}
+    </td>
+  </tr>
+{% if openid_user %}
+  <!-- Is logged in. -->
+{% ifequal response None %}
+  <!-- Has not responded yet. -->
+  <tr>
+    <td colspan=2>Why don't you attend too?</td>
+  </tr><tr>
+    <td>
+      I'll attend, and I'll be bringing 
+      <input class="response-friends" type=text name=friends value=0> friends!
+    </td><td>
+      <img class="response-image" src="/images/tick-small.png">
+    </td>
+  </tr><tr>
+    <td>
+      Sorry, I can't attend.
+    </td><td>
+      <img class="response-image" src="/images/cross-small.png">
+    </td>
+  </tr>  
+{% else %}
+  <!-- Has responded. -->
+  <tr>
+    <td>
+    {% if response.attending %}
+      Yes, I'm attending!
+    {% else %}
+      I'm not attending!
+    {% endif %}
+    </td><td>
+    {% if response.attending %}
+      {% if guests %}
+        <img class="response-image" src="/images/multi-small.png">
+      {% else %}
+        <img class="response-image" src="/images/tick-small.png">
+      {% endif %}
+    {% else %}
+        <img class="response-image" src="/images/cross-small.png">
+    {% endif %}
+    </td><td rowspan=2>
+      <!-- Share widget goes here! -->
+    </td>
+  </tr><tr>
+    <td colspan=2>
+      <!-- Your gravatar -->
+      <img src="{{ response.created_by.email|gravatar:32 }}"
+          alt="{{ response.created_by.nickname }}'s Gravatar"
+          class="gravatar">
+      <!-- Your friends gravatars -->
+      {% for guest in guests %}
+      <img src="{{ guest.guest_email|gravatar:32 }}"
+          alt="{{ guest.guest_name }}'s Gravatar"
+          class="gravatar">
+      {% endfor %}
+      <!-- Change response widget goes here -->
+    </td>
+  </tr>
+{% endifequal %}
+{% else %}
+  <!-- Is not logged in. -->
+  <tr>
+    <td>
+      <a class="openid_login" href="{{ openid_login_url }}">Login to RSVP!</a>
+    </td>
+  </tr>
+{% endif %}
+</table>

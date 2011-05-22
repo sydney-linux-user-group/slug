@@ -8,7 +8,10 @@ from django.template.defaultfilters import stringfilter, register
 @register.filter
 @stringfilter
 def gravatar(email, size=40):
-  default = "http://sydney-linux-user-group.appspot.com/images/silhouette.png"
+  if size <= 32:
+    default = "http://signup.slug.org.au/images/silhouette-small.png"
+  else:
+    default = "http://signup.slug.org.au/images/silhouette.png"
 
   # construct the url
   gravatar_url = "http://www.gravatar.com/avatar/"

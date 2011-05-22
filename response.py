@@ -91,12 +91,12 @@ class UpdateResponsePage(webapp.RequestHandler):
         if response is not None:
             response.delete()
 
+        for guest in guests:
+            guest.delete()
+
         response = models.Response(event=event, guest=False)
         response.attending = self.request.get('attending').lower() != 'no'
         response.put()
-
-        for guest in guests:
-            guest.delete()
 
         guest_names = self.request.get_all('guest_name')
         guest_emails = self.request.get_all('guest_email')

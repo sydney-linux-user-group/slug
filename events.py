@@ -21,10 +21,12 @@ import event_lists
 
 from utils.render import render as r
 
+
 class Next(webapp.RequestHandler):
     """Figure out the next event, then redirect to it."""
     def get(self):
         self.redirect(event_lists.get_next_event().get_url())
+
 
 class Event(webapp.RequestHandler):
     """Handler for display a single event."""
