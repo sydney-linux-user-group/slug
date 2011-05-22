@@ -148,6 +148,10 @@ img {
 
 #navbar {
   border-bottom: 1px solid black;
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
 }
 
 #navbar ul {
@@ -171,8 +175,9 @@ img {
 }
 
 #main {
+  padding-top: 1.4em;
   border-collapse: separate;
-  height: 95%;
+  height: 100%;
 }
 
 #content {
@@ -292,7 +297,7 @@ img {
 
 #rightbar {
   vertical-align: top;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .eventData li {
