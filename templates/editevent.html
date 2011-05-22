@@ -56,24 +56,6 @@ vim: set ts=2 sw=2 et sts=2 ai:
 <script>
 
   $(function() {
-    var fancyinput = "<pre class='box eventInput' name='input' contentEditable='true'></pre>";
-    var boringinput = $('textarea.eventInput');
-    var rawcontent = boringinput.html();
-    boringinput.after(fancyinput);
-    boringinput.hide();
-    fancyinput = $('pre.eventInput');
-    fancyinput.text(rawcontent);
-  });
-
-  $('.templateEdit').ajaxForm({
-    beforeserialize: function () {
-      var fancyinput = $('pre.eventInput');
-      var boringinput = $('textarea.eventInput');
-      boringinput.text(fancyinput.text());
-    }
-  });
-
-  $(function() {
     $( "#tabs" ).tabs();
   });
 
