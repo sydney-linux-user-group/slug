@@ -35,6 +35,10 @@ handlers:
   login: admin
   script: publishevent.py
 
+- url: /event/[0-9]*/email
+  login: admin
+  script: publishevent.py
+
 - url: /events/admin
   login: admin
   script: adminevents.py

@@ -29,6 +29,7 @@ from datetime_tz import datetime_tz
 # Our App imports
 import models
 from utils.render import render as r
+import logging
 
 
 # We don't want to wrap this line as we use a grep to extract the details
@@ -77,6 +78,8 @@ class SendEmailAboutEvent(webapp.RequestHandler):
             message.subject = event.name
 
         message.send()
+        logging.info("Sent email. Subject: %s | To: %s | Body: %s",
+                message.subject, message.to, message.body)
         event.put()
 
         self.redirect("/events")
