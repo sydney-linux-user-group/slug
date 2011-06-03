@@ -46,6 +46,9 @@ handlers:
 - url: /.*
   script: handler.py
 
+builtins:
+- appstats: on
+
 skip_files:
 - third_party/((?!(aeoid|gaepytz-2011c)).*)/
 - third_party/gaepytz-2011c/(?!pytz)
