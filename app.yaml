@@ -1,5 +1,5 @@
 application: sydney-linux-user-group-hr
-version: 6
+version: 7
 runtime: python
 api_version: 1
 
@@ -32,6 +32,10 @@ handlers:
   script: editevent.py
 
 - url: /event/[0-9]*/publish
+  login: admin
+  script: publishevent.py
+
+- url: /event/[0-9]*/email
   login: admin
   script: publishevent.py
 
