@@ -247,6 +247,8 @@ img {
 
 
 .response-button {
+  cursor: pointer;
+
   height: 32px; /* 30px + 2px border */
   width: 8.5em;
 
@@ -287,6 +289,8 @@ img {
 }
 
 .response-button-small {
+  cursor: pointer;
+
   height: 22px; /* 20px + 2px border */
 
   border: 1px solid #aaaaaa;
