@@ -29,7 +29,7 @@ $(DATEUTIL).tar.gz:
 $(DATEUTIL): $(DATEUTIL).tar.gz
 	tar -zxvf $^
 	@# Update modtime on tar.gz to match directory so we don't continually rebuild
-	@touch -m $^ -r $@
+	@touch -r $@ -m $^
 
 # Human name target
 dateutil: $(DATEUTIL)
@@ -49,7 +49,7 @@ $(GAEPYTZ): $(GAEPYTZ).tar.gz
 	tar -zxvf $^
 	rsync -Pa $(GAEPYTZ)/pytz pytz
 	@# Update modtime on tar.gz to match directory so we don't continually rebuild
-	@touch -m $^ -r $@
+	@touch -r $@ -m $^
 
 pytz: $(GAEPYTZ)
 
@@ -82,7 +82,7 @@ $(MARKDOWN).tar.gz:
 $(MARKDOWN): $(MARKDOWN).tar.gz $(MARKDOWN_EXT)
 	tar -zxvf $(MARKDOWN).tar.gz
 	@# Update modtime on tar.gz to match directory so we don't continually rebuild
-	@touch -m $^ -r $@
+	@touch -r $@ -m $^
 	for f in $(MARKDOWN_EXT); do \
 		cp $$f $(MARKDOWN)/markdown/extensions/; \
 	done
@@ -106,7 +106,7 @@ $(PYRSS).tar.gz:
 $(PYRSS): $(PYRSS).tar.gz
 	tar -zxvf $^
 	@# Update modtime on tar.gz to match directory so we don't continually rebuild
-	@touch -m $^ -r $@
+	@touch -r $@ -m $^
 
 # Human name target
 pyrss: $(PYRSS)
