@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% comment %}
+-*- coding: utf-8 -*-
+vim: set ts=2 sw=2 et sts=2 ai:
+{% endcomment %}
+{% block head %}
+    <link rel="StyleSheet" href="/css/offertalk.css" type="text/css" media="screen">
+{% endblock %}
+{% block body %}
+
+<form id="talkOfferForm" class="clearfix" action="/offer/{{offer.key.id}}/edit"
+    method="post">
+  <ul class="eventData">
+    <li><label for="name">Talk Summary:</label>
+      <input type="text" name="name" value="{{offer.name}}"/></li>
+    <li><label for="text">Talk Details:</label>
+      <textarea class="offerText" rows=5 cols=40 name="text">{{offer.text}}</textarea>
+    <li><label for="minutes">Talk length (in minutes)</label>
+      <input type="text" name="minutes" value="{{ offer.minutes  }}" /></li>
+    <li><label for="consent">I give consent for my talk to be recorded, and the
+      resulting video distributed under a <a
+        href="http://creativecommons.org/licenses/by-sa/3.0/au/deed.en">CC-BY-SA</a>
+      license</label>
+    <li><input type="checkbox"></li>
+    <li><input type="submit"/></li>
+  </ul>
+</form>
+
+<script>
+
+</script>
+
+{% endblock %}

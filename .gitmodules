@@ -3,13 +3,13 @@
 	url = git://github.com/mithro/aeoid.git
 [submodule "third_party/markdown-extensions/subscript"]
 	path = third_party/markdown-extensions/subscript
-	url = https://github.com/sgraber/markdown.subscript.git
+	url = git://github.com/sgraber/markdown.subscript.git
 [submodule "third_party/markdown-extensions/superscript"]
 	path = third_party/markdown-extensions/superscript
-	url = https://github.com/sgraber/markdown.superscript.git
+	url = git://github.com/sgraber/markdown.superscript.git
 [submodule "third_party/jquery.tweet"]
 	path = third_party/jquery.tweet
 	url = git://github.com/seaofclouds/tweet.git
 [submodule "third_party/jquery.form"]
 	path = third_party/jquery.form
-	url = https://github.com/malsup/form.git
+	url = git://github.com/malsup/form.git
