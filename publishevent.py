@@ -9,11 +9,6 @@ import config
 config.setup()
 
 # Python Imports
-import os
-import os.path
-import traceback
-import cStringIO as StringIO
-from datetime import datetime
 
 # AppEngine Imports
 from google.appengine.api import mail
@@ -21,12 +16,9 @@ from google.appengine.api import users
 from google.appengine.ext import webapp
 
 # Third Party imports
-from dateutil import rrule
-from datetime_tz import datetime_tz
 
 # Our App imports
 import models
-from utils.render import render as r
 import logging
 
 
@@ -36,10 +28,6 @@ extensions = ['abbr', 'footnotes', 'def_list', 'fenced_code', 'tables', 'subscri
 
 def prep_values(key=None):
     user = users.get_current_user()
-    if user is None:
-        login_url = users.create_login_url(self.request.path)
-        self.redirect(login_url)
-        return
 
     if key:
         try:
@@ -48,8 +36,7 @@ def prep_values(key=None):
             assert event
         # pylint: disable-msg=W0702
         except (AssertionError, ValueError):
-            self.redirect('/events')
-            return
+            event = None
     else:
         event = None
 
@@ -58,10 +45,10 @@ def prep_values(key=None):
 
 class SendEmailAboutEvent(webapp.RequestHandler):
     def post(self, key=None):
-        user, event = prep_values(key)
+        user, event = prep_values(self.request.path, key)
 
-        if not event.published:
-            self.redirect('/event')
+        if not user or not event or event.published:
+            self.redirect("/events")
 
         message = mail.EmailMessage()
         message.sender = "committee@slug.org.au"
@@ -82,19 +69,20 @@ class SendEmailAboutEvent(webapp.RequestHandler):
 
         self.redirect("/events")
 
+
 class PublishEvent(webapp.RequestHandler):
     def post(self, key=None):
+        user, event = prep_values(self.request.path, key)
 
-        user, event = prep_values(key)
-
-        announcement = models.Announcement(
+        if user and event:
+            announcement = models.Announcement(
                 name=event.name,
                 plaintext=event.plaintext,
-                html = event.html)
+                html=event.html)
 
-        event.announcement = announcement.put()
+            event.announcement = announcement.put()
 
-        event.published = True
-        event.put()
+            event.published = True
+            event.put()
 
         self.redirect('/events')

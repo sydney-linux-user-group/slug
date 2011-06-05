@@ -14,7 +14,7 @@ doing anything else, *including imports*!
 import sys
 import os
 
-HOST=None
+HOST = None
 
 def getpaths():
     """Get the extra third_party paths we need."""

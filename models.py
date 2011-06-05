@@ -71,6 +71,7 @@ class TalkOffer(db.Model):
     seconds = db.IntegerProperty()
     consent = db.BooleanProperty()
 
+
 class LigtningTalk(db.Model):
     created_by = openid.UserProperty(
             auto_current_user_add=True, required=True)

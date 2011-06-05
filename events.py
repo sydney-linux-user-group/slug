@@ -9,13 +9,11 @@ import config
 config.setup()
 
 from google.appengine.api import users
-from google.appengine.ext import db
 from google.appengine.ext import webapp
 
 from aeoid import users as openid_users
 
 import datetime
-import logging
 import models
 import event_lists
 
@@ -32,6 +30,8 @@ class Event(webapp.RequestHandler):
     """Handler for display a single event."""
 
     def get(self, key=None):
+        # We are using locals which confuses pylint.
+        # pylint: disable-msg=W0612
         if not key:
             key = self.request.get('id')
 
@@ -53,12 +53,14 @@ class Events(webapp.RequestHandler):
     published_only = False
 
     def get(self, year=None, month=None, day=None):
+        # We are using locals which confuses pylint.
+        # pylint: disable-msg=W0613,W0612
         now = datetime.datetime.now()
 
         if users.is_current_user_admin():
-            published_only=False
+            published_only = False
         else:
-            published_only=True
+            published_only = True
 
         current_user = openid_users.get_current_user()
 

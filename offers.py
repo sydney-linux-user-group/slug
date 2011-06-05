@@ -8,15 +8,10 @@
 import config
 config.setup()
 
-# Python Imports
-from datetime import datetime
-
 # AppEngine Imports
 from google.appengine.ext import webapp
-from django import template
 
 # Third Party imports
-import aeoid.middleware
 
 # Our App imports
 import models
@@ -30,7 +25,7 @@ class EditOffer(webapp.RequestHandler):
         if key:
             try:
                 key = long(key)
-                offer = models.TalkOffers.get_by_id(key)
+                offer = models.TalkOffer.get_by_id(key)
                 assert offer
             # pylint: disable-msg=W0702
             except (AssertionError, ValueError):

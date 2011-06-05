@@ -3,6 +3,9 @@
 # -*- coding: utf-8 -*-
 # vim: set ts=4 sw=4 et sts=4 ai:
 
+# We have functions with loads of arguments.
+# pylint: disable-msg=R0913
+
 """Helper module for obtaining lists of events"""
 
 import config
@@ -10,10 +13,7 @@ config.setup()
 
 from google.appengine.ext import db
 
-from aeoid import users as openid_users
-
 import datetime
-import models
 
 
 def get_event_responses(event, user):
@@ -38,6 +38,7 @@ def get_eventlist_responses(event_list, user):
 
     return events
 
+
 def get_future_events(
         year=None, month=None, day=None, published_only=True, user=None,
         count=100):
@@ -47,13 +48,13 @@ def get_future_events(
     month = month or now.month
     day = day or now.day
 
-    q = "SELECT * from Event " \
-        "WHERE start > DATETIME(:1, :2, :3, 23, 59, 59) "
+    query = ("SELECT * from Event "
+             "WHERE start > DATETIME(:1, :2, :3, 23, 59, 59) ")
     if published_only:
-        q += "AND published = True "
-    q += "ORDER BY start"
+        query += "AND published = True "
+    query += "ORDER BY start"
 
-    future_events = db.GqlQuery(q, year, month, day).fetch(count)
+    future_events = db.GqlQuery(query, year, month, day).fetch(count)
 
     return EventList(get_eventlist_responses(
         future_events, user), "Coming soon")
@@ -68,14 +69,14 @@ def get_current_events(
     month = month or now.month
     day = day or now.day
 
-    q = "SELECT * from Event " \
-        "WHERE end >= DATETIME(:1, :2, :3, 00, 00, 00) " \
-        "AND end <= DATETIME(:1, :2, :3, 23, 59, 59) "
+    query = ("SELECT * from Event "
+             "WHERE end >= DATETIME(:1, :2, :3, 00, 00, 00) "
+             "AND end <= DATETIME(:1, :2, :3, 23, 59, 59) ")
     if published_only:
-        q += "AND published = True "
-    q += "ORDER BY end"
+        query += "AND published = True "
+    query += "ORDER BY end"
 
-    current_events = db.GqlQuery(q, year, month, day).fetch(count)
+    current_events = db.GqlQuery(query, year, month, day).fetch(count)
 
     return EventList(get_eventlist_responses(
         current_events, user), "Happening today")
@@ -109,7 +110,8 @@ def get_event_lists(year=None, month=None, day=None, hour=None, minute=None,
 
     return event_lists
 
-class EventList():
+
+class EventList(object):
     """A named list of events.
 
     Arguments:

@@ -74,6 +74,7 @@ endif
 lint: third_party.zip
 	@# R0904 - Disable "Too many public methods" warning
 	@# W0221 - Disable "Arguments differ from parent", as get and post will.
+	@# E1103 - Disable "Instance of 'x' has no 'y' member (but some types could not be inferred)"
 	@python \
 		-W "ignore:disable-msg is:DeprecationWarning:pylint.lint" \
 		-c "import config; config.lint_setup(); import sys; from pylint import lint; lint.Run(sys.argv[1:])" \
@@ -83,6 +84,7 @@ lint: third_party.zip
 		--indent-string='    ' \
 		${PYLINT_DISABLE}=W0221 \
 		${PYLINT_DISABLE}=R0904 \
+		${PYLINT_DISABLE}=E1103 \
 		--const-rgx='[a-z_][a-z0-9_]{2,30}$$' *.py
 
 ###############################################################################

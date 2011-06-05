@@ -20,7 +20,6 @@ from google.appengine.ext import webapp
 from django import template
 
 # Third Party imports
-import aeoid.middleware
 from dateutil import rrule
 from datetime_tz import datetime_tz
 import markdown
@@ -62,6 +61,8 @@ class EditEvent(webapp.RequestHandler):
     """Handler for creating and editing Event objects."""
 
     def get(self, key=None):
+        # We use locals() which confuses pylint.
+        # pylint: disable-msg=W0612
         if key:
             try:
                 key = long(key)
@@ -115,7 +116,7 @@ class EditEvent(webapp.RequestHandler):
             html = markdown.markdown(plaintext, extensions).encode('utf-8')
             event.plaintext = plaintext
             event.html = html
-        except Exception, e:
+        except Exception:
             sio = StringIO.StringIO()
             traceback.print_exc(file=sio)
             event.plaintext = sio.getvalue()
