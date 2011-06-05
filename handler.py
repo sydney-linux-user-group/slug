@@ -25,7 +25,7 @@ import rss
 
 application = webapp.WSGIApplication(
   [('/', index.Index),
-    ('/event/next', events.Next),
+   ('/event/next', events.Next),
    ('/ical[/]?(?P<key>[^\.]*)(?:.ics)?', ical.iCal),
    ('/event[/]?(?P<key>[^\.]*)(?:.ics)', ical.iCal),
    ('/event/ical', ical.iCal),
@@ -33,11 +33,11 @@ application = webapp.WSGIApplication(
    ('/\d*/.*feed.*', rss.RSSHandler),
    ('/full/.*feed.*', rss.RSSHandler),
    ('/event/.*feed.*', rss.RSSHandler),
-   ('/events[/]?(?P<year>[^/]*)[/]?(?P<month>[^/]*)[/]?(?P<day>[^/]*)[/]?',
-        events.Events),
-   ('/event[/]?(.*)', events.Event),
    ('/event/(.*)/response/show',    response.ShowResponsePage),
    ('/event/(.*)/response/update',  response.UpdateResponsePage),
+   ('/events[/]?(?P<year>[^/]*)[/]?(?P<month>[^/]*)[/]?(?P<day>[^/]*)[/]?',
+        events.Events),
+   ('/event/(.*)', events.Event),
    ('/refresh', index.Refresh),
    ('/(.*)', index.StaticTemplate),
    ],
