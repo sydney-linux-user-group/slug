@@ -320,3 +320,7 @@ img {
   padding-left: 20px;
   background-image: url('/images/cross-tiny-button.png');
 }
+
+.staticContent {
+  vertical-align: top;
+}
