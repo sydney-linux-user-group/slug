@@ -1,6 +1,6 @@
 #!/bin/bash
 
-TARGETS=dateutil pytz datetime-tz markdown pyrss python-vobject
+TARGETS=dateutil pytz markdown pyrss
 TARGETS_CLEAN=$(addsuffix -clean,$(TARGETS))
 
 all: git $(TARGETS)
@@ -57,18 +57,6 @@ pytz-clean:
 	rm -rf $(GAEPYTZ)* pytz
 
 ###############################################################################
-# python-datetime-tz a datetime library which cares about timezones
-###############################################################################
-
-python-datetime-tz:
-	svn checkout http://python-datetime-tz.googlecode.com/svn/trunk/ python-datetime-tz
-
-datetime-tz: python-datetime-tz
-
-datetime-tz-clean:
-	rm -rf python-datetime-tz
-
-###############################################################################
 # Markdown parser
 ###############################################################################
 MARKDOWN=Markdown-2.0.3
@@ -113,18 +101,6 @@ pyrss: $(PYRSS)
 
 pyrss-clean:
 	rm -rf $(PYRSS)*
-
-###############################################################################
-# vobject a iCal file generator
-###############################################################################
-
-vobject:
-	svn checkout -r 217 http://svn.osafoundation.org/vobject/trunk/ vobject
-
-vobject-clean:
-	rm -rf vobject
-
-python-vobject: vobject
 
 ###############################################################################
 .PHONY : all clean git $(TARGETS) $(TARGETS_CLEAN)

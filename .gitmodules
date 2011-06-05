@@ -13,3 +13,12 @@
 [submodule "third_party/jquery.form"]
 	path = third_party/jquery.form
 	url = git://github.com/malsup/form.git
+[submodule "third_party/python-datetime-tz"]
+	path = third_party/python-datetime-tz
+	url = git://github.com/mithro/python-datetime-tz
+[submodule "third_party/vobject"]
+	path = third_party/vobject
+	url = git://github.com/sydney-linux-user-group/vobject
+[submodule "third_party/python-markdown"]
+	path = third_party/python-markdown
+	url = git://github.com/waylan/Python-Markdown.git
