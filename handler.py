@@ -30,6 +30,7 @@ application = webapp.WSGIApplication(
    ('/event[/]?(?P<key>[^\.]*)(?:.ics)', ical.iCal),
    ('/event/ical', ical.iCal),
    ('/rss', rss.RSSHandler),
+   ('/\d*/.*feed.*', rss.RSSHandler),
    ('/event/.*feed.*', rss.RSSHandler),
    ('/events[/]?(?P<year>[^/]*)[/]?(?P<month>[^/]*)[/]?(?P<day>[^/]*)[/]?',
         events.Events),
