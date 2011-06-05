@@ -76,19 +76,7 @@ vim: set ts=2 sw=2 et sts=2 ai:
       <ul>
         {% for event, response, guests in event_list.events %}
           <li class=eventitem>
-            {% if appengine_admin %}
-              <div class=editlink><a href="{{ event.get_url }}/edit">Edit</a></div>
-            {% endif %}
-            <h3><a class=eventname href="{{ event.get_url }}">{{ event.announcement.name }}</a></h3>
-            <div class=event-icons>
-              <div class="ical-link">
-                <a href="{{ event.get_url }}.ics" title="Add this event to your iCalendar">
-                  <img src="/images/ical16x16.gif" alt="Add event to iCalendar">
-                </a>
-              </div>
-            </div>
-            <span class=start>{{ event.start }}</span>
-            <div class=respond id="respond-{{ event.key.id }}">
+            <div class=respond id="{{ event.key.id }}">
               {% include "response-show.html" %}
             </div>
           </li>
@@ -199,6 +187,7 @@ function youtube_setup() {
     var videoid = youtube_playlist[Math.floor(Math.random()*youtube_playlist.length)];
 
     var playerVars = {};
+    playerVars.wmode = "transparent";
     playerVars.allowScriptAccess = "always";
     playerVars.enablejsapi = 1;
 

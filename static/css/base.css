@@ -90,10 +90,6 @@ body {
   font-family: "Trebuchet MS", "Tahoma", "Verdana", "Arial", "Helvetica", sans-serif;
 }
 
-form {
-  margin-top: 0.4em;
-}
-
 /* Fix PNG transparence in older IE browsers. */
 img, div, a, input {
   behavior: url(/css/resources/iepngfix.htc);
@@ -204,20 +200,6 @@ img {
 }
 
 
-#eventright {
-  display: table
-  padding: 5px;
-}
-#eventright .start {
-  display: table-row;
-}
-#eventright .respond {
-  display: table-row;
-}
-#eventright .editlink {
-  display: table-row;
-}
-
 .gravatar {
   width: 34px;
   height: 34px;
@@ -241,10 +223,21 @@ img {
   border: 1px solid red;
 }
 
-.gravatar-friend:hover {
-  background-image: url('/images/cross-small.png');
+.response {
+  width: 100%;
 }
 
+.response-header table {
+  width: 100%;
+}
+
+.response-header td {
+  text-align: right;
+}
+
+.response-share {
+  width: 70px;
+}
 
 .response-button {
   cursor: pointer;
@@ -286,12 +279,15 @@ img {
 
 .response-change {
   border-spacing: 2px;
+  width: 100%;
 }
 
 .response-button-small {
   cursor: pointer;
 
   height: 22px; /* 20px + 2px border */
+  width: 100%;
+  max-width: 150px;
 
   border: 1px solid #aaaaaa;
   -ms-border-radius: 8px;
@@ -323,4 +319,12 @@ img {
 
 .staticContent {
   vertical-align: top;
+}
+
+/* Reset CSS for share widget */
+#at20mc * {
+  -moz-box-sizing: content-box;
+  -ms-box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+  box-sizing: content-box;
 }

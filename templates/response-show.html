@@ -3,10 +3,27 @@
 vim: set ts=2 sw=2 et sts=2 ai:
 {% endcomment %}
 <table class="response">
+  <!-- Event header -->
   <tr>
-    <td colspan=2>
+    <td colspan=3 class="response-header">
+      <table>
+        <tr>
+          <th>
+            <h3><a class=eventname href="{{ event.get_url }}">{{ event.announcement.name }}</a></h3>
+          </th>
+          <td>
+            {{ event.start }}
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+  <tr>
+    <!-- Show the gravatars of people attending. -->
+    <td colspan=2 class="response-gravatars">
       <div>
-        <form class="response-answer" method=post action="{{ event.get_url }}/response/update">
+        <form method=post action="{{ event.get_url }}/response/update">
           <input type=hidden name=attending value="yes">
           {% for other_response in event.responses %}
             {% ifequal other_response.created_by.user_id response.created_by.user_id %}
@@ -16,7 +33,7 @@ vim: set ts=2 sw=2 et sts=2 ai:
                   <input id="{{other_response.key}}" type="hidden" name="guest_email" value="{{ other_response.guest_email }}">
                   <img class="gravatar gravatar-friend"
                     style="background-image: url('{{ other_response.guest_email|gravatar:32 }}');"
-                    src="/images/blank.png" 
+                    src="/images/blank.png"
                     onMouseOver="this.src='/images/cross-gravatar.png';"
                     onMouseOut="this.src='/images/blank.png';"
                     onClick="$('#{{other_response.key}}').val(''); $(this.parentNode).submit();">
@@ -40,31 +57,44 @@ vim: set ts=2 sw=2 et sts=2 ai:
         </form>
       </div>
     </td>
+
+    <!-- Social widget -->
+    <td rowspan=2 class="response-share">
+      <div id="share-{{ event.key.id }}" class="addthis_toolbox addthis_default_style"
+          addthis:url="http://{{ config.HOST }}{{ event.get_url }}"
+          addthis:title="{{ event.announcement.name }} on {{ event.start }}"
+          >
+        <a class="addthis_counter"></a>
+        <a class="addthis_button_preferred_1"></a>
+        <a class="addthis_button_preferred_2"></a>
+        <a class="addthis_button_preferred_3"></a>
+        <a class="addthis_button_preferred_4"></a>
+      </div>
+    </td>
   </tr>
+
 {% if openid_user %}
   <!-- Is logged in. -->
 {% ifequal response None %}
   <!-- Has not responded yet. -->
   <tr>
-    <td colspan=2>Why don't you attend too?</td>
-  </tr><tr>
     <td>
-      <form class="response-answer" method=post action="{{ event.get_url }}/response/update">
+      <form method=post action="{{ event.get_url }}/response/update">
         <input type=hidden name=attending value="yes">
         <input class="response-button response-yes" type=submit value="I can attend">
-        and I'll be bringing
+        and be bringing
         <input class="response-friends" type=text name=friends value=0>
         friends!
       </form>
     </td>
   </tr><tr>
     <td>
-      <form class="response-answer" method=post action="{{ event.get_url }}/response/update">
+      <form method=post action="{{ event.get_url }}/response/update">
         <input type=hidden name=attending value="no">
         <input class="response-button response-no" type=submit value="I can't attend">
       </form>
     </td>
-  </tr>  
+  </tr>
 {% else %}
   <!-- Has responded. -->
   <tr>
@@ -84,30 +114,28 @@ vim: set ts=2 sw=2 et sts=2 ai:
       {% else %}
         I'm not attending!
       {% endif %}
-    </td><td rowspan=2>
-      <!-- Share widget goes here! -->
     </td>
   </tr><tr>
-    <td colspan=2>
+    <td colspan=3>
       <table class="response-change">
         <tr>
           {% if response.attending %}
           <td>
-            <form class="response-answer" method=post action="{{ event.get_url }}/response/update">
+            <form method=post action="{{ event.get_url }}/response/update">
               <input type=hidden name=attending value="yes">
               <input type=hidden name=friends value="{{ guests|length|add:5 }}">
               <input class="response-button-small response-addfriends-small" type=submit value="Add more friends">
             </form>
           </td>
           <td>
-            <form class="response-answer" method=post action="{{ event.get_url }}/response/update">
+            <form method=post action="{{ event.get_url }}/response/update">
               <input type=hidden name=attending value="no">
               <input class="response-button-small response-no-small" type=submit value="I can't attend">
             </form>
           </td>
           {% else %}
           <td>
-            <form class="response-answer" method=post action="{{ event.get_url }}/response/update">
+            <form method=post action="{{ event.get_url }}/response/update">
               <input type=hidden name=attending value="yes">
               <input class="response-button-small response-yes-small" type=submit value="I can attend">
             </form>
@@ -127,3 +155,28 @@ vim: set ts=2 sw=2 et sts=2 ai:
   </tr>
 {% endif %}
 </table>
+
+
+{%block script %}
+<style>
+  a.addthis_button_expanded {
+    width: 100%;
+  }
+</style>
+<script type="text/javascript">
+var addthis_config = {
+  data_ga_tracker: true,
+  data_ga_property: 'UA-23521264-1',
+  data_track_clickback: true,
+  ui_508_compliant: true,
+  services_exclude: 'print',
+  ui_delay: 500
+};
+var addthis_share = {
+  templates: {
+    twitter: "I'm going to {"+"{title}"+"}! {"+"{lurl}"+"} @slugupdates"
+  }
+};
+</script>
+<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4deafbff00885a29"></script>
+{%endblock%}
