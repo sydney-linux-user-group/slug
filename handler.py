@@ -38,6 +38,8 @@ application = webapp.WSGIApplication(
    ('/events[/]?(?P<year>[^/]*)[/]?(?P<month>[^/]*)[/]?(?P<day>[^/]*)[/]?',
         events.Events),
    ('/event/(.*)', events.Event),
+   ('/offer/(.*)/edit', offers.EditOffer),
+   ('/offer/add', offers.EditOffer),
    ('/refresh', index.Refresh),
    ('/(.*)', index.StaticTemplate),
    ],

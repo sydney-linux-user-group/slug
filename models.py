@@ -69,7 +69,7 @@ class TalkOffer(db.Model):
     name = db.StringProperty(required=True)
     text = db.TextProperty()
     seconds = db.IntegerProperty()
-    consent = db.BooleanProperty(required=True)
+    consent = db.BooleanProperty()
 
 class LigtningTalk(db.Model):
     created_by = openid.UserProperty(
