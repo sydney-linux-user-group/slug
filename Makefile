@@ -133,7 +133,7 @@ update: third_party.zip
 	${APPENGINE_SDK}/appcfg.py update .
 
 serve: third_party.zip
-	python2.6 ${APPENGINE_SDK}/dev_appserver.py -a 0.0.0.0 -d --enable_sendmail .
+	${APPENGINE_SDK}/dev_appserver.py -a 0.0.0.0 -d --enable_sendmail .
 
 clean:
 	$(MAKE) -C third_party clean
