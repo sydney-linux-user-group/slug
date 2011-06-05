@@ -59,7 +59,7 @@ class Event(db.Model):
     end = db.DateTimeProperty(required=True)
 
 
-class LightningTalk(db.Model):
+class TalkOffer(db.Model):
     """An lightning talk to be given at an event."""
     created_by = openid.UserProperty(
             auto_current_user_add=True, required=True)
@@ -67,13 +67,20 @@ class LightningTalk(db.Model):
             auto_now_add=True, required=True)
 
     name = db.StringProperty(required=True)
-    text = db.StringProperty(multiline=True)
+    text = db.TextProperty()
+    seconds = db.IntegerProperty()
+    consent = db.BooleanProperty(required=True)
 
-    # If a approver exists, then it is approved.
-    approver = appengine.UserProperty()
+class LigtningTalk(db.Model):
+    created_by = openid.UserProperty(
+            auto_current_user_add=True, required=True)
+    created_on = db.DateTimeProperty(
+            auto_now_add=True, required=True)
 
-    given_at = db.Reference(Event)
-
+    offer = db.ReferenceProperty(TalkOffer, required=True,
+            collection_name='events')
+    event = db.ReferenceProperty(Event, required=True,
+            collection_name='talks')
 
 class Response(db.Model):
     """An RSVP to attend an event."""
