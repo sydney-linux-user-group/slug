@@ -2,7 +2,7 @@
 -*- coding: utf-8 -*-
 vim: set ts=2 sw=2 et sts=2 ai:
 {% endcomment %}
-<html>
+<html {%block namespace %}{%endblock%}>
   <head>
     <title>{%block title%}Sydney Linux User Group{%endblock%}</title>
     <link rel="StyleSheet" href="/css/base.css" type="text/css" media="screen">
@@ -81,22 +81,31 @@ vim: set ts=2 sw=2 et sts=2 ai:
 </table>
 
   <script type="text/javascript">
-    function handleSuccess(responseText, statusText, xhr, $form) {
-      target = $form.closest('.respond');
-      targetid = target.attr('id');
+    function handleSuccess(responseText, statusText, xhr, form) {
+      // Find the div which contains this form
+      var target = form.closest('div.respond');
+      var targetid = target.attr('id');
+
+      // Replace the HTML
       target.html(responseText);
-      $('#' + targetid + ' .response-answer').ajaxForm({
+
+      // Populate the share widgets
+      addthis.counter(target.find('.addthis_counter')[0]);
+      addthis.toolbox(target.find('.addthis_toolbox')[0]);
+
+      // Setup the Ajax form
+      target.find('form').ajaxForm({
         data: { returnfragment: 'yes' },
         dataType: 'html',
         success: handleSuccess
-        });
+      });
     };
     function ajaxifyforms () {
-      $('.response-answer').ajaxForm({
+      $('div.respond form').ajaxForm({
         data: { returnfragment: 'yes' },
         dataType: 'html',
         success: handleSuccess
-        });
+      });
     };
     $(ajaxifyforms);
   </script>

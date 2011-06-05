@@ -1,4 +1,10 @@
+#!/usr/bin/python
+#
+# -*- coding: utf-8 -*-
+# vim: set ts=4 sw=4 et sts=4 ai:
 
+import config
+config.setup()
 
 from google.appengine.api import users as appengine_users
 from google.appengine.ext.webapp import template
@@ -10,6 +16,7 @@ def render(t, kw):
   req = kw['self'].request
   extra = {
       'req': req,
+      'config': config,
       'openid_user': openid_users.get_current_user(),
       'openid_login_jsurl': openid_users.create_login_url('/refresh'),
       'openid_login_url': openid_users.create_login_url(req.path),
