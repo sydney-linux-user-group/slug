@@ -19,10 +19,8 @@ from datetime import datetime
 from google.appengine.api import mail
 from google.appengine.api import users
 from google.appengine.ext import webapp
-from google.appengine.ext.webapp.util import run_wsgi_app
 
 # Third Party imports
-import aeoid.middleware
 from dateutil import rrule
 from datetime_tz import datetime_tz
 
@@ -100,19 +98,3 @@ class PublishEvent(webapp.RequestHandler):
         event.put()
 
         self.redirect('/events')
-
-
-
-application = webapp.WSGIApplication(
-     [('/event/(.*)/publish', PublishEvent),
-      ('/event/(.*)/email', SendEmailAboutEvent)],
-    debug=True)
-application = aeoid.middleware.AeoidMiddleware(application)
-
-
-def main():
-    run_wsgi_app(application)
-
-
-if __name__ == "__main__":
-    main()

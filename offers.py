@@ -13,7 +13,6 @@ from datetime import datetime
 
 # AppEngine Imports
 from google.appengine.ext import webapp
-from google.appengine.ext.webapp.util import run_wsgi_app
 from django import template
 
 # Third Party imports
@@ -76,18 +75,3 @@ class EditOffer(webapp.RequestHandler):
         offer.put()
 
         self.redirect('/events')
-
-
-application = webapp.WSGIApplication(
-    [('/offer/add', EditOffer),
-     ('/offer/(.*)/edit', EditOffer)],
-    debug=True)
-application = aeoid.middleware.AeoidMiddleware(application)
-
-
-def main():
-    run_wsgi_app(application)
-
-
-if __name__ == "__main__":
-    main()

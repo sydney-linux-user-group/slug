@@ -17,7 +17,6 @@ from datetime import datetime
 
 # AppEngine Imports
 from google.appengine.ext import webapp
-from google.appengine.ext.webapp.util import run_wsgi_app
 from django import template
 
 # Third Party imports
@@ -126,18 +125,3 @@ class EditEvent(webapp.RequestHandler):
         event.put()
 
         self.redirect('%s/edit' % event.get_url())
-
-
-application = webapp.WSGIApplication(
-    [('/event/add', EditEvent),
-     ('/event/(.*)/edit', EditEvent)],
-    debug=True)
-application = aeoid.middleware.AeoidMiddleware(application)
-
-
-def main():
-    run_wsgi_app(application)
-
-
-if __name__ == "__main__":
-    main()
