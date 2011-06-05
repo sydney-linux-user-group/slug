@@ -20,6 +20,7 @@ import aeoid.middleware
 import index
 import response
 import events
+import offers
 import ical
 import rss
 
