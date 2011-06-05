@@ -37,11 +37,11 @@ endif
 ## How do we calculate md5s?
 ###############################################################################
 ifndef MD5SUM
-ifeq "$(shell echo -n 'Found' | md5sum 2>&1)" "5d695cc28c6a7ea955162fbdd0ae42b9  -"
+ifeq "$(shell echo -n 'Found' | md5sum 2>/dev/null)" "5d695cc28c6a7ea955162fbdd0ae42b9  -"
 MD5SUM=md5sum
 else
 #Maybe we're on a mac
-ifeq "$(shell md5 -q -s Found 2>&1)" "5d695cc28c6a7ea955162fbdd0ae42b9" #md5sum of Found
+ifeq "$(shell md5 -q -s Found 2>/dev/null)" "5d695cc28c6a7ea955162fbdd0ae42b9" #md5sum of Found
 MD5SUM=md5 -r
 else
 $(error "Please install md5sum\nOn Ubuntu/Debian run:\n    sudo apt-get install md5sum\n")
@@ -57,11 +57,10 @@ export
 ###############################################################################
 ## Look at pylint
 ###############################################################################
-PYLINT=$(shell which pylint)
+PYLINT=$(shell python -c "import pylint; print 'ok'" 2>/dev/null)
 ifeq ($(strip $(PYLINT)),)
 $(error "Please install pylint\nOn Ubuntu/Debian run:\n    sudo apt-get install pylint\n")
 endif
-PYLINT_VERSION=$(shell pylint --version 2>/dev/null | head -1 | sed -e's/pylint //' -e's/,//')
 
 # Newer versions of pylint uses --disable rather then --disable-msg
 PYLINT_NEW=$(shell python -c "from pylint import lint; import sys; print cmp(tuple(int(x) for x in lint.version.split('.')), (0,20,0))" 2>/dev/null)
