@@ -1,0 +1,128 @@
+.gravatar {
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 0;
+  margin: 0;
+  margin-left: 1px;
+  float: left;
+
+  -ms-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+
+.gravatar-you {
+  border: 1px solid blue;
+}
+
+.gravatar-friend {
+  border: 1px solid red;
+}
+
+.response {
+  width: 100%;
+}
+
+.response-header table {
+  width: 100%;
+}
+
+.response-header td {
+  text-align: right;
+}
+
+.response-share {
+  width: 70px;
+}
+
+.response-button {
+  cursor: pointer;
+
+  height: 32px; /* 30px + 2px border */
+  width: 8.5em;
+
+  border: 1px solid #aaaaaa;
+  -ms-border-radius: 15px;
+  -moz-border-radius: 15px;
+  -webkit-border-radius: 15px;
+  border-radius: 15px;
+
+  padding: 4px;
+  padding-right: 8px;
+  font-size: 16px;
+
+  background: #999;
+  background-repeat: no-repeat;
+}
+
+.response-button:hover {
+  border: 1px solid black;
+}
+
+.response-yes {
+  padding-left: 34px;
+  background-image: url('/images/tick-small-button.png');
+}
+
+.response-no {
+  padding-left: 34px;
+  background-image: url('/images/cross-small-button.png');
+}
+
+.response-friends {
+  width: 1.5em;
+}
+
+.response-change {
+  border-spacing: 2px;
+  width: 100%;
+}
+
+.response-button-small {
+  cursor: pointer;
+
+  height: 22px; /* 20px + 2px border */
+  width: 100%;
+  max-width: 150px;
+
+  border: 1px solid #aaaaaa;
+  -ms-border-radius: 8px;
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
+  border-radius: 8px;
+
+  padding-right: 5px;
+}
+
+.response-button-small:hover {
+  border: 1px solid black;
+}
+
+.response-addfriends-small {
+  padding-left: 25px;
+  background-image: url('/images/multi-tiny-button.png');
+}
+
+.response-yes-small {
+  padding-left: 20px;
+  background-image: url('/images/tick-tiny-button.png');
+}
+
+.response-no-small {
+  padding-left: 20px;
+  background-image: url('/images/cross-tiny-button.png');
+}
+
+/* Reset CSS for share widget */
+#at20mc * {
+  -moz-box-sizing: content-box;
+  -ms-box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+  box-sizing: content-box;
+}
+
+a.addthis_button_expanded {
+  width: 100%;
+}

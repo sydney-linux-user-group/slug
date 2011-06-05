@@ -155,28 +155,3 @@ vim: set ts=2 sw=2 et sts=2 ai:
   </tr>
 {% endif %}
 </table>
-
-
-{%block script %}
-<style>
-  a.addthis_button_expanded {
-    width: 100%;
-  }
-</style>
-<script type="text/javascript">
-var addthis_config = {
-  data_ga_tracker: true,
-  data_ga_property: 'UA-23521264-1',
-  data_track_clickback: true,
-  ui_508_compliant: true,
-  services_exclude: 'print',
-  ui_delay: 500
-};
-var addthis_share = {
-  templates: {
-    twitter: "I'm going to {"+"{title}"+"}! {"+"{lurl}"+"} @slugupdates"
-  }
-};
-</script>
-<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4deafbff00885a29"></script>
-{%endblock%}

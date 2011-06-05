@@ -14,7 +14,7 @@ table {
   border-collapse:separate;
   border-spacing:0;
 }
-fieldset,img { 
+fieldset,img {
   border:0;
 }
 address,caption,cite,code,dfn,em,strong,th,var {
@@ -66,6 +66,9 @@ h3 {
   height: 0;
 }
 
+/**
+ * Changes to the default behaviour of elements
+ */
 * {
   -moz-box-sizing: border-box;
   -ms-box-sizing: border-box;
@@ -90,11 +93,6 @@ body {
   font-family: "Trebuchet MS", "Tahoma", "Verdana", "Arial", "Helvetica", sans-serif;
 }
 
-/* Fix PNG transparence in older IE browsers. */
-img, div, a, input {
-  behavior: url(/css/resources/iepngfix.htc);
-}
-
 a {
   text-decoration: 0;
 }
@@ -103,32 +101,14 @@ img {
   border: 0;
 }
 
-#background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-
-  height: 100%;
-  z-index: -1;
-  overflow: hidden;
+/* Fix PNG transparency in older IE browsers. */
+img, div, a, input {
+  behavior: url(/css/resources/iepngfix.htc);
 }
 
-#background img {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  height: 100%;
-}
-
-#adminfooter {
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  padding-right: 10px;
-}
-
+/**
+ * Useful classes used everywhere.
+ */
 .box {
   behavior: url(/css/htc/border-radius.htc);
 
@@ -140,15 +120,13 @@ img {
   padding: 9px;
 }
 
-#heading {
-  font-size: 40pt;
-  float: left;
-}
-
 .hover:hover {
   cursor: pointer;
 }
 
+/**
+ * CSS for objects in every page.
+ */
 #navbar {
   border-bottom: 1px solid black;
   position: absolute;
@@ -174,13 +152,26 @@ img {
 #navbar li {
   display: inline;
   padding-left: 0.2em;
-  padding-right: 0.2em; 
+  padding-right: 0.2em;
 }
 
 #main {
   padding-top: 1.4em;
   border-collapse: separate;
   height: 100%;
+}
+
+#body table {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  border-spacing: 1px;
+}
+
+#header {
+  height: 14pt;
+  font-size: 14pt;
 }
 
 #content {
@@ -193,138 +184,4 @@ img {
 #rightbar {
   vertical-align: top;
   overflow-y: auto;
-}
-
-.event-icons {
-  display: table-cell;
-}
-
-
-.gravatar {
-  width: 34px;
-  height: 34px;
-  padding: 0;
-  border: 0;
-  margin: 0;
-  margin-left: 1px;
-  float: left;
-
-  -ms-border-radius: 5px;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
-}
-
-.gravatar-you {
-  border: 1px solid blue;
-}
-
-.gravatar-friend {
-  border: 1px solid red;
-}
-
-.response {
-  width: 100%;
-}
-
-.response-header table {
-  width: 100%;
-}
-
-.response-header td {
-  text-align: right;
-}
-
-.response-share {
-  width: 70px;
-}
-
-.response-button {
-  cursor: pointer;
-
-  height: 32px; /* 30px + 2px border */
-  width: 8.5em;
-
-  border: 1px solid #aaaaaa;
-  -ms-border-radius: 15px;
-  -moz-border-radius: 15px;
-  -webkit-border-radius: 15px;
-  border-radius: 15px;
-
-  padding: 4px;
-  padding-right: 8px;
-  font-size: 16px;
-
-  background: #999;
-  background-repeat: no-repeat;
-}
-
-.response-button:hover {
-  border: 1px solid black;
-}
-
-.response-yes {
-  padding-left: 34px;
-  background-image: url('/images/tick-small-button.png');
-}
-
-.response-no {
-  padding-left: 34px;
-  background-image: url('/images/cross-small-button.png');
-}
-
-.response-friends {
-  width: 1.5em;
-}
-
-.response-change {
-  border-spacing: 2px;
-  width: 100%;
-}
-
-.response-button-small {
-  cursor: pointer;
-
-  height: 22px; /* 20px + 2px border */
-  width: 100%;
-  max-width: 150px;
-
-  border: 1px solid #aaaaaa;
-  -ms-border-radius: 8px;
-  -moz-border-radius: 8px;
-  -webkit-border-radius: 8px;
-  border-radius: 8px;
-
-  padding-right: 5px;
-}
-
-.response-button-small:hover {
-  border: 1px solid black;
-}
-
-.response-addfriends-small {
-  padding-left: 25px;
-  background-image: url('/images/multi-tiny-button.png');
-}
-
-.response-yes-small {
-  padding-left: 20px;
-  background-image: url('/images/tick-tiny-button.png');
-}
-
-.response-no-small {
-  padding-left: 20px;
-  background-image: url('/images/cross-tiny-button.png');
-}
-
-.staticContent {
-  vertical-align: top;
-}
-
-/* Reset CSS for share widget */
-#at20mc * {
-  -moz-box-sizing: content-box;
-  -ms-box-sizing: content-box;
-  -webkit-box-sizing: content-box;
-  box-sizing: content-box;
 }

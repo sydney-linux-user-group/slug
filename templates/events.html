@@ -5,75 +5,76 @@ vim: set ts=2 sw=2 et sts=2 ai:
 {% endcomment %}
 {% block head %}
     <link rel="StyleSheet" href="/css/events.css" type="text/css" media="screen">
+    <link rel="StyleSheet" href="/css/response.css" type="text/css" media="screen">
 {% endblock %}
 
 {% block body %}
-  <h1>SLUG Events</h1>
-  <div id=content class=box>
-    {% for event_list in events_lists %}
-      {% if event_list.events %}
-      <h2>{{ event_list.name }}</h2>
+<table>
+  <tr>
+    <td colspan=2 id=header>
+      <h1>SLUG Events</h1>
+    </td>
+  </tr><tr>
+    <td colspan=2 id=content class=box>
       <table>
-        <tr><th>Start Date</th><th>End Date</th><th>Event Name</th><th>Event Text</th><th>Response</th><th>iCal</th>
-          {% if appengine_admin %}
-            <th>Actions</th>
-          {% endif %}
+      {% for event_list in events_lists %}
+      {% if event_list.events %}
+        <tr class="header-type">
+          <th colspan="3">
+            <h2>{{ event_list.name }}</h2>
+          </th>
+        </tr>
+        <tr class="header-titles">
+          <th>Date</th><th>Event Text</th><th class="response">Response</th>
         </tr>
         {% for event, response, guests in event_list.events %}
-        <tr class="hover {% cycle 'evenRow' 'oddRow' %}{% if appengine_admin and not event.published %} unpublished{% endif %}{% if appengine_admin and event.html != event.announcement.html %} altered{% endif %}">
-            <td>{{ event.start }}</td>
-            <td>{{ event.end }}</td>
-            <td><a href="{{ event.get_url }}">
-              {% if appengine_admin %}
-                {{ event.name }}
-              {% else %}
-                {{ event.announcement.name }}
-              {% endif %}
-            </a></td>
-            <td><div class=event-html>
-              {% if appengine_admin %}
-                {{ event.html|safe }}
-              {% else %}
-                {{ event.announcement.html|safe }}
-              {% endif %}
-            </div></td>
-            <td><div class=respond id="respond-{{ event.key.id}}">
-              {% if openid_user %}
-                {% include "response-show.html" %}
-              {% else %}
-                <a class=openid_login  href="{{ openid_login_url }}">Login to RSVP!</a>
-              {% endif %}
-            <td>
-              <div class=event-icons> <div class="ical-link"><a href="{{ event.get_url }}.ics" title="Add this event to your iCalendar"><img src="/images/ical16x16.gif" alt="Add event to iCalendar"></a></div> </div>
-            </td>
+        <tr class="{% cycle 'evenRow' 'oddRow' %}{% if appengine_admin and not event.published %} unpublished{% endif %}{% if appengine_admin and event.html != event.announcement.html %} altered{% endif %}">
+          <td>
+            {{ event.start }} - {{ event.end }}
             {% if appengine_admin %}
-              <td>
-                <a href="{{ event.get_url }}/edit">Edit</a>
-                <div id=publishform>
-                  {% ifnotequal event.html event.announcement.html %}
-                    <form name="publish" action="{{ event.get_url }}/publish" method="post">
-                    {% if event.published %} <!-- Event was published, then changed"-->
-                      <input type="submit" value="Re-publish event">
-                      <p>Cannot send announcement email until after republishing.</p>
-                    {% else %} <!-- event not ever published -->
-                      <input type="submit" value="Publish event">
-                    {% endif %}
-                    </form>
-                  {% else %} <!-- No change -->
-                    <p>Already published</p>
-                    <form name="sendemail" action="{{ event.get_url }}/email" method=post>
-                      <input type="submit" value="Announce event via email">
-                    </form>
-                  {% endifnotequal %} <!-- No change -->
-                </div>
-              </td>
-            {% endif %} <!--appengine_admin -->
-          </tr>
+              <a href="{{ event.get_url }}/edit">Edit</a>
+              <div id=publishform>
+                {% ifnotequal event.html event.announcement.html %}
+                <form name="publish" action="{{ event.get_url }}/publish" method="post">
+                {% if event.published %} <!-- Event was published, then changed"-->
+                  <input type="submit" value="Re-publish event">
+                  <p>Cannot send announcement email until after republishing.</p>
+                {% else %} <!-- event not ever published -->
+                  <input type="submit" value="Publish event">
+                {% endif %}
+                </form>
+                {% else %} <!-- No change -->
+                <p>Already published</p>
+                <form name="sendemail" action="{{ event.get_url }}/email" method=post>
+                  <input type="submit" value="Announce event via email">
+                </form>
+                {% endifnotequal %} <!-- No change -->
+              </div>
+            {% endif %}
+          </td><td>
+            <div class="event">
+              {% if appengine_admin %}
+              {{ event.html|safe }}
+              {% else %}
+              {{ event.announcement.html|safe }}
+              {% endif %}
+            </div>
+          </td><td>
+            <div class=respond id="{{ event.key.id}}">
+              {% include "response-show.html" %}
+            </div>
+          </td>
+        </tr>
         {% endfor %} <!--event-->
+      {% endif %} <!--event_list.events -->
+      {% endfor %} <!-- event_list-->
+      <tr><td colspan=6>&nbsp;</td></tr>
     </table>
-    {% endif %} <!--event_list.events -->
-  {% endfor %} <!-- event_list-->
+    </td>
+  </tr>
+</table>
+{% endblock %}
 
-  </div> <!-- content -->
-
+{% block script %}
+{% include "response-script.html" %}
 {% endblock %}

@@ -22,14 +22,29 @@
   background-color: #F7BE81;
 }
 
-.event-html {
-  height: 250px;
-  overflow-y: scroll
+.event {
+  height: 100%;
+  overflow-y: auto;
 }
 
-.response {
-  height: 250px;
-  overflow: scroll;
-  border: 0px;
+#content table th {
+  height: 12pt;
 }
 
+#content table th.response {
+  width: 276px;
+  max-width: 276px;
+  min-width: 276px;
+}
+
+#content table tr {
+  height: 33%;
+}
+
+#content table tr.header-type {
+  height: 12pt;
+}
+
+#content table tr.header-titles {
+  height: 10pt;
+}
