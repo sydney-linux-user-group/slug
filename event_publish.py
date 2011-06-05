@@ -45,7 +45,7 @@ def prep_values(key=None):
 
 class SendEmailAboutEvent(webapp.RequestHandler):
     def post(self, key=None):
-        user, event = prep_values(self.request.path, key)
+        user, event = prep_values(key)
 
         if not user or not event or event.published:
             self.redirect("/events")
@@ -72,7 +72,7 @@ class SendEmailAboutEvent(webapp.RequestHandler):
 
 class PublishEvent(webapp.RequestHandler):
     def post(self, key=None):
-        user, event = prep_values(self.request.path, key)
+        user, event = prep_values(key)
 
         if user and event:
             announcement = models.Announcement(

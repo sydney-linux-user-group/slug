@@ -17,15 +17,15 @@ from google.appengine.ext.webapp.util import run_wsgi_app
 import aeoid.middleware
 
 # Import the actual handlers
-import editevent
-import publishevent
+import event_edit
+import event_publish
 import offers
 
 application = webapp.WSGIApplication(
-  [('/event/add', editevent.EditEvent),
-   ('/event/(.*)/edit', editevent.EditEvent),
-   ('/event/(.*)/publish', publishevent.PublishEvent),
-   ('/event/(.*)/email', publishevent.SendEmailAboutEvent),
+  [('/event/add', event_edit.EditEvent),
+   ('/event/(.*)/edit', event_edit.EditEvent),
+   ('/event/(.*)/publish', event_publish.PublishEvent),
+   ('/event/(.*)/email', event_publish.SendEmailAboutEvent),
    ('/offer/add', offers.EditOffer),
    ('/offer/(.*)/edit', offers.EditOffer),
    ],
