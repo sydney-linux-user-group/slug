@@ -1,6 +1,6 @@
 [submodule "third_party/aeoid"]
 	path = third_party/aeoid
-	url = git://github.com/mithro/aeoid.git
+	url = git://github.com/sydney-linux-user-group/aeoid.git
 [submodule "third_party/markdown-extensions/subscript"]
 	path = third_party/markdown-extensions/subscript
 	url = git://github.com/sgraber/markdown.subscript.git
