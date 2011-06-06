@@ -1,30 +1,33 @@
 [submodule "third_party/aeoid"]
 	path = third_party/aeoid
-	url = git://github.com/sydney-linux-user-group/aeoid.git
-[submodule "third_party/markdown-extensions/subscript"]
-	path = third_party/markdown-extensions/subscript
-	url = git://github.com/sgraber/markdown.subscript.git
-[submodule "third_party/markdown-extensions/superscript"]
-	path = third_party/markdown-extensions/superscript
-	url = git://github.com/sgraber/markdown.superscript.git
+	url = git://github.com/sydney-linux-user-group-dependencies/aeoid.git
 [submodule "third_party/jquery.tweet"]
 	path = third_party/jquery.tweet
-	url = git://github.com/seaofclouds/tweet.git
+	url = git://github.com/sydney-linux-user-group-dependencies/jquery.tweet.git
 [submodule "third_party/jquery.form"]
 	path = third_party/jquery.form
-	url = git://github.com/malsup/form.git
+	url = git://github.com/sydney-linux-user-group-dependencies/jquery.form.git
 [submodule "third_party/python-datetime-tz"]
 	path = third_party/python-datetime-tz
-	url = git://github.com/mithro/python-datetime-tz
-[submodule "third_party/vobject"]
-	path = third_party/vobject
-	url = git://github.com/sydney-linux-user-group/vobject
-[submodule "third_party/python-markdown"]
-	path = third_party/python-markdown
-	url = git://github.com/waylan/Python-Markdown.git
+	url = git://github.com/sydney-linux-user-group-dependencies/python-datetime-tz.git
 [submodule "third_party/python-dateutil"]
 	path = third_party/python-dateutil
-	url = git://github.com/sydney-linux-user-group/python-dateutil.git
-[submodule "third_party/pyrss2gen"]
-	path = third_party/pyrss2gen
-	url = git://github.com/sydney-linux-user-group/pyrss2gen.git
+	url = git://github.com/sydney-linux-user-group-dependencies/python-dateutil.git
+[submodule "third_party/python-gae-pytz"]
+	path = third_party/python-gae-pytz
+	url = git://github.com/sydney-linux-user-group-dependencies/python-gae-pytz.git
+[submodule "third_party/python-markdown"]
+	path = third_party/python-markdown
+	url = git://github.com/sydney-linux-user-group-dependencies/python-markdown.git
+[submodule "third_party/python-markdown-extensions/subscript"]
+	path = third_party/python-markdown-extensions/subscript
+	url = git://github.com/sydney-linux-user-group-dependencies/python-markdown.subscript.git
+[submodule "third_party/python-markdown-extensions/superscript"]
+	path = third_party/python-markdown-extensions/superscript
+	url = git://github.com/sydney-linux-user-group-dependencies/python-markdown.superscript.git
+[submodule "third_party/python-pyrss2gen"]
+	path = third_party/python-pyrss2gen
+	url = git://github.com/sydney-linux-user-group-dependencies/python-pyrss2gen.git
+[submodule "third_party/python-vobject"]
+	path = third_party/python-vobject
+	url = git://github.com/sydney-linux-user-group-dependencies/python-vobject.git

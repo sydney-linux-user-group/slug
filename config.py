@@ -52,7 +52,10 @@ def setup(host=None):
             HOST = host
 
     # Add our extra modules to sys.path
+    sys_path_insert('third_party.zip')
     for ipath in getpaths():
+        if 'third_party.zip' in ipath:
+            continue
         sys_path_insert(ipath)
 
     setup_django()

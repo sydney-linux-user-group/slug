@@ -85,12 +85,12 @@ lint: third_party.zip
 		${PYLINT_DISABLE}=W0221 \
 		${PYLINT_DISABLE}=R0904 \
 		${PYLINT_DISABLE}=E1103 \
-		--const-rgx='[a-z_][a-z0-9_]{2,30}$$' *.py
+		--const-rgx='[a-z_][a-z0-9_]{2,30}$$' *.py 2>&1 | grep -v 'maximum recursion depth exceeded'
 
 ###############################################################################
 # Third Party Zip file creation
 ##############################################################################
-FINDARGS=-type f -name \*.py -exec  echo "	{} \\" \;
+FINDARGS=-follow -type f -name \*.py -exec  echo "		{} \\" \;
 TP=cd third_party;
 TPT=third_party.zip.d.tmp
 
@@ -99,28 +99,35 @@ third_party:
 
 third_party.zip.d: third_party third_party.paths
 	@echo "Generating a third_party.zip dependency file."
-	@echo "THIRD_PARTY_files=\\" >> $(TPT)
+	@echo "THIRD_PARTY_files=\\" > $(TPT).files
+	@echo 'third_party.zip: third_party.zip.d $$(THIRD_PARTY_here)' > $(TPT).target
+	@echo '	@echo Changed files: $$?' >> $(TPT).target
 	@cd third_party; \
 	 cat ../third_party.paths | grep ^third_party.zip | sed -e's-third_party.zip/--' | (while read LINE; do \
 		PREFIX=$${LINE%% *}; \
 		for SUFFIX in $${LINE#* }; do \
-			find $$PREFIX/$$SUFFIX $(FINDARGS) >> ../$(TPT); \
+			find $$PREFIX/$$SUFFIX $(FINDARGS) >> ../$(TPT).files; \
+			echo "	cd $(CURDIR)/third_party/$$PREFIX; zip -r $(CURDIR)/third_party.zip \\" >> ../$(TPT).target; \
+			(cd $$PREFIX; find $$SUFFIX $(FINDARGS)) >> ../$(TPT).target; \
+			echo "	" >> ../$(TPT).target; \
 		done; \
 	 done)
-	@echo '' >> $(TPT)
-	@echo 'THIRD_PARTY_here=$$(addprefix third_party/,$$(THIRD_PARTY_files)) ' >> $(TPT)
-	@echo '' >> $(TPT)
-	@echo 'third_party.zip: third_party.zip.d $$(THIRD_PARTY_here)' >> $(TPT)
-	@echo '	@echo Changed files: $$?' >> $(TPT)
-	@echo '	@cd third_party; rm ../third_party.zip; zip -r ../third_party.zip $$(THIRD_PARTY_files)' >> $(TPT)
+	@echo '' >> $(TPT).files
+	@echo 'THIRD_PARTY_here=$$(addprefix third_party/,$$(THIRD_PARTY_files)) ' >> $(TPT).files
+	@echo '' >> $(TPT).files
+	
+	@echo '' > $(TPT)
+	@cat $(TPT).files >> $(TPT)
+	@cat $(TPT).target >> $(TPT)
+	
 	@if [ ! -e $@ ]; then touch $@; fi
 	@if [ `${MD5SUM} $@ | sed -e's/ .*//'` != `${MD5SUM} $(TPT) | sed -e's/ .*//'` ]; then \
 		echo "third_party.zip.d has changed!"; \
 		mv $(TPT) $@; \
 	else \
 		echo "third_party.zip.d has not changed!"; \
-		rm $(TPT); \
 	fi
+	@rm $(TPT)*
 
 
 include third_party.zip.d

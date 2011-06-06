@@ -1,13 +1,10 @@
 #!/bin/bash
 
-TARGETS=pytz markdown
-TARGETS_CLEAN=$(addsuffix -clean,$(TARGETS))
-
-all: git $(TARGETS)
-clean: $(TARGETS_CLEAN)
+all: git
+clean: git_clean
 
 ###############################################################################
-# There are some third_party modules managed by git
+# third_party modules are managed by git
 ###############################################################################
 
 git:
@@ -15,49 +12,7 @@ git:
 		git submodule init; \
 		git submodule update
 
-###############################################################################
-# pytz optimised for Google AppEngine
-###############################################################################
-GAEPYTZ=gaepytz-2011c
+git_clean:
+	
 
-$(GAEPYTZ).tar.gz:
-	curl -O http://pypi.python.org/packages/source/g/gaepytz/$(GAEPYTZ).tar.gz
-
-$(GAEPYTZ): $(GAEPYTZ).tar.gz
-	tar -zxvf $^
-	rsync -Pa $(GAEPYTZ)/pytz pytz
-	@# Update modtime on tar.gz to match directory so we don't continually rebuild
-	@touch -r $@ -m $^
-
-pytz: $(GAEPYTZ)
-
-pytz-clean:
-	rm -rf $(GAEPYTZ)* pytz
-
-###############################################################################
-# Markdown parser
-###############################################################################
-MARKDOWN=Markdown-2.0.3
-MARKDOWN_EXT=$(shell find markdown-extensions -type f -name *.py)
-
-# Download the tar.gz
-$(MARKDOWN).tar.gz:
-	curl -O http://pypi.python.org/packages/source/M/Markdown/$(MARKDOWN).tar.gz
-
-# Extract the tar.gz
-$(MARKDOWN): $(MARKDOWN).tar.gz $(MARKDOWN_EXT)
-	tar -zxvf $(MARKDOWN).tar.gz
-	@# Update modtime on tar.gz to match directory so we don't continually rebuild
-	@touch -r $@ -m $^
-	for f in $(MARKDOWN_EXT); do \
-		cp $$f $(MARKDOWN)/markdown/extensions/; \
-	done
-
-# Human name target
-markdown: $(MARKDOWN)
-
-markdown-clean:
-	rm -rf $(MARKDOWN)*
-
-###############################################################################
-.PHONY : all clean git $(TARGETS) $(TARGETS_CLEAN)
+.PHONY : all clean git git_clean

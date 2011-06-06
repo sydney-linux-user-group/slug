@@ -40,8 +40,8 @@ handlers:
   script: handler.py
 
 skip_files:
-- third_party/((?!(aeoid|gaepytz-2011c)).*)/
-- third_party/gaepytz-2011c/(?!pytz)
+- third_party/((?!(aeoid|python-gae-pytz)).*)/
+- third_party/python-gae-pytz/(?!pytz)
 - third_party/aeoid/demo
 - third_party/mkzip
 - (.*/)*.git/
