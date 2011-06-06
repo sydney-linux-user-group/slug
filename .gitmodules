@@ -22,3 +22,9 @@
 [submodule "third_party/python-markdown"]
 	path = third_party/python-markdown
 	url = git://github.com/waylan/Python-Markdown.git
+[submodule "third_party/python-dateutil"]
+	path = third_party/python-dateutil
+	url = git://github.com/sydney-linux-user-group/python-dateutil.git
+[submodule "third_party/pyrss2gen"]
+	path = third_party/pyrss2gen
+	url = git://github.com/sydney-linux-user-group/pyrss2gen.git

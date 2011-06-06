@@ -1,6 +1,6 @@
 #!/bin/bash
 
-TARGETS=dateutil pytz markdown pyrss
+TARGETS=pytz markdown
 TARGETS_CLEAN=$(addsuffix -clean,$(TARGETS))
 
 all: git $(TARGETS)
@@ -14,28 +14,6 @@ git:
 	@cd ..; echo "Updating git submodules." ;\
 		git submodule init; \
 		git submodule update
-
-###############################################################################
-# python-dateutil
-###############################################################################
-
-DATEUTIL=python-dateutil-1.5
-
-# Download the tar.gz
-$(DATEUTIL).tar.gz:
-	curl -O http://labix.org/download/python-dateutil/$(DATEUTIL).tar.gz
-
-# Extract the tar.gz
-$(DATEUTIL): $(DATEUTIL).tar.gz
-	tar -zxvf $^
-	@# Update modtime on tar.gz to match directory so we don't continually rebuild
-	@touch -r $@ -m $^
-
-# Human name target
-dateutil: $(DATEUTIL)
-
-dateutil-clean:
-	rm -rf $(DATEUTIL)*
 
 ###############################################################################
 # pytz optimised for Google AppEngine
@@ -80,27 +58,6 @@ markdown: $(MARKDOWN)
 
 markdown-clean:
 	rm -rf $(MARKDOWN)*
-
-###############################################################################
-# RSS generator
-###############################################################################
-PYRSS=PyRSS2Gen-1.0.0
-
-# Download the tar.gz
-$(PYRSS).tar.gz:
-	curl -O http://www.dalkescientific.com/Python/$(PYRSS).tar.gz
-
-# Extract the tar.gz
-$(PYRSS): $(PYRSS).tar.gz
-	tar -zxvf $^
-	@# Update modtime on tar.gz to match directory so we don't continually rebuild
-	@touch -r $@ -m $^
-
-# Human name target
-pyrss: $(PYRSS)
-
-pyrss-clean:
-	rm -rf $(PYRSS)*
 
 ###############################################################################
 .PHONY : all clean git $(TARGETS) $(TARGETS_CLEAN)
