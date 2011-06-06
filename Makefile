@@ -1,3 +1,7 @@
+define \n
+
+
+endef
 
 ###############################################################################
 ## Trying to find the AppEngine SDK
@@ -44,7 +48,7 @@ else
 ifeq "$(shell md5 -q -s Found 2>/dev/null)" "5d695cc28c6a7ea955162fbdd0ae42b9" #md5sum of Found
 MD5SUM=md5 -r
 else
-$(error "Please install md5sum\nOn Ubuntu/Debian run:\n    sudo apt-get install md5sum\n")
+$(error "${\n}Please install md5sum${\n}On Ubuntu/Debian run:${\n}    sudo apt-get install md5sum${\n}")
 endif # md5
 endif #md5sum
 endif #ndef MD5SUM
@@ -59,7 +63,7 @@ export
 ###############################################################################
 PYLINT=$(shell python -c "import pylint; print 'ok'" 2>/dev/null)
 ifeq ($(strip $(PYLINT)),)
-$(error "Please install pylint\nOn Ubuntu/Debian run:\n    sudo apt-get install pylint\n")
+$(error "${\n}Please install pylint${\n} On Ubuntu/Debian run:${\n} sudo apt-get install pylint${\n}")
 endif
 
 # Newer versions of pylint uses --disable rather then --disable-msg
