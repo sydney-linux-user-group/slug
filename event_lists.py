@@ -59,7 +59,6 @@ def get_future_events(
     return EventList(get_eventlist_responses(
         future_events, user), "Coming soon")
 
-
 def get_current_events(
         year=None, month=None, day=None, published_only=True, user=None,
         count=5):

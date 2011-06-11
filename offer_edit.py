@@ -73,6 +73,7 @@ class EditOffer(webapp.RequestHandler):
         if not consent:
             consent = False
 
+        offer.displayname = self.request.get('displayname')
         offer.text = self.request.get('text')
         offer.seconds = seconds
         offer.consent = consent

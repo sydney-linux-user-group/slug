@@ -185,3 +185,29 @@ img, div, a, input {
   vertical-align: top;
   overflow-y: auto;
 }
+
+.hint {
+  display: inline;
+  font-size: smaller;
+}
+
+form li {
+  margin-top: 1em;
+}
+
+form li label {
+  vertical-align: top;
+}
+
+#talkOfferForm {
+  width: 600px;
+}
+
+.evenrow {
+  background-color: grey
+}
+
+.oddrow {
+  background-color: white
+}
+
