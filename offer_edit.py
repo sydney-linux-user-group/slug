@@ -16,12 +16,17 @@ from google.appengine.ext import webapp
 # Our App imports
 import models
 from utils.render import render as r
+from aeoid import users as openid_users
 
 
 class EditOffer(webapp.RequestHandler):
     """Handler for creating and editing Offer objects."""
 
     def get(self, key=None):
+        user = openid_users.get_current_user()
+        if not user:
+          self.redirect(openid_users.create_login_url(self.request.url))
+          return
         if key:
             try:
                 key = long(key)
@@ -39,6 +44,11 @@ class EditOffer(webapp.RequestHandler):
             ))
 
     def post(self, key=None):
+        user = openid_users.get_current_user()
+        if not user:
+          self.redirect(openid_users.create_login_url(self.request.url))
+          return
+
         if key:
             try:
                 key = long(key)
