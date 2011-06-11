@@ -19,6 +19,8 @@ from utils.render import render
 class ShowResponsePage(webapp.RequestHandler):
     """Showing an RSVP."""
     def get(self, eventid):
+        # We use locals() which confuses pylint.
+        # pylint: disable-msg=W0612
         ####################################################
         event = models.Event.get_by_id(long(eventid))
         if not event:
@@ -37,6 +39,8 @@ class ShowResponsePage(webapp.RequestHandler):
 class UpdateResponsePage(webapp.RequestHandler):
     """Update an RSVP."""
     def post(self, eventid):
+        # We use locals() which confuses pylint.
+        # pylint: disable-msg=W0612
         ####################################################
         event = models.Event.get_by_id(long(eventid))
         if not event:
@@ -51,7 +55,8 @@ class UpdateResponsePage(webapp.RequestHandler):
         
         # Check if the person is trying to add friends
         try:
-            extra_guests = range(0, int(self.request.get('friends', '0'))-len(guests))
+            extra_guests = range(
+                0, int(self.request.get('friends', '0'))-len(guests))
         except ValueError:
             extra_guests = []
 

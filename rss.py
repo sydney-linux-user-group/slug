@@ -16,7 +16,6 @@ from pytz.gae import pytz
 import PyRSS2Gen as rss_gen
 
 # Our App imports
-import models
 import datetime
 import event_lists
 
