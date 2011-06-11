@@ -75,7 +75,19 @@ document.getElementById('txt').value=c;
 {% endblock %}
 
 {% block body %}
-<p><input class=timer type="text" id="s-txt" size=20></p>
+<p><select>
+  <option>Meet&Greet Topic 30min</option>
+  <option>Committee Welcome 5min</option>
+  <option>Speaker 2 Topic   5min</option>
+  <option>Speaker 3 Topic   5min</option>
+  <option>Speaker 4 Topic   5min</option>
+  <option>Speaker 5 Topic   5min</option>
+  <option>Break       20 minutes</option>
+  <option>Speaker 6 Topic  10min</option>
+  <option>Speaker 7 Topic  10min</option>
+  <option>Speaker 8 Topic  10min</option>
+  <option>Committee Wrap up 5min</option>
+</select></p>
 <p><input  class=timer type="text" id="txt" size=3> (Seconds) 
 <input type=radio onclick="doTimer();" name=status value=Started>Start
 <input type=radio onclick="stopCount();" name=status value=completed>Stop</p>

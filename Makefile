@@ -150,6 +150,7 @@ serve: third_party.zip
 	${APPENGINE_SDK}/dev_appserver.py -a 0.0.0.0 -d --enable_sendmail .
 
 clean:
+	find . -name \*.pyc -exec rm {\} \;
 	$(MAKE) -C third_party clean
 	git clean -f -d
 
