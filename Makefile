@@ -79,6 +79,7 @@ lint: third_party.zip
 	@# R0904 - Disable "Too many public methods" warning
 	@# W0221 - Disable "Arguments differ from parent", as get and post will.
 	@# E1103 - Disable "Instance of 'x' has no 'y' member (but some types could not be inferred)"
+	@# I0011 - Disable "Locally disabling 'xxxx'"
 	@python \
 		-W "ignore:disable-msg is:DeprecationWarning:pylint.lint" \
 		-c "import config; config.lint_setup(); import sys; from pylint import lint; lint.Run(sys.argv[1:])" \
@@ -89,6 +90,7 @@ lint: third_party.zip
 		${PYLINT_DISABLE}=W0221 \
 		${PYLINT_DISABLE}=R0904 \
 		${PYLINT_DISABLE}=E1103 \
+		${PYLINT_DISABLE}=I0011 \
 		--const-rgx='[a-z_][a-z0-9_]{2,30}$$' *.py 2>&1 | grep -v 'maximum recursion depth exceeded'
 
 ###############################################################################

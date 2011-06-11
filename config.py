@@ -44,7 +44,7 @@ def setup_django():
 
 def setup(host=None):
     """Setup our configuration environment."""
-    global HOST
+    global HOST # pylint: disable-msg=W0603
     if HOST is None:
         if host is None:
             HOST = 'signup.slug.org.au'
