@@ -154,4 +154,7 @@ clean:
 	$(MAKE) -C third_party clean
 	git clean -f -d
 
-.PHONY : lint third_party upload deploy serve clean
+edit:
+	$(EDITOR) *.py templates/*.html static/css/*.css
+
+.PHONY : lint third_party upload deploy serve clean edit
