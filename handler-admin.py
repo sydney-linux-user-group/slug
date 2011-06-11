@@ -19,15 +19,12 @@ import aeoid.middleware
 # Import the actual handlers
 import event_edit
 import event_publish
-import offers
 
 application = webapp.WSGIApplication(
   [('/event/add', event_edit.EditEvent),
    ('/event/(.*)/edit', event_edit.EditEvent),
    ('/event/(.*)/publish', event_publish.PublishEvent),
    ('/event/(.*)/email', event_publish.SendEmailAboutEvent),
-   ('/offer/add', offers.EditOffer),
-   ('/offer/(.*)/edit', offers.EditOffer),
    ],
   debug=True)
 application = aeoid.middleware.AeoidMiddleware(application)

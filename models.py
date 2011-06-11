@@ -67,6 +67,7 @@ class TalkOffer(db.Model):
             auto_now_add=True, required=True)
 
     name = db.StringProperty(required=True)
+    active = db.BooleanProperty(required=True,default=True)
     text = db.TextProperty()
     seconds = db.IntegerProperty()
     consent = db.BooleanProperty()

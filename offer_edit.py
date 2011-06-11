@@ -19,7 +19,7 @@ from utils.render import render as r
 
 
 class EditOffer(webapp.RequestHandler):
-    """Handler for creating and editing Event objects."""
+    """Handler for creating and editing Offer objects."""
 
     def get(self, key=None):
         if key:

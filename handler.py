@@ -20,7 +20,7 @@ import aeoid.middleware
 import index
 import response
 import events
-import offers
+import offer_edit
 import ical
 import rss
 
@@ -39,8 +39,8 @@ application = webapp.WSGIApplication(
    ('/events[/]?(?P<year>[^/]*)[/]?(?P<month>[^/]*)[/]?(?P<day>[^/]*)[/]?',
         events.Events),
    ('/event/(.*)', events.Event),
-   ('/offer/(.*)/edit', offers.EditOffer),
-   ('/offer/add', offers.EditOffer),
+   ('/offer/(.*)/edit', offer_edit.EditOffer),
+   ('/offer/add', offer_edit.EditOffer),
    ('/refresh', index.Refresh),
    ('/(.*)', index.StaticTemplate),
    ],
