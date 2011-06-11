@@ -57,10 +57,11 @@ vim: set ts=2 sw=2 et sts=2 ai:
                   <span class=minor> An event or SLUG as a whole </span>
                   </a>
                 </td>
-                <td id=speak class="box hover" onclick="location.href='mailto:activities@slug.org.au&subject=Talk%20suggestion'">
-                  <h2> Give a talk </h2>
-                  <span class=minor> Educate your fellows </span>
-                </a>
+                <td id=speak class="box hover">
+                  <a href="/offer/add">
+                    <h2> Give a talk </h2>
+                    <span class=minor> Educate your fellows </span>
+                  </a>
                 </td>
               <tr>
             </table>
@@ -89,6 +90,14 @@ vim: set ts=2 sw=2 et sts=2 ai:
 {% endblock %}
 
 {% block script %}
+<script type="text/javascript">
+  //Turn links into buttons
+  $(function () {
+    $('#spoak a').button();
+  });
+
+</script>
+
 <script type="text/javascript">
   function handle_response() {
     event.preventDefault();

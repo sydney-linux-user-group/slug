@@ -42,8 +42,13 @@
   margin: 0;
 }
 
-#attend:hover {
+#attend:hover, #speak:hover {
   cursor: pointer;
+}
+
+#speak a:link, #speak a:visited {
+    color: #ffffff;
+    text-decoration: none;
 }
 
 #header {
