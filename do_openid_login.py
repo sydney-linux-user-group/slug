@@ -33,15 +33,16 @@ class MainHandler(webapp.RequestHandler):
             self.redirect(users.create_login_url(continue_url, None, openid_url))
 
     def get(self):
-        continue_url = self.request.GET.get('continue')
-        openid_url = self.request.GET.get('openid')
+        continue_url = self.request.get('continue')
+        openid_url = self.request.get('openid')
         self.handle_openid()
 
     def post(self):
-        logging.debug(self.request.GET.get())
-        continue_url = self.request.GET.get('continue')
-        openid_url = self.request.GET.get('openid')
-        self.handle_openid()
+        logging.debug(self.request.arguments())
+        logging.debug(self.request.get('openid_url'))
+        continue_url = self.request.get('continue')
+        openid_url = self.request.get('openid_url')
+        self.handle_openid(continue_url, openid_url)
         
 
 application = webapp.WSGIApplication([
