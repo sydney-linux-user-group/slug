@@ -48,8 +48,6 @@ vim: set ts=2 sw=2 et sts=2 ai:
     {% if appengine_admin %}
       <li><span style="color: red;">Admin User</span></li>
       <li><a href="/event/add">Add Event</a></li>
-      <li>|</li>
-      <li><a href="{{ appengine_logout_url }}">AppEngine Logout</a></li>
     {% endif %}
     <li id="feed-icons">
       <a href="webcal://{{ req.host }}/ical" title="iCal feed of all events"><img src="/images/ical16x16.gif" alt="iCal feed of all events"></a>
@@ -57,10 +55,10 @@ vim: set ts=2 sw=2 et sts=2 ai:
     </li>
     <li>|</li>
     <li>
-    {% if openid_user %}
-      <a href="{{ openid_logout_url }}">Logout</a>
+    {% if appengine_user %}
+      <a href="{{ appengine_logout_url }}">Logout</a>
     {% else %}
-      <a class="openid_login" href="{{ openid_login_url }}">Login</a>
+      <a class="openid_login" href="{{ login_url }}">Login</a>
     {% endif %}
 
     </li>
@@ -119,9 +117,9 @@ vim: set ts=2 sw=2 et sts=2 ai:
 </html>
 <script type="text/javascript">
 function openid_login() {
-  var url = '{{ openid_login_jsurl }}';
-  var width  = 300;
-  var height = 200;
+  var url = '{{ jslogin_url }}';
+  var width  = 400;
+  var height = 400;
   var left   = (screen.width  - width)/2;
   var top    = (screen.height - height)/2;
   var params = 'width='+width+', height='+height;

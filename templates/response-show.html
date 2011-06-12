@@ -26,7 +26,7 @@ vim: set ts=2 sw=2 et sts=2 ai:
         <form method=post action="{{ event.get_url }}/response/update">
           <input type=hidden name=attending value="yes">
           {% for other_response in event.responses %}
-            {% ifequal other_response.created_by.user_id response.created_by.user_id %}
+            {% ifequal other_response.gcreated_by.user_id response.gcreated_by.user_id %}
               {% if response.attending %}
                 {% if other_response.guest %}
                   <input type="hidden" name="guest_name" value="{{ other_response.guest_name }}">
@@ -38,16 +38,16 @@ vim: set ts=2 sw=2 et sts=2 ai:
                     onMouseOut="this.src='/images/blank.png';"
                     onClick="$('#{{other_response.key}}').val(''); $(this.parentNode).submit();">
                 {% else %}
-                  <!-- you're responses -->
-                  <img src="{{ other_response.created_by.email|gravatar:32 }}"
-                      title="{{ other_response.created_by.nickname }}"
+                  <!-- your responses -->
+                  <img src="{{ other_response.gcreated_by.email|gravatar:32 }}"
+                      title="{{ other_response.gcreated_by.nickname }}"
                       class="gravatar gravatar-you">
                 {% endif %}
               {% endif %}
             {% else %}
               {% if not other_response.guest and other_response.attending %}
-                <img src="{{ other_response.created_by.email|gravatar:32 }}"
-                    title="{{ other_response.created_by.nickname }}"
+                <img src="{{ other_response.gcreated_by.email|gravatar:32 }}"
+                    title="{{ other_response.gcreated_by.nickname }}"
                     class="gravatar">
               {% else %}
                 <!-- not attending or guest -->
@@ -73,7 +73,7 @@ vim: set ts=2 sw=2 et sts=2 ai:
     </td>
   </tr>
 
-{% if openid_user %}
+{% if user %}
   <!-- Is logged in. -->
 {% ifequal response None %}
   <!-- Has not responded yet. -->
@@ -150,7 +150,7 @@ vim: set ts=2 sw=2 et sts=2 ai:
   <!-- Is not logged in. -->
   <tr>
     <td>
-      <a class="openid_login" href="{{ openid_login_url }}">Login to RSVP!</a>
+      <a class="openid_login" href="{{ login_url }}">Login to RSVP!</a>
     </td>
   </tr>
 {% endif %}

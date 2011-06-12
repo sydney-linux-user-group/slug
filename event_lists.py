@@ -12,16 +12,29 @@ import config
 config.setup()
 
 from google.appengine.ext import db
+from aeoid import users as openid
 
 import datetime
+import models
 
+def fix_responses(user):
+    fedid = user.federated_identity()
+    if fedid:
+        openid_user_key = openid.UserInfo.get_by_identity_url(fedid)
+        query = ("Select * from Response "
+                 "WHERE created_by = :1")
+        resps = db.GqlQuery(query, openid_user_key)
+        for resp in resps:
+            resp.gcreated_by = user
+            resp.put()
 
 def get_event_responses(event, user):
     response = None
     guests = []
     if user:
-        responses = event.responses.filter("created_by = ",
-                user._user_info_key).order( "created_on")
+        fix_responses(user)
+        responses = event.responses.filter("gcreated_by = ",
+                user).order("created_on")
         for resp in responses:
             if not resp.guest:
                 response = resp

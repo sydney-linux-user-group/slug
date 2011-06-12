@@ -31,3 +31,6 @@
 [submodule "third_party/python-vobject"]
 	path = third_party/python-vobject
 	url = git://github.com/sydney-linux-user-group-dependencies/python-vobject.git
+[submodule "third_party/jquery-openid"]
+	path = third_party/jquery-openid
+	url = git://github.com/jamezpolley/jquery-openid.git
