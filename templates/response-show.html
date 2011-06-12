@@ -73,7 +73,7 @@ vim: set ts=2 sw=2 et sts=2 ai:
     </td>
   </tr>
 
-{% if openid_user %}
+{% if user %}
   <!-- Is logged in. -->
 {% ifequal response None %}
   <!-- Has not responded yet. -->
@@ -150,7 +150,7 @@ vim: set ts=2 sw=2 et sts=2 ai:
   <!-- Is not logged in. -->
   <tr>
     <td>
-      <a class="openid_login" href="{{ openid_login_url }}">Login to RSVP!</a>
+      <a class="openid_login" href="{{ login_url }}">Login to RSVP!</a>
     </td>
   </tr>
 {% endif %}

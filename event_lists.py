@@ -21,7 +21,7 @@ def get_event_responses(event, user):
     guests = []
     if user:
         responses = event.responses.filter("created_by = ",
-                user._user_info_key).order( "created_on")
+                user.user_id()).order( "created_on")
         for resp in responses:
             if not resp.guest:
                 response = resp

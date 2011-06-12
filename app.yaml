@@ -1,4 +1,4 @@
-application: sydney-linux-user-group-hr
+application: jpolley-openid-test
 version: 8
 runtime: python
 api_version: 1
@@ -23,6 +23,9 @@ handlers:
 
 - url: /third_party
   static_dir: static/third_party
+
+- url: /_ah/login_required
+  script: do_openid_login.py
 
 - url: /event/add
   login: admin

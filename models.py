@@ -9,16 +9,11 @@ import config
 config.setup()
 
 from google.appengine.ext import db
-
-# Some clever namespaces to make it easier to understand.
-# pylint: disable-msg=W0404
-from google.appengine.ext import db as appengine
-from aeoid import users as openid
-
+from google.appengine.api import users
 
 class Announcement(db.Model):
     """An announcement for an event."""
-    created_by = openid.UserProperty(
+    created_by = db.UserProperty(
             auto_current_user_add=True, required=True)
     created_on = db.DateTimeProperty(
             auto_now_add=True, required=True)
@@ -27,7 +22,7 @@ class Announcement(db.Model):
     plaintext = db.TextProperty()
     html = db.BlobProperty()
 
-    published_by = appengine.UserProperty(
+    published_by = db.UserProperty(
             auto_current_user_add=True, required=True)
     published_on = db.DateTimeProperty(
             auto_now_add=True, required=True)
@@ -40,7 +35,7 @@ class Event(db.Model):
         """Return the canonical url for an event."""
         return "/event/%s" % self.key().id()
 
-    created_by = appengine.UserProperty(
+    created_by = db.UserProperty(
             auto_current_user_add=True, required=True)
     created_on = db.DateTimeProperty(
             auto_now_add=True, required=True)
@@ -61,21 +56,22 @@ class Event(db.Model):
 
 class TalkOffer(db.Model):
     """An lightning talk to be given at an event."""
-    created_by = openid.UserProperty(
+    created_by = db.UserProperty(
             auto_current_user_add=True, required=True)
     created_on = db.DateTimeProperty(
             auto_now_add=True, required=True)
 
+    displayname = db.StringProperty()
+    contactinfo = db.StringProperty()
     name = db.StringProperty(required=True)
     active = db.BooleanProperty(required=True,default=True)
     text = db.TextProperty()
-    displayname = db.StringProperty()
     seconds = db.IntegerProperty()
     consent = db.BooleanProperty()
 
 
 class LigtningTalk(db.Model):
-    created_by = openid.UserProperty(
+    created_by = db.UserProperty(
             auto_current_user_add=True, required=True)
     created_on = db.DateTimeProperty(
             auto_now_add=True, required=True)
@@ -87,7 +83,7 @@ class LigtningTalk(db.Model):
 
 class Response(db.Model):
     """An RSVP to attend an event."""
-    created_by = openid.UserProperty(
+    created_by = db.UserProperty(
             auto_current_user_add=True, required=True)
     created_on = db.DateTimeProperty(
             auto_now_add=True, required=True)
