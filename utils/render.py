@@ -17,7 +17,6 @@ def render(t, kw):
       'req': req,
       'config': config,
       'user': users.get_current_user(),
-      'login_jsurl': '/login',
       'login_url': users.create_login_url(req.path),
       'logout_url': users.create_logout_url(req.path),
       'appengine_user': users.get_current_user(),
@@ -32,4 +31,3 @@ def render(t, kw):
 
   kw.update(extra)
   return template.render(t, kw)
-  kkk

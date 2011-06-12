@@ -58,7 +58,7 @@ vim: set ts=2 sw=2 et sts=2 ai:
     {% if appengine_user %}
       <a href="{{ appengine_logout_url }}">Logout</a>
     {% else %}
-      <a class="openid_login" href="/_ah/login_required">Login</a>
+      <a class="openid_login" href="{{ login_url }}">Login</a>
     {% endif %}
 
     </li>
@@ -117,7 +117,7 @@ vim: set ts=2 sw=2 et sts=2 ai:
 </html>
 <script type="text/javascript">
 function openid_login() {
-  var url = '{{ login_jsurl }}?continue=/refresh';
+  var url = '{{ login_url }}';
   var width  = 300;
   var height = 200;
   var left   = (screen.width  - width)/2;
