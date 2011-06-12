@@ -9,10 +9,12 @@ import config
 config.setup()
 
 # Python imports
+import logging
 import os
 
 # AppEngine Imports
 from google.appengine.ext import webapp
+from google.appengine.ext.webapp import template
 
 # Our App imports
 import events
@@ -22,19 +24,27 @@ from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 
 class MainHandler(webapp.RequestHandler):
-    def get(self):
-        continue_url = self.request.GET.get('continue')
-        openid_url = self.request.GET.get('openid')
+    def handle_openid(self, continue_url=None, openid_url=None):
         if not openid_url:
             logging.debug("Serving login page for %s", continue_url)
-            self.response.out.write(r(
-                'third_party/jQueryOpenIdPlugin/Login.xhtml',
-                {'continue': continue_url}))
+            self.response.out.write(template.render(
+                'templates/login.html', {'continue': continue_url}))
         else:
             self.redirect(users.create_login_url(continue_url, None, openid_url))
 
+    def get(self):
+        continue_url = self.request.GET.get('continue')
+        openid_url = self.request.GET.get('openid')
+        self.handle_openid()
+
+    def post(self):
+        continue_url = self.request.GET.get('continue')
+        openid_url = self.request.GET.get('openid')
+        self.handle_openid()
+        
+
 application = webapp.WSGIApplication([
-    ('/', MainHandler),
+    ('.*', MainHandler),
 ], debug=True)
 
 def main():
