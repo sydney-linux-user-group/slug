@@ -18,12 +18,6 @@ import offer_lists
 from utils.render import render as r
 
 
-class Next(webapp.RequestHandler):
-    """Figure out the next offer, then redirect to it."""
-    def get(self):
-        self.redirect(offer_lists.get_next_event().get_url())
-
-
 class Offer(webapp.RequestHandler):
     """Handler for display a single offer."""
 
