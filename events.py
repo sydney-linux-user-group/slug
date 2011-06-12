@@ -38,7 +38,7 @@ class Event(webapp.RequestHandler):
         key = long(key)
         event = models.Event.get_by_id(key)
 
-        current_user = openid_users.get_current_user()
+        current_user = users.get_current_user()
         response, guests = event_lists.get_event_responses(event, current_user)
 
         self.response.headers['Content-Type'] = 'text/html'
@@ -62,7 +62,7 @@ class Events(webapp.RequestHandler):
         else:
             published_only = True
 
-        current_user = openid_users.get_current_user()
+        current_user = users.get_current_user()
 
         events_lists = event_lists.get_event_lists(
                 published_only=published_only, user=current_user)

@@ -24,6 +24,9 @@ handlers:
 - url: /third_party
   static_dir: static/third_party
 
+- url: /_ah/login_required
+  script: do_openid_login.py
+
 - url: /event/add
   login: admin
   script: handler-admin.py

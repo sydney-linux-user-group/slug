@@ -9,7 +9,7 @@ import config
 config.setup()
 
 from google.appengine.ext import webapp
-from aeoid import users as openid_users
+from google.appengine.api import users
 
 import models
 import event_lists
@@ -25,7 +25,7 @@ class ShowResponsePage(webapp.RequestHandler):
         event = models.Event.get_by_id(long(eventid))
         if not event:
             self.redirect('/')
-        current_user = openid_users.get_current_user()
+        current_user = users.get_current_user()
         if not current_user:
             self.redirect('/')
             return
@@ -45,7 +45,7 @@ class UpdateResponsePage(webapp.RequestHandler):
         event = models.Event.get_by_id(long(eventid))
         if not event:
             self.redirect('/')
-        current_user = openid_users.get_current_user()
+        current_user = users.get_current_user()
         if not current_user:
             self.redirect('/')
             return

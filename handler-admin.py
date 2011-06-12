@@ -27,8 +27,6 @@ application = webapp.WSGIApplication(
    ('/event/(.*)/email', event_publish.SendEmailAboutEvent),
    ],
   debug=True)
-application = aeoid.middleware.AeoidMiddleware(application)
-
 
 def main():
     run_wsgi_app(application)

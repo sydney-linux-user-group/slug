@@ -8,6 +8,8 @@
 import config
 config.setup()
 
+import logging
+
 # AppEngine Imports
 from google.appengine.ext import webapp
 
@@ -16,16 +18,15 @@ from google.appengine.ext import webapp
 # Our App imports
 import models
 from utils.render import render as r
-from aeoid import users as openid_users
 
 
 class EditOffer(webapp.RequestHandler):
     """Handler for creating and editing Offer objects."""
 
     def get(self, key=None):
-        user = openid_users.get_current_user()
+        user = users.get_current_user()
         if not user:
-          self.redirect(openid_users.create_login_url(self.request.url))
+          self.redirect(users.create_login_url(self.request.url))
           return
         if key:
             try:
@@ -44,9 +45,9 @@ class EditOffer(webapp.RequestHandler):
             ))
 
     def post(self, key=None):
-        user = openid_users.get_current_user()
+        user = users.get_current_user()
         if not user:
-          self.redirect(openid_users.create_login_url(self.request.url))
+          self.redirect(users.create_login_url(self.request.url))
           return
 
         if key:
@@ -55,10 +56,11 @@ class EditOffer(webapp.RequestHandler):
                 offer = models.TalkOffer.get_by_id(key)
             # pylint: disable-msg=W0702
             except (AssertionError, ValueError):
-                self.redirect('/events')
+                self.redirect('/offers')
                 return
         else:
-            offer = models.TalkOffer(name=self.request.get('name'))
+            u_key = user.user_id()
+            offer = models.TalkOffer(name=self.request.get('name'), parent=u_key)
 
         user_time = self.request.get('minutes')
         if 's' in user_time:
@@ -77,7 +79,5 @@ class EditOffer(webapp.RequestHandler):
         offer.text = self.request.get('text')
         offer.seconds = seconds
         offer.consent = consent
-
-        offer.put()
 
         self.redirect('/events')

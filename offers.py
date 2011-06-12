@@ -11,8 +11,6 @@ config.setup()
 from google.appengine.api import users
 from google.appengine.ext import webapp
 
-from aeoid import users as openid_users
-
 import datetime
 import models
 import offer_lists
@@ -38,7 +36,7 @@ class Offer(webapp.RequestHandler):
         key = long(key)
         offer = models.Offer.get_by_id(key)
 
-        current_user = openid_users.get_current_user()
+        current_user = users.get_current_user()
         response, guests = offer_lists.get_event_responses(event, current_user)
 
         self.response.headers['Content-Type'] = 'text/html'
@@ -62,7 +60,7 @@ class Offers(webapp.RequestHandler):
         else:
             published_only = True
 
-        current_user = openid_users.get_current_user()
+        current_user = users.get_current_user()
 
         offers_lists = event_lists.get_event_lists(
                 published_only=published_only, user=current_user)
