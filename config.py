@@ -47,7 +47,7 @@ def setup(host=None):
     global HOST # pylint: disable-msg=W0603
     if HOST is None:
         if host is None:
-            HOST = 'jamezpolley-openid-test.appspot.com'
+            HOST = 'www.slug.org.au'
         else:
             HOST = host
 
