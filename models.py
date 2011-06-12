@@ -10,11 +10,12 @@ config.setup()
 
 from google.appengine.ext import db
 from google.appengine.api import users
+from aeoid import users as openid
 
 class Announcement(db.Model):
     """An announcement for an event."""
     created_by = db.UserProperty(
-            auto_current_user_add=True, required=True)
+            auto_current_user_add=True)
     created_on = db.DateTimeProperty(
             auto_now_add=True, required=True)
 
@@ -83,8 +84,9 @@ class LigtningTalk(db.Model):
 
 class Response(db.Model):
     """An RSVP to attend an event."""
-    created_by = db.UserProperty(
-            auto_current_user_add=True, required=True)
+    created_by = openid.UserProperty()
+    gcreated_by = db.UserProperty(
+            auto_current_user_add=True)
     created_on = db.DateTimeProperty(
             auto_now_add=True, required=True)
 

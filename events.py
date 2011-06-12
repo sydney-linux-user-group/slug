@@ -11,6 +11,8 @@ config.setup()
 from google.appengine.api import users
 from google.appengine.ext import webapp
 
+from aeoid import users as openid_users
+
 import datetime
 import models
 import event_lists

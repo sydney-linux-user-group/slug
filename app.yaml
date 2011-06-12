@@ -1,5 +1,5 @@
 application: jamezpolley-openid-test
-version: 8
+version: openid
 runtime: python
 api_version: 1
 
@@ -8,6 +8,10 @@ builtins:
 - appstats: on
 
 handlers:
+- url: /fix
+  login: required
+  script: fix_openid.py
+
 - url: /favicon.ico
   static_files: static/images/favicon.png
   upload: static/images/favicon.ico
