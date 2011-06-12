@@ -38,6 +38,7 @@ class MainHandler(webapp.RequestHandler):
         self.handle_openid()
 
     def post(self):
+        logging.debug(self.request.GET.get())
         continue_url = self.request.GET.get('continue')
         openid_url = self.request.GET.get('openid')
         self.handle_openid()
