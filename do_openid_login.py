@@ -25,24 +25,24 @@ from google.appengine.ext.webapp.util import run_wsgi_app
 
 class MainHandler(webapp.RequestHandler):
     def handle_openid(self, continue_url=None, openid_url=None):
-        if not openid_url:
+        if openid_url:
+            self.redirect(users.create_login_url(continue_url, None, openid_url))
+        else:
             self.response.out.write(template.render(
                 'templates/login.html', {'continue': continue_url}))
-        else:
-            self.redirect(users.create_login_url(continue_url, None, openid_url))
 
     def get(self):
         for arg in self.request.arguments():
             logging.debug('%s %s', arg, self.request.get_all(arg))
         continue_url = self.request.get('continue')
-        openid_url = self.request.get('openid_url')
+        openid_url = self.request.get('openid_identifier')
         self.handle_openid(continue_url, openid_url)
 
     def post(self):
         for arg in self.request.arguments():
             logging.debug('%s %s', arg, self.request.get_all(arg))
         continue_url = self.request.get('continue')
-        openid_url = self.request.get('openid_url')
+        openid_url = self.request.get('openid_identifier')
         self.handle_openid(continue_url, openid_url)
         
 

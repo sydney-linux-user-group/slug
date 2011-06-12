@@ -18,15 +18,15 @@ import datetime
 import models
 
 def fix_responses(user):
-    openid_user_key = openid.UserInfo.get_by_identity_url(current_user.federated_identity())
-    query = ("Select * from Response "
-             "WHERE created_by = :1")
-    resps = db.GqlQuery(query, openid_user_key)
-    for resp in resps:
-        logging.debug(resp)
-        resp.gcreated_by = current_user
-        resp.created_by = None
-        resp.put()
+    fedid = user.federated_identity()
+    if fedid:
+        openid_user_key = openid.UserInfo.get_by_identity_url(fedid)
+        query = ("Select * from Response "
+                 "WHERE created_by = :1")
+        resps = db.GqlQuery(query, openid_user_key)
+        for resp in resps:
+            resp.gcreated_by = user
+            resp.put()
 
 def get_event_responses(event, user):
     response = None
@@ -34,7 +34,7 @@ def get_event_responses(event, user):
     if user:
         fix_responses(user)
         responses = event.responses.filter("gcreated_by = ",
-                user.user_id()).order( "created_on")
+                user).order("created_on")
         for resp in responses:
             if not resp.guest:
                 response = resp

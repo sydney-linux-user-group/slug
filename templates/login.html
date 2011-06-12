@@ -12,7 +12,7 @@
 <body>
   
   <form class="openid" method="post" action="/_ah/login_required"> 
-    <input type="hidden" name="continue" value="/refresh">
+      <input type="hidden" name="continue" value="{{ continue }}">
     <div>
       <ul class="providers">
         <li class="openid highlight" title="OpenID" style="line-height: 0; cursor: pointer; ">
@@ -83,7 +83,7 @@
     <fieldset> 
       <label for="openid_identifier">Enter your <a class="openid_logo" href="http://openid.net">OpenID</a></label> 
       <div>
-        <input type="text" name="openid_url"> 
+        <input type="text" name="openid_identifier"> 
         <input type="submit" value="Log In">
       </div> 
     </fieldset> 
