@@ -2,6 +2,19 @@
   display: none;
 }
 
+#source {
+    padding: 0.2em;
+}
+
 #main {
   width: 100%;
 }
+
+#source .eventInput {
+    margin-right: 1em;
+    float: left;
+}
+
+#sourceoptions {
+}
+

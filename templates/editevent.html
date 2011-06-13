@@ -8,42 +8,43 @@ vim: set ts=2 sw=2 et sts=2 ai:
 {% endblock %}
 {% block body %}
 
-  <form>
-    <label for="fridays">Fridays</label>
-    <select id=fridays>
-       <option value=""></option>
-       {% for friday in fridays %}
-       <option value="{{ friday }}">{{friday}}</option>
-       {% endfor %}
-    </select>
-    <label for="templates">Templates</label>
-    <select id=templates>
-       <option value=""></option>
-       {% for name, template in templates %}
-       <option value="{{ name }}">{{ name }}</option>
-       {% endfor %}
-    </select>
-    {% for name, template in templates %}
-       <textarea id={{name}} style="display: none;">{{template|safe}}</textarea>
-    {% endfor %}
-  </form>
-</div>
 
 <form id="templateEdit" class="clearfix" action="/event/{{event.key.id}}/edit" method="post">
-  <ul class="eventData">
-    <li>Event Name: <input type="text" name="name" value="{{event.name}}"/></li>
-    <li>Start Time: <input type="text" name="start" value="{{event.start}}"/></li>
-    <li>End Time: <input type="text" name="end" value="{{event.end}}" /></li>
-    <li><input type="submit"/></li>
-  </ul>
   <div id="tabs">
     <ul class="tablist">
       <li><a href="#source">Source</a></li>
       <li><a href="#plaintext">Formatted plaintext</a></li>
       <li><a href="#formatted">HTML</a></li>
     </ul>
-    <div id="source">
+    <div id="source" class=clearfix>
       <textarea class="box eventInput" rows="30" cols="80" name="input">{{event.input}} </textarea>
+      <div id="sourceoptions">
+        <form>
+          <label for="fridays">Fridays</label>
+          <select id=fridays>
+             <option value=""></option>
+             {% for friday in fridays %}
+             <option value="{{ friday }}">{{friday}}</option>
+             {% endfor %}
+          </select>
+          <label for="templates">Templates</label>
+          <select id=templates>
+             <option value=""></option>
+             {% for name, template in templates %}
+             <option value="{{ name }}">{{ name }}</option>
+             {% endfor %}
+          </select>
+          {% for name, template in templates %}
+             <textarea id={{name}} style="display: none;">{{template|safe}}</textarea>
+          {% endfor %}
+        </form>
+        <ul class="eventData">
+          <li><label for="name">Event Name: </label><input type="text" name="name" value="{{event.name}}"/></li>
+          <li><label for="start">Start Time: </label><input type="text" name="start" value="{{event.start}}"/></li>
+          <li><label for="end">End Time: </label><input type="text" name="end" value="{{event.end}}" /></li>
+          <li><input type="submit"/></li>
+        </ul>
+      </div>
     </div>
     <div id="plaintext" class="eventOutput">
       <div class="box"><pre class="eventOutput">{{event.plaintext|safe}}</pre></div>
