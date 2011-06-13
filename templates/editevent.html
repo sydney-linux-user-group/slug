@@ -13,6 +13,7 @@ vim: set ts=2 sw=2 et sts=2 ai:
   <div id="tabs">
     <ul class="tablist">
       <li><a href="#source">Source</a></li>
+      <li><a href="#agenda">Agenda</a></li>
       <li><a href="#plaintext">Formatted plaintext</a></li>
       <li><a href="#formatted">HTML</a></li>
     </ul>
@@ -39,9 +40,12 @@ vim: set ts=2 sw=2 et sts=2 ai:
           {% endfor %}
         </form>
         <ul class="eventData">
-          <li><label for="name">Event Name: </label><input type="text" name="name" value="{{event.name}}"/></li>
-          <li><label for="start">Start Time: </label><input type="text" name="start" value="{{event.start}}"/></li>
-          <li><label for="end">End Time: </label><input type="text" name="end" value="{{event.end}}" /></li>
+          <li><label for="name">Event Name: </label>
+            <input type="text" name="name" value="{{event.name}}"/></li>
+          <li><label for="start">Start Time: </label>
+            <input type="text" name="start" value="{{event.start}}"/></li>
+          <li><label for="end">End Time: </label>
+            <input type="text" name="end" value="{{event.end}}" /></li>
           <li><input type="submit"/></li>
         </ul>
       </div>
