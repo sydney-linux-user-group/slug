@@ -13,9 +13,6 @@ config.setup(os.environ.get('HTTP_HOST', None))
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 
-# OpenID middleware
-import aeoid.middleware
-
 # Import the actual handlers
 import index
 import response
@@ -45,8 +42,6 @@ application = webapp.WSGIApplication(
    ('/(.*)', index.StaticTemplate),
    ],
   debug=True)
-application = aeoid.middleware.AeoidMiddleware(application)
-
 
 def main():
     run_wsgi_app(application)
