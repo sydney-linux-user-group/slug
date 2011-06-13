@@ -15,6 +15,32 @@
     float: left;
 }
 
-#sourceoptions {
+#agenda_items, #offers, #trashcan {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    float: left;
+    margin-right: 10px;
+    min-height: 6em;
+    min-width: 20em;
 }
 
+#agenda_items li, #offers li, #trashcan li {
+    margin: 0.4em;
+    padding-left: 1em;
+    padding-right: 1em;
+    font-size: 1.2em;
+    min-width: 18em;
+    -ms-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    border-radius: 15px;
+}
+
+.offer {
+    background-color: pink;
+}
+
+.agendaitem {
+    background-color: orange;
+}

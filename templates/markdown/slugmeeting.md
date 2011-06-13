@@ -10,7 +10,11 @@
 
 ==== Details ====
 
-TBA
+{% for item in agenda %}
+  - {{ item.offer.displayname }} - {{ item.offer.title }}
+{% empty %}
+Details TBA.
+{% endfor %}
 
 ====Location====
 

@@ -92,6 +92,29 @@ vim: set ts=2 sw=2 et sts=2 ai:
 {% block script %}
 
 <script type="text/javascript">
+function offer_popup() {
+  var url = '/offer/add';
+  var width  = 800;
+  var height = 475;
+  var left   = (screen.width  - width)/2;
+  var top    = (screen.height - height)/2;
+  var params = 'width='+width+', height='+height;
+  params += ', top='+top+', left='+left;
+  params += ', directories=no';
+  params += ', location=no';
+  params += ', menubar=no';
+  params += ', resizable=no';
+  params += ', scrollbars=no';
+  params += ', status=no';
+  params += ', toolbar=no';
+  newwin=window.open(url,'offers', params);
+  if (window.focus) {newwin.focus()}
+  return false;
+}
+$('#speak').click(offer_popup);
+</script>
+
+<script type="text/javascript">
   function handle_response() {
     event.preventDefault();
     url=this.href;

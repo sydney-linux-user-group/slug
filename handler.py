@@ -18,6 +18,7 @@ import index
 import response
 import events
 import offer_edit
+import offers
 import ical
 import rss
 
@@ -38,6 +39,7 @@ application = webapp.WSGIApplication(
    ('/event/(.*)', events.Event),
    ('/offer/(.*)/edit', offer_edit.EditOffer),
    ('/offer/add', offer_edit.EditOffer),
+   ('/offers', offers.Offers),
    ('/refresh', index.Refresh),
    ('/(.*)', index.StaticTemplate),
    ],

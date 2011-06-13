@@ -50,19 +50,85 @@ vim: set ts=2 sw=2 et sts=2 ai:
         </ul>
       </div>
     </div>
+    <div id=agenda class=clearfix>
+      <ul id="agenda_items" class="connectedSortable box">
+        <li class=".ui-state-disabled">Agenda Items</li>
+        {% for item in agenda %}
+          <li class="agendaitem" id={{ item.key }}>
+          {{ item.offer.displayname }} - {{ item.offer.title }} - {{ item.offer.minutes }}
+          </li>
+        {% endfor %}
+      </ul>
+      <ul id="offers" class="connectedSortable box">
+        <li class=".ui-state-disabled">All offers</li>
+          {% for item in offers %}
+          <li class="offer" id={{ item.key }}>
+          {{ item.displayname }} - {{ item.title }} - {{ item.minutes }}
+          </li>
+          {% endfor %}
+      </ul>
+      <ul id="trashcan" class="connectedSortable box">
+        <li>Drag agenda items here</li>
+        <li>to delete them</li>
+      </ul>
+    </div>
     <div id="plaintext" class="eventOutput">
       <div class="box"><pre class="eventOutput">{{event.plaintext|safe}}</pre></div>
     </div>
     <div id="formatted" class="eventOutput">
       <div class="box">{{event.html|safe}}</div>
     </div>
-  </div>  <!--tabs-->
+  </div>
 </form>
 <script>
 
+  //Sets up the tabs
   $(function() {
     $( "#tabs" ).tabs();
   });
+
+  //Set up drag/drop agendaization
+
+  //Handle adding an item to agenda
+  function addToAgenda(event, ui) {
+    item = $(ui.item);
+    id = item.attr('id');
+    if (item.hasClass('offer')) {
+      $.post('/event/{{ event.key }}/addoffer', { 'id': id }, function(data) {
+        item.removeClass('offer');
+        item.addClass('agendaitem');
+        item.attr('id', data.key);
+      }, 'json');
+    };
+    };
+
+  function dragToTrash(event, ui) {
+    item = $(ui.item);
+    id = item.attr('id');
+    $.post('/event/{{ event.key }}/remoffer', { 'id': id }, function(data) {
+      item.remove();
+    });
+  };
+
+  $(function() {
+    $("#trashcan" ).sortable({
+      receive: dragToTrash,
+    }).disableSelection();
+  });
+
+  $(function() {
+    $( "#agenda_items" ).sortable({
+      connectWith: "#trashcan",
+      receive: addToAgenda,
+    }).disableSelection();
+  });
+
+  $(function() {
+    $( "#offers" ).sortable({
+      connectWith: "#agenda_items"
+    }).disableSelection();
+  });
+  
 
   $('#fridays').change(function () {
     var value = $(this).val();

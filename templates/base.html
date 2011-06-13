@@ -29,55 +29,76 @@ vim: set ts=2 sw=2 et sts=2 ai:
 </script>
 
   </head>
-  <body>
-    {% block header %}
-<div id=navbar class="clearfix">
-  <ul id=links>
-    <li><a href="/">Home</a></li>
-    <li>|</li>
-    <li><a href="/events">Events</a></li>
-    <li>|</li>
-    <li><a href="http://lists.slug.org.au/archives/slug/">Archives</a></li>
-    <li>|</li>
-    <li><a href="http://lists.slug.org.au/listinfo/">Mailing Lists</a></li>
-    <li>|</li>
-    <li><a href="https://github.com/sydney-linux-user-group/slug">Get the code!</a></li>
-  </ul>
 
-  <ul id=config>
-    {% if appengine_admin %}
+<body>
+  {% block header %}
+
+  <div id="navbar" class="clearfix">
+    <ul id="links">
+      <li><a href="/">Home</a></li>
+
+      <li>|</li>
+
+      <li><a href="/events">Events</a></li>
+
+      <li>|</li>
+
+      <li><a href=
+      "http://lists.slug.org.au/archives/slug/">Archives</a></li>
+
+      <li>|</li>
+
+      <li><a href="http://lists.slug.org.au/listinfo/">Mailing Lists</a></li>
+
+      <li>|</li>
+
+      <li><a href= "https://github.com/sydney-linux-user-group/slug">Get the code!</a></li>
+    </ul>
+
+    <ul id="config">
+      <li style="list-style: none">{% if appengine_admin %}</li>
+
       <li><span style="color: red;">Admin User</span></li>
+
       <li><a href="/event/add">Add Event</a></li>
-    {% endif %}
-    <li id="feed-icons">
-      <a href="webcal://{{ req.host }}/ical" title="iCal feed of all events"><img src="/images/ical16x16.gif" alt="iCal feed of all events"></a>
-      <a href="/rss" title="RSS Feed of all events"><img src="/images/feed-icon-14x14.png" alt="RSS Feed of all events"></a>
-    </li>
-    <li>|</li>
-    <li>
-    {% if appengine_user %}
-      <a href="{{ appengine_logout_url }}">Logout</a>
-    {% else %}
-      <a class="openid_login" href="{{ login_url }}">Login</a>
-    {% endif %}
 
-    </li>
-  </ul>
-</div>
+      <li style="list-style: none">{% endif %}</li>
 
-    {% endblock %}
+      <li id="feed-icons"><a href=
+      "webcal://{{ req.host }}/ical" title=
+      "iCal feed of all events"><img src="/images/ical16x16.gif"
+      alt="iCal feed of all events"></a> <a href="/rss" title=
+      "RSS Feed of all events"><img src=
+      "/images/feed-icon-14x14.png" alt=
+      "RSS Feed of all events"></a></li>
 
-<table id=main>
-  <tr>
-    <td id=body>
-      {% block body %}{% endblock %}
-    </td>
-    <td id=rightbar>
-     {% block rightbar %}{% endblock %}
-    </td>
-  </tr>
-</table>
+      <li>|</li>
 
+      <li>{% if appengine_user %}
+        <a href= "{{ appengine_logout_url }}">Logout</a>
+      {% else %}
+        <a class="openid_login" href="{{ login_url }}">Login</a>
+      {% endif %}</li>
+    </ul>
+  </div>{% endblock %}
+
+  <table id="main">
+    <tr>
+      <td id="body">
+        {% block body %}
+        {% endblock %}
+      </td>
+
+      <td id="rightbar">
+        {% block rightbar %}
+        {% endblock %}
+      </td>
+    </tr>
+  </table>
+</body>
+
+
+</html>
   <script type="text/javascript">
     function handleSuccess(responseText, statusText, xhr, form) {
       // Find the div which contains this form
@@ -106,15 +127,8 @@ vim: set ts=2 sw=2 et sts=2 ai:
       });
     };
     $(ajaxifyforms);
+    $(window.console.log('ajaxification'));
   </script>
-
-  </body>
-
-</head>
-
-<body>
-</body>
-</html>
 <script type="text/javascript">
 function openid_login() {
   var url = '{{ jslogin_url }}';

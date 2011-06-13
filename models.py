@@ -57,6 +57,11 @@ class Event(db.Model):
 
 class TalkOffer(db.Model):
     """An lightning talk to be given at an event."""
+
+    def get_url(self):
+        """Return the canonical url for an event."""
+        return "/offer/%s" % self.key().id()
+
     created_by = db.UserProperty(
             auto_current_user_add=True, required=True)
     created_on = db.DateTimeProperty(
@@ -64,23 +69,24 @@ class TalkOffer(db.Model):
 
     displayname = db.StringProperty()
     contactinfo = db.StringProperty()
-    name = db.StringProperty(required=True)
+    title = db.StringProperty(required=True)
     active = db.BooleanProperty(required=True,default=True)
     text = db.TextProperty()
-    seconds = db.IntegerProperty()
+    minutes = db.IntegerProperty()
     consent = db.BooleanProperty()
 
 
-class LigtningTalk(db.Model):
+class LightningTalk(db.Model):
     created_by = db.UserProperty(
             auto_current_user_add=True, required=True)
     created_on = db.DateTimeProperty(
             auto_now_add=True, required=True)
 
+    weight = db.IntegerProperty(default=100, required=True)
     offer = db.ReferenceProperty(TalkOffer, required=True,
             collection_name='events')
     event = db.ReferenceProperty(Event, required=True,
-            collection_name='talks')
+            collection_name='agenda')
 
 class Response(db.Model):
     """An RSVP to attend an event."""

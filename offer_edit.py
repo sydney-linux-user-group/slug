@@ -11,6 +11,7 @@ config.setup()
 import logging
 
 # AppEngine Imports
+from google.appengine.api import users
 from google.appengine.ext import webapp
 
 # Third Party imports
@@ -35,13 +36,20 @@ class EditOffer(webapp.RequestHandler):
                 assert offer
             # pylint: disable-msg=W0702
             except (AssertionError, ValueError):
-                self.redirect('/events')
+                self.redirect('/offers')
                 return
         else:
             offer = None
 
+        q = models.TalkOffer.all()
+        if not users.is_current_user_admin():
+            q.filter("created_by =", user)
+
+        offer_list = q.fetch(limit=100)
+
         self.response.out.write(r(
-            'templates/offertalk.html', locals()
+            'templates/offertalk.html', { 'offer': offer,
+                'offer_list': offer_list, 'self': self }
             ))
 
     def post(self, key=None):
@@ -59,25 +67,19 @@ class EditOffer(webapp.RequestHandler):
                 self.redirect('/offers')
                 return
         else:
-            u_key = user.user_id()
-            offer = models.TalkOffer(name=self.request.get('name'), parent=u_key)
+            logging.debug('creating offer')
+            offer = models.TalkOffer(title=self.request.get('title'))
 
-        user_time = self.request.get('minutes')
-        if 's' in user_time:
-            user_time.replace('s', '')
-            seconds = int(user_time)
+
+        if self.request.get('consent'):
+            consent = True
         else:
-            user_time.replace('m', '')
-            seconds = 60 * int(user_time)
-
-
-        consent = self.request.get('consent')
-        if not consent:
             consent = False
 
         offer.displayname = self.request.get('displayname')
         offer.text = self.request.get('text')
-        offer.seconds = seconds
+        offer.minutes = int(self.request.get('minutes'))
         offer.consent = consent
+        offer.put()
 
-        self.redirect('/events')
+        self.redirect('/refresh')

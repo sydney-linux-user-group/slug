@@ -23,6 +23,8 @@ import event_publish
 application = webapp.WSGIApplication(
   [('/event/add', event_edit.EditEvent),
    ('/event/(.*)/edit', event_edit.EditEvent),
+   ('/event/(.*)/addoffer', event_edit.AddOffer),
+   ('/event/(.*)/remoffer', event_edit.RemOffer),
    ('/event/(.*)/publish', event_publish.PublishEvent),
    ('/event/(.*)/email', event_publish.SendEmailAboutEvent),
    ],

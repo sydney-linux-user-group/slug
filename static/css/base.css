@@ -161,12 +161,8 @@ img, div, a, input {
   height: 100%;
 }
 
-#body table {
-  width: 100%;
-  height: 100%;
-  padding: 0;
-  margin: 0;
-  border-spacing: 1px;
+#main #body {
+  vertical-align: top;
 }
 
 #header {
@@ -191,20 +187,8 @@ img, div, a, input {
   font-size: smaller;
 }
 
-form li {
-  margin-top: 1em;
-}
-
-form li label {
-  vertical-align: top;
-}
-
-#talkOfferForm {
-  width: 600px;
-}
-
 .evenrow {
-  background-color: grey
+  background-color: grey;
 }
 
 .oddrow {

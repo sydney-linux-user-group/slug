@@ -31,7 +31,7 @@ handlers:
   login: admin
   script: handler-admin.py
 
-- url: /event/[0-9]*/(edit|publish|email)
+- url: /event/[a-zA-Z0-9]*/(edit|publish|email|addoffer|remoffer)
   login: admin
   script: handler-admin.py
 

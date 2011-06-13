@@ -1,0 +1,44 @@
+.evenrow {
+  background-color: grey
+}
+
+.oddrow {
+  background-color: white
+}
+
+.offerrow td {
+    vertical-align: top;
+}
+
+.offer {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.offer li {
+    padding: 2px;
+}
+
+#content table th {
+  height: 12pt;
+}
+
+#content table tr {
+  height: 33%;
+}
+
+#content table tr.header-type {
+  height: 12pt;
+}
+
+#content table tr.header-titles {
+  height: 10pt;
+}
+
+td, th {
+    padding: 0.4em;
+}
+
+.ui-tabs .ui-tabs-nav li a {
+    padding: 2px;
+}

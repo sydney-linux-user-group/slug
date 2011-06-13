@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% comment %}
+-*- coding: utf-8 -*-
+vim: set ts=2 sw=2 et sts=2 ai:
+{% endcomment %}
+{% block head %}
+    <link rel="StyleSheet" href="/css/offers.css" type="text/css" media="screen">
+{% endblock %}
+
+{% block body %}
+{% if appengine_admin %}
+  <h1>Talk Offers</h1>
+{% else %}
+  <h1>Your Offers</h1>
+{% endif %}
+<table id=offertable class=box>
+  <thead>
+    <tr>
+      {% if appengine_admin %}
+        <th>DisplayName</th>
+      {% endif %}
+      <th>Title</th>
+      <th>Description</th>
+      <th>Length</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for offer in offer_list %}
+      <tr class="offerrow {% cycle 'evenRow' 'oddRow' %}">
+        {% if appengine_admin %}<td>{{ offer.displayname }}</td>{% endif %}
+        <td>{{ offer.title }}</td>
+        <td>{{ offer.text }}</td>
+        <td>{{ offer.minutes }}</td>
+        <td><a class="offerlink" href="{{ offer.get_url }}/edit">Edit</a></td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript">
+function offer_popup() {
+  event.preventDefault();
+  var width  = 800;
+  var height = 475;
+  var left   = (screen.width  - width)/2;
+  var top    = (screen.height - height)/2;
+  var params = 'width='+width+', height='+height;
+  params += ', top='+top+', left='+left;
+  params += ', directories=no';
+  params += ', location=no';
+  params += ', menubar=no';
+  params += ', resizable=no';
+  params += ', scrollbars=no';
+  params += ', status=no';
+  params += ', toolbar=no';
+  newwin=window.open(this.href,'offers', params);
+  if (window.focus) {newwin.focus()}
+}
+$('.offerlink').click(offer_popup);
+</script>
+{% endblock %}

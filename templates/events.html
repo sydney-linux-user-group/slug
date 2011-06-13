@@ -28,7 +28,7 @@ vim: set ts=2 sw=2 et sts=2 ai:
           <th>Date</th><th>Event Text</th><th class="response">Response</th>
         </tr>
         {% for event, response, guests in event_list.events %}
-        <tr class="{% cycle 'evenRow' 'oddRow' %}{% if appengine_admin and not event.published %} unpublished{% endif %}{% if appengine_admin and event.html != event.announcement.html %} altered{% endif %}">
+        <tr class="eventrow {% cycle 'evenRow' 'oddRow' %}{% if appengine_admin and not event.published %} unpublished{% endif %}{% if appengine_admin and event.html != event.announcement.html %} altered{% endif %}">
           <td>
             {{ event.start }} - {{ event.end }}
             {% if appengine_admin %}
