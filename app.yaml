@@ -39,6 +39,10 @@ handlers:
   script: $PYTHON_LIB/google/appengine/ext/admin
   login: admin
 
+- url: /talks
+  script: handler.py
+  login: required
+
 - url: /.*
   script: handler.py
 

@@ -38,6 +38,7 @@ application = webapp.WSGIApplication(
         events.Events),
    ('/event/(.*)', events.Event),
    ('/offer/(.*)/edit', offer_edit.EditOffer),
+   ('/talks', offer_edit.EditOffer),
    ('/offer/add', offer_edit.EditOffer),
    ('/offers', offers.Offers),
    ('/refresh', index.Refresh),
