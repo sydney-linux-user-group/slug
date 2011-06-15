@@ -21,12 +21,13 @@ def fix_responses(user):
     fedid = user.federated_identity()
     if fedid:
         openid_user_key = openid.UserInfo.get_by_identity_url(fedid)
-        query = ("Select * from Response "
-                 "WHERE created_by = :1")
-        resps = db.GqlQuery(query, openid_user_key)
-        for resp in resps:
-            resp.gcreated_by = user
-            resp.put()
+        if openid_user_key:
+            query = ("Select * from Response "
+                     "WHERE created_by = :1")
+            resps = db.GqlQuery(query, openid_user_key)
+            for resp in resps:
+                resp.gcreated_by = user
+                resp.put()
 
 def get_event_responses(event, user):
     response = None

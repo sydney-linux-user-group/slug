@@ -26,7 +26,8 @@ vim: set ts=2 sw=2 et sts=2 ai:
         <form method=post action="{{ event.get_url }}/response/update">
           <input type=hidden name=attending value="yes">
           {% for other_response in event.responses %}
-            {% ifequal other_response.gcreated_by.user_id response.gcreated_by.user_id %}
+
+            {% ifequal other_response.gcreated_by response.gcreated_by %}
               {% if response.attending %}
                 {% if other_response.guest %}
                   <input type="hidden" name="guest_name" value="{{ other_response.guest_name }}">

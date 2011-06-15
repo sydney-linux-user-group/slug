@@ -71,7 +71,8 @@ class UpdateResponsePage(webapp.RequestHandler):
         for guest in guests:
             guest.delete()
 
-        response = models.Response(event=event, guest=False)
+        response = models.Response(event=event, gcreated_by = current_user,
+                guest=False)
         response.attending = self.request.get('attending').lower() != 'no'
         response.put()
 
@@ -84,7 +85,8 @@ class UpdateResponsePage(webapp.RequestHandler):
             if not name or not email:
                 continue
 
-            response = models.Response(event=event, guest=True)
+            response = models.Response(event=event, guest=True,
+                    gcreated_by = current_user)
             response.attending = True
             response.guest_name = name
             response.guest_email = email

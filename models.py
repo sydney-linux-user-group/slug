@@ -91,8 +91,7 @@ class LightningTalk(db.Model):
 class Response(db.Model):
     """An RSVP to attend an event."""
     created_by = openid.UserProperty()
-    gcreated_by = db.UserProperty(
-            auto_current_user_add=True)
+    gcreated_by = db.UserProperty()
     created_on = db.DateTimeProperty(
             auto_now_add=True, required=True)
 

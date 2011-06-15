@@ -112,11 +112,16 @@ class EditEvent(webapp.RequestHandler):
             event = None
 
         template_values = {}
+
+        if event:
+            template_values['agenda'] = offers.get_event_agenda(event)
+        else:
+            template_values['agenda'] = None
+
         template_values['event'] = event
         template_values['fridays'] = lastfridays()
         template_values['templates'] = get_templates()
         template_values['self'] = self
-        template_values['agenda'] = offers.get_event_agenda(event)
         template_values['offers'] = models.TalkOffer.all().fetch(limit=100)
 
         self.response.out.write(r(
