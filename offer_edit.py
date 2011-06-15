@@ -82,4 +82,11 @@ class EditOffer(webapp.RequestHandler):
         offer.consent = consent
         offer.put()
 
+        logging.debug('TalkOffer created by %s (%s email: %s fedid: %s) - : %s',
+                offer.displayname, user.nickname(), user.email(),
+                user.federated_identity(), offer.title)
+        logging.debug('For talkoffer %s, %s gave displayname %s. '
+                'Consent flag is: %s', offer.title, user.nickname(),
+                offer.displayname, offer.consent)
+
         self.redirect('/refresh')

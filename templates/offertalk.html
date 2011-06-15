@@ -71,7 +71,7 @@ vim: set ts=2 sw=2 et sts=2 ai:
       <tbody>
         {% for offer in offer_list %}
           <tr class="offerrow {% cycle 'evenRow' 'oddRow' %}">
-            {% if appengine_admin %}<td>{{ offer.displayname }}</td>{% endif %}
+            {% if appengine_admin %}<td><p title="Created by: {{ offer.created_by.nickname }} ({{offer.created_by.email}}, {{offer.created_by.federated_id }})">{{ offer.displayname }}</td>{% endif %}
             <td>{{ offer.title }}</td>
             <td>{{ offer.text }}</td>
             <td>{{ offer.minutes }}</td>
