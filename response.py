@@ -8,6 +8,7 @@
 import config
 config.setup()
 
+import logging
 from google.appengine.ext import webapp
 from google.appengine.api import users
 
@@ -75,6 +76,10 @@ class UpdateResponsePage(webapp.RequestHandler):
                 guest=False)
         response.attending = self.request.get('attending').lower() != 'no'
         response.put()
+
+        logging.info('Response %s created by user %s (email: %s fedid: %s)',
+                response.key(), current_user.nickname(), current_user.email(),
+                current_user.federated_identity() )
 
         guest_names = self.request.get_all('guest_name')
         guest_emails = self.request.get_all('guest_email')
