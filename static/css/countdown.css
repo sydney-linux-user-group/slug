@@ -1,0 +1,15 @@
+body .neutral {
+  background-color: white;
+}
+
+body .counting {
+  background-color: green;
+}
+
+body .close {
+  background-color: orange;
+}
+
+body .overtime {
+  background-color: red;
+}

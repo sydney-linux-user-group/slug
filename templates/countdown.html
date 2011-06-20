@@ -13,7 +13,7 @@ Eventually, when the user presses the "next speaker" button the module sends a r
 {% endcomment %}
 {% block head %}
     <link rel="StyleSheet" href="/third_party/jquery.tweet/jquery.tweet.css" type="text/css" />
-    <link rel="StyleSheet" href="/css/index.css" type="text/css" media="screen">
+    <link rel="StyleSheet" href="/css/countdown.css" type="text/css" media="screen">
     <link rel="StyleSheet" href="/css/jquery.tweet.css" type="text/css" />
     <script src="/third_party/jquery.tweet/jquery.tweet.js" type="text/javascript"></script>
     <script src="/third_party/jquery.gravatar/md5.js" type="text/javascript"></script>
@@ -21,13 +21,23 @@ Eventually, when the user presses the "next speaker" button the module sends a r
 
 
 <script type="text/javascript">
-var c=300;
+var c=60;
 var t;
 var timer_is_on=0;
 
 function timedCount()
 {
 document.getElementById('txt').value=c;
+if (c > 30) {
+  $(body .close).removeClass('close');
+  $(body .overtime).removeClass('overtime');
+};
+if (c == 30) {
+  $(body).addClass('close');
+};
+if (c == 0) {
+  $(body).addClass('overtime');
+}
 c=c-1;
 t=setTimeout("timedCount()",1000);
 }
@@ -38,6 +48,7 @@ if (!timer_is_on)
   {
   timer_is_on=1;
   timedCount();
+  $(body).addClass('counting');
   }
 }
 
@@ -75,6 +86,7 @@ document.getElementById('txt').value=c;
 {% endblock %}
 
 {% block body %}
+<div id="countdown">00</div>
 <p><select>
   <option>Meet&Greet Topic 30min</option>
   <option>Committee Welcome 5min</option>
