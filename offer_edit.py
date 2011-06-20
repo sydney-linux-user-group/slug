@@ -98,4 +98,4 @@ class EditOffer(webapp.RequestHandler):
                 'Consent flag is: %s', offer.title, user.nickname(),
                 offer.displayname, offer.consent)
 
-        self.redirect(offer.get_url())
+        self.redirect('/offer/add#prevoffers')
