@@ -9,6 +9,7 @@ import config
 config.setup()
 
 import logging
+import re
 
 # AppEngine Imports
 from google.appengine.api import users
@@ -70,6 +71,7 @@ class EditOffer(webapp.RequestHandler):
             logging.debug('creating offer')
             offer = models.TalkOffer(title=self.request.get('title'))
 
+        valid = True
 
         if self.request.get('consent'):
             consent = True
@@ -78,7 +80,14 @@ class EditOffer(webapp.RequestHandler):
 
         offer.displayname = self.request.get('displayname')
         offer.text = self.request.get('text')
-        offer.minutes = int(self.request.get('minutes'))
+        minutes = self.request.get('minutes')
+        if minutes.isnumeric():
+            offer.minutes = int(minutes)
+        else:
+            mins = ''.join(re.findall('[0-9]+', minutes))
+            if mins.isnumneric():
+                offer.minutes = int(mins)
+
         offer.consent = consent
         offer.put()
 
@@ -89,4 +98,4 @@ class EditOffer(webapp.RequestHandler):
                 'Consent flag is: %s', offer.title, user.nickname(),
                 offer.displayname, offer.consent)
 
-        self.redirect('/refresh')
+        self.redirect(offer.get_url())

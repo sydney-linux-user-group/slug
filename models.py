@@ -60,7 +60,7 @@ class TalkOffer(db.Model):
 
     def get_url(self):
         """Return the canonical url for an event."""
-        return "/offer/%s" % self.key().id()
+        return "/offer/%s/edit" % self.key().id()
 
     created_by = db.UserProperty(
             auto_current_user_add=True, required=True)
