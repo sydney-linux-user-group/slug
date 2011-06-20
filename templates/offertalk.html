@@ -5,6 +5,7 @@ vim: set ts=2 sw=2 et sts=2 ai:
 {% endcomment %}
 {% block head %}
     <link rel="StyleSheet" href="/css/offers.css" type="text/css" media="screen">
+    <script type="text/javascript" src="/third_party/jquery.validation/jquery.validate.js"></script>
 {% endblock %}
 {% block body %}
 
@@ -19,26 +20,26 @@ vim: set ts=2 sw=2 et sts=2 ai:
     <ul class="offer">
 
       <li class="evenRow"><label for="displayname">Your Name</label>
-      <input type="text" name="displayname" value="{{offer.displayname|default:user.nickname}}"/>
+      <input type="text" name="displayname" class="required " value="{{offer.displayname|default:user.nickname}}"/>
         <div class="hint">This name will be used on meeting invitations and when
         announcing your talk at the event</div></li>
 
-      <li class="oddRow"><label for="contactinfo">Contact Details</label>
-      <input type="text" name="contactinfo" value="{{offer.contactinfo|default:user.email}}"/>
+      <li class="oddRow"><label for="contactinfo">Contact Email</label>
+      <input type="text" name="contactinfo" class="required email" value="{{offer.contactinfo|default:user.email}}"/>
         <div class="hint">We'll follow up at this address to confirm your talk.
           Your address will not be shared, and you will not be contacting for
           anything other than confirming your offer.</div>
       </li>
 
-      <li class="evenRow"><label for="title">Talk Title:</label>
-      <input type="text" name="title" value="{{offer.title}}"/>
+      <li class="evenRow"><label for="title">Talk Title</label>
+      <input type="text" name="title" class="required" value="{{offer.title}}"/>
       <div class="hint"></li>
 
       <li class="oddRow"><label for="text">Talk Details:</label>
-        <textarea class="offerText" rows=5 cols=40 name="text">{{offer.text}}</textarea>
+        <textarea class="offerText" class="required" rows=5 cols=40 name="text">{{offer.text}}</textarea>
 
       <li class="evenRow"><label for="minutes">Talk length</label>
-        <input type="text" name="minutes" value="{{ offer.minutes  }}" /> <div
+        <input type="text" class="required digits" name="minutes" value="{{ offer.minutes  }}" /> <div
           class="hint">in minutes. As a guide, 5 minutes for a lightning talk, 35
           for a long talk.</div></li>
 
@@ -88,25 +89,31 @@ vim: set ts=2 sw=2 et sts=2 ai:
   $(function() {
     $( "#tabs" ).tabs();
   });
-function offer_popup() {
-  event.preventDefault();
-  var width  = 800;
-  var height = 475;
-  var left   = (screen.width  - width)/2;
-  var top    = (screen.height - height)/2;
-  var params = 'width='+width+', height='+height;
-  params += ', top='+top+', left='+left;
-  params += ', directories=no';
-  params += ', location=no';
-  params += ', menubar=no';
-  params += ', resizable=no';
-  params += ', scrollbars=no';
-  params += ', status=no';
-  params += ', toolbar=no';
-  newwin=window.open(this.href,'offers', params);
-  if (window.focus) {newwin.focus()}
-}
-$('.offerlink').click(offer_popup);
+
+  function offer_popup() {
+    event.preventDefault();
+    var width  = 800;
+    var height = 475;
+    var left   = (screen.width  - width)/2;
+    var top    = (screen.height - height)/2;
+    var params = 'width='+width+', height='+height;
+    params += ', top='+top+', left='+left;
+    params += ', directories=no';
+    params += ', location=no';
+    params += ', menubar=no';
+    params += ', resizable=no';
+    params += ', scrollbars=no';
+    params += ', status=no';
+    params += ', toolbar=no';
+    newwin=window.open(this.href,'offers', params);
+    if (window.focus) {newwin.focus()}
+  }
+  $('.offerlink').click(offer_popup);
+
+  $(function(){
+    $("#talkOfferForm").validate();
+  });
+
 </script>
 
 {% endblock %}

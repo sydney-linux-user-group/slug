@@ -42,3 +42,11 @@ td, th {
 .ui-tabs .ui-tabs-nav li a {
     padding: 2px;
 }
+
+.error {
+  background-color: red;
+}
+
+.valid {
+  background-color: green;
+}
