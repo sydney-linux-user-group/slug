@@ -80,6 +80,7 @@ class EditOffer(webapp.RequestHandler):
 
         offer.displayname = self.request.get('displayname')
         offer.text = self.request.get('text')
+        offer.contactinfo = self.request.get('contactinfo')
         minutes = self.request.get('minutes')
         if minutes.isnumeric():
             offer.minutes = int(minutes)
