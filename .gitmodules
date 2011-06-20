@@ -34,3 +34,6 @@
 [submodule "third_party/jquery-openid"]
 	path = third_party/jquery-openid
 	url = git://github.com/jamezpolley/jquery-openid.git
+[submodule "third_party/jquery.validation"]
+	path = third_party/jquery.validation
+	url = https://github.com/jzaefferer/jquery-validation
