@@ -65,6 +65,7 @@ class SendEmailAboutEvent(webapp.RequestHandler):
         message.send()
         logging.info("Sent email. Subject: %s | To: %s | Body: %s",
                 message.subject, message.to, message.body)
+        event.emailed = True
         event.put()
 
         self.redirect("/events")
