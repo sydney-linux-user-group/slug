@@ -18,7 +18,7 @@ def render(t, kw):
       'config': config,
       'user': users.get_current_user(),
       'jslogin_url': '/_ah/login_required?continue=/refresh',
-      'login_url': users.create_login_url(req.path),
+      'login_url': '/_ah/login_required?continue=%s' % req.path,
       'logout_url': users.create_logout_url(req.path),
       'appengine_user': users.get_current_user(),
       'appengine_admin': users.is_current_user_admin(),

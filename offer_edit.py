@@ -28,7 +28,7 @@ class EditOffer(webapp.RequestHandler):
     def get(self, key=None):
         user = users.get_current_user()
         if not user:
-          self.redirect(users.create_login_url(self.request.url))
+          self.redirect('/_ah/login_required?continue=%s' % self.request.path)
           return
         if key:
             try:
@@ -56,7 +56,7 @@ class EditOffer(webapp.RequestHandler):
     def post(self, key=None):
         user = users.get_current_user()
         if not user:
-          self.redirect(users.create_login_url(self.request.url))
+          self.redirect('/_ah/login_required?continue=%s' % self.request.path)
           return
 
         if key:

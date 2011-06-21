@@ -53,7 +53,7 @@ class Offers(webapp.RequestHandler):
     def get(self, limit=100, offset=0):
         current_user = users.get_current_user()
         if not current_user:
-            self.redirect(users.create_login_url(self.request.url))
+            self.redirect('/_ah/login_required?continue=%s' % self.request.path)
             return
 
         q = models.TalkOffer.all()
