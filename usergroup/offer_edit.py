@@ -5,98 +5,86 @@
 
 """Module for creating and editing Event objects."""
 
-import config
-config.setup()
-
+# Python imports
 import logging
 import re
 
-# AppEngine Imports
-from google.appengine.api import users
-from google.appengine.ext import webapp
+# django Imports
+from django import http
+from django import shortcuts
+from django.views.decorators.http import as method
+from django.contrib.auth.decorators import as auth
 
 # Third Party imports
 
+
 # Our App imports
-import models
-from utils.render import render as r
+from usergroup import models
 
 
-class EditOffer(webapp.RequestHandler):
-    """Handler for creating and editing Offer objects."""
+@auth.login_required
+@method.require_http_methods(["GET", "POST"])
+def handler_edit_offer(request):
+    """Handler for creating and editing Event objects."""
 
-    def get(self, key=None):
-        user = users.get_current_user()
-        if not user:
-          self.redirect(users.create_login_url(self.request.url))
-          return
-        if key:
-            try:
-                key = long(key)
-                offer = models.TalkOffer.get_by_id(key)
-                assert offer
-            # pylint: disable-msg=W0702
-            except (AssertionError, ValueError):
-                self.redirect('/offers')
-                return
-        else:
-            offer = None
+    q = models.TalkOffer.objects.all()
+    if not request.user.is_staff():
+        q.filter(created_by__exact=request.user)
+    offers = q[:100]
 
-        q = models.TalkOffer.all()
-        if not users.is_current_user_admin():
-            q.filter("created_by =", user)
+    # /offer/<key> (POST/Get)
+    # /offer/add (POST/Get)
+    try:
+        unused_offer, key = request.path_info.split('/')
+    except IndexError:
+        return shortcuts.redirect('/offers')
 
-        offer_list = q.fetch(limit=100)
+    if key == 'add':
+        offer = models.Offer()
+    else:
+        offer = shortcuts.get_object_or_404(models.TalkOffer, pk=key)
 
-        self.response.out.write(r(
-            'templates/offertalk.html', { 'offer': offer,
-                'offer_list': offer_list, 'self': self }
-            ))
+    if request.method == 'GET':
+        offer_list = q[:100]
 
-    def post(self, key=None):
-        user = users.get_current_user()
-        if not user:
-          self.redirect(users.create_login_url(self.request.url))
-          return
+        return shortcut.render(
+                'offertalk.html', {
+                        'offer': offer, 'offer_list': offers, 'self': self})
+    elif request.method == 'POST':
+        return handler_edit_offer_post(request, offer, offers)
 
-        if key:
-            try:
-                key = long(key)
-                offer = models.TalkOffer.get_by_id(key)
-            # pylint: disable-msg=W0702
-            except (AssertionError, ValueError):
-                self.redirect('/offers')
-                return
-        else:
-            logging.debug('creating offer')
-            offer = models.TalkOffer(title=self.request.get('title'))
 
-        valid = True
+@auth.login_required
+@method.require_POST
+def handler_edit_offer_post(request, offer, offers):
 
-        if self.request.get('consent'):
-            consent = True
-        else:
-            consent = False
+    valid = True
 
-        offer.displayname = self.request.get('displayname')
-        offer.text = self.request.get('text')
-        offer.contactinfo = self.request.get('contactinfo')
-        minutes = self.request.get('minutes')
-        if minutes.isnumeric():
-            offer.minutes = int(minutes)
-        else:
-            mins = ''.join(re.findall('[0-9]+', minutes))
-            if mins.isnumneric():
-                offer.minutes = int(mins)
+    if request.GET['consent']:
+        consent = True
+    else:
+        consent = False
 
-        offer.consent = consent
-        offer.put()
+    offer.displayname = request.GET['displayname']
+    offer.text = request.GET['text']
+    offer.contactinfo = request.GET['contactinfo']
 
-        logging.debug('TalkOffer created by %s (%s email: %s fedid: %s) - : %s',
-                offer.displayname, user.nickname(), user.email(),
-                user.federated_identity(), offer.title)
-        logging.debug('For talkoffer %s, %s gave displayname %s. '
-                'Consent flag is: %s', offer.title, user.nickname(),
-                offer.displayname, offer.consent)
+    minutes = request.GET['minutes']
+    if minutes.isnumeric():
+        offer.minutes = int(minutes)
+    else:
+        mins = ''.join(re.findall('[0-9]+', minutes))
+        if mins.isnumneric():
+            offer.minutes = int(mins)
 
-        self.redirect('/offer/add#prevoffers')
+    offer.consent = consent
+    offer.put()
+
+    logging.debug('TalkOffer created by %s (%s email: %s fedid: %s) - : %s',
+                  offer.displayname, request.user.username, request.user.email,
+                  offer.title)
+    logging.debug('For talkoffer %s, %s gave displayname %s. '
+                  'Consent flag is: %s', offer.title, user.username,
+                  offer.displayname, offer.consent)
+
+    return shortcuts.redirect('/offers')

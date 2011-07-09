@@ -5,96 +5,91 @@
 
 """Module for dealing with people's RSVPs."""
 
-import config
-config.setup()
-
+# Python imports
 import logging
-from google.appengine.ext import webapp
-from google.appengine.api import users
 
-import models
-import event_lists
-from utils.render import render
+# Django Imports
+from django import http
+from django import shortcuts
+from django.views.decorators.http import as method
+from django.contrib.auth.decorators import as auth
 
-
-class ShowResponsePage(webapp.RequestHandler):
-    """Showing an RSVP."""
-    def get(self, eventid):
-        # We use locals() which confuses pylint.
-        # pylint: disable-msg=W0612
-        ####################################################
-        event = models.Event.get_by_id(long(eventid))
-        if not event:
-            self.redirect('/')
-        current_user = users.get_current_user()
-        if not current_user:
-            self.redirect('/')
-            return
-        ####################################################
-
-        response, guests = event_lists.get_event_responses(event, current_user)
-        self.response.out.write(render(
-                'templates/response-show.html', locals()))
+# Third Party imports
 
 
-class UpdateResponsePage(webapp.RequestHandler):
+# Our App imports
+from usergroup import models
+from usergroup import event_lists
+
+
+@auth.login_required
+@method.require_http_methods(["GET", "POST"])
+def handler_response(request):
+    """Handler for creating and editing Event objects."""
+
+    # /events/<key>/response (GET/POST)
+    try:
+        unused_events, key, unused_response = request.path_info.split('/')
+    except IndexError:
+        return shortcuts.redirect('/events')
+
+    event = shortcuts.get_object_or_404(models.Event, pk=key)
+
+    if request.method == 'GET':
+        return shortcut.render(request, 'response-show.html', locals())
+    elif request.method == 'POST':
+        return handler_response_post(request, event)
+
+
+@auth.login_required
+@method.require_POST
+def handler_response_get(request, event):
     """Update an RSVP."""
-    def post(self, eventid):
-        # We use locals() which confuses pylint.
-        # pylint: disable-msg=W0612
-        ####################################################
-        event = models.Event.get_by_id(long(eventid))
-        if not event:
-            self.redirect('/')
-        current_user = users.get_current_user()
-        if not current_user:
-            self.redirect('/')
-            return
-        ####################################################
 
-        response, guests = event_lists.get_event_responses(event, current_user)
-        
-        # Check if the person is trying to add friends
-        try:
-            extra_guests = range(
-                0, int(self.request.get('friends', '0'))-len(guests))
-        except ValueError:
-            extra_guests = []
+    response, guests = event_lists.get_event_responses(event, request.user)
 
-        if extra_guests:
-            self.response.out.write(render(
-                    'templates/response-friends.html', locals()))
-            return
-    
-        # Remove the current information
-        if response is not None:
-            response.delete()
-        for guest in guests:
-            guest.delete()
+    # Check if the person is trying to add friends
+    try:
+        extra_guests = range(
+            0, int(request.POST.get('friends', '0'))-len(guests))
+    except ValueError:
+        extra_guests = []
 
-        response = models.Response(event=event, gcreated_by = current_user,
-                guest=False)
-        response.attending = self.request.get('attending').lower() != 'no'
-        response.put()
+    if extra_guests:
+        httpresponse = http.HttpResponse()
+        httpresponse['Content-Type'] = 'text/html'
+        httpresponse.write(render(
+                'templates/response-friends.html', locals()))
+        return
 
-        logging.info('Response %s created by user %s (email: %s fedid: %s)',
-                response.key(), current_user.nickname(), current_user.email(),
-                current_user.federated_identity() )
+    # Remove the current information
+    if response is not None:
+        response.delete()
+    for guest in guests:
+        guest.delete()
 
-        guest_names = self.request.get_all('guest_name')
-        guest_emails = self.request.get_all('guest_email')
-        assert len(guest_names) == len(guest_emails)
+    response = models.Response(
+            event=event, created_by=request.user, guest=False)
+    response.attending = request.POST.get('attending').lower() != 'no'
+    response.save()
 
-        for name, email in zip(guest_names, guest_emails):
-            name, email = name.strip(), email.strip()
-            if not name or not email:
-                continue
+    logging.info('Response %s created by user %s (email: %s)',
+            response.pk, request.user.username, request.user.email)
 
-            response = models.Response(event=event, guest=True,
-                    gcreated_by = current_user)
-            response.attending = True
-            response.guest_name = name
-            response.guest_email = email
-            response.put()
+    guest_names = request.POST.get_list('guest_name')
+    guest_emails = request.POST.get_list('guest_email')
+    assert len(guest_names) == len(guest_emails)
 
-        self.redirect('/event/%s/response/show' % event.key().id())
+    for name, email in zip(guest_names, guest_emails):
+        name, email = name.strip(), email.strip()
+        if not name or not email:
+            continue
+
+        response = models.Response(
+                event=event, guest=True, created_by=request.user)
+        response.attending = True
+        response.guest_name = name
+        response.guest_email = email
+        response.save()
+
+    return shortcuts.redirect('/event/%s/response' % event.pk)

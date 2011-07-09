@@ -5,15 +5,8 @@
 
 """Module contains the models of objects used in the application."""
 
-#import config
-#config.setup()
-
 from django.db import models
 from django.contrib.auth.models import User
-
-
-def get_current_user():
-    pass
 
 
 class Announcement(models.Model):
@@ -22,16 +15,15 @@ class Announcement(models.Model):
     def __unicode__(self):
         return u'%s' % self.name
 
-    created_by = models.ForeignKey(User)
-    created_on = models.DateTimeField(
-            auto_now_add=True)
+    created_by = models.ForeignKey(User, blank=False)
+    created_on = models.DateTimeField(auto_now_add=True)
 
     name = models.CharField(max_length=250, blank=False)
     plaintext = models.TextField()
     html = models.TextField()
 
     published_by = models.ForeignKey(
-            User, default=get_current_user, blank=False)
+            User, blank=False)
     published_on = models.DateTimeField(
             auto_now_add=True, blank=False)
 
@@ -46,10 +38,8 @@ class Event(models.Model):
     def __unicode__(self):
         return u'%s' % self.name
 
-    created_by = models.ForeignKey(
-            User, default=get_current_user, blank=False)
-    created_on = models.DateTimeField(
-            auto_now_add=True, blank=False)
+    created_by = models.ForeignKey(User, blank=False)
+    created_on = models.DateTimeField(auto_now_add=True)
 
     name = models.CharField(max_length=250, blank=False)
     input = models.TextField()
@@ -72,10 +62,8 @@ class TalkOffer(models.Model):
         """Return the canonical url for an event."""
         return "/offer/%s/edit" % self.key().id()
 
-    created_by = models.ForeignKey(
-            User, default=get_current_user, blank=False)
-    created_on = models.DateTimeField(
-            auto_now_add=True, blank=False)
+    created_by = models.ForeignKey(User, blank=False)
+    created_on = models.DateTimeField(auto_now_add=True)
 
     displayname = models.TextField()
     contactinfo = models.TextField()
@@ -87,10 +75,8 @@ class TalkOffer(models.Model):
 
 
 class LightningTalk(models.Model):
-    created_by = models.ForeignKey(
-            User, default=get_current_user, blank=False)
-    created_on = models.DateTimeField(
-            auto_now_add=True, blank=False)
+    created_by = models.ForeignKey(User, blank=False)
+    created_on = models.DateTimeField(auto_now_add=True)
 
     weight = models.IntegerField(default=100, blank=False)
     offer = models.ForeignKey(TalkOffer, blank=False,
@@ -101,10 +87,8 @@ class LightningTalk(models.Model):
 
 class Response(models.Model):
     """An RSVP to attend an event."""
-    created_by = models.ForeignKey(
-            User, default=get_current_user, blank=False)
-    created_on = models.DateTimeField(
-            auto_now_add=True, blank=False)
+    created_by = models.ForeignKey(User, blank=False)
+    created_on = models.DateTimeField(auto_now_add=True)
 
     event = models.ForeignKey(Event, related_name="responses")
 

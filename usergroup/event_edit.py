@@ -6,6 +6,7 @@
 """Module for creating and editing Event objects."""
 
 # Python Imports
+import logging
 import os
 import os.path
 import simplejson
@@ -14,12 +15,15 @@ import cStringIO as StringIO
 from datetime import datetime
 
 # Django Imports
+from django import http
+from django import shortcuts
+from django.views.decorators.http import as method
+from django.contrib.auth.decorators import as auth
 
 # Third Party imports
 from dateutil import rrule
 from datetime_tz import datetime_tz
 import markdown
-import logging
 
 # Our App imports
 from usergroup import models
@@ -53,7 +57,8 @@ def get_templates():
     return ret
 
 
-@require_POST
+@auth.login_required
+@method.require_POST
 def handler_add_offer(request):
     """Adds an offer to an event"""
 
@@ -74,9 +79,11 @@ def handler_add_offer(request):
     response = http.HttpResponse()
     response['Content-Type'] = 'application/javascript'
     response.write(simplejson.dumps({'key': str(talk.key())}))
+    return response
 
 
-@require_POST
+@auth.login_required
+@method.require_POST
 def handler_remove_offer(request):
     """Removes an offer from an event."""
 
@@ -87,10 +94,10 @@ def handler_remove_offer(request):
         return shortcuts.redirect('/events')
 
     event = shortcuts.get_object_or_404(models.Event, pk=key)
+    assert event.created_by == request.user or request.user.is_staff
 
     talk = shortcuts.get_object_or_404(
             models.LightningTalk, pk=request.POST.get('id', -1))
-
     assert talk.event == event
 
     talk.delete()
@@ -98,9 +105,11 @@ def handler_remove_offer(request):
     response = http.HttpResponse()
     response['Content-Type'] = 'application/javascript'
     response.write(simplejson.dumps({'deleted': str(True)}))
+    return response
 
 
-@require_http_methods(["GET", "POST"])
+@auth.login_required
+@method.require_http_methods(["GET", "POST"])
 def handler_edit_event(request):
     """Handler for creating and editing Event objects."""
 
@@ -112,18 +121,23 @@ def handler_edit_event(request):
         return shortcuts.redirect('/events')
 
     if key == 'add':
-        event = models.Event()
+        event = models.Event(created_by=request.user)
     else:
         event = shortcuts.get_object_or_404(models.Event, pk=key)
 
+    assert event.created_by == request.user or request.user.is_staff
+
     if request.method == 'GET':
-        return handler_edit_event_post(request, event)
+        return handler_edit_event_get(request, event)
     elif request.method == 'POST':
-        return handler_edit_eveit_get(request, event)
+        return handler_edit_event_post(request, event)
 
 
-@require_GET
+@auth.login_required
+@method.require_GET
 def handler_edit_event_get(request, key):
+
+    assert event.created_by == request.user or request.user.is_staff
 
     template_values = {}
     if event:
@@ -137,13 +151,15 @@ def handler_edit_event_get(request, key):
     template_values['self'] = self
     template_values['offers'] = models.TalkOffer.objects.all()[:100]
 
-    response.out.write(r(
-        'templates/editevent.html', template_values
-        ))
+    return shortcuts.render(
+            request, 'templates/editevent.html', template_values)
 
 
-@require_POST
+@auth.login_required
+@method.require_POST
 def handler_edit_event_post(request, event):
+
+    assert event.created_by == request.user or request.user.is_staff
 
     start_date = datetime_tz.smartparse(request.REQUEST['start'])
     end_date = datetime_tz.smartparse(request.REQUEST['end'])

@@ -5,18 +5,21 @@
 
 """Module for viewing the offers."""
 
-import config
-config.setup()
-
-from google.appengine.api import users
-from google.appengine.ext import db
-from google.appengine.ext import webapp
-
-import datetime
+# Python imports
 import logging
-import models
+import datetime
 
-from utils.render import render as r
+# django imports
+from django import http
+from django import shortcuts
+from django.views.decorators.http import as method
+from django.contrib.auth.decorators import as auth
+
+# Third Party imports
+
+
+# Our  App imports
+from usergroup import models
 
 
 def get_event_agenda(event):
@@ -25,49 +28,36 @@ def get_event_agenda(event):
     agenda.fetch(100, 0)
     return agenda
 
-class Offer(webapp.RequestHandler):
+
+@method.require_GET
+def handler_offer(request):
     """Handler for display a single offer."""
+    # We are using locals which confuses pylint.
+    # pylint: disable-msg=W0612
 
-    def get(self, key=None):
-        # We are using locals which confuses pylint.
-        # pylint: disable-msg=W0612
-        if not key:
-            key = self.request.get('id')
+    offer = shortcuts.get_object_or_404(
+            models.Offer, pk=request.GET.get('id', -1))
 
-        key = long(key)
-        offer = models.Offer.get_by_id(key)
+    response, guests = event_lists.get_event_responses(event, request.user)
 
-        current_user = users.get_current_user()
-        response, guests = offer_lists.get_event_responses(event, current_user)
-
-        self.response.headers['Content-Type'] = 'text/html'
-        self.response.out.write(r(
-            'templates/offer.html', locals()))
+    return shortcut.render(request, 'offer.html', locals())
 
 
-class Offers(webapp.RequestHandler):
+@auth.login_required
+@method.require_GET
+def handler_offers(request, template="offers.html"):
     """Handler for displaying a table of offers."""
 
-    template = "templates/offers.html"
+    q = models.TalkOffer.objects.all()
+    if not request.users.is_staff:
+        q.filter(created_by__exact=current_user)
 
-    def get(self, limit=100, offset=0):
-        current_user = users.get_current_user()
-        if not current_user:
-            self.redirect(users.create_login_url(self.request.url))
-            return
+    offer_list = q[:100]
 
-        q = models.TalkOffer.all()
-        if not users.is_current_user_admin():
-            q.filter("created_by =", current_user)
+    logging.debug('offerlist: %s', offer_list)
 
-        offer_list = q.fetch(limit=limit, offset=offset)
+    template_values = {}
+    template_values['offer_list'] = offer_list
+    template_values['self'] = self
 
-        logging.debug('offerlist: %s', offer_list)
-
-        template_values = {}
-        template_values['offer_list'] = offer_list
-        template_values['self'] = self
-
-        self.response.headers['Content-Type'] = 'text/html'
-        self.response.out.write(r(
-            self.template, template_values))
+    return shortcut.render(request, template, template_values)

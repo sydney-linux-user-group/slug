@@ -3,9 +3,6 @@
 # -*- coding: utf-8 -*-
 # vim: set ts=4 sw=4 et sts=4 ai:
 
-# We have functions with loads of arguments.
-# pylint: disable-msg=R0913
-
 """Helper module for obtaining lists of events"""
 
 from usergroup import models

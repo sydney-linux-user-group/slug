@@ -6,17 +6,14 @@
 """Simple pages."""
 
 # Python imports
-import os
 
 # AppEngine Imports
-from google.appengine.ext import webapp
 
 # Our App imports
-import events
-from utils.render import render as r
+from usergroup import events
 
 
-class Index(events.Events):
+def handler_index(request):
     """Handler for index page."""
-    published_only = True
-    template = "templates/index.html"
+    return event.handler_events(
+            request, "templates/index.html", published_default=True)

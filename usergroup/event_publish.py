@@ -5,85 +5,77 @@
 
 """Module for creating and editing Event objects."""
 
-import config
-config.setup()
-
 # Python Imports
+import logging
 
 # AppEngine Imports
-from google.appengine.api import mail
-from google.appengine.api import users
-from google.appengine.ext import webapp
+from django import http
+from django import shortcuts
+from django.views.decorators.http import as require
+from django.contrib.auth.decorators import as auth
 
 # Third Party imports
 
 # Our App imports
-import models
-import logging
+from usergroup import models
 
 
-# We don't want to wrap this line as we use a grep to extract the details
-# pylint: disable-msg=C0301
-extensions = ['abbr', 'footnotes', 'def_list', 'fenced_code', 'tables', 'subscript', 'superscript', 'slugheader', 'anyurl']
+def get_event_from_url(request):
+    # /events/<key>/<action> (POST)
+    try:
+        unused_events, key, unused_addoffer = request.path_info.split('/')
+    except IndexError:
+        return Http404
 
-def prep_values(key=None):
-    user = users.get_current_user()
+    event = shortcuts.get_object_or_404(models.Event, pk=key)
+    return event
 
-    if key:
-        try:
-            key = long(key)
-            event = models.Event.get_by_id(key)
-            assert event
-        # pylint: disable-msg=W0702
-        except (AssertionError, ValueError):
-            event = None
+
+@auth.login_required
+@require_POST
+def handler_send_email_about_event(request):
+    assert request.user.is_staff
+
+    event = get_event_from_url(request)
+
+    if request.user.is_staff or event.published:
+        return shortcuts.redirect("/events")
+
+    if event.emailed:
+        # This is an update
+        subject = "Updated: %s " % event.name
     else:
-        event = None
+        subject = event.name
 
-    return user, event
+    message = mail.EmailMuliAlternatives()
+    message.from_email = "committee@slug.org.au"
+    message.to = "announce@slug.org.au"
+    message.body = event.plaintext
+    message.attach_alernative(event.html, "text/html")
+    message.send()
 
+    logging.info("Sent email. Subject: %s | To: %s | Body: %s",
+            message.subject, message.to, message.body)
+    event.emailed = True
+    event.save()
 
-class SendEmailAboutEvent(webapp.RequestHandler):
-    def post(self, key=None):
-        user, event = prep_values(key)
-
-        if not user or not event or event.published:
-            self.redirect("/events")
-
-        message = mail.EmailMessage()
-        message.sender = "committee@slug.org.au"
-        message.to = "announce@slug.org.au"
-        message.body = event.plaintext
-        message.html = event.html
-
-        if event.emailed:
-            # This is an update
-            message.subject = "Updated: %s " % event.name
-        else:
-            message.subject = event.name
-
-        message.send()
-        logging.info("Sent email. Subject: %s | To: %s | Body: %s",
-                message.subject, message.to, message.body)
-        event.emailed = True
-        event.put()
-
-        self.redirect("/events")
+    return shortcuts.redirect("/events")
 
 
-class PublishEvent(webapp.RequestHandler):
-    def post(self, key=None):
-        user, event = prep_values(key)
+@auth.login_required
+@require_POST
+def handler_publish_event(request):
+    assert request.user.is_staff
 
-        if user and event:
-            announcement = models.Announcement(
-                name=event.name,
-                plaintext=event.plaintext,
-                html=event.html)
+    event = get_event_from_url(request)
 
-            event.announcement = announcement.put()
+    announcement = models.Announcement(
+        name=event.name,
+        plaintext=event.plaintext,
+        html=event.html)
+    event.announcement = announcement.save()
 
-            event.published = True
-            event.put()
+    event.published = True
+    event.save()
 
-        self.redirect('/events')
+    return shortcuts.redirect('/events')

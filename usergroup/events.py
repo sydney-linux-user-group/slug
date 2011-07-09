@@ -5,70 +5,68 @@
 
 """Module for viewing the events."""
 
-import config
-config.setup()
-
-from google.appengine.api import users
-from google.appengine.ext import webapp
-
-from aeoid import users as openid_users
-
+# Python Imports
 import datetime
-import models
-import event_lists
+
+# Django Imports
+from django import http
+from django import shortcuts
+from django.views.decorators.http import as method
+from django.contrib.auth.decorators import as auth
+
+# Third Party imports
+
+
+# Our App imports
+from usergroup import models
+from usergroup import event_lists
 
 from utils.render import render as r
 
 
-class Next(webapp.RequestHandler):
+@method.require_GET
+def handler_next_event_redirect(request):
     """Figure out the next event, then redirect to it."""
-    def get(self):
-        self.redirect(event_lists.get_next_event().get_url())
+    return shortcuts.redirect(event_lists.get_next_event().get_url())
 
 
-class Event(webapp.RequestHandler):
+@method.require_GET
+def handler_event(request):
     """Handler for display a single event."""
 
-    def get(self, key=None):
-        # We are using locals which confuses pylint.
-        # pylint: disable-msg=W0612
-        if not key:
-            key = self.request.get('id')
+    # We are using locals which confuses pylint.
+    # pylint: disable-msg=W0612
+    # /events/<key>
+    # /events?id=<key>
+    try:
+        unused_events, key, unused_addoffer = request.path_info.split('/')
+    except IndexError:
+        key = request.GET.get('id', -1)
 
-        key = long(key)
-        event = models.Event.get_by_id(key)
+    event = shortcuts.get_object_or_404(models.Event, pk=key)
 
-        current_user = users.get_current_user()
-        response, guests = event_lists.get_event_responses(event, current_user)
+    current_user = users.get_current_user()
+    response, guests = event_lists.get_event_responses(event, request.user)
 
-        self.response.headers['Content-Type'] = 'text/html'
-        self.response.out.write(r(
-            'templates/event.html', locals()))
+    return shortcut.render(request, 'event.html', locals())
 
 
-class Events(webapp.RequestHandler):
+@method.require_GET
+def handler_events(
+        request, template="events.html", published_default=False)
     """Handler for display a table of events."""
 
-    template = "templates/events.html"
-    published_only = False
+    # We are using locals which confuses pylint.
+    # pylint: disable-msg=W0613,W0612
 
-    def get(self, year=None, month=None, day=None):
-        # We are using locals which confuses pylint.
-        # pylint: disable-msg=W0613,W0612
-        now = datetime.datetime.now()
+    if request.user.is_staff:
+        published_only = published_default
+    else:
+        published_only = True
 
-        if users.is_current_user_admin():
-            published_only = False
-        else:
-            published_only = True
+    events_lists = event_lists.get_event_lists(
+            published_only=published_only, user=request.user)
 
-        current_user = users.get_current_user()
+    next_event = event_lists.get_next_event()
 
-        events_lists = event_lists.get_event_lists(
-                published_only=published_only, user=current_user)
-
-        next_event = event_lists.get_next_event()
-
-        self.response.headers['Content-Type'] = 'text/html'
-        self.response.out.write(r(
-            self.template, locals()))
+    return shortcut.render(request, template, locals())

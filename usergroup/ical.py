@@ -5,60 +5,66 @@
 
 """Generate iCal feed based on events in database."""
 
-import config
-config.setup()
+# Python Imports
 
-# AppEngine Imports
-from google.appengine.ext import webapp
+
+# Django Imports
+from django import http
+from django import shortcuts
+from django.views.decorators.http import as method
 
 # Third Party imports
 from pytz.gae import pytz
 import vobject
 
 # Our App imports
-import models
-import event_lists
+from usergroup import models
+from usergroup import event_lists
 
 
-# pylint: disable-msg=C0103
-class iCal(webapp.RequestHandler):
+def add_event(host_url, event, cal):
+    """Takes a models.Event, adds it to the calendar.
+
+    Arguments:
+        event: a models.Event
+        cal: an icalendar.Calendar
+    """
+    syd = pytz.timezone('Australia/Sydney')
+
+    cal_event = cal.add('vevent')
+    cal_event.add('summary').value = event.announcement.name
+    cal_event.add('dtstart').value = syd.localize(event.start)
+    cal_event.add('dtend').value = syd.localize(event.end)
+    cal_event.add('dtstamp').value = syd.localize(event.created_on)
+    cal_event.add('description').value = event.announcement.plaintext or \
+      'See %s%s for details' % (host_url, event.get_url() )
+    cal_event.add('uid').value = str(event.announcement.key())
+
+
+@method.require_GET
+def handler_ical(request):
     """Handler which outputs an iCal feed."""
 
-    def add_event(self, event, cal):
-        """Takes a models.Event, adds it to the calendar.
+    cal = vobject.iCalendar()
 
-        Arguments:
-            event: a models.Event
-            cal: an icalendar.Calendar
-        """
-        syd = pytz.timezone('Australia/Sydney')
+    # /ical/<key>
+    try:
+        # If a key is passed, return just that Event
+        unused_ical, key = request.path_info.split('/')
 
-        cal_event = cal.add('vevent')
-        cal_event.add('summary').value = event.announcement.name
-        cal_event.add('dtstart').value = syd.localize(event.start)
-        cal_event.add('dtend').value = syd.localize(event.end)
-        cal_event.add('dtstamp').value = syd.localize(event.created_on)
-        cal_event.add('description').value = event.announcement.plaintext or \
-          'See %s%s for details' % ( self.request.host_url, event.get_url() )
-        cal_event.add('uid').value = str(event.announcement.key())
+        event = shortcuts.get_object_or_404(models.Event, pk=key)
+        self.add_event(request.get_host(), event, cal)
+    except IndexError:
+        # else whole calendar.
+        future_events = event_lists.get_future_events()
+        current_events = event_lists.get_current_events()
 
-
-    def get(self, key=None):
-        """If a key is passed, return just that Event, else whole calendar."""
-
-        cal = vobject.iCalendar()
-
-        if key:
-            event = models.Event.get_by_id(int(key))
+        for event, _, _ in current_events.events:
+            self.add_event(request.get_host(), event, cal)
+        for event, _, _ in future_events.events:
             self.add_event(event, cal)
-        else:
-            future_events = event_lists.get_future_events()
-            current_events = event_lists.get_current_events()
 
-            for event, _, _ in current_events.events:
-                self.add_event(event, cal)
-            for event, _, _ in future_events.events:
-                self.add_event(event, cal)
-
-        self.response.headers['Content-Type'] = 'text/x-vCalendar'
-        self.response.out.write(cal.serialize())
+    response = http.HttpResponse()
+    response['Content-Type'] = 'text/x-vCalendar'
+    response.write(cal.serialize())
+    return response
