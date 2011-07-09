@@ -14,8 +14,6 @@ doing anything else, *including imports*!
 import sys
 import os
 
-HOST = None
-
 def getpaths():
     """Get the extra third_party paths we need."""
     paths = set()
@@ -35,21 +33,9 @@ def sys_path_insert(ipath):
         sys.path.insert(0, ipath)
 
 
-def setup_django():
-    """Setup the django settings."""
-    os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
-    from google.appengine.dist import use_library
-    use_library('django', '1.2')
-
-
-def setup(host=None):
+def setup():
     """Setup our configuration environment."""
-    global HOST # pylint: disable-msg=W0603
-    if HOST is None:
-        if host is None:
-            HOST = 'www.slug.org.au'
-        else:
-            HOST = host
+    assert os.path.exists('third_party.zip')
 
     # Add our extra modules to sys.path
     sys_path_insert('third_party.zip')
@@ -57,8 +43,6 @@ def setup(host=None):
         if 'third_party.zip' in ipath:
             continue
         sys_path_insert(ipath)
-
-    setup_django()
 
 
 def lint_setup():

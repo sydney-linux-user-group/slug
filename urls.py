@@ -14,7 +14,7 @@ urlpatterns = patterns(
         {'authentication_form': AuthenticationForm,
         'template_name': 'usergroup/login.html',}),
     (r'^accounts/logout/$', 'django.contrib.auth.views.logout',
-        {'next_page': '/usergroup/',}),
+        {'next_page': '/',}),
 
     (r'^.*$', include('usergroup.urls')),
 )

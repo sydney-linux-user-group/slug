@@ -11,8 +11,8 @@ import logging
 # Django Imports
 from django import http
 from django import shortcuts
-from django.views.decorators.http import as method
-from django.contrib.auth.decorators import as auth
+from django.views.decorators import http as method
+from django.contrib.auth import decorators as auth
 
 # Third Party imports
 
@@ -24,7 +24,7 @@ from usergroup import event_lists
 
 @auth.login_required
 @method.require_http_methods(["GET", "POST"])
-def handler_response(request):
+def handler(request):
     """Handler for creating and editing Event objects."""
 
     # /events/<key>/response (GET/POST)
@@ -43,7 +43,7 @@ def handler_response(request):
 
 @auth.login_required
 @method.require_POST
-def handler_response_get(request, event):
+def handler_response_post(request, event):
     """Update an RSVP."""
 
     response, guests = event_lists.get_event_responses(event, request.user)

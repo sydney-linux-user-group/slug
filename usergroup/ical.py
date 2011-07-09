@@ -11,7 +11,7 @@
 # Django Imports
 from django import http
 from django import shortcuts
-from django.views.decorators.http import as method
+from django.views.decorators import http as method
 
 # Third Party imports
 from pytz.gae import pytz

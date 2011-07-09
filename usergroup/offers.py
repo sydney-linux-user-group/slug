@@ -12,8 +12,8 @@ import datetime
 # django imports
 from django import http
 from django import shortcuts
-from django.views.decorators.http import as method
-from django.contrib.auth.decorators import as auth
+from django.views.decorators import http as method
+from django.contrib.auth import decorators as auth
 
 # Third Party imports
 

@@ -11,8 +11,8 @@ import logging
 # AppEngine Imports
 from django import http
 from django import shortcuts
-from django.views.decorators.http import as require
-from django.contrib.auth.decorators import as auth
+from django.views.decorators import http as method
+from django.contrib.auth import decorators as auth
 
 # Third Party imports
 
@@ -22,8 +22,8 @@ from usergroup import events
 
 
 @auth.login_required
-@require_POST
-def handler_send_email(request):
+@method.require_POST
+def handler_email(request):
     assert request.user.is_staff
 
     event = events.get_event_from_url(request)
@@ -53,7 +53,7 @@ def handler_send_email(request):
 
 
 @auth.login_required
-@require_POST
+@method.require_POST
 def handler(request):
     assert request.user.is_staff
 

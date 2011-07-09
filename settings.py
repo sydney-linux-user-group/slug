@@ -1,5 +1,8 @@
 # Django settings for slug project.
 
+import third_party
+third_party.setup()
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 

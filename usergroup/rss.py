@@ -11,7 +11,7 @@ import datetime
 # AppEngine Imports
 from django import http
 from django import shortcuts
-from django.views.decorators.http import as require
+from django.views.decorators import http as require
 
 # Third Party imports
 from pytz.gae import pytz
