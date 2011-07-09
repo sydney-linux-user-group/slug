@@ -100,7 +100,7 @@ vim: set ts=2 sw=2 et sts=2 ai:
         item.attr('id', data.key);
       }, 'json');
     };
-    };
+  }
 
   function dragToTrash(event, ui) {
     item = $(ui.item);
@@ -108,7 +108,7 @@ vim: set ts=2 sw=2 et sts=2 ai:
     $.post('/event/{{ event.key }}/remoffer', { 'id': id }, function(data) {
       item.remove();
     });
-  };
+  }
 
   $(function() {
     $("#trashcan" ).sortable({
@@ -128,7 +128,6 @@ vim: set ts=2 sw=2 et sts=2 ai:
       connectWith: "#agenda_items"
     }).disableSelection();
   });
-  
 
   $('#fridays').change(function () {
     var value = $(this).val();
@@ -149,7 +148,7 @@ vim: set ts=2 sw=2 et sts=2 ai:
        return;
     }
     var template = $('#'+name).val();
-   
+
     var input = $('textarea[name="input"]');
     if (input.val().replace(/\W+/,'') == '') {
        input.val(template);

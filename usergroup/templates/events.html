@@ -31,7 +31,7 @@ vim: set ts=2 sw=2 et sts=2 ai:
         <tr class="eventrow {% cycle 'evenRow' 'oddRow' %}{% if appengine_admin and not event.published %} unpublished{% endif %}{% if appengine_admin and event.html != event.announcement.html %} altered{% endif %}">
           <td>
             {{ event.start }} - {{ event.end }}
-            {% if appengine_admin %}
+            {% if request.user.is_staff %}
               <a href="{{ event.get_url }}/edit">Edit</a>
               <div id=publishform>
                 {% ifnotequal event.html event.announcement.html %}
@@ -53,7 +53,7 @@ vim: set ts=2 sw=2 et sts=2 ai:
             {% endif %}
           </td><td>
             <div class="event">
-              {% if appengine_admin %}
+              {% if request.user.is_staff %}
               {{ event.html|safe }}
               {% else %}
               {{ event.announcement.html|safe }}

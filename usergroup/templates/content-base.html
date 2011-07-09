@@ -51,7 +51,7 @@ This page is based on the front page, but stripped down to have space to add con
                   </a>
                 </td>
                 <td id=speak class="box hover">
-                  <a href="/
+                <a href="/">
                   <h2> Give a talk </h2>
                   <span class=minor> Educate your fellows </span>
                 </a>
@@ -194,7 +194,7 @@ function youtube_setup() {
     var videoid = youtube_playlist[Math.floor(Math.random()*youtube_playlist.length)];
 
     var playerVars = {};
-		playerVars.allowScriptAccess = "always";
+    playerVars.allowScriptAccess = "always";
     playerVars.enablejsapi = 1;
 
     // Choose a random video to show
@@ -207,11 +207,11 @@ function youtube_setup() {
           'onReady': function(event) {
             $("youtube-wrapper").fadeIn();
             // Mute doesn't work on HTML5 videos
-            event.target.setVolume(0); 
+            event.target.setVolume(0);
             event.target.playVideo();
           },
         }
-	    }); // YT.Player */
+    }); // YT.Player */
   }
 }
 </script>

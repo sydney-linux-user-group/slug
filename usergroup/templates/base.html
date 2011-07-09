@@ -48,21 +48,21 @@ vim: set ts=2 sw=2 et sts=2 ai:
     </ul>
 
     <ul id="config">
-      <li style="list-style: none">{% if appengine_admin %}</li>
+      <li style="list-style: none">{% if request.user.is_staff %}</li>
       <li><span style="color: red;">Admin User</span></li>
       <li><a href="/event/add">Add Event</a></li>
       <li style="list-style: none">{% endif %}</li>
       <li id="feed-icons">
-        <a href="webcal://{{ req.host }}/ical" title="iCal feed of all events">
+        <a href="webcal://{{ request.get_host }}/ical" title="iCal feed of all events">
           <img src="{{ STATIC_URL }}images/ical16x16.gif" alt="iCal feed of all events"></a>
         <a href="/rss" title="RSS Feed of all events">
           <img src="{{ STATIC_URL }}images/feed-icon-14x14.png" alt="RSS Feed of all events"></a>
         </li>
       <li>|</li>
-      <li>{% if appengine_user %}
-        <a href= "{{ appengine_logout_url }}">Logout</a>
+      <li>{% if request.user.is_authenticated %}
+        <a href="{% url 'django.contrib.auth.views.logout' %}">Logout</a>
       {% else %}
-        <a class="openid_login" href="{{ login_url }}">Login</a>
+        <a class="openid_login" href="{% url 'django.contrib.auth.views.login' %}">Login</a>
       {% endif %}</li>
     </ul>
   </div>{% endblock %}
@@ -116,7 +116,7 @@ vim: set ts=2 sw=2 et sts=2 ai:
   </script>
 <script type="text/javascript">
 function openid_login() {
-  var url = '{{ jslogin_url }}';
+  var url = '{% url 'django.contrib.auth.views.login' %}';
   var width  = 400;
   var height = 400;
   var left   = (screen.width  - width)/2;

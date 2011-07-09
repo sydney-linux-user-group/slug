@@ -1,18 +1,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"><head>
   <title>Log In</title>
-  
-  
   <link rel="stylesheet" type="text/css" media="screen" href="{{ STATIC_URL }}third_party/jquery-openid/openid.css">
-  
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.1/jquery.min.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}third_party/jquery-openid/jquery.openid.js"></script>
   <script type="text/javascript">  $(function() { $("form.openid").openid(); });</script>
 
 </head>
 <body>
-  
-  <form class="openid" method="post" action="/_ah/login_required"> 
-      <input type="hidden" name="continue" value="{{ continue }}">
+  <form class="openid" method="post" action="{% url 'django.contrib.auth.views.login' %}">
+    {% csrf_token %}
+    <input type="hidden" name="continue" value="{{ continue }}">
     <div>
       <ul class="providers">
         <li class="openid highlight" title="OpenID" style="line-height: 0; cursor: pointer; ">
@@ -73,25 +70,22 @@
         </li>
       </ul>
     </div>
-    <fieldset style="display: none; "> 
-      <label for="openid_username">Enter your <span>Provider user name</span></label> 
+    <fieldset style="display: none; ">
+      <label for="openid_username">Enter your <span>Provider user name</span></label>
       <div>
-        <span></span><input type="text" name="openid_username"><span></span> 
+        <span></span><input type="text" name="openid_username"><span></span>
         <input type="submit" value="Log In">
-      </div> 
-    </fieldset> 
-    <fieldset> 
-      <label for="openid_identifier">Enter your <a class="openid_logo" href="http://openid.net">OpenID</a></label> 
+      </div>
+    </fieldset>
+    <fieldset>
+      <label for="openid_identifier">Enter your <a class="openid_logo" href="http://openid.net">OpenID</a></label>
       <div>
-        <input type="text" name="openid_identifier"> 
+        <input type="text" name="openid_identifier">
         <input type="submit" value="Log In">
-      </div> 
-    </fieldset> 
+      </div>
+    </fieldset>
   </form>
   <!--
     Includes code from Jarret Vance's JQuery OpenID selector (http://jvance.com/)
    -->
-
-
-
 </body></html>

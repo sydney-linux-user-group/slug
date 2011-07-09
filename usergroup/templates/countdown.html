@@ -25,62 +25,58 @@ var c=60;
 var t;
 var timer_is_on=0;
 
-function timedCount()
-{
-document.getElementById('txt').value=c;
-if (c > 30) {
-  $(body .close).removeClass('close');
-  $(body .overtime).removeClass('overtime');
-};
-if (c == 30) {
-  $(body).addClass('close');
-};
-if (c == 0) {
-  $(body).addClass('overtime');
-}
-c=c-1;
-t=setTimeout("timedCount()",1000);
+function timedCount() {
+  document.getElementById('txt').value=c;
+  if (c > 30) {
+    $(body .close).removeClass('close');
+    $(body .overtime).removeClass('overtime');
+  }
+
+  if (c == 30) {
+    $(body).addClass('close');
+  }
+  if (c == 0) {
+    $(body).addClass('overtime');
+  }
+  c=c-1;
+  t=setTimeout("timedCount()",1000);
 }
 
-function doTimer()
-{
-if (!timer_is_on)
-  {
-  timer_is_on=1;
-  timedCount();
-  $(body).addClass('counting');
+function doTimer() {
+  if (!timer_is_on) {
+    timer_is_on=1;
+    timedCount();
+    $(body).addClass('counting');
   }
 }
 
-function stopCount()
-{
-clearTimeout(t);
-timer_is_on=0;
-c=300;
+function stopCount() {
+  clearTimeout(t);
+  timer_is_on=0;
+  c=300;
 }
-function getSpeaker()
-{
-timer_is_on=0;
-s="";
-c=300;
-document.getElementById('s-txt').value=s;
-document.getElementById('txt').value=c;
+function getSpeaker() {
+  timer_is_on=0;
+  s="";
+  c=300;
+  document.getElementById('s-txt').value=s;
+  document.getElementById('txt').value=c;
 }
-function getSpeaker2()
-{
-timer_is_on=0;
-s="";
-c=600;
-document.getElementById('s-txt').value=s;
-document.getElementById('txt').value=c;
+
+function getSpeaker2() {
+  timer_is_on=0;
+  s="";
+  c=600;
+  document.getElementById('s-txt').value=s;
+  document.getElementById('txt').value=c;
 }
-function getSpeaker3()
-{
-timer_is_on=0;
-s="";
-c=900;
-document.getElementById('s-txt').value=s;
-document.getElementById('txt').value=c;
+
+function getSpeaker3() {
+  timer_is_on=0;
+  s="";
+  c=900;
+  document.getElementById('s-txt').value=s;
+  document.getElementById('txt').value=c;
 }
 </script>
 {% endblock %}
@@ -88,7 +84,7 @@ document.getElementById('txt').value=c;
 {% block body %}
 <div id="countdown">00</div>
 <p><select>
-  <option>Meet&Greet Topic 30min</option>
+  <option>Meet&amp;Greet Topic 30min</option>
   <option>Committee Welcome 5min</option>
   <option>Speaker 2 Topic   5min</option>
   <option>Speaker 3 Topic   5min</option>
@@ -100,12 +96,10 @@ document.getElementById('txt').value=c;
   <option>Speaker 8 Topic  10min</option>
   <option>Committee Wrap up 5min</option>
 </select></p>
-<p><input  class=timer type="text" id="txt" size=3> (Seconds) 
+<p><input  class=timer type="text" id="txt" size=3> (Seconds)
 <input type=radio onclick="doTimer();" name=status value=Started>Start
 <input type=radio onclick="stopCount();" name=status value=completed>Stop</p>
-<p><input type=button name="speaker1" value="5min" onclick="getSpeaker()"> 
+<p><input type=button name="speaker1" value="5min" onclick="getSpeaker()">
 <input type=button name="speaker2" value="10min" onclick="getSpeaker2()">
 <input type=button name="speaker3" value="15min" onclick="getSpeaker3()"></p>
-
-
 {%endblock %}

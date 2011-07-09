@@ -75,7 +75,7 @@ vim: set ts=2 sw=2 et sts=2 ai:
     </td>
   </tr>
 
-{% if user %}
+{% if request.user.is_authenticated %}
   <!-- Is logged in. -->
 {% ifequal response None %}
   <!-- Has not responded yet. -->
