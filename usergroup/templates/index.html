@@ -4,13 +4,13 @@
 vim: set ts=2 sw=2 et sts=2 ai:
 {% endcomment %}
 {% block head %}
-    <link rel="StyleSheet" href="/third_party/jquery.tweet/jquery.tweet.css" type="text/css" />
-    <link rel="StyleSheet" href="/css/index.css" type="text/css" media="screen">
-    <link rel="StyleSheet" href="/css/response.css" type="text/css" media="screen">
-    <link rel="StyleSheet" href="/css/jquery.tweet.css" type="text/css" />
-    <script src="/third_party/jquery.tweet/jquery.tweet.js" type="text/javascript"></script>
-    <script src="/third_party/jquery.gravatar/md5.js" type="text/javascript"></script>
-    <script src="/third_party/jquery.gravatar/jquery.gravatar.js" type="text/javascript"></script>
+    <link rel="StyleSheet" href="{{ STATIC_URL }}third_party/jquery.tweet/jquery.tweet.css" type="text/css" />
+    <link rel="StyleSheet" href="{{ STATIC_URL }}css/index.css" type="text/css" media="screen">
+    <link rel="StyleSheet" href="{{ STATIC_URL }}css/response.css" type="text/css" media="screen">
+    <link rel="StyleSheet" href="{{ STATIC_URL }}css/jquery.tweet.css" type="text/css" />
+    <script src="{{ STATIC_URL }}third_party/jquery.tweet/jquery.tweet.js" type="text/javascript"></script>
+    <script src="{{ STATIC_URL }}third_party/jquery.gravatar/md5.js" type="text/javascript"></script>
+    <script src="{{ STATIC_URL }}third_party/jquery.gravatar/jquery.gravatar.js" type="text/javascript"></script>
 {% endblock %}
 
 {% block body %}
@@ -181,7 +181,7 @@ $(document).ready(function(){
 
   /* // Load the jquery plugin...
   var tag = document.createElement('script');
-  tag.src = "/third_party/jquery.youtubecloud/jquery.youtubecloud.js";
+  tag.src = "{{ STATIC_URL }}third_party/jquery.youtubecloud/jquery.youtubecloud.js";
   firstScriptTag.parentNode.insertBefore(tag, firstScriptTag); */
 
   // Load the You Tube iFrame API...

@@ -29,23 +29,9 @@ def get_event_agenda(event):
     return agenda
 
 
-@method.require_GET
-def handler_offer(request):
-    """Handler for display a single offer."""
-    # We are using locals which confuses pylint.
-    # pylint: disable-msg=W0612
-
-    offer = shortcuts.get_object_or_404(
-            models.Offer, pk=request.GET.get('id', -1))
-
-    response, guests = event_lists.get_event_responses(event, request.user)
-
-    return shortcut.render(request, 'offer.html', locals())
-
-
 @auth.login_required
 @method.require_GET
-def handler_offers(request, template="offers.html"):
+def handler(request, template="offers.html"):
     """Handler for displaying a table of offers."""
 
     q = models.TalkOffer.objects.all()

@@ -28,6 +28,7 @@ import markdown
 # Our App imports
 from usergroup import models
 from usergroup import offers
+from usergroup import events
 
 
 # We don't want to wrap this line as we use a grep to extract the details
@@ -59,16 +60,11 @@ def get_templates():
 
 @auth.login_required
 @method.require_POST
-def handler_add_offer(request):
+def handler_offer_add(request):
     """Adds an offer to an event"""
 
     # /events/<key>/addoffer?id=<offerid> (POST)
-    try:
-        unused_events, key, unused_addoffer = request.path_info.split('/')
-    except IndexError:
-        return shortcuts.redirect('/events')
-
-    event = shortcuts.get_object_or_404(models.Event, pk=key)
+    event = events.get_event_from_url(request)
 
     offer = shortcuts.get_object_or_404(
             models.TalkOffer, pk=request.POST.get('id', -1))
@@ -84,16 +80,11 @@ def handler_add_offer(request):
 
 @auth.login_required
 @method.require_POST
-def handler_remove_offer(request):
+def handler_offer_remove(request):
     """Removes an offer from an event."""
 
     # /events/<key>/removeoffer?id=<offerid> (POST)
-    try:
-        unused_events, key, unused_addoffer = request.path_info.split('/')
-    except IndexError:
-        return shortcuts.redirect('/events')
-
-    event = shortcuts.get_object_or_404(models.Event, pk=key)
+    event = events.get_event_from_url(request)
     assert event.created_by == request.user or request.user.is_staff
 
     talk = shortcuts.get_object_or_404(
@@ -110,22 +101,23 @@ def handler_remove_offer(request):
 
 @auth.login_required
 @method.require_http_methods(["GET", "POST"])
-def handler_edit_event(request):
+def handler(request):
     """Handler for creating and editing Event objects."""
 
-    # /events/<key> (POST/Get)
-    # /events/add (POST/Get)
+    assert request.user.is_staff
+
+    # /events/<key>/edit (POST/GET)
+    # /events/add (POST/GET)
+    event = events.get_event_from_url(request)
     try:
         unused_events, key = request.path_info.split('/')
+        if key == 'add':
+            event = models.Event(created_by=request.user)
+        else:
+            key, unused_edit = key.split('/')
+            event = shortcuts.get_object_or_404(models.Event, pk=key)
     except IndexError:
         return shortcuts.redirect('/events')
-
-    if key == 'add':
-        event = models.Event(created_by=request.user)
-    else:
-        event = shortcuts.get_object_or_404(models.Event, pk=key)
-
-    assert event.created_by == request.user or request.user.is_staff
 
     if request.method == 'GET':
         return handler_edit_event_get(request, event)

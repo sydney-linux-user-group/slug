@@ -15,7 +15,7 @@ class Announcement(models.Model):
     def __unicode__(self):
         return u'%s' % self.name
 
-    created_by = models.ForeignKey(User, blank=False)
+    created_by = models.ForeignKey(User, blank=False, related_name='+')
     created_on = models.DateTimeField(auto_now_add=True)
 
     name = models.CharField(max_length=250, blank=False)
@@ -23,7 +23,7 @@ class Announcement(models.Model):
     html = models.TextField()
 
     published_by = models.ForeignKey(
-            User, blank=False)
+            User, blank=False, related_name='+')
     published_on = models.DateTimeField(
             auto_now_add=True, blank=False)
 
@@ -38,7 +38,7 @@ class Event(models.Model):
     def __unicode__(self):
         return u'%s' % self.name
 
-    created_by = models.ForeignKey(User, blank=False)
+    created_by = models.ForeignKey(User, blank=False, related_name='+')
     created_on = models.DateTimeField(auto_now_add=True)
 
     name = models.CharField(max_length=250, blank=False)
@@ -62,7 +62,7 @@ class TalkOffer(models.Model):
         """Return the canonical url for an event."""
         return "/offer/%s/edit" % self.key().id()
 
-    created_by = models.ForeignKey(User, blank=False)
+    created_by = models.ForeignKey(User, blank=False, related_name='+')
     created_on = models.DateTimeField(auto_now_add=True)
 
     displayname = models.TextField()
@@ -75,7 +75,7 @@ class TalkOffer(models.Model):
 
 
 class LightningTalk(models.Model):
-    created_by = models.ForeignKey(User, blank=False)
+    created_by = models.ForeignKey(User, blank=False, related_name='+')
     created_on = models.DateTimeField(auto_now_add=True)
 
     weight = models.IntegerField(default=100, blank=False)
@@ -87,7 +87,7 @@ class LightningTalk(models.Model):
 
 class Response(models.Model):
     """An RSVP to attend an event."""
-    created_by = models.ForeignKey(User, blank=False)
+    created_by = models.ForeignKey(User, blank=False, related_name='+')
     created_on = models.DateTimeField(auto_now_add=True)
 
     event = models.ForeignKey(Event, related_name="responses")

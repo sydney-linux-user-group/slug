@@ -2,6 +2,7 @@
 -*- coding: utf-8 -*-
 vim: set ts=2 sw=2 et sts=2 ai:
 {% endcomment %}
+{% load gravatar %}
 <table class="response">
   <!-- Event header -->
   <tr>
@@ -34,9 +35,9 @@ vim: set ts=2 sw=2 et sts=2 ai:
                   <input id="{{other_response.key}}" type="hidden" name="guest_email" value="{{ other_response.guest_email }}">
                   <img class="gravatar gravatar-friend"
                     style="background-image: url('{{ other_response.guest_email|gravatar:32 }}');"
-                    src="/images/blank.png"
-                    onMouseOver="this.src='/images/cross-gravatar.png';"
-                    onMouseOut="this.src='/images/blank.png';"
+                    src="{{ STATIC_URL }}images/blank.png"
+                    onMouseOver="this.src='{{ STATIC_URL }}images/cross-gravatar.png';"
+                    onMouseOut="this.src='{{ STATIC_URL }}images/blank.png';"
                     onClick="$('#{{other_response.key}}').val(''); $(this.parentNode).submit();">
                 {% else %}
                   <!-- your responses -->
@@ -102,12 +103,12 @@ vim: set ts=2 sw=2 et sts=2 ai:
     <td>
       {% if response.attending %}
         {% if guests %}
-          <img class="response-image" src="/images/multi-small.png">
+          <img class="response-image" src="{{ STATIC_URL }}images/multi-small.png">
         {% else %}
-          <img class="response-image" src="/images/tick-small.png">
+          <img class="response-image" src="{{ STATIC_URL }}images/tick-small.png">
         {% endif %}
       {% else %}
-          <img class="response-image" src="/images/cross-small.png">
+          <img class="response-image" src="{{ STATIC_URL }}images/cross-small.png">
       {% endif %}
     </td><td>
       {% if response.attending %}

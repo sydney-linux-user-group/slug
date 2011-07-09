@@ -2,16 +2,17 @@
 -*- coding: utf-8 -*-
 vim: set ts=2 sw=2 et sts=2 ai:
 {% endcomment %}
+{% load gravatar %}
 <html {%block namespace %}{%endblock%}>
   <head>
     <title>{%block title%}Sydney Linux User Group{%endblock%}</title>
-    <link rel="StyleSheet" href="/css/base.css" type="text/css" media="screen">
+    <link rel="StyleSheet" href="{{ STATIC_URL }}css/base.css" type="text/css" media="screen">
     <link rel="StyleSheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.0/themes/ui-lightness/jquery-ui.css" type="text/css" media="screen">
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.0/jquery.min.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="/third_party/jquery.form/jquery.form.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}third_party/jquery.form/jquery.form.js"></script>
 
-    <link type="application/rss+xml" rel="alternate" title="SLUG Events RSS" href="/rss"/> 
+    <link type="application/rss+xml" rel="alternate" title="SLUG Events RSS" href="/rss"/>
     {% block head %}
     {% endblock %}
 
@@ -36,44 +37,28 @@ vim: set ts=2 sw=2 et sts=2 ai:
   <div id="navbar" class="clearfix">
     <ul id="links">
       <li><a href="/">Home</a></li>
-
       <li>|</li>
-
       <li><a href="/events">Events</a></li>
-
       <li>|</li>
-
-      <li><a href=
-      "http://lists.slug.org.au/archives/slug/">Archives</a></li>
-
+      <li><a href="http://lists.slug.org.au/archives/slug/">Archives</a></li>
       <li>|</li>
-
       <li><a href="http://lists.slug.org.au/listinfo/">Mailing Lists</a></li>
-
       <li>|</li>
-
       <li><a href= "https://github.com/sydney-linux-user-group/slug">Get the code!</a></li>
     </ul>
 
     <ul id="config">
       <li style="list-style: none">{% if appengine_admin %}</li>
-
       <li><span style="color: red;">Admin User</span></li>
-
       <li><a href="/event/add">Add Event</a></li>
-
       <li style="list-style: none">{% endif %}</li>
-
-      <li id="feed-icons"><a href=
-      "webcal://{{ req.host }}/ical" title=
-      "iCal feed of all events"><img src="/images/ical16x16.gif"
-      alt="iCal feed of all events"></a> <a href="/rss" title=
-      "RSS Feed of all events"><img src=
-      "/images/feed-icon-14x14.png" alt=
-      "RSS Feed of all events"></a></li>
-
+      <li id="feed-icons">
+        <a href="webcal://{{ req.host }}/ical" title="iCal feed of all events">
+          <img src="{{ STATIC_URL }}images/ical16x16.gif" alt="iCal feed of all events"></a>
+        <a href="/rss" title="RSS Feed of all events">
+          <img src="{{ STATIC_URL }}images/feed-icon-14x14.png" alt="RSS Feed of all events"></a>
+        </li>
       <li>|</li>
-
       <li>{% if appengine_user %}
         <a href= "{{ appengine_logout_url }}">Logout</a>
       {% else %}

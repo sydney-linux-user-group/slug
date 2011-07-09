@@ -5,6 +5,14 @@
 
 """Helper module for obtaining lists of events"""
 
+# Python Imports
+import datetime
+
+# Django Imports
+
+# Third Party imports
+
+# Our App imports
 from usergroup import models
 
 
@@ -81,13 +89,13 @@ def get_next_event(**kw):
     return events[0:1]
 
 
-def get_event_lists(published_only=True, user=None):
+def get_event_lists(published_only=True, user=None, **kw):
 
     event_lists = []
     event_lists.append(
-        get_current_events(year, month, day, published_only, user))
+        get_current_events(published_only, user, **kw))
     event_lists.append(
-        get_future_events(year, month, day, published_only, user))
+        get_future_events(published_only, user, **kw))
 
     return event_lists
 

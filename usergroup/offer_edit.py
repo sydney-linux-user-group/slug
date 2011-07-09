@@ -24,7 +24,7 @@ from usergroup import models
 
 @auth.login_required
 @method.require_http_methods(["GET", "POST"])
-def handler_edit_offer(request):
+def handler(request):
     """Handler for creating and editing Event objects."""
 
     q = models.TalkOffer.objects.all()
@@ -51,12 +51,12 @@ def handler_edit_offer(request):
                 'offertalk.html', {
                         'offer': offer, 'offer_list': offers, 'self': self})
     elif request.method == 'POST':
-        return handler_edit_offer_post(request, offer, offers)
+        return handler_edit(request, offer, offers)
 
 
 @auth.login_required
 @method.require_POST
-def handler_edit_offer_post(request, offer, offers):
+def handler_edit(request, offer, offers):
 
     valid = True
 

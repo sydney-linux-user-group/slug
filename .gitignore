@@ -1,4 +1,5 @@
 *.pyc
 *.swp
+db.sqlite3
 third_party.zip
 third_party.zip.d

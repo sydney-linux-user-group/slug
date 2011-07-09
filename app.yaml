@@ -1,5 +1,5 @@
 application: sydney-linux-user-group-hr
-version: 9
+version: django
 runtime: python
 api_version: 1
 
@@ -12,39 +12,11 @@ handlers:
   static_files: static/images/favicon.png
   upload: static/images/favicon.ico
 
-- url: /images
-  static_dir: static/images
-
-- url: /css
-  static_dir: static/css
-
-- url: /js
-  static_dir: static/js
-
 - url: /third_party
   static_dir: static/third_party
 
-- url: /_ah/login_required
-  script: do_openid_login.py
-
-- url: /event/add
-  login: admin
-  script: handler-admin.py
-
-- url: /event/[a-zA-Z0-9]*/(edit|publish|email|addoffer|remoffer)
-  login: admin
-  script: handler-admin.py
-
-- url: /admin/.*
-  script: $PYTHON_LIB/google/appengine/ext/admin
-  login: admin
-
-- url: /talks
-  script: handler.py
-  login: required
-
 - url: /.*
-  script: handler.py
+  script: main.py
 
 skip_files:
 - third_party/((?!(aeoid|python-gae-pytz)).*)/

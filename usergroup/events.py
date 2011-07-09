@@ -11,8 +11,8 @@ import datetime
 # Django Imports
 from django import http
 from django import shortcuts
-from django.views.decorators.http import as method
-from django.contrib.auth.decorators import as auth
+from django.views.decorators import http as method
+from django.contrib.auth import decorators as auth
 
 # Third Party imports
 
@@ -21,11 +21,19 @@ from django.contrib.auth.decorators import as auth
 from usergroup import models
 from usergroup import event_lists
 
-from utils.render import render as r
+
+def get_event_from_url(request):
+    # /events/<key>/<action> (POST)
+    try:
+        unused_events, key, unused_leftover = request.path_info.split('/')
+    except IndexError:
+        raise http.Http404
+
+    return shortcuts.get_object_or_404(models.Event, pk=key)
 
 
 @method.require_GET
-def handler_next_event_redirect(request):
+def handler_next(request):
     """Figure out the next event, then redirect to it."""
     return shortcuts.redirect(event_lists.get_next_event().get_url())
 
@@ -39,21 +47,20 @@ def handler_event(request):
     # /events/<key>
     # /events?id=<key>
     try:
-        unused_events, key, unused_addoffer = request.path_info.split('/')
+        unused_events, key = request.path_info.split('/')
     except IndexError:
         key = request.GET.get('id', -1)
 
     event = shortcuts.get_object_or_404(models.Event, pk=key)
 
-    current_user = users.get_current_user()
     response, guests = event_lists.get_event_responses(event, request.user)
 
-    return shortcut.render(request, 'event.html', locals())
+    return shortcuts.render(request, 'event.html', locals())
 
 
 @method.require_GET
 def handler_events(
-        request, template="events.html", published_default=False)
+        request, template="events.html", published_default=False, **kw):
     """Handler for display a table of events."""
 
     # We are using locals which confuses pylint.
@@ -65,8 +72,8 @@ def handler_events(
         published_only = True
 
     events_lists = event_lists.get_event_lists(
-            published_only=published_only, user=request.user)
+            published_only=published_only, user=request.user, **kw)
 
     next_event = event_lists.get_next_event()
 
-    return shortcut.render(request, template, locals())
+    return shortcuts.render(request, template, locals())

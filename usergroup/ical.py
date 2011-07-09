@@ -42,7 +42,7 @@ def add_event(host_url, event, cal):
 
 
 @method.require_GET
-def handler_ical(request):
+def handler(request):
     """Handler which outputs an iCal feed."""
 
     cal = vobject.iCalendar()

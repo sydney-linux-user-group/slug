@@ -3,9 +3,12 @@
 
 import urllib, hashlib
 
-from django.template.defaultfilters import stringfilter, register
+from django import template
+from django.template.defaultfilters import stringfilter
 
-@register.filter
+register = template.Library()
+
+@register.filter(name="gravatar")
 @stringfilter
 def gravatar(email, size=40, rating='pg'):
   if size <= 32:

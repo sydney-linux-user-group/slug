@@ -43,7 +43,7 @@ def add_event(host_url, event, rss):
 
 
 @require.require_GET
-def handler_rss(request):
+def handler(request):
     """Handler which outputs an RSS feed."""
 
     rss = rss_gen.RSS2(title="Slug Meetings",

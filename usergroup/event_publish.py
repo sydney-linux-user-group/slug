@@ -18,25 +18,15 @@ from django.contrib.auth.decorators import as auth
 
 # Our App imports
 from usergroup import models
-
-
-def get_event_from_url(request):
-    # /events/<key>/<action> (POST)
-    try:
-        unused_events, key, unused_addoffer = request.path_info.split('/')
-    except IndexError:
-        return Http404
-
-    event = shortcuts.get_object_or_404(models.Event, pk=key)
-    return event
+from usergroup import events
 
 
 @auth.login_required
 @require_POST
-def handler_send_email_about_event(request):
+def handler_send_email(request):
     assert request.user.is_staff
 
-    event = get_event_from_url(request)
+    event = events.get_event_from_url(request)
 
     if request.user.is_staff or event.published:
         return shortcuts.redirect("/events")
@@ -64,10 +54,10 @@ def handler_send_email_about_event(request):
 
 @auth.login_required
 @require_POST
-def handler_publish_event(request):
+def handler(request):
     assert request.user.is_staff
 
-    event = get_event_from_url(request)
+    event = events.get_event_from_url(request)
 
     announcement = models.Announcement(
         name=event.name,
