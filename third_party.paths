@@ -1,4 +1,3 @@
-third_party/aeoid
 third_party/python-gae-pytz
 # Directory to add to sys.path, things to include in third_party.zip
 third_party.zip/python-dateutil dateutil
