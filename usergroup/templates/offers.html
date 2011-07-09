@@ -8,7 +8,7 @@ vim: set ts=2 sw=2 et sts=2 ai:
 {% endblock %}
 
 {% block body %}
-{% if request.user.is_staff %}
+{% if user.is_staff %}
   <h1>Talk Offers</h1>
 {% else %}
   <h1>Your Offers</h1>
@@ -16,7 +16,7 @@ vim: set ts=2 sw=2 et sts=2 ai:
 <table id=offertable class=box>
   <thead>
     <tr>
-      {% if request.user.is_staff %}
+      {% if user.is_staff %}
         <th>DisplayName</th>
       {% endif %}
       <th>Title</th>
@@ -27,7 +27,7 @@ vim: set ts=2 sw=2 et sts=2 ai:
   <tbody>
     {% for offer in offer_list %}
       <tr class="offerrow {% cycle 'evenRow' 'oddRow' %}">
-        {% if request.user.is_staff %}<td>{{ offer.displayname }}</td>{% endif %}
+        {% if user.is_staff %}<td>{{ offer.displayname }}</td>{% endif %}
         <td>{{ offer.title }}</td>
         <td>{{ offer.text }}</td>
         <td>{{ offer.minutes }}</td>

@@ -14,7 +14,7 @@ from django import shortcuts
 from django.views.decorators import http as require
 
 # Third Party imports
-from pytz.gae import pytz
+import pytz
 import PyRSS2Gen as rss_gen
 
 # Our App imports

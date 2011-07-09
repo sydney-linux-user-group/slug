@@ -18,15 +18,14 @@ from django.contrib.auth import decorators as auth
 
 # Our App imports
 from usergroup import models
-from usergroup import events
 
 
 @auth.login_required
 @method.require_POST
-def handler_email(request):
+def handler_email(request, event_key):
     assert request.user.is_staff
 
-    event = events.get_event_from_url(request)
+    event = shortcuts.get_object_or_404(models.Event, pk=event_key)
 
     if request.user.is_staff or event.published:
         return shortcuts.redirect("/events")
@@ -54,10 +53,10 @@ def handler_email(request):
 
 @auth.login_required
 @method.require_POST
-def handler(request):
+def handler(request, event_key):
     assert request.user.is_staff
 
-    event = events.get_event_from_url(request)
+    event = shortcuts.get_object_or_404(models.Event, pk=event_key)
 
     announcement = models.Announcement(
         name=event.name,

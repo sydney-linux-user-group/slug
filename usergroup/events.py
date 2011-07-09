@@ -7,6 +7,11 @@
 
 # Python Imports
 import datetime
+import logging
+import os
+import os.path
+import traceback
+import cStringIO as StringIO
 
 # Django Imports
 from django import http
@@ -15,21 +20,17 @@ from django.views.decorators import http as method
 from django.contrib.auth import decorators as auth
 
 # Third Party imports
-
+import datetime_tz
+import markdown
 
 # Our App imports
 from usergroup import models
 from usergroup import event_lists
 
 
-def get_event_from_url(request):
-    # /events/<key>/<action> (POST)
-    try:
-        unused_events, key, unused_leftover = request.path_info.split('/')
-    except IndexError:
-        raise http.Http404
-
-    return shortcuts.get_object_or_404(models.Event, pk=key)
+# We don't want to wrap this line as we use a grep to extract the details
+# pylint: disable-msg=C0301
+extensions = ['abbr', 'footnotes', 'def_list', 'fenced_code', 'tables', 'subscript', 'superscript', 'slugheader', 'anyurl']
 
 
 @method.require_GET
@@ -38,17 +39,31 @@ def handler_next(request):
     return shortcuts.redirect(event_lists.get_next_event().get_url())
 
 
+@method.require_http_methods(["GET", "POST"])
+def handler_event(request, event_key=None):
+    try:
+        if not event_key:
+            event = models.Event(created_by=request.user)
+        else:
+            event = shortcuts.get_object_or_404(models.Event, pk=event_key)
+    except IndexError:
+        return shortcuts.redirect('/events')
+
+    if request.method == 'GET':
+        return handler_event_get(request, event)
+    elif request.method == 'POST':
+        return handler_event_post(request, event)
+
+
 @method.require_GET
-def handler_event(request):
+def handler_event_get(request, event):
     """Handler for display a single event."""
 
     # We are using locals which confuses pylint.
     # pylint: disable-msg=W0612
     # /events/<key>
     # /events?id=<key>
-    try:
-        unused_events, key = request.path_info.split('/')
-    except IndexError:
+    if key is None:
         key = request.GET.get('id', -1)
 
     event = shortcuts.get_object_or_404(models.Event, pk=key)
@@ -58,10 +73,53 @@ def handler_event(request):
     return shortcuts.render(request, 'event.html', locals())
 
 
+@auth.login_required
+@method.require_POST
+def handler_event_post(request, event):
+    assert request.user.is_staff
+
+    start_date = datetime_tz.datetime_tz.smartparse(request.REQUEST['start'])
+    end_date = datetime_tz.datetime_tz.smartparse(request.REQUEST['end'])
+
+    event.input = request.REQUEST['input']
+    event.start = start_date.asdatetime()
+    event.end = end_date.asdatetime()
+
+    event.save()
+
+    # We can't do this template subsitution until we have saved the event.
+    try:
+        plaintext = str(template.Template(inputtext).render(
+                        template.Context({
+                            'event': event,
+                            'req': request,
+                            'agenda': offers.get_event_agenda(event)
+                        }), ))
+        html = markdown.markdown(plaintext, extensions).encode('utf-8')
+        event.plaintext = plaintext
+        event.html = html
+    except Exception:
+        sio = StringIO.StringIO()
+        traceback.print_exc(file=sio)
+        event.plaintext = sio.getvalue()
+
+    logging.debug("e.a %s, e.n %s", event.announcement, event.name)
+
+    event.save()
+
+    return shortcuts.redirect('%s/edit' % event.get_url())
+
+
 @method.require_GET
 def handler_events(
         request, template="events.html", published_default=False, **kw):
     """Handler for display a table of events."""
+
+    for i, w in kw.items():
+        if w:
+            kw[i] = int(w)
+        else:
+            del kw[i]
 
     # We are using locals which confuses pylint.
     # pylint: disable-msg=W0613,W0612

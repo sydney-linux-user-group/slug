@@ -147,7 +147,10 @@ update: third_party.zip
 	${APPENGINE_SDK}/appcfg.py update .
 
 serve: third_party.zip
-	${APPENGINE_SDK}/dev_appserver.py -a 0.0.0.0 -d --enable_sendmail .
+	python manage.py collectstatic --noinput
+	python manage.py syncdb
+	python manage.py runserver
+	#${APPENGINE_SDK}/dev_appserver.py -a 0.0.0.0 -d --enable_sendmail .
 
 clean:
 	find . -name \*.pyc -exec rm {\} \;

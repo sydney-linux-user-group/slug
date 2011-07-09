@@ -33,7 +33,7 @@ class Event(models.Model):
 
     def get_url(self):
         """Return the canonical url for an event."""
-        return "/event/%s" % self.key().id()
+        return "/event/%s" % self.pk
 
     def __unicode__(self):
         return u'%s' % self.name
@@ -47,7 +47,7 @@ class Event(models.Model):
     html = models.TextField()
 
     published = models.BooleanField(default=False)
-    announcement = models.ForeignKey(Announcement)
+    announcement = models.ForeignKey(Announcement, null=True)
 
     emailed = models.BooleanField(default=False)
 
@@ -60,7 +60,7 @@ class TalkOffer(models.Model):
 
     def get_url(self):
         """Return the canonical url for an event."""
-        return "/offer/%s/edit" % self.key().id()
+        return "/offer/%s/edit" % self.pk
 
     created_by = models.ForeignKey(User, blank=False, related_name='+')
     created_on = models.DateTimeField(auto_now_add=True)

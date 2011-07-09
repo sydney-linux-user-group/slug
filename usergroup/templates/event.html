@@ -14,14 +14,14 @@ vim: set ts=2 sw=2 et sts=2 ai:
 {% block rightbar %}
     <div id=eventright class='box'>
       <div class=eventitem>
-        {% if request.user.is_staff %}
+        {% if user.is_staff %}
           <div class=editlink><a href="{{ event.get_url }}/edit">Edit</a></div>
         {% endif %}
         <div class=respond id="respond-{{ event.key.id }}">
-          {% if request.user.is_staff %}
+          {% if user.is_staff %}
             {% include "response-show.html" %}
           {% else %}
-            <a class="openid_login" href="{% url 'django.contrib.auth.views.login' %}">Login to RSVP!</a>
+            <a class="openid_login" href="/accounts/login/?next=/refresh">Login to RSVP!</a>
           {% endif %}
         </div>
       </div>

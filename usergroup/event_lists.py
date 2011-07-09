@@ -26,10 +26,10 @@ def get_event_responses(event, user):
     response = None
     guests = []
     if user:
-        responses = models.Response.objects.all()
-        responses.filter(event__extact=event)
-        responses.filter(created_by__extact=user)
-        for resp in responses:
+        q = models.Response.objects.all(
+                ).filter(event__exact=event
+                ).filter(created_by__exact=user)
+        for resp in q:
             if not resp.guest:
                 response = resp
             else:
@@ -48,45 +48,41 @@ def get_eventlist_responses(event_list, user):
 
 def get_future_events(published_only=True, user=None, count=100, **kw):
 
-    events = models.Event.objects.all()
-    events.filter(start__gte=get_date(**kw))
+    q = models.Event.objects.all()
+    q = q.filter(start__gte=get_date(**kw))
     if published_only:
-        events.filter(published__exact=True)
-    events.order_by('start')
-
-    future_events = events[0:count]
+        q = q.filter(published__exact=True)
+    q = q.order_by('start')
 
     return EventList(get_eventlist_responses(
-        future_events, user), "Coming soon")
+            q[0:count], user), "Coming soon")
 
 
 def get_current_events(published_only=True, user=None, count=5, **kw):
 
     date = get_date(**kw)
 
-    events = models.Event.objects.all()
-    events.filter(start__gte=date.replace(hour=0, minute=0, second=0))
-    events.filter(start__lte=date.replace(hour=23, minute=59, second=59))
-    if published_only:
-        events.filter(published__exact=True)
-    events.order_by('end')
+    q = models.Event.objects.all(
+            ).filter(
+                start__gte=date.replace(hour=0, minute=0, second=0),
+                start__lte=date.replace(hour=23, minute=59, second=59)
+            ).order_by('end')
 
-    current_events = events[0:count]
+    if published_only:
+        q = q.filter(published__exact=True)
 
     return EventList(get_eventlist_responses(
-        current_events, user), "Happening today")
+            q[0:count], user), "Happening today")
 
 
 def get_next_event(**kw):
-
     date = get_date(**kw)
 
-    events = models.Event.objects.all()
-    events.filter(start__gte=get_date(**kw))
-    events.filter(published__exact=True)
-    events.order_by('start')
-
-    return events[0:1]
+    q = models.Event.objects.all(
+            ).filter(start__gte=get_date(**kw)
+            ).filter(published__exact=True
+            ).order_by('start')
+    return q[0:1]
 
 
 def get_event_lists(published_only=True, user=None, **kw):

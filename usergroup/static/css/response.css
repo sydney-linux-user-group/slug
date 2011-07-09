@@ -63,12 +63,12 @@
 
 .response-yes {
   padding-left: 34px;
-  background-image: url('/images/tick-small-button.png');
+  background-image: url('/static/images/tick-small-button.png');
 }
 
 .response-no {
   padding-left: 34px;
-  background-image: url('/images/cross-small-button.png');
+  background-image: url('/static/images/cross-small-button.png');
 }
 
 .response-friends {
@@ -102,17 +102,17 @@
 
 .response-addfriends-small {
   padding-left: 25px;
-  background-image: url('/images/multi-tiny-button.png');
+  background-image: url('/static/images/multi-tiny-button.png');
 }
 
 .response-yes-small {
   padding-left: 20px;
-  background-image: url('/images/tick-tiny-button.png');
+  background-image: url('/static/images/tick-tiny-button.png');
 }
 
 .response-no-small {
   padding-left: 20px;
-  background-image: url('/images/cross-tiny-button.png');
+  background-image: url('/static/images/cross-tiny-button.png');
 }
 
 /* Reset CSS for share widget */

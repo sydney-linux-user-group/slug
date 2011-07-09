@@ -25,10 +25,11 @@ vim: set ts=2 sw=2 et sts=2 ai:
     <td colspan=2 class="response-gravatars">
       <div>
         <form method=post action="{{ event.get_url }}/response/update">
+          {% csrf_token %}
           <input type=hidden name=attending value="yes">
-          {% for other_response in event.responses %}
+          {% for other_response in event.responses_set %}
 
-            {% ifequal other_response.gcreated_by response.gcreated_by %}
+            {% ifequal other_response.created_by response.created_by %}
               {% if response.attending %}
                 {% if other_response.guest %}
                   <input type="hidden" name="guest_name" value="{{ other_response.guest_name }}">
@@ -75,7 +76,7 @@ vim: set ts=2 sw=2 et sts=2 ai:
     </td>
   </tr>
 
-{% if request.user.is_authenticated %}
+{% if user.is_authenticated %}
   <!-- Is logged in. -->
 {% ifequal response None %}
   <!-- Has not responded yet. -->
@@ -152,7 +153,7 @@ vim: set ts=2 sw=2 et sts=2 ai:
   <!-- Is not logged in. -->
   <tr>
     <td>
-      <a class="openid_login" href="{{ login_url }}">Login to RSVP!</a>
+      <a class="openid_login" href="/accounts/login/">Login to RSVP!</a>
     </td>
   </tr>
 {% endif %}

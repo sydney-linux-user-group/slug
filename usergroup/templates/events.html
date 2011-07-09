@@ -31,11 +31,12 @@ vim: set ts=2 sw=2 et sts=2 ai:
         <tr class="eventrow {% cycle 'evenRow' 'oddRow' %}{% if appengine_admin and not event.published %} unpublished{% endif %}{% if appengine_admin and event.html != event.announcement.html %} altered{% endif %}">
           <td>
             {{ event.start }} - {{ event.end }}
-            {% if request.user.is_staff %}
+            {% if user.is_staff %}
               <a href="{{ event.get_url }}/edit">Edit</a>
               <div id=publishform>
                 {% ifnotequal event.html event.announcement.html %}
                 <form name="publish" action="{{ event.get_url }}/publish" method="post">
+                {% csrf_token %}
                 {% if event.published %} <!-- Event was published, then changed"-->
                   <input type="submit" value="Re-publish event">
                   <p>Cannot send announcement email until after republishing.</p>
@@ -46,6 +47,7 @@ vim: set ts=2 sw=2 et sts=2 ai:
                 {% else %} <!-- No change -->
                 <p>Already published</p>
                 <form name="sendemail" action="{{ event.get_url }}/email" method=post>
+                  {% csrf_token %}
                   <input type="submit" value="Announce event via email">
                 </form>
                 {% endifnotequal %} <!-- No change -->
@@ -53,7 +55,7 @@ vim: set ts=2 sw=2 et sts=2 ai:
             {% endif %}
           </td><td>
             <div class="event">
-              {% if request.user.is_staff %}
+              {% if user.is_staff %}
               {{ event.html|safe }}
               {% else %}
               {{ event.announcement.html|safe }}

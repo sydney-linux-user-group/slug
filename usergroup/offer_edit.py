@@ -29,7 +29,7 @@ def handler(request):
 
     q = models.TalkOffer.objects.all()
     if not request.user.is_staff():
-        q.filter(created_by__exact=request.user)
+        q = q.filter(created_by__exact=request.user)
     offers = q[:100]
 
     # /offer/<key> (POST/Get)

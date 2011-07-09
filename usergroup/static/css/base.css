@@ -103,14 +103,14 @@ img {
 
 /* Fix PNG transparency in older IE browsers. */
 img, div, a, input {
-  behavior: url(/css/resources/iepngfix.htc);
+  behavior: url(/static/css/resources/iepngfix.htc);
 }
 
 /**
  * Useful classes used everywhere.
  */
 .box {
-  behavior: url(/css/htc/border-radius.htc);
+  behavior: url(/static/css/htc/border-radius.htc);
 
   -ms-border-radius: 15px;
   -moz-border-radius: 15px;

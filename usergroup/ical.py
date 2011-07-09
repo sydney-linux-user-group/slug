@@ -14,7 +14,7 @@ from django import shortcuts
 from django.views.decorators import http as method
 
 # Third Party imports
-from pytz.gae import pytz
+import pytz
 import vobject
 
 # Our App imports

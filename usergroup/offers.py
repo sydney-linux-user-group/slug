@@ -24,9 +24,8 @@ from usergroup import models
 
 def get_event_agenda(event):
     logging.debug('getting agenda: %s', event)
-    agenda = event.agenda.order("weight")
-    agenda.fetch(100, 0)
-    return agenda
+    agenda = event.agenda.order_by("weight")
+    return agenda[:100]
 
 
 @auth.login_required
@@ -36,7 +35,7 @@ def handler(request, template="offers.html"):
 
     q = models.TalkOffer.objects.all()
     if not request.users.is_staff:
-        q.filter(created_by__exact=current_user)
+        q = q.filter(created_by__exact=current_user)
 
     offer_list = q[:100]
 
