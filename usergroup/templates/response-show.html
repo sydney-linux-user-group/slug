@@ -24,7 +24,7 @@ vim: set ts=2 sw=2 et sts=2 ai:
     <!-- Show the gravatars of people attending. -->
     <td colspan=2 class="response-gravatars">
       <div>
-        <form method=post action="{{ event.get_url }}/response/update">
+        <form method=post action="{{ event.get_url }}/response">
           {% csrf_token %}
           <input type=hidden name=attending value="yes">
           {% for other_response in event.responses_set %}
@@ -82,7 +82,8 @@ vim: set ts=2 sw=2 et sts=2 ai:
   <!-- Has not responded yet. -->
   <tr>
     <td>
-      <form method=post action="{{ event.get_url }}/response/update">
+      <form method=post action="{{ event.get_url }}/response">
+        {% csrf_token %}
         <input type=hidden name=attending value="yes">
         <input class="response-button response-yes" type=submit value="I can attend">
         and be bringing
@@ -92,7 +93,8 @@ vim: set ts=2 sw=2 et sts=2 ai:
     </td>
   </tr><tr>
     <td>
-      <form method=post action="{{ event.get_url }}/response/update">
+      <form method=post action="{{ event.get_url }}/response">
+        {% csrf_token %}
         <input type=hidden name=attending value="no">
         <input class="response-button response-no" type=submit value="I can't attend">
       </form>
@@ -124,21 +126,24 @@ vim: set ts=2 sw=2 et sts=2 ai:
         <tr>
           {% if response.attending %}
           <td>
-            <form method=post action="{{ event.get_url }}/response/update">
+            <form method=post action="{{ event.get_url }}/response">
+              {% csrf_token %}
               <input type=hidden name=attending value="yes">
               <input type=hidden name=friends value="{{ guests|length|add:5 }}">
               <input class="response-button-small response-addfriends-small" type=submit value="Add more friends">
             </form>
           </td>
           <td>
-            <form method=post action="{{ event.get_url }}/response/update">
+            <form method=post action="{{ event.get_url }}/response">
+              {% csrf_token %}
               <input type=hidden name=attending value="no">
               <input class="response-button-small response-no-small" type=submit value="I can't attend">
             </form>
           </td>
           {% else %}
           <td>
-            <form method=post action="{{ event.get_url }}/response/update">
+            <form method=post action="{{ event.get_url }}/response">
+              {% csrf_token %}
               <input type=hidden name=attending value="yes">
               <input class="response-button-small response-yes-small" type=submit value="I can attend">
             </form>

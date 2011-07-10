@@ -24,19 +24,12 @@ from usergroup import event_lists
 
 @auth.login_required
 @method.require_http_methods(["GET", "POST"])
-def handler(request):
+def handler(request, key):
     """Handler for creating and editing Event objects."""
-
-    # /events/<key>/response (GET/POST)
-    try:
-        unused_events, key, unused_response = request.path_info.split('/')
-    except IndexError:
-        return shortcuts.redirect('/events')
-
     event = shortcuts.get_object_or_404(models.Event, pk=key)
 
     if request.method == 'GET':
-        return shortcut.render(request, 'response-show.html', locals())
+        return shortcuts.render(request, 'response-show.html', locals())
     elif request.method == 'POST':
         return handler_response_post(request, event)
 
@@ -76,8 +69,8 @@ def handler_response_post(request, event):
     logging.info('Response %s created by user %s (email: %s)',
             response.pk, request.user.username, request.user.email)
 
-    guest_names = request.POST.get_list('guest_name')
-    guest_emails = request.POST.get_list('guest_email')
+    guest_names = request.POST.getlist('guest_name')
+    guest_emails = request.POST.getlist('guest_email')
     assert len(guest_names) == len(guest_emails)
 
     for name, email in zip(guest_names, guest_emails):
