@@ -41,32 +41,27 @@ def handler_next(request):
 
 @method.require_http_methods(["GET", "POST"])
 def handler_event(request, event_key=None):
-    try:
-        if not event_key:
-            event = models.Event(created_by=request.user)
-        else:
-            event = shortcuts.get_object_or_404(models.Event, pk=event_key)
-    except IndexError:
-        return shortcuts.redirect('/events')
 
     if request.method == 'GET':
-        return handler_event_get(request, event)
+        return handler_event_get(request, event_key)
     elif request.method == 'POST':
-        return handler_event_post(request, event)
+        return handler_event_post(request, event_key)
 
 
 @method.require_GET
-def handler_event_get(request, event):
+def handler_event_get(request, event_key=None):
     """Handler for display a single event."""
 
     # We are using locals which confuses pylint.
     # pylint: disable-msg=W0612
+
     # /events/<key>
     # /events?id=<key>
-    if key is None:
-        key = request.GET.get('id', -1)
-
-    event = shortcuts.get_object_or_404(models.Event, pk=key)
+    print event_key, request.GET.get('id', -1)
+    if event_key is None:
+        event = shortcuts.get_object_or_404(models.Event, pk=request.GET.get('id', -1))
+    else:
+        event = shortcuts.get_object_or_404(models.Event, pk=event_key)
 
     response, guests = event_lists.get_event_responses(event, request.user)
 
@@ -75,7 +70,15 @@ def handler_event_get(request, event):
 
 @auth.login_required
 @method.require_POST
-def handler_event_post(request, event):
+def handler_event_post(request, event_key):
+    try:
+        if not event_key:
+            event = models.Event(created_by=request.user)
+        else:
+            event = shortcuts.get_object_or_404(models.Event, pk=event_key)
+    except IndexError:
+        return shortcuts.redirect('/events')
+
     assert request.user.is_staff
 
     start_date = datetime_tz.datetime_tz.smartparse(request.REQUEST['start'])
