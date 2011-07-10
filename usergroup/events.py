@@ -61,12 +61,11 @@ def handler_event_get(request, event):
 
     # We are using locals which confuses pylint.
     # pylint: disable-msg=W0612
+
     # /events/<key>
     # /events?id=<key>
-    if key is None:
-        key = request.GET.get('id', -1)
-
-    event = shortcuts.get_object_or_404(models.Event, pk=key)
+    if event is None:
+        event = shortcuts.get_object_or_404(models.Event, pk=request.GET.get('id', -1))
 
     response, guests = event_lists.get_event_responses(event, request.user)
 
