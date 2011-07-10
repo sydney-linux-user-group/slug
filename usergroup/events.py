@@ -82,6 +82,7 @@ def handler_event_post(request, event_key):
     start_date = datetime_tz.datetime_tz.smartparse(request.REQUEST['start'])
     end_date = datetime_tz.datetime_tz.smartparse(request.REQUEST['end'])
 
+    event.name = request.REQUEST['name']
     event.input = request.REQUEST['input']
     event.start = start_date.asdatetime()
     event.end = end_date.asdatetime()
@@ -93,7 +94,7 @@ def handler_event_post(request, event_key):
         plaintext = str(template.Template(event.input).render(
                         template.Context({
                             'event': event,
-                            'req': request,
+                            'request': request,
                             'agenda': offers.get_event_agenda(event)
                         }), ))
         html = markdown.markdown(plaintext, extensions).encode('utf-8')
