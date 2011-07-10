@@ -7,7 +7,11 @@
 
 # Python Imports
 import os
-import simplejson
+try:
+    import simplejson as json
+except ImportError:
+    import json
+
 from datetime import datetime
 
 # Django Imports
@@ -61,7 +65,7 @@ def handler_offer_add(request, event_key):
 
     response = http.HttpResponse()
     response['Content-Type'] = 'application/javascript'
-    response.write(simplejson.dumps({'key': str(talk.key())}))
+    response.write(json.dumps({'key': str(talk.key())}))
     return response
 
 
@@ -79,7 +83,7 @@ def handler_offer_remove(request, event_key):
 
     response = http.HttpResponse()
     response['Content-Type'] = 'application/javascript'
-    response.write(simplejson.dumps({'deleted': str(True)}))
+    response.write(json.dumps({'deleted': str(True)}))
     return response
 
 
