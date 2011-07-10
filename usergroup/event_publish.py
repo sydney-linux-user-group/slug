@@ -64,8 +64,9 @@ def handler(request, event_key):
         name=event.name,
         plaintext=event.plaintext,
         html=event.html)
-    event.announcement = announcement.save()
+    announcement.save()
 
+    event.announcement = announcement
     event.published = True
     event.save()
 

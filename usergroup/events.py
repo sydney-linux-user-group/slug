@@ -16,6 +16,7 @@ import cStringIO as StringIO
 # Django Imports
 from django import http
 from django import shortcuts
+from django import template
 from django.views.decorators import http as method
 from django.contrib.auth import decorators as auth
 
@@ -25,6 +26,7 @@ import markdown
 
 # Our App imports
 from usergroup import models
+from usergroup import offers
 from usergroup import event_lists
 
 
@@ -70,13 +72,10 @@ def handler_event_get(request, event_key=None):
 @auth.login_required
 @method.require_POST
 def handler_event_post(request, event_key):
-    try:
-        if not event_key:
-            event = models.Event(created_by=request.user)
-        else:
-            event = shortcuts.get_object_or_404(models.Event, pk=event_key)
-    except IndexError:
-        return shortcuts.redirect('/events')
+    if not event_key or event_key == 'None':
+        event = models.Event(created_by=request.user)
+    else:
+        event = shortcuts.get_object_or_404(models.Event, pk=event_key)
 
     assert request.user.is_staff
 
@@ -91,7 +90,7 @@ def handler_event_post(request, event_key):
 
     # We can't do this template subsitution until we have saved the event.
     try:
-        plaintext = str(template.Template(inputtext).render(
+        plaintext = str(template.Template(event.input).render(
                         template.Context({
                             'event': event,
                             'req': request,

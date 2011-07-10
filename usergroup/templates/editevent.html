@@ -9,7 +9,7 @@ vim: set ts=2 sw=2 et sts=2 ai:
 {% block body %}
 
 
-<form id="templateEdit" class="clearfix" action="/event/{{event.key.id}}" method="post">
+<form id="templateEdit" class="clearfix" action="/event/{{event.pk}}" method="post">
   {% csrf_token %}
   <div id="tabs">
     <ul class="tablist">
