@@ -49,11 +49,7 @@ def handler_response_post(request, event):
         extra_guests = []
 
     if extra_guests:
-        httpresponse = http.HttpResponse()
-        httpresponse['Content-Type'] = 'text/html'
-        httpresponse.write(render(
-                'templates/response-friends.html', locals()))
-        return
+        return shortcuts.render(request, 'response-friends.html', locals())
 
     # Remove the current information
     if response is not None:
