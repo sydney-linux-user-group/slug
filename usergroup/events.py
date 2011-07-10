@@ -57,7 +57,6 @@ def handler_event_get(request, event_key=None):
 
     # /events/<key>
     # /events?id=<key>
-    print event_key, request.GET.get('id', -1)
     if event_key is None:
         event = shortcuts.get_object_or_404(models.Event, pk=request.GET.get('id', -1))
     else:
