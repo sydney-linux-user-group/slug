@@ -148,9 +148,9 @@ class EditEvent(webapp.RequestHandler):
 
         start_date = self.request.get('start')
         end_date = self.request.get('end')
-        if start_date.starts_with('Sept.'):
+        if start_date.startswith('Sept.'):
             start_date = start_date.replace('Sept.', 'Sep.')
-        if end_date.ends_with('Sept.'):
+        if end_date.startswith('Sept.'):
             end_date = end_date.replace('Sept.', 'Sep.')
 
 
