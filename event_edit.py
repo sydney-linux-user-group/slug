@@ -146,8 +146,16 @@ class EditEvent(webapp.RequestHandler):
 
         inputtext = self.request.get('input')
 
-        start_date = datetime_tz.smartparse(self.request.get('start'))
-        end_date = datetime_tz.smartparse(self.request.get('end'))
+        start_date = self.request.get('start')
+        end_date = self.request.get('end')
+        if start_date.starts_with('Sept.'):
+            start_date = start_date.replace('Sept.', 'Sep.')
+        if end_date.ends_with('Sept.'):
+            end_date = end_date.replace('Sept.', 'Sep.')
+
+
+        start_date = datetime_tz.smartparse(start_date)
+        end_date = datetime_tz.smartparse(end_date)
 
         event.input = inputtext
         event.start = start_date.asdatetime()
