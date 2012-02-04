@@ -3,6 +3,16 @@
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
+import os
+assert os.environ.has_key('VIRTUAL_ENV'), "Application must run in the virtualenv environment setup by the Makefile"
+
+try:
+	from private.keys import *
+except ImportError:
+	import warnings
+	warnings.warn("Using fake keys - DON'T RUN IN PRODUCTION!", RuntimeWarning)
+	from public.keys import *
+
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
@@ -82,9 +92,6 @@ STATICFILES_FINDERS = (
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
-# Make this unique, and don't share it with anybody.
-SECRET_KEY = '*@5%gyon&3wlq3ye9=s&^pve9)wzug2myic32_nw)vosv0qnu@'
-
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
@@ -147,8 +154,6 @@ AUTHENTICATION_BACKENDS = (
     'social_auth.backends.OpenIDBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
-
-from private.keys import *
 
 LOGIN_URL = '/accounts/login/'
 LOGIN_ERROR_URL = '/accounts/error/'
