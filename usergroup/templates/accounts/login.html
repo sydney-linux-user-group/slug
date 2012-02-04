@@ -1,29 +1,88 @@
-{% extends "accounts/base.html" %}
+{% extends "base.html" %}
+{% comment %}
+-*- coding: utf-8 -*-
+vim: set ts=2 sw=2 et sts=2 ai:
+{% endcomment %}
 
-{% block heading %}Login using any of the following methods{% endblock %}
+{% block title %}Login!{% endblock %}
 
-{% block content %}
-<div>
-  <h3>Login using <a href="http://oauth.net/" title="OAuth">OAuth</a> from:</h3>
-  <ul>
-  {% for name in social_auth.backends.oauth %}
-    <li><a rel="nofollow" href="{% url socialauth_begin name %}">{{ name|title }}</a></li>
+{% block body %}
+
+<link href='http://fonts.googleapis.com/css?family=Homenaje' rel='stylesheet' type='text/css'>
+<style>
+
+td.or {
+ text-align: center;
+ font-family: 'Homenaje', sans-serif;
+ font-size: 32pt;
+ color: #aaa;
+ padding: 0;
+ margin: 0;
+}
+
+td.or hr {
+ color: #aaa;
+ background-color: #aaa;
+ border: 1px solid #aaa;
+}
+
+td.or-hr hr {
+ height: 2px;
+ width: 100%;
+}
+
+td.or-hr {
+ width: 40%;
+}
+
+td.or-middle {
+ width: 5%;
+}
+
+td.vor {
+ text-align: center;
+ font-family: 'Homenaje', sans-serif;
+ font-size: 32pt;
+ color: #ddd;
+ padding: 0;
+ margin: 0;
+}
+
+td.vor hr {
+ color: #ddd;
+ background-color: #ddd;
+ border: 1px solid #ddd;
+}
+
+td.vor-hr {
+ height: 10%;
+}
+
+td.vor-middle {
+ height: 5%;
+}
+
+td.vor-hr hr {
+ width: 2px;
+ height: 40px;
+}
+
+</style>
+
+
+<table>
+ <tr>
+  <td colspan=3 id=oauth>
+  {% for name, backend in providers.items %}
+    <li><a rel="nofollow" href="{% url socialauth_begin backend.name %}">{{ name }}</a></li>
   {% endfor %}
-  </ul>
-</div>
-
-<div>
-  <h3>Login using <a href="http://tools.ietf.org/html/draft-ietf-oauth-v2-10" title="OAuth2">OAuth2</a> from:</h3>
-  <ul>
-  {% for name in social_auth.backends.oauth2 %}
-    <li><a rel="nofollow" href="{% url socialauth_begin name %}">{{ name|title }}</a></li>
-  {% endfor %}
-  </ul>
-</div>
-
-<div>
-  <h3>Login using <a href="http://openid.net/" title="OpenId">OpenId</a> from:</h3>
-  <ul>
+  </td>
+ </tr><tr>
+  <td class="or or-hr"><hr></td>
+  <td class="or or-middle">OR</td>
+  <td class="or or-hr"><hr></td>
+ </tr><tr>
+  <td colspan=3 id=openid>
   {% for name in social_auth.backends.openid %}
     <li>
     {% if name != "livejournal" and name != "openid" %}
@@ -50,8 +109,20 @@
         {% endif %}
       {% endif %}
     {% endif %}
-    </li>
   {% endfor %}
-  </ul>
-</div>
+  </td>
+ </tr><tr>
+  <td class="or or-hr"><hr></td>
+  <td class="or or-middle">OR</td>
+  <td class="or or-hr"><hr></td>
+ </tr><tr>
+  <td id=login rowspan=3></td>
+  <td class="vor vor-hr"><hr></td>
+  <td id=register rowspan=3></td>
+ </tr><tr>
+  <td class="vor vor-middle">OR</td>
+ </tr><tr>
+  <td class="vor vor-hr"><hr></td>
+ </tr>
+</table>
 {% endblock %}

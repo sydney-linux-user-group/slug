@@ -155,14 +155,14 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-LOGIN_URL = '/accounts/login/'
-LOGIN_ERROR_URL = '/accounts/error/'
-LOGIN_REDIRECT_URL = '/accounts/profile/'
-LOGOUT_URL = '/accounts/logout/'
+LOGIN_URL = '/accounts/login'
+LOGIN_ERROR_URL = '/accounts/error'
+LOGIN_REDIRECT_URL = '/accounts/profile'
+LOGOUT_URL = '/accounts/logout'
 
-SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/accounts/new-users/'
-SOCIAL_AUTH_NEW_ASSOCIATION_REDIRECT_URL = '/accounts/new-association/'
-SOCIAL_AUTH_DISCONNECT_REDIRECT_URL = '/accounts/disconnected/'
+SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/accounts/profile/new'
+SOCIAL_AUTH_NEW_ASSOCIATION_REDIRECT_URL = '/accounts/profile/association'
+SOCIAL_AUTH_DISCONNECT_REDIRECT_URL = '/accounts/disconnected'
 SOCIAL_AUTH_ERROR_KEY = 'social_errors'
 SOCIAL_AUTH_COMPLETE_URL_NAME  = 'socialauth_complete'
 SOCIAL_AUTH_ASSOCIATE_URL_NAME = 'socialauth_associate_complete'

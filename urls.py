@@ -10,7 +10,7 @@ urlpatterns = patterns(
     # admin pages
     (r'^admin/', include(admin.site.urls)),
     # auth specific urls
-    (r'^', include('social_auth.urls')),
+    (r'^accounts/', include('social_auth.urls')),
     # Our actual app
     (r'^', include('usergroup.urls')),
 )
