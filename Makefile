@@ -16,6 +16,7 @@ export
 all: test
 
 virtualenv: bin/activate
+lib: bin/activate
 
 distclean: virtualenv-clean clean
 
@@ -32,16 +33,20 @@ bin/activate:
 freeze:
 	$(ACTIVATE) && pip freeze -E . > requirements.txt
 
-lib: bin/activate
-	$(ACTIVATE) && pip install ez_setup
+lib/python2.6/site-packages/distribute-0.6.24-py2.6.egg-info: lib
 	$(ACTIVATE) && pip install -U distribute
-	$(ACTIVATE) && pip install -E . -r requirements.txt
+
+lib/python2.6/site-packages/ez_setup.py: lib
+	$(ACTIVATE) && pip install ez_setup
 
 third_party/jquery-openid:
 	git submodule init
 
-install: lib third_party/jquery-openid
+requirements.txt.updated: requirements.txt
+	$(ACTIVATE) && pip install -E . -r requirements.txt
 	git submodule update
+
+install: lib/python2.6/site-packages/ez_setup.py lib/python2.6/site-packages/distribute-0.6.24-py2.6.egg-info third_party/jquery-openid requirements.txt.updated
 
 test: install
 	$(ACTIVATE) && unit2 discover -t ./ tests/
