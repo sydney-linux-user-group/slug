@@ -9,3 +9,5 @@ bin/
 include/
 lib/
 src/
+third_party/.initialized
+third_party/.updated

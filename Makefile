@@ -16,11 +16,12 @@ export
 all: test
 
 virtualenv: bin/activate
+lib: bin/activate
 
 distclean: virtualenv-clean clean
 
 virtualenv-clean:
-	rm -rf bin include lib lib64 share
+	rm -rf bin include lib lib64 share src
 
 clean:
 	find . \( -name \*\.pyc -o -name \*\.dot -o -name \*\.svg -o -name \*\.png \) -delete
@@ -32,16 +33,25 @@ bin/activate:
 freeze:
 	$(ACTIVATE) && pip freeze -E . > requirements.txt
 
-lib: bin/activate
-	$(ACTIVATE) && pip install ez_setup
+lib/python2.6/site-packages/distribute-0.6.24-py2.6.egg-info: lib
 	$(ACTIVATE) && pip install -U distribute
-	$(ACTIVATE) && pip install -E . -r requirements.txt
 
-third_party/jquery-openid:
+lib/python2.6/site-packages/ez_setup.py: lib
+	$(ACTIVATE) && pip install ez_setup
+
+third_party/.initialized:
 	git submodule init
+	touch third_party/.initialized
 
-install: lib third_party/jquery-openid
+third_party/.updated: .gitmodules third_party/.initialized
 	git submodule update
+	touch -r .gitmodules third_party/.updated
+
+src/pip-delete-this-directory.txt: requirements.txt
+	$(ACTIVATE) && pip install -E . -r requirements.txt
+	touch -r requirements.txt src/pip-delete-this-directory.txt
+
+install: lib/python2.6/site-packages/ez_setup.py lib/python2.6/site-packages/distribute-0.6.24-py2.6.egg-info third_party/.initialized third_party/.updated src/pip-delete-this-directory.txt
 
 test: install
 	$(ACTIVATE) && unit2 discover -t ./ tests/
@@ -70,7 +80,7 @@ lint: install
 serve: install
 	$(ACTIVATE) && python manage.py collectstatic --noinput
 	$(ACTIVATE) && python manage.py syncdb
-	$(ACTIVATE) && python manage.py runserver
+	$(ACTIVATE) && python manage.py run_gunicorn
 
 edit:
 	$(EDITOR) *.py templates/*.html static/css/*.css

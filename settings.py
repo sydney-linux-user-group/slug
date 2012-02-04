@@ -4,7 +4,10 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 import os
-assert os.environ.has_key('VIRTUAL_ENV'), "Application must run in the virtualenv environment setup by the Makefile"
+import os.path
+import sys
+print os.path.abspath('.'), sys.path
+assert os.path.abspath('.') in sys.path, "Application must be run in the virtualenv set up by `make install`"
 
 try:
 	from private.keys import *
@@ -75,7 +78,7 @@ STATIC_URL = '/static/'
 # URL prefix for admin static files -- CSS, JavaScript and images.
 # Make sure to use a trailing slash.
 # Examples: "http://foo.com/static/admin/", "/static/admin/".
-ADMIN_MEDIA_PREFIX = '/static/admin/'
+ADMIN_MEDIA_PREFIX = '/admin/media/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
@@ -130,6 +133,7 @@ INSTALLED_APPS = (
     'social_auth',
     'accounts',
     'usergroup',
+    'gunicorn',
 )
 
 AUTHENTICATION_BACKENDS = (
