@@ -1,6 +1,6 @@
 -e git://github.com/sydney-linux-user-group-dependencies/python-datetime-tz.git@8f081442da51dadee67afacb25901257cfe340be#egg=python_datetime_tz-dev
 -e git://github.com/sydney-linux-user-group-dependencies/python-dateutil.git@93f2157fc38500dc73d4f1a4fdbe072be63cd218#egg=python_dateutil-dev
--e git://github.com/sydney-linux-user-group-dependencies/python-markdown.git@16fc2e73c8aa39533dc9b0163b0a612260825b54#egg=Markdown-dev
+-e git://github.com/sydney-linux-user-group-dependencies/python-markdown.git@5c7355cffd2737de2222cf33fdf047d274af3d44#egg=Markdown-dev
 -e git://github.com/sydney-linux-user-group-dependencies/python-pyrss2gen.git@1fde0e73c022e2efc1d51cd655b7369251ace4d7#egg=PyRSS2Gen-dev
 -e git://github.com/sydney-linux-user-group-dependencies/python-vobject.git@458fe5d43c7967ff444f48167d04ea6aa9c4a5da#egg=vobject-dev
 Django==1.3.1
