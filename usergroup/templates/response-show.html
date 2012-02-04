@@ -64,7 +64,7 @@ vim: set ts=2 sw=2 et sts=2 ai:
     <!-- Social widget -->
     <td rowspan=2 class="response-share">
       <div id="share-{{ event.key.id }}" class="addthis_toolbox addthis_default_style"
-          addthis:url="http://{{ config.HOST }}{{ event.get_url }}"
+          addthis:url="http://{{ request.get_host }}{{ event.get_url }}"
           addthis:title="{{ event.announcement.name }} on {{ event.start }}"
           >
         <a class="addthis_counter"></a>
