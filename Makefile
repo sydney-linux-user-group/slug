@@ -50,6 +50,7 @@ freeze:
 
 lib: bin/activate
 	$(ACTIVATE) && pip install ez_setup
+	$(ACTIVATE) && pip install distribute==0.6.14
 	$(ACTIVATE) && pip install -E . -r requirements.txt
 
 third_party/jquery-openid:
@@ -90,4 +91,4 @@ serve: install
 edit:
 	$(EDITOR) *.py templates/*.html static/css/*.css
 
-.PHONY : lint third_party upload deploy serve clean edit
+.PHONY : lint upload deploy serve clean edit
