@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% comment %}
+-*- coding: utf-8 -*-
+vim: set ts=2 sw=2 et sts=2 ai:
+{% endcomment %}
+
+{% block title %}Profile!{% endblock %}
+
+{% block body %}
+<div>
+  <h3>User data:</h3>
+  <table>
+    <tr class="odd"><th>Id:</th> <td>{{ user.id }}</td></tr>
+    <tr class="even"><th>Username:</th> <td>{{ user.username }}</td></tr>
+    <tr class="odd"><th>Email:</th> <td>{{ user.email|default:"Not provided" }}</td></tr>
+    <tr class="even"><th>First name:</th> <td>{{ user.first_name|default:"Not provided" }}</td></tr>
+    <tr class="odd"><th>Last name:</th> <td>{{ user.last_name|default:"Not provided" }}</td></tr>
+    <tr class="even"><th>Last login backend:</th> <td>{{ last_login }}</td></tr>
+  </table>
+</div>
+
+<div>
+{% if social_auth.associated %}
+  <h3>Disconnect accounts</h3>
+  <ul>
+  {% for type, accounts in social_auth.associated.items %}
+    {% for account in accounts %}
+    <li>
+        <span class="disconnect"><a href={% url socialauth_disconnect_individual account.provider account.id %}>{{ account.provider|title }} (ID {{ account.id }})</a></span>
+    </li>
+    {% endfor %}
+  {% endfor %}
+  </ul>
+{% endif %}
+
+  </ul>
+</div>
+
+<div>
+  <h3>Associate new <a href="http://oauth.net/" title="OAuth">OAuth</a> credentials:</h3>
+  <table class="login">
+{% with socialauth_begin_type='associate' socialauth_verb='Associate' %}
+{% include "possible.html" %}
+{% endwith %}
+  </table>
+
+<div>
+  <a rel="nofollow" class="logout" href="/accounts/logout/">Logout</a>
+</div>
+{% endblock %}
