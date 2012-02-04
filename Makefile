@@ -76,7 +76,7 @@ lint: install
 serve: install
 	$(ACTIVATE) && python manage.py collectstatic --noinput
 	$(ACTIVATE) && python manage.py syncdb
-	$(ACTIVATE) && python manage.py runserver
+	$(ACTIVATE) && python manage.py run_gunicorn
 
 edit:
 	$(EDITOR) *.py templates/*.html static/css/*.css

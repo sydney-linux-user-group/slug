@@ -139,6 +139,7 @@ INSTALLED_APPS = (
     'django_extensions',
     'social_auth',
     'usergroup',
+    'gunicorn',
 )
 
 AUTHENTICATION_BACKENDS = (
