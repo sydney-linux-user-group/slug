@@ -45,13 +45,13 @@ third_party/.initialized:
 
 third_party/.updated: .gitmodules third_party/.initialized
 	git submodule update
-	touch third_party/.updated
+	touch -r .gitmodules third_party/.updated
 
 src/pip-delete-this-directory.txt: requirements.txt
 	$(ACTIVATE) && pip install -E . -r requirements.txt
-	touch src/pip-delete-this-directory.txt
+	touch -r requirements.txt src/pip-delete-this-directory.txt
 
-install: lib/python2.6/site-packages/ez_setup.py lib/python2.6/site-packages/distribute-0.6.24-py2.6.egg-info third_party/.initialized src/pip-delete-this-directory.txt
+install: lib/python2.6/site-packages/ez_setup.py lib/python2.6/site-packages/distribute-0.6.24-py2.6.egg-info third_party/.initialized third_party/.updated src/pip-delete-this-directory.txt
 
 test: install
 	$(ACTIVATE) && unit2 discover -t ./ tests/
