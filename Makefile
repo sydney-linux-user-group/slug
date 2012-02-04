@@ -1,41 +1,12 @@
+###############################################################################
+## Helpful Definitions
+###############################################################################
 define \n
 
 
 endef
 
-###############################################################################
-## Trying to find the AppEngine SDK
-###############################################################################
-ifndef APPENGINE_SDK
-# ../google_appengine
-ifeq "$(shell [ -x ../google_appengine ] && echo -n 'Found')" "Found"
-APPENGINE_SDK=../google_appengine
-else
-
-# which dev_appserver.py
-APPENGINE_SDK=$(dir $(realpath $(shell which dev_appserver.py)))
-ifeq ($(strip $(APPENGINE_SDK)),)
-
-# which dev_appserver
-APPENGINE_SDK=$(dir $(realpath $(shell which dev_appserver)))
-ifeq ($(strip $(APPENGINE_SDK)),)
-
-# FIXME: Put the next location to search here.
-
-endif # which dev_appserver
-endif # which dev_appserver.py
-endif # ../google_appengine
-endif # ndef APPENGINE_SDK
-
-#ifeq "$(shell [ -x ${APPENGINE_SDK} ] && echo -n 'Found')" "Found"
-ifndef APPENGINE_SDK
-$(error Could not find AppEngine SDK, please set $$APPENGINE_SDK)
-else
-$(info Found AppEngine SDK at ${APPENGINE_SDK})
-endif
-
-###############################################################################
-###############################################################################
+ACTIVATE = . bin/activate
 
 ###############################################################################
 ## How do we calculate md5s?
@@ -58,104 +29,59 @@ endif #ndef MD5SUM
 ###############################################################################
 export
 
-###############################################################################
-## Look at pylint
-###############################################################################
-PYLINT=$(shell python -c "import pylint; print 'ok'" 2>/dev/null)
-ifeq ($(strip $(PYLINT)),)
-$(error "${\n}Please install pylint${\n} On Ubuntu/Debian run:${\n} sudo apt-get install pylint${\n}")
-endif
+all: test
 
-# Newer versions of pylint uses --disable rather then --disable-msg
-PYLINT_NEW=$(shell python -c "from pylint import lint; import sys; print cmp(tuple(int(x) for x in lint.version.split('.')), (0,20,0))" 2>/dev/null)
+virtualenv: bin/activate
 
-ifeq "${PYLINT_NEW}" "1"
-PYLINT_DISABLE="--disable"
-else
-PYLINT_DISABLE="--disable-msg"
-endif
+distclean: virtualenv-clean clean
 
-lint: third_party.zip
+virtualenv-clean:
+	rm -rf bin include lib lib64 share
+
+clean:
+	find . \( -name \*\.pyc -o -name \*\.dot -o -name \*\.svg -o -name \*\.png \) -delete
+	git clean -f -d
+
+bin/activate:
+	virtualenv --no-site-packages .
+
+freeze:
+	$(ACTIVATE) && pip freeze -E . > requirements.txt
+
+lib: bin/activate
+	$(ACTIVATE) && pip install ez_setup
+	$(ACTIVATE) && pip install -E . -r requirements.txt
+
+install: lib
+
+test: install
+	$(ACTIVATE) && unit2 discover -t ./ tests/
+
+lint: install
 	@# R0904 - Disable "Too many public methods" warning
 	@# W0221 - Disable "Arguments differ from parent", as get and post will.
 	@# E1103 - Disable "Instance of 'x' has no 'y' member (but some types could not be inferred)"
 	@# I0011 - Disable "Locally disabling 'xxxx'"
-	@python \
+	@$(ACTIVATE) && python \
 		-W "ignore:disable-msg is:DeprecationWarning:pylint.lint" \
 		-c "import config; config.lint_setup(); import sys; from pylint import lint; lint.Run(sys.argv[1:])" \
 		--reports=n \
 		--include-ids=y \
 		--no-docstring-rgx "(__.*__)|(get)|(post)|(main)" \
 		--indent-string='    ' \
-		${PYLINT_DISABLE}=W0221 \
-		${PYLINT_DISABLE}=R0904 \
-		${PYLINT_DISABLE}=E1103 \
-		${PYLINT_DISABLE}=I0011 \
+		--disable=W0221 \
+		--disable=R0904 \
+		--disable=E1103 \
+		--disable=I0011 \
 		--const-rgx='[a-z_][a-z0-9_]{2,30}$$' *.py 2>&1 | grep -v 'maximum recursion depth exceeded'
 
 ###############################################################################
-# Third Party Zip file creation
-##############################################################################
-FINDARGS=-follow -type f -name \*.py -exec  echo "		{} \\" \;
-TP=cd third_party;
-TPT=third_party.zip.d.tmp
-
-third_party:
-	make -C third_party
-
-third_party.zip.d: third_party third_party.paths
-	@echo "Generating a third_party.zip dependency file."
-	@echo "THIRD_PARTY_files=\\" > $(TPT).files
-	@echo 'third_party.zip: third_party.zip.d $$(THIRD_PARTY_here)' > $(TPT).target
-	@echo '	@echo Changed files: $$?' >> $(TPT).target
-	@cd third_party; \
-	 cat ../third_party.paths | grep ^third_party.zip | sed -e's-third_party.zip/--' | (while read LINE; do \
-		PREFIX=$${LINE%% *}; \
-		for SUFFIX in $${LINE#* }; do \
-			find $$PREFIX/$$SUFFIX $(FINDARGS) >> ../$(TPT).files; \
-			echo "	cd $(CURDIR)/third_party/$$PREFIX; zip -r $(CURDIR)/third_party.zip \\" >> ../$(TPT).target; \
-			(cd $$PREFIX; find $$SUFFIX $(FINDARGS)) >> ../$(TPT).target; \
-			echo "	" >> ../$(TPT).target; \
-		done; \
-	 done)
-	@echo '' >> $(TPT).files
-	@echo 'THIRD_PARTY_here=$$(addprefix third_party/,$$(THIRD_PARTY_files)) ' >> $(TPT).files
-	@echo '' >> $(TPT).files
-	
-	@echo '' > $(TPT)
-	@cat $(TPT).files >> $(TPT)
-	@cat $(TPT).target >> $(TPT)
-	
-	@if [ ! -e $@ ]; then touch $@; fi
-	@if [ `${MD5SUM} $@ | sed -e's/ .*//'` != `${MD5SUM} $(TPT) | sed -e's/ .*//'` ]; then \
-		echo "third_party.zip.d has changed!"; \
-		mv $(TPT) $@; \
-	else \
-		echo "third_party.zip.d has not changed!"; \
-	fi
-	@rm $(TPT)*
-
-
-include third_party.zip.d
-
-###############################################################################
 ###############################################################################
 
-upload: update
-deploy: update
-update: third_party.zip
-	${APPENGINE_SDK}/appcfg.py update .
-
-serve: third_party.zip
-	python manage.py collectstatic --noinput
-	python manage.py syncdb
-	python manage.py runserver
-	#${APPENGINE_SDK}/dev_appserver.py -a 0.0.0.0 -d --enable_sendmail .
-
-clean:
-	find . -name \*.pyc -exec rm {\} \;
-	$(MAKE) -C third_party clean
-	git clean -f -d
+serve: install
+	$(ACTIVATE) && python manage.py collectstatic --noinput
+	$(ACTIVATE) && python manage.py syncdb
+	$(ACTIVATE) && python manage.py runserver
 
 edit:
 	$(EDITOR) *.py templates/*.html static/css/*.css
