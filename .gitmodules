@@ -1,36 +1,9 @@
-[submodule "third_party/aeoid"]
-	path = third_party/aeoid
-	url = git://github.com/sydney-linux-user-group-dependencies/aeoid.git
 [submodule "third_party/jquery.tweet"]
 	path = third_party/jquery.tweet
 	url = git://github.com/sydney-linux-user-group-dependencies/jquery.tweet.git
 [submodule "third_party/jquery.form"]
 	path = third_party/jquery.form
 	url = git://github.com/sydney-linux-user-group-dependencies/jquery.form.git
-[submodule "third_party/python-datetime-tz"]
-	path = third_party/python-datetime-tz
-	url = git://github.com/sydney-linux-user-group-dependencies/python-datetime-tz.git
-[submodule "third_party/python-dateutil"]
-	path = third_party/python-dateutil
-	url = git://github.com/sydney-linux-user-group-dependencies/python-dateutil.git
-[submodule "third_party/python-gae-pytz"]
-	path = third_party/python-gae-pytz
-	url = git://github.com/sydney-linux-user-group-dependencies/python-gae-pytz.git
-[submodule "third_party/python-markdown"]
-	path = third_party/python-markdown
-	url = git://github.com/sydney-linux-user-group-dependencies/python-markdown.git
-[submodule "third_party/python-markdown-extensions/subscript"]
-	path = third_party/python-markdown-extensions/subscript
-	url = git://github.com/sydney-linux-user-group-dependencies/python-markdown.subscript.git
-[submodule "third_party/python-markdown-extensions/superscript"]
-	path = third_party/python-markdown-extensions/superscript
-	url = git://github.com/sydney-linux-user-group-dependencies/python-markdown.superscript.git
-[submodule "third_party/python-pyrss2gen"]
-	path = third_party/python-pyrss2gen
-	url = git://github.com/sydney-linux-user-group-dependencies/python-pyrss2gen.git
-[submodule "third_party/python-vobject"]
-	path = third_party/python-vobject
-	url = git://github.com/sydney-linux-user-group-dependencies/python-vobject.git
 [submodule "third_party/jquery-openid"]
 	path = third_party/jquery-openid
 	url = git://github.com/jamezpolley/jquery-openid.git

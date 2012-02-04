@@ -52,7 +52,11 @@ lib: bin/activate
 	$(ACTIVATE) && pip install ez_setup
 	$(ACTIVATE) && pip install -E . -r requirements.txt
 
-install: lib
+third_party/jquery-openid:
+	git submodule init
+
+install: lib third_party/jquery-openid
+	git submodule update
 
 test: install
 	$(ACTIVATE) && unit2 discover -t ./ tests/

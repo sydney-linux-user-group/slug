@@ -3,3 +3,7 @@
 db.sqlite3
 third_party.zip
 third_party.zip.d
+bin/
+include/
+lib/
+src/
