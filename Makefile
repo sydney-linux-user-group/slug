@@ -50,7 +50,7 @@ freeze:
 
 lib: bin/activate
 	$(ACTIVATE) && pip install ez_setup
-	$(ACTIVATE) && pip install distribute==0.6.14
+	$(ACTIVATE) && pip install -U distribute
 	$(ACTIVATE) && pip install -E . -r requirements.txt
 
 third_party/jquery-openid:
