@@ -9,22 +9,6 @@ endef
 ACTIVATE = . bin/activate
 
 ###############################################################################
-## How do we calculate md5s?
-###############################################################################
-ifndef MD5SUM
-ifeq "$(shell echo -n 'Found' | md5sum 2>/dev/null)" "5d695cc28c6a7ea955162fbdd0ae42b9  -"
-MD5SUM=md5sum
-else
-#Maybe we're on a mac
-ifeq "$(shell md5 -q -s Found 2>/dev/null)" "5d695cc28c6a7ea955162fbdd0ae42b9" #md5sum of Found
-MD5SUM=md5 -r
-else
-$(error "${\n}Please install md5sum${\n}On Ubuntu/Debian run:${\n}    sudo apt-get install md5sum${\n}")
-endif # md5
-endif #md5sum
-endif #ndef MD5SUM
-
-###############################################################################
 # Export the configuration to sub-makes
 ###############################################################################
 export
@@ -32,6 +16,7 @@ export
 all: test
 
 virtualenv: bin/activate
+lib: bin/activate
 
 distclean: virtualenv-clean clean
 
@@ -48,16 +33,21 @@ bin/activate:
 freeze:
 	$(ACTIVATE) && pip freeze -E . > requirements.txt
 
-lib: bin/activate
+lib/python2.6/site-packages/distribute-0.6.24-py2.6.egg-info: lib
+	$(ACTIVATE) && pip install -U distribute
+
+lib/python2.6/site-packages/ez_setup.py: lib
 	$(ACTIVATE) && pip install ez_setup
-	$(ACTIVATE) && pip install distribute==0.6.14
-	$(ACTIVATE) && pip install -E . -r requirements.txt
 
 third_party/jquery-openid:
 	git submodule init
 
-install: lib third_party/jquery-openid
+src/pip-delete-this-directory.txt: requirements.txt
+	$(ACTIVATE) && pip install -E . -r requirements.txt
+	touch src/pip-delete-this-directory.txt
 	git submodule update
+
+install: lib/python2.6/site-packages/ez_setup.py lib/python2.6/site-packages/distribute-0.6.24-py2.6.egg-info third_party/jquery-openid src/pip-delete-this-directory.txt
 
 test: install
 	$(ACTIVATE) && unit2 discover -t ./ tests/
@@ -91,4 +81,8 @@ serve: install
 edit:
 	$(EDITOR) *.py templates/*.html static/css/*.css
 
-.PHONY : lint upload deploy serve clean edit
+private:
+	rm -rf private
+	git clone git+ssh://git@github.com/mithro/slug-private.git private
+
+.PHONY : lint upload deploy serve clean edit private
