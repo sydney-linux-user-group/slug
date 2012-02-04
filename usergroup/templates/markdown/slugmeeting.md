@@ -5,8 +5,8 @@
  * Date: Friday, {{event.start}}
  * Start: Arrive at 6pm for a 6:30pm start
  * Format: TBA
- * RSVP: {{ req.host_url }}{{event.get_url}}
- * Suggest or sign up for a talk at {{ req.host_url }}/talks
+ * RSVP: http://{{ request.get_host }}{{event.get_url}}
+ * Suggest or sign up for a talk at http://{{ request.get_host }}/talks
 
 ==== Details ====
 
@@ -23,7 +23,7 @@ Details TBA.
   48 Pirrama Road
   Pyrmont, NSW
 
- Map: http://signup.slug.org.au/map
+ Map: http://{{ request.get_host }}/map
 
 -- Getting there --
 

@@ -32,6 +32,8 @@ urlpatterns = patterns(
     (r'^events[/]?(?P<year>[^/]*)[/]?(?P<month>[^/]*)[/]?(?P<day>[^/]*)[/]?',
          'events.handler_events', {}),
 
+    (r'^event', 'events.handler_event', {}),
+
     (r'^offer/(.*)', 'offer_edit.handler', {}),
     (r'^offers', 'offers.handler', {}),
 

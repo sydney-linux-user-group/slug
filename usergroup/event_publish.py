@@ -59,11 +59,14 @@ def handler(request, event_key):
     event = shortcuts.get_object_or_404(models.Event, pk=event_key)
 
     announcement = models.Announcement(
+        created_by=request.user,
+        published_by=request.user,
         name=event.name,
         plaintext=event.plaintext,
         html=event.html)
-    event.announcement = announcement.save()
+    announcement.save()
 
+    event.announcement = announcement
     event.published = True
     event.save()
 

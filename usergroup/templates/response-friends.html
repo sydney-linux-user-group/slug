@@ -2,9 +2,10 @@
 -*- coding: utf-8 -*-
 vim: set ts=2 sw=2 et sts=2 ai:
 {% endcomment %}
+{% load gravatar %}
 {% block body %}
 
-<form class="response-answer" action="{{ event.get_url }}/response/update" method="post">
+<form class="response-answer" action="{{ event.get_url }}/response" method="post">
   {% csrf_token %}
   <input type="hidden" name="attending" value="yes">
 
