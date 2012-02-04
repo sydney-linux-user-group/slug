@@ -1,8 +1,5 @@
 # Django settings for slug project.
 
-import third_party
-third_party.setup()
-
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -30,7 +27,7 @@ DATABASES = {
 # timezone as the operating system.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
-TIME_ZONE = 'America/Chicago'
+TIME_ZONE = 'Australia/Sydney'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -95,6 +92,16 @@ TEMPLATE_LOADERS = (
 #     'django.template.loaders.eggs.Loader',
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.debug',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.media',
+    'django.core.context_processors.static',
+    'django.contrib.messages.context_processors.messages',
+    'social_auth.context_processors.social_auth_by_type_backends',
+)
+
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -103,7 +110,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
-ROOT_URLCONF = 'usergroup.urls'
+ROOT_URLCONF = 'urls'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -112,7 +119,6 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
-    'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
@@ -122,12 +128,48 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
-    'accounts',
+    'django.contrib.auth',
+    'django_extensions',
+    'social_auth',
     'usergroup',
 )
 
-AUTH_PROFILE_MODULE = ''
-LOGIN_REDIRECT_URL = '/'
+AUTHENTICATION_BACKENDS = (
+    'social_auth.backends.twitter.TwitterBackend',
+    'social_auth.backends.facebook.FacebookBackend',
+    'social_auth.backends.google.GoogleOAuthBackend',
+    'social_auth.backends.google.GoogleOAuth2Backend',
+    'social_auth.backends.google.GoogleBackend',
+    'social_auth.backends.yahoo.YahooBackend',
+    'social_auth.backends.contrib.linkedin.LinkedinBackend',
+    'social_auth.backends.contrib.foursquare.FoursquareBackend',
+    'social_auth.backends.contrib.github.GithubBackend',
+    'social_auth.backends.OpenIDBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+from private.keys import *
+
+LOGIN_URL = '/accounts/login/'
+LOGIN_ERROR_URL = '/accounts/error/'
+LOGIN_REDIRECT_URL = '/accounts/profile/'
+LOGOUT_URL = '/accounts/logout/'
+
+SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/accounts/new-users/'
+SOCIAL_AUTH_NEW_ASSOCIATION_REDIRECT_URL = '/accounts/new-association/'
+SOCIAL_AUTH_DISCONNECT_REDIRECT_URL = '/accounts/disconnected/'
+SOCIAL_AUTH_ERROR_KEY = 'social_errors'
+SOCIAL_AUTH_COMPLETE_URL_NAME  = 'socialauth_complete'
+SOCIAL_AUTH_ASSOCIATE_URL_NAME = 'socialauth_associate_complete'
+
+from django.template.defaultfilters import slugify
+SOCIAL_AUTH_USERNAME_FIXER = lambda u: slugify(u)
+SOCIAL_AUTH_EXPIRATION = 'expires'
+SOCIAL_AUTH_EXTRA_DATA = True
+SOCIAL_AUTH_SESSION_EXPIRATION = False
+SOCIAL_AUTH_ASSOCIATE_BY_MAIL = True
+SOCIAL_AUTH_SANITIZE_REDIRECTS = False
+
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

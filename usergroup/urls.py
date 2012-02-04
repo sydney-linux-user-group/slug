@@ -1,7 +1,17 @@
-from django.conf.urls.defaults import patterns
+from django.conf.urls.defaults import patterns, url, include
+
+from usergroup.accounts import *
 
 urlpatterns = patterns(
     'usergroup',
+
+    url(r'^accounts/login/$', home, name='login'),
+    url(r'^accounts/profile/$', done, name='profile'),
+    url(r'^accounts/new-association/$', done, name='profile'),
+    url(r'^accounts/new-account/$', done, name='profile'),
+    url(r'^accounts/disconnected/$', done, name='profile'),
+    url(r'^accounts/error/$', error, name='error'),
+    url(r'^accounts/logout/$', logout, name='logout'),
 
     # iCal feeds
     (r'^ical[/]?[^\.]*(?:.ics)?', 'ical.handler', {}),
