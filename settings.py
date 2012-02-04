@@ -4,7 +4,10 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 import os
-assert os.environ.has_key('VIRTUAL_ENV'), "Application must run in the virtualenv environment setup by the Makefile"
+import os.path
+import sys
+print os.path.abspath('.'), sys.path
+assert os.path.abspath('.') in sys.path, "Application must be run in the virtualenv set up by `make install`"
 
 try:
 	from private.keys import *
