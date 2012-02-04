@@ -42,11 +42,12 @@ lib/python2.6/site-packages/ez_setup.py: lib
 third_party/jquery-openid:
 	git submodule init
 
-requirements.txt.updated: requirements.txt
+src/pip-delete-this-directory.txt: requirements.txt
 	$(ACTIVATE) && pip install -E . -r requirements.txt
+	touch src/pip-delete-this-directory.txt
 	git submodule update
 
-install: lib/python2.6/site-packages/ez_setup.py lib/python2.6/site-packages/distribute-0.6.24-py2.6.egg-info third_party/jquery-openid requirements.txt.updated
+install: lib/python2.6/site-packages/ez_setup.py lib/python2.6/site-packages/distribute-0.6.24-py2.6.egg-info third_party/jquery-openid src/pip-delete-this-directory.txt
 
 test: install
 	$(ACTIVATE) && unit2 discover -t ./ tests/
