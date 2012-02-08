@@ -5,6 +5,7 @@
 
 """Module contains the models of objects used in the application."""
 
+from django.contrib import admin
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -26,6 +27,10 @@ class Announcement(models.Model):
             User, blank=False, related_name='+')
     published_on = models.DateTimeField(
             auto_now_add=True, blank=False)
+
+class AnnouncementAdmin(admin.ModelAdmin):
+    pass
+admin.site.register(Announcement, AnnouncementAdmin)
 
 
 class Event(models.Model):
@@ -54,6 +59,10 @@ class Event(models.Model):
     start = models.DateTimeField(blank=False)
     end = models.DateTimeField(blank=False)
 
+class EventAdmin(admin.ModelAdmin):
+    pass
+admin.site.register(Event, EventAdmin)
+
 
 class TalkOffer(models.Model):
     """An lightning talk to be given at an event."""
@@ -73,6 +82,10 @@ class TalkOffer(models.Model):
     minutes = models.IntegerField()
     consent = models.BooleanField()
 
+class TalkOfferAdmin(admin.ModelAdmin):
+    pass
+admin.site.register(TalkOffer, TalkOfferAdmin)
+
 
 class LightningTalk(models.Model):
     created_by = models.ForeignKey(User, blank=False, related_name='+')
@@ -83,6 +96,10 @@ class LightningTalk(models.Model):
             related_name='events')
     event = models.ForeignKey(Event, blank=False,
             related_name='agenda')
+
+class LightningTalkAdmin(admin.ModelAdmin):
+    pass
+admin.site.register(LightningTalk, LightningTalkAdmin)
 
 
 class Response(models.Model):
@@ -102,3 +119,7 @@ class Response(models.Model):
     guest = models.BooleanField(blank=False, default=False)
     guest_name = models.TextField()
     guest_email = models.EmailField()
+
+class ResponseAdmin(admin.ModelAdmin):
+    pass
+admin.site.register(Response, ResponseAdmin)

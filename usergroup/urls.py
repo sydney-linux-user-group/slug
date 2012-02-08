@@ -37,7 +37,9 @@ urlpatterns = patterns(
     (r'^offer/(.*)', 'offer_edit.handler', {}),
     (r'^offers', 'offers.handler', {}),
 
-    (r'^(?P<template>.+)', 'utils.handler_any', {}),
+    (r'^(countdown)', 'utils.handler_any'),
+    (r'^(map)', 'utils.handler_any'),
+    (r'^(refresh)', 'utils.handler_any'),
 
     (r'^$', 'events.handler_events', {
         'template': 'index.html', 'published_default': True}),

@@ -1,0 +1,15 @@
+{% extends "blank.html" %}
+{% comment %}
+-*- coding: utf-8 -*-
+vim: set ts=2 sw=2 et sts=2 ai:
+{% endcomment %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+<div>
+  {% with register_form=form %}
+  {% include "fragments/register.html" %}
+  {% endwith %}
+</div>
+{% endblock %}

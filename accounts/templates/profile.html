@@ -1,12 +1,11 @@
 {% extends "base.html" %}
-{% comment %}
--*- coding: utf-8 -*-
-vim: set ts=2 sw=2 et sts=2 ai:
-{% endcomment %}
 
 {% block title %}Profile!{% endblock %}
 
 {% block body %}
+
+<div>Welcome, {{ user.username }}. Thanks for logging in.</div>
+
 <div>
   <h3>User data:</h3>
   <table>
@@ -37,10 +36,9 @@ vim: set ts=2 sw=2 et sts=2 ai:
 </div>
 
 <div>
-  <h3>Associate new <a href="http://oauth.net/" title="OAuth">OAuth</a> credentials:</h3>
   <table class="login">
 {% with socialauth_begin_type='associate' socialauth_verb='Associate' %}
-{% include "possible.html" %}
+{% include "fragments/possible.html" %}
 {% endwith %}
   </table>
 
