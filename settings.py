@@ -10,11 +10,11 @@ print os.path.abspath('.'), sys.path
 assert os.path.abspath('.') in sys.path, "Application must be run in the virtualenv set up by `make install`"
 
 try:
-	from private.keys import *
+    from private.keys import *
 except ImportError:
-	import warnings
-	warnings.warn("Using fake keys - DON'T RUN IN PRODUCTION!", RuntimeWarning)
-	from public.keys import *
+    import warnings
+    warnings.warn("Using fake keys - DON'T RUN IN PRODUCTION!", RuntimeWarning)
+    from public.keys import *
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
@@ -193,3 +193,8 @@ LOGGING = {
         },
     }
 }
+
+try:
+    from private.settings import *
+except ImportError:
+    pass
