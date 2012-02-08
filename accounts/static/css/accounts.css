@@ -1,0 +1,92 @@
+
+table.login h4 {
+ width: 100%;
+ text-align: left;
+ font-family: 'Homenaje', sans-serif;
+ font-size: 28pt;
+ color: #aaa;
+}
+
+#oauth {
+ text-align: center;
+}
+
+#oauth a {
+ text-decoration: none;
+ border: none;
+}
+
+#openid {
+ text-align: center;
+}
+#openid h4 img {
+ vertical-align: text-bottom;
+}
+
+#openid form.openid ul li {
+ float: left;
+}
+
+#openid form.openid ul li.highlight { 
+ -moz-border-radius:35px;
+ -webkit-border-radius:35px; 
+ background-color: #FD6
+}
+#openid form.openid ul li span {
+}
+
+td.or {
+ text-align: center;
+ font-family: 'Homenaje', sans-serif;
+ font-size: 32pt;
+ color: #aaa;
+ padding: 0;
+ margin: 0;
+}
+
+td.or hr {
+ color: #aaa;
+ background-color: #aaa;
+ border: 1px solid #aaa;
+}
+
+td.or-hr hr {
+ height: 2px;
+ width: 100%;
+}
+
+td.or-hr {
+ width: 40%;
+}
+
+td.or-middle {
+ width: 5%;
+}
+
+td.vor {
+ text-align: center;
+ font-family: 'Homenaje', sans-serif;
+ font-size: 32pt;
+ color: #ddd;
+ padding: 0;
+ margin: 0;
+}
+
+td.vor hr {
+ color: #ddd;
+ background-color: #ddd;
+ border: 1px solid #ddd;
+}
+
+td.vor-hr {
+ height: 10%;
+}
+
+td.vor-middle {
+ height: 5%;
+}
+
+td.vor-hr hr {
+ width: 2px;
+ height: 40px;
+}

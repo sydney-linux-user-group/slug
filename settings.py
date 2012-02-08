@@ -102,16 +102,6 @@ TEMPLATE_LOADERS = (
 #     'django.template.loaders.eggs.Loader',
 )
 
-TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.contrib.auth.context_processors.auth',
-    'django.core.context_processors.debug',
-    'django.core.context_processors.i18n',
-    'django.core.context_processors.media',
-    'django.core.context_processors.static',
-    'django.contrib.messages.context_processors.messages',
-    'social_auth.context_processors.social_auth_by_type_backends',
-)
-
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -141,6 +131,7 @@ INSTALLED_APPS = (
     'django.contrib.auth',
     'django_extensions',
     'social_auth',
+    'accounts',
     'usergroup',
     'gunicorn',
 )
@@ -159,14 +150,14 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-LOGIN_URL = '/accounts/login/'
-LOGIN_ERROR_URL = '/accounts/error/'
-LOGIN_REDIRECT_URL = '/accounts/profile/'
-LOGOUT_URL = '/accounts/logout/'
+LOGIN_URL = '/accounts/login'
+LOGIN_ERROR_URL = '/accounts/error'
+LOGIN_REDIRECT_URL = '/accounts/profile'
+LOGOUT_URL = '/accounts/logout'
 
-SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/accounts/new-users/'
-SOCIAL_AUTH_NEW_ASSOCIATION_REDIRECT_URL = '/accounts/new-association/'
-SOCIAL_AUTH_DISCONNECT_REDIRECT_URL = '/accounts/disconnected/'
+SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/accounts/profile/new'
+SOCIAL_AUTH_NEW_ASSOCIATION_REDIRECT_URL = '/accounts/profile/association'
+SOCIAL_AUTH_DISCONNECT_REDIRECT_URL = '/accounts/disconnected'
 SOCIAL_AUTH_ERROR_KEY = 'social_errors'
 SOCIAL_AUTH_COMPLETE_URL_NAME  = 'socialauth_complete'
 SOCIAL_AUTH_ASSOCIATE_URL_NAME = 'socialauth_associate_complete'
