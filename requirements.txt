@@ -3,10 +3,10 @@
 -e git://github.com/sydney-linux-user-group-dependencies/python-markdown.git@5c7355cffd2737de2222cf33fdf047d274af3d44#egg=Markdown-dev
 -e git://github.com/sydney-linux-user-group-dependencies/python-pyrss2gen.git@1fde0e73c022e2efc1d51cd655b7369251ace4d7#egg=PyRSS2Gen-dev
 -e git://github.com/sydney-linux-user-group-dependencies/python-vobject.git@458fe5d43c7967ff444f48167d04ea6aa9c4a5da#egg=vobject-dev
+-e hg+https://bitbucket.org/ubernostrum/django-registration#egg=django-registration
 Django==1.3.1
 distribute>=0.6.14
 django-extensions==0.7.1
-django-registration==0.7.0
 django-social-auth==0.6.1
 ez-setup==0.9
 httplib2==0.7.2

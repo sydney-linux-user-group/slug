@@ -26,5 +26,5 @@ urlpatterns = patterns(
     url(r'error/*$', error, name='error'),
     url(r'logout/*$', logout, name='logout'),
     url(r'/', include('social_auth.urls')),
-    url(r'/', include('registration.urls')),
+    url(r'/', include('registration.backends.default.urls')),
 )
