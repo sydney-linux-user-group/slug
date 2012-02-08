@@ -52,6 +52,8 @@ src/pip-delete-this-directory.txt: requirements.txt
 	touch -r requirements.txt src/pip-delete-this-directory.txt
 
 install: lib/python2.6/site-packages/ez_setup.py lib/python2.6/site-packages/distribute-0.6.24-py2.6.egg-info third_party/.initialized third_party/.updated src/pip-delete-this-directory.txt
+
+prepare-serve: install
 	$(ACTIVATE) && python manage.py collectstatic --noinput
 	$(ACTIVATE) && python manage.py syncdb
 
@@ -79,7 +81,7 @@ lint: install
 ###############################################################################
 ###############################################################################
 
-serve: install
+serve: prepare-serve install
 	$(ACTIVATE) && python manage.py runserver
 
 edit:
@@ -89,4 +91,4 @@ private:
 	rm -rf private
 	git clone git+ssh://git@github.com/mithro/slug-private.git private
 
-.PHONY : lint upload deploy serve clean edit private
+.PHONY : lint upload deploy serve clean edit private prepare-serve
