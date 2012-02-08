@@ -80,7 +80,7 @@ lint: install
 serve: install
 	$(ACTIVATE) && python manage.py collectstatic --noinput
 	$(ACTIVATE) && python manage.py syncdb
-	$(ACTIVATE) && python manage.py runserve
+	$(ACTIVATE) && python manage.py runserver
 
 edit:
 	$(EDITOR) *.py templates/*.html static/css/*.css
