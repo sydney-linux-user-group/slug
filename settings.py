@@ -130,6 +130,7 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     'django.contrib.auth',
     'django_extensions',
+    'registration',
     'social_auth',
     'accounts',
     'usergroup',
@@ -170,6 +171,8 @@ SOCIAL_AUTH_SESSION_EXPIRATION = False
 SOCIAL_AUTH_ASSOCIATE_BY_MAIL = True
 SOCIAL_AUTH_SANITIZE_REDIRECTS = False
 
+# One-week activation window; you may, of course, use a different value.
+ACCOUNT_ACTIVATION_DAYS = 7
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

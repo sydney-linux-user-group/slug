@@ -1,14 +1,15 @@
-{% extends "base.html" %}
+{% extends "blank.html" %}
 {% comment %}
 -*- coding: utf-8 -*-
 vim: set ts=2 sw=2 et sts=2 ai:
 {% endcomment %}
+
 {% block title %}Login!{% endblock %}
 
 {% block body %}
 <table class="login">
 {% with socialauth_begin_type='login' socialauth_verb='Login' %}
-{% include "possible.html" %}
+{% include "fragments/possible.html" %}
 {% endwith %}
   </tr><tr>
     <td class="or or-hr"><hr></td>
@@ -17,30 +18,22 @@ vim: set ts=2 sw=2 et sts=2 ai:
   </tr><tr>
     <td id=login rowspan=3>
       <h4>Login:</h4>
-      {% if form.errors %}
-      <p>Your username and password didn't match. Please try again.</p>
-      {% endif %}
-
-      <form method="post" action="">
+      <form action="" method="POST">
         {% csrf_token %}
         <table>
+          {{ login_form.as_table }}
           <tr>
-            <td>{{ form.username.label_tag }}</td>
-            <td>{{ form.username }}</td>
-          </tr>
-          <tr>
-            <td>{{ form.password.label_tag }}</td>
-            <td>{{ form.password }}</td>
+            <td colspan=2>
+              <input type="submit" value="Login" />
+              <input type="hidden" name="next" value="{{ next }}" />
+            </td>
           </tr>
         </table>
-
-        <input type="submit" value="login" />
-        <input type="hidden" name="next" value="{{ next }}" />
       </form>
     </td>
     <td class="vor vor-hr"><hr></td>
     <td id=register rowspan=3>
-      <h4>Register:</h4>
+     {% include "fragments/register.html" %}
     </td>
   </tr><tr>
      <td class="vor vor-middle">OR</td>
