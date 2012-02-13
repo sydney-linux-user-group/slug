@@ -1,0 +1,4 @@
+CODE_REVIEW_SERVER: codereview.mithis.com
+BASE_URL: https://github.com/sydney-linux-user-group/slug
+VIEW_VC: https://github.com/sydney-linux-user-group/slug/commit/
+CC_LIST: 

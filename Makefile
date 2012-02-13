@@ -29,6 +29,7 @@ clean:
 
 bin/activate:
 	virtualenv --no-site-packages .
+	rm distribute*.tar.gz
 
 freeze:
 	$(ACTIVATE) && pip freeze -E . > requirements.txt
@@ -81,6 +82,12 @@ lint: install
 ###############################################################################
 ###############################################################################
 
+config:
+	$(ACTIVATE) && git-cl config file://$$PWD/.codereview.settings
+
+upload:
+	$(ACTIVATE) && git-cl upload
+
 serve: prepare-serve install
 	$(ACTIVATE) && python manage.py runserver
 
@@ -91,4 +98,4 @@ private:
 	rm -rf private
 	git clone git+ssh://git@github.com/mithro/slug-private.git private
 
-.PHONY : lint upload deploy serve clean edit private prepare-serve
+.PHONY : lint upload deploy serve clean config edit private prepare-serve
