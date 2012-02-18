@@ -38,8 +38,6 @@ Production Deployment
    be persisted across deployments, you may have to take care of this in your
    deploy script.
 
-   .. [1] For instance, if you're using ``sqlite`` as the database, the run
-          user will need permission to write to the ``sqlite`` file
 #. For deployment, I simply ``ssh slug@localhost -A``; this turns on agent
    forwarding so that my usual SSH keys are used to pull the code from
    bitbucket. For automated deployments, you can create a passwordless key
@@ -118,3 +116,8 @@ Production Deployment
    that the deploy user can write to and the user running nginx can read from.
 
    .. _nginx: http://nginx.org/en/
+
+.. rubric:: Footnotes
+
+.. [1] For instance, if you're using ``sqlite`` as the database, the run
+       user will need permission to write to the ``sqlite`` file
