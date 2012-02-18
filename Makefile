@@ -29,7 +29,7 @@ clean:
 
 bin/activate:
 	virtualenv --no-site-packages .
-	rm distribute*.tar.gz
+	-rm distribute*.tar.gz
 
 freeze:
 	$(ACTIVATE) && pip freeze -E . > requirements.txt
