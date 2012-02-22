@@ -61,9 +61,9 @@ vim: set ts=2 sw=2 et sts=2 ai:
         </li>
       <li>|</li>
       <li>{% if user.is_authenticated %}
-        <a href="/accounts/logout/?next=/refresh">Logout</a>
+        <a id="logout_link" href="/accounts/logout/?next=/refresh">Logout</a>
       {% else %}
-        <a class="openid_login" href="/accounts/login/?next=/refresh">Login</a>
+        <a id="login_link" class="openid_login" href="/accounts/login/?next=/refresh">Login</a>
       {% endif %}</li>
     </ul>
   </div>{% endblock %}
