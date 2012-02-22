@@ -4,23 +4,30 @@ from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.keys import Keys
 import time
-import unittest2 as unittest
 
-class TestBasicSeleniumality(unittest.TestCase):
+from django.utils import unittest
+from django import test as djangotest
+
+from liveserver.test.testcases import LiveServerTestCase
+
+class SeleniumBasicsTestCase(LiveServerTestCase):
 
     def testBasics(self):
-        browser = webdriver.Firefox() # Get local session of firefox
-        browser.get("http://localhost:8000")
+        self.browser = webdriver.Firefox() # Get local session of firefox
+        self.browser.get("%s" % self.live_server_url)
         self.assertIn("Sydney Linux User Group", browser.title)
 
     def tearDown(self):
-        self.browser.close()
+        LiveServerTestCase.tearDown(self)
+        self.browser.quit()
 
-class TestLogin(unittest.TestCase):
+class TestLogin(LiveServerTestCase):
+
+    fixtures = [ 'test_admin_user' ];
 
     def setUp(self):
         self.browser = webdriver.Firefox() # Get local session of firefox
-        self.browser.get("http://localhost:8000")
+        self.browser.get("%s" % self.live_server_url)
 
     def testLogin(self):
         login_link = self.browser.find_element_by_xpath
@@ -33,4 +40,5 @@ class TestLogin(unittest.TestCase):
         self.browser.switch_to_window("parent")
 
     def tearDown(self):
-        self.browser.close()
+        LiveServerTestCase.tearDown(self)
+        self.browser.quit()

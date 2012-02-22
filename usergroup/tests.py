@@ -1,16 +1,20 @@
-"""
-This file demonstrates writing tests using the unittest module. These will pass
-when you run "manage.py test".
+#!/usr/bin/env python
 
-Replace this with more appropriate tests for your application.
-"""
+from django.utils import unittest
+import os
+import re
 
-from django.test import TestCase
+def suite():
+    mylocation = os.path.dirname(__file__)
 
+    suite = unittest.TestSuite()
+    for dirpath, dirnames, filenames in os.walk(mylocation):
+        for filename in filenames:
+           remaining = dirpath[len(os.path.commonprefix([mylocation, dirpath])):].replace('/', '.')
+           test = "usergroup%s.%s" % (remaining, filename[:-3])
 
-class SimpleTest(TestCase):
-    def test_basic_addition(self):
-        """
-        Tests that 1 + 1 always equals 2.
-        """
-        self.assertEqual(1 + 1, 2)
+           # Unittest test
+           if filename.endswith('_test.py'):
+               suite.addTest(unittest.TestLoader().loadTestsFromName(test))
+
+    return suite
