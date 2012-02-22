@@ -1,6 +1,7 @@
 *.pyc
 *.swp
-db.sqlite3
+db.sqlite*
+testing.sqlite*
 third_party.zip
 third_party.zip.d
 private/
@@ -14,3 +15,4 @@ third_party/.updated
 tags
 build/
 .Python
+vncserver.stdout

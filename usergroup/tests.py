@@ -77,8 +77,44 @@ class VNCDisplay(object):
             self.vncserver = 'TERMINATED'
 
 
+import cStringIO as StringIO
+import sys
+from django import test as djangotest
+from django.db import connections, DEFAULT_DB_ALIAS
+from django.core.management import call_command
+
+def _fixture_setup(self, _real_fixture_setup=djangotest.TestCase._fixture_setup, _sys_stdout=sys.stdout):
+    _real_fixture_setup(self)
+
+    if getattr(self, 'multi_db', False):
+        databases = connections
+    else:
+        databases = [DEFAULT_DB_ALIAS]
+
+    for db in databases:
+        if hasattr(self, 'fixtures'):
+            for fixture in self.fixtures:
+                print "Loading fixture", fixture
+                sys.stdout = StringIO.StringIO()
+                call_command('loaddata', *[fixture], **{
+                    'verbosity': 1,
+                    'commit': False,
+                    'database': db
+                    })
+                cmd_stdout, sys.stdout = sys.stdout, _sys_stdout
+                assert "No fixtures found." not in cmd_stdout.getvalue(), \
+                    "Was not able to find fixture %s" % fixture
+                print cmd_stdout.getvalue()
+
+djangotest.TestCase._fixture_setup = _fixture_setup
+
 class UserGroupTestSuiteRunner(testsuite.DjangoTestSuiteRunner):
     """A test suite runner which can use a display."""
+
+    def setup_test_environment(self, **kwargs):
+        testsuite.setup_test_environment()
+        settings.DEBUG=False
+        unittest.installHandler()
 
     def filter_suite(self, suite, pred):
         """Recursively filter test cases in a suite based on a predicate."""

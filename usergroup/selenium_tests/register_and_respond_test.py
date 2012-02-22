@@ -21,33 +21,11 @@ from django.core import mail
 from django.utils import unittest
 from django import test as djangotest
 
-from liveserver.test.testcases import LiveServerTestCase
+from base import SeleniumTestCase
 
 
-class TestRegister(LiveServerTestCase, djangotest.TestCase):
+class TestRegister(SeleniumTestCase):
     fixtures = ['test_existing_user']
-
-    def setUp(self):
-        djangotest.TestCase.setUp(self)
-        LiveServerTestCase.setUp(self)
-        self.browser = webdriver.Firefox()
-        self.browser.get("%s" % self.live_server_url)
-        self.assertIn("Sydney Linux User Group", self.browser.title)
-
-        login_link = self.browser.find_elements_by_class_name("openid_login")
-        login_link[0].click()
-
-        self.browser.switch_to_window("login")
-
-    def tearDown(self):
-        try:
-            time.sleep(100000000)
-        except KeyboardInterrupt:
-            pass
-        LiveServerTestCase.tearDown(self)
-        djangotest.TestCase.tearDown(self)
-
-        self.browser.quit()
 
     def testFailOnNonMatchingPasswords(self):
         self.browser.find_element_by_name("username").send_keys("test")
@@ -93,5 +71,3 @@ class TestRegister(LiveServerTestCase, djangotest.TestCase):
         self.browser.find_element_by_id("submit_create").click()
 
         self.assertIn("register", self.browser.title.lower())
-
-
