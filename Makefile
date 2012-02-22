@@ -24,7 +24,7 @@ virtualenv-clean:
 	rm -rf bin include lib lib64 share src
 
 clean:
-	find . \( -name \*\.pyc -o -name \*\.dot -o -name \*\.svg -o -name \*\.png \) -delete
+	find . \( -name \*\.pyc \) -delete
 	git clean -f -d
 
 bin/activate:
