@@ -11,3 +11,6 @@ lib/
 src/
 third_party/.initialized
 third_party/.updated
+tags
+build/
+.Python
