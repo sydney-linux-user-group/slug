@@ -1,0 +1,7 @@
+Hi.
+
+Thank you for registering.
+
+Visit this link to confirm your email address and activate your account.
+
+http://{{site.domain}}{% url registration_activate activation_key=activation_key %}
