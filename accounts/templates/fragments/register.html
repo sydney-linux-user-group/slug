@@ -3,13 +3,13 @@
 vim: set ts=2 sw=2 et sts=2 ai ft=htmldjango:
 {% endcomment %}
 <h4>Create an account:</h4>
-<form action="/accounts/register" method="POST">
+<form action="/accounts/register/" method="POST">
   {% csrf_token %}
   <table>
     {{ register_form.as_table }}
     <tr>
      <td colspan=2>
-      <input type="submit" value="Create the account" />
+      <input id="submit_create" type="submit" value="Create the account" />
      </td>
     </tr>
   </table>
