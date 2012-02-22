@@ -20,3 +20,4 @@ pytz==2011n
 unittest2==0.5.1
 wsgiref==0.1.2
 gunicorn==0.13.4
+selenium
