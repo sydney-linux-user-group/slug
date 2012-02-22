@@ -6,7 +6,6 @@ TEMPLATE_DEBUG = DEBUG
 import os
 import os.path
 import sys
-print os.path.abspath('.'), sys.path
 assert os.path.abspath('.') in sys.path, "Application must be run in the virtualenv set up by `make install`"
 
 try:
@@ -48,6 +47,8 @@ TIME_ZONE = 'Australia/Sydney'
 LANGUAGE_CODE = 'en-us'
 
 SITE_ID = 1
+
+TEST_RUNNER = "usergroup.tests.UserGroupTestSuiteRunner"
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
@@ -119,6 +120,12 @@ TEMPLATE_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
 )
 
+
+OUR_APPS = (
+    'accounts',
+    'usergroup',
+)
+
 INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -133,10 +140,8 @@ INSTALLED_APPS = (
     'django_extensions',
     'registration',
     'social_auth',
-    'accounts',
-    'usergroup',
     'gunicorn',
-)
+) + OUR_APPS
 
 AUTHENTICATION_BACKENDS = (
     'social_auth.backends.twitter.TwitterBackend',
