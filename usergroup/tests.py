@@ -3,135 +3,25 @@
 # -*- coding: utf-8 -*-
 # vim: set ts=4 sw=4 et sts=4 ai:
 
+import cStringIO as StringIO
+
 import os
 import re
 import subprocess
+import sys
 
+from django import test as djangotest
+from django.core.management import call_command
 from django.conf import settings
+from django.db import connections, DEFAULT_DB_ALIAS
 from django.db.models import get_app
 from django.utils import unittest
 from django.test import simple as testsuite
 from django.test import testcases
 
-
-class RealDisplay(object):
-    """Use the users display."""
-
-    def __enter__(self):
-        pass
-    def __exit__(self, exc_type, exc_value, traceback):
-        pass
-
-
-class VNCDisplay(object):
-    """Use a VNCServer for display."""
-
-    def __init__(self, viewer=False):
-        self.display = ':10'
-        self.original = os.getenv('DISPLAY')
-
-        self.vncserver = None
-
-        self.viewer = viewer
-
-    def __enter__(self):
-        # Start the VNCServer
-        p = subprocess.Popen(
-            ' '.join(['vncserver', self.display, '-SecurityTypes', 'None']),
-            shell=True,
-            stdout=file('vncserver.stdout', 'w'),
-            stderr=subprocess.STDOUT,
-            )
-        p.wait()
-        self.vncserver = 'RUNNING'
-
-        # Set the environment
-        os.environ['DISPLAY'] = ':10'
-
-        # Start a window manager
-        winman = subprocess.Popen(
-            ' '.join(['ratpoison']),
-            shell=True,
-            )
-
-        # Start a viewer if needed
-        if self.viewer:
-            viewer = subprocess.Popen(
-                ' '.join(['vncviewer', self.display]),
-                shell=True,
-                stdout=file('vncviewer.stdout', 'w'),
-                stderr=subprocess.STDOUT,
-                env={'DISPLAY': self.original},
-                )
-
-    def __exit__(self, exc_type, exc_value, traceback):
-        if self.vncserver == 'RUNNING':
-            os.putenv('DISPLAY', self.original)
-
-            p = subprocess.Popen(
-                ' '.join(['vncserver', '-kill', self.display]),
-                shell=True,
-                )
-            p.wait()
-
-            self.vncserver = 'TERMINATED'
-
-
-import cStringIO as StringIO
-import sys
-from django import test as djangotest
-from django.db import connections, DEFAULT_DB_ALIAS
-from django.core.management import call_command
-
-
-def _fixture_setup(self, _real_fixture_setup=djangotest.TestCase._fixture_setup, _sys_stdout=sys.stdout):
-    _real_fixture_setup(self)
-
-    if getattr(self, 'multi_db', False):
-        databases = connections
-    else:
-        databases = [DEFAULT_DB_ALIAS]
-
-    for db in databases:
-        if hasattr(self, 'fixtures'):
-            for fixture in self.fixtures:
-                print "Loading fixture", fixture
-                sys.stdout = StringIO.StringIO()
-                call_command('loaddata', *[fixture], **{
-                    'verbosity': 1,
-                    'commit': False,
-                    'database': db
-                    })
-                cmd_stdout, sys.stdout = sys.stdout, _sys_stdout
-                assert "No fixtures found." not in cmd_stdout.getvalue(), \
-                    "Was not able to find fixture %s" % fixture
-                print cmd_stdout.getvalue()
-
-djangotest.TestCase._fixture_setup = _fixture_setup
-
-
-from django.core.handlers.base import BaseHandler
-def _handle_uncaught_exception(self, request, resolver, exc_info):
-    """
-    Processing for any otherwise uncaught exceptions (those that will
-    generate HTTP 500 responses). Can be overridden by subclasses who want
-    customised 500 handling.
-
-    Be *very* careful when overriding this because the error could be
-    caused by anything, so assuming something like the database is always
-    available would be an error.
-    """
-    from django.conf import settings
-    from django.core.mail.message import EmailMessage
-    from django.views import debug
-
-    if settings.DEBUG_PROPAGATE_EXCEPTIONS:
-        raise
-
-    technical_500_response = debug.technical_500_response(request, *exc_info)
-    return technical_500_response
-
-BaseHandler.handle_uncaught_exception = _handle_uncaught_exception
+from usergroup.test_utils import fix_fixtures
+from usergroup.test_utils import fix_exceptions
+from usergroup.test_utils import display_servers
 
 
 class UserGroupTestSuiteRunner(testsuite.DjangoTestSuiteRunner):
@@ -183,9 +73,9 @@ class UserGroupTestSuiteRunner(testsuite.DjangoTestSuiteRunner):
 
     def run_tests(self, *args, **kwargs):
         if os.environ.get('TEST_DISPLAY', '') in ('1', 'True'):
-            server = RealDisplay()
+            server = display_servers.RealDisplay()
         else:
-            server = VNCDisplay()
+            server = display_servers.VNCDisplay()
 
         with server:
             return testsuite.DjangoTestSuiteRunner.run_tests(self, *args, **kwargs)

@@ -3,11 +3,12 @@
 # -*- coding: utf-8 -*-
 # vim: set ts=4 sw=4 et sts=4 ai:
 
+import time
+
 from selenium import webdriver
 from selenium.selenium import selenium
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.keys import Keys
-import time
 
 from django.conf import settings
 from django.utils import unittest
@@ -26,11 +27,10 @@ class BrowserQuiter(object):
         self.browser.quit()
 
 
-class SeleniumTestCase(django.test.TestCase, LiveServerTestCase):
+class SeleniumTestCase(LiveServerTestCase):
     fixtures = []
 
     def setUp(self):
-        django.test.TestCase.setUp(self)
         LiveServerTestCase.setUp(self)
 
         self.browser = webdriver.Firefox()
@@ -41,10 +41,8 @@ class SeleniumTestCase(django.test.TestCase, LiveServerTestCase):
         self.main_window_handle = self.browser.window_handles[0]
 
     def tearDown(self):
-        time.sleep(120)
         del self.browser_quiter
         LiveServerTestCase.tearDown(self)
-        django.test.TestCase.tearDown(self)
 
     def doLogin(self, username, password):
         login_link = self.browser.find_element_by_id("login_link")
