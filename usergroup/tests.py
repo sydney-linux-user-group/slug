@@ -83,6 +83,7 @@ from django import test as djangotest
 from django.db import connections, DEFAULT_DB_ALIAS
 from django.core.management import call_command
 
+
 def _fixture_setup(self, _real_fixture_setup=djangotest.TestCase._fixture_setup, _sys_stdout=sys.stdout):
     _real_fixture_setup(self)
 
@@ -107,6 +108,31 @@ def _fixture_setup(self, _real_fixture_setup=djangotest.TestCase._fixture_setup,
                 print cmd_stdout.getvalue()
 
 djangotest.TestCase._fixture_setup = _fixture_setup
+
+
+from django.core.handlers.base import BaseHandler
+def _handle_uncaught_exception(self, request, resolver, exc_info):
+    """
+    Processing for any otherwise uncaught exceptions (those that will
+    generate HTTP 500 responses). Can be overridden by subclasses who want
+    customised 500 handling.
+
+    Be *very* careful when overriding this because the error could be
+    caused by anything, so assuming something like the database is always
+    available would be an error.
+    """
+    from django.conf import settings
+    from django.core.mail.message import EmailMessage
+    from django.views import debug
+
+    if settings.DEBUG_PROPAGATE_EXCEPTIONS:
+        raise
+
+    technical_500_response = debug.technical_500_response(request, *exc_info)
+    return technical_500_response
+
+BaseHandler.handle_uncaught_exception = _handle_uncaught_exception
+
 
 class UserGroupTestSuiteRunner(testsuite.DjangoTestSuiteRunner):
     """A test suite runner which can use a display."""
