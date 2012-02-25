@@ -89,18 +89,18 @@ put in your base directory.
         del self.browser_quitter
         LiveServerTestCase.tearDown(self)
 
-    def doLogin(self, username="admin", password="admin"):
+    def doLogin(self, username="admin", password="admin", wait=True):
         login_link = self.browser.find_element_by_id("login_link")
         login_link.click()
         self.browser.switch_to_window("login")
         self.browser.find_elements_by_name("username")[0].send_keys(username)
         self.browser.find_element_by_id("id_password").send_keys(password)
         self.browser.find_element_by_id("submit_login").click()
-
-        WebDriverWait(self.browser, 30).until(lambda b: len(b.window_handles) == 1)
-        self.browser.switch_to_window(self.main_window_handle)
-        #Pause for up to implicitly_wait seconds until it page is loaded
-        self.browser.find_element_by_id("content")
+        if wait:
+            WebDriverWait(self.browser, 30).until(lambda b: len(b.window_handles) == 1)
+            self.browser.switch_to_window(self.main_window_handle)
+            #Pause for up to implicitly_wait seconds until it page is loaded
+            self.browser.find_element_by_id("content")
 
     def doLogout(self):
         self.browser.switch_to_window(self.main_window_handle)
