@@ -32,6 +32,12 @@ class TestEventCreationAndPublication(SeleniumTestCase):
         event_url = self.browser.current_url
         return event_url
 
+    def get_id_and_action_from_url(self, event_url):
+        event_url = event_url.split('/')[-3:]
+        event_id = event_url[1]
+        event_action = event_url[2]
+        return event_id, event_action
+
     def testLoginAndLogout(self):
         self.assertEqual(1, len(self.browser.window_handles))
         self.doLogin()
@@ -43,8 +49,24 @@ class TestEventCreationAndPublication(SeleniumTestCase):
     def testCreateEvent(self):
         self.doLogin()
         event_url = self.do_create_event()
-        event_url = event_url.split('/')[-3:]
-        event_id = event_url[1]
-        self.assertEqual(event_url[-1], 'edit')
+        event_id, event_action = self.get_id_and_action_from_url(event_url)
+        self.assertEqual(event_action, 'edit')
         self.assertNotIn(u"Traceback", self.browser.page_source)
         self.assertIn(u"Suggest or sign up", self.browser.page_source)
+
+    def testNewEventReadyToPublish(self):
+        self.doLogin()
+        event_url = self.do_create_event()
+        event_id, _ = self.get_id_and_action_from_url(event_url)
+        self.browser.find_element_by_id("events_link").click()
+        submit = self.browser.find_element_by_id("submit_%s" % event_id)
+        submit_text = submit.get_attribute("value")
+        self.assertEqual(u"Publish event", submit_text, msg=submit)
+
+    def testUnpublishedEventInvisibleToAnonymousUsers(self):
+        self.doLogin()
+        event_url = self.do_create_event()
+        event_url = event_url.split('/')[-3:]
+        event_id = event_url[1]
+        self.doLogout()
+        self.browser.get("%s" % self.live_server_url)
