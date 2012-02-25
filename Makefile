@@ -59,7 +59,7 @@ prepare-serve: install
 	$(ACTIVATE) && python manage.py syncdb
 
 test: install
-	$(ACTIVATE) && TEST_DISPLAY=1 python manage.py test -v 2 usergroup.selenium_tests.create_meeting_test
+	$(ACTIVATE) && TEST_DISPLAY=1 python manage.py test -v 2 usergroup.selenium_tests
 
 lint: install
 	@# R0904 - Disable "Too many public methods" warning
