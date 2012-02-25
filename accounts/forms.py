@@ -5,6 +5,7 @@
 
 from django.contrib.auth import authenticate
 from django.contrib.auth import forms as login_forms
+import django.forms
 
 
 class AuthenticationWithInActiveForm(login_forms.AuthenticationForm):
@@ -16,6 +17,6 @@ class AuthenticationWithInActiveForm(login_forms.AuthenticationForm):
         if username and password:
             self.user_cache = authenticate(username=username, password=password)
             if self.user_cache is None:
-                raise forms.ValidationError(_("Please enter a correct username and password. Note that both fields are case-sensitive."))
+                raise django.forms.ValidationError(("Please enter a correct username and password. Note that both fields are case-sensitive."))
         self.check_for_test_cookie()
         return self.cleaned_data
