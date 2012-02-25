@@ -3,7 +3,9 @@
 # -*- coding: utf-8 -*-
 # vim: set ts=4 sw=4 et sts=4 ai:
 
+import cStringIO as StringIO
 import os
+import sys
 import time
 import warnings
 
@@ -53,6 +55,21 @@ class SeleniumTestCase(LiveServerTestCase):
         self.browser.get("%s" % self.live_server_url)
         self.assertIn("Sydney Linux User Group", self.browser.title)
         self.main_window_handle = self.browser.window_handles[0]
+
+    def _formatMessage(self, msg, standardMsg):
+        s = StringIO.StringIO()
+        s.write(LiveServerTestCase._formatMessage(self, msg, standardMsg))
+        s.write("\n")
+        s.write("\n")
+        s.write("failure url: %s\n" % self.browser.current_url)
+        s.write("failure page source\n")
+        s.write("-"*80)
+        s.write("\n")
+        s.write(self.browser.page_source)
+        s.write("\n")
+        s.write("-"*80)
+        s.write("\n")
+        return s.getvalue()
 
     def tearDown(self):
         del self.browser_quiter
