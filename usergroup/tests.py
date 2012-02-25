@@ -30,6 +30,9 @@ class UserGroupTestSuiteRunner(testsuite.DjangoTestSuiteRunner):
     def setup_test_environment(self, **kwargs):
         testsuite.setup_test_environment()
         settings.DEBUG=False
+        settings.TEMPLATE_CONTEXT_PROCESSORS = list(settings.TEMPLATE_CONTEXT_PROCESSORS) + [
+            'usergroup.test_utils.testing_context.extra'
+        ]
         unittest.installHandler()
 
     def filter_suite(self, suite, pred):

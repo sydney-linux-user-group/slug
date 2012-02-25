@@ -40,15 +40,27 @@ class SeleniumTestCase(LiveServerTestCase):
     def setUp(self):
         LiveServerTestCase.setUp(self)
 
-        profile = FirefoxProfile()
-        profile.set_preference('plugins.hide_infobar_for_missing_plugin', True)
+        browser = os.environ.get("TEST_DRIVER", "firefox")
+        if browser == "firefox":
+            profile = FirefoxProfile()
+            profile.set_preference('plugins.hide_infobar_for_missing_plugin', True)
 
-        firefox_bin = os.path.join('firefox', 'firefox')
-        if os.path.exists(firefox_bin):
-            self.browser = webdriver.Firefox(firefox_profile=profile, firefox_binary=FirefoxBinary(firefox_bin))
-        else:
-            warnings.warn("Using your default firefox, this can be unreliable!")
-            self.browser = webdriver.Firefox(firefox_profile=profile)
+            firefox_bin = os.path.join(os.getcwd(), 'firefox', 'firefox')
+            if os.path.exists(firefox_bin):
+                self.browser = webdriver.Firefox(firefox_profile=profile, firefox_binary=FirefoxBinary(firefox_bin))
+            else:
+                warnings.warn("Using your default firefox, this can be unreliable!")
+                self.browser = webdriver.Firefox(firefox_profile=profile)
+        elif browser == "chrome":
+            chromedriver_bin = os.path.join(os.getcwd(), 'chromedriver')
+            if not os.path.exists(chromedriver_bin):
+                raise SystemError("""\
+Unable to find chromedriver binary.
+
+Please download from http://code.google.com/p/chromedriver/downloads/list and
+put in your base directory.
+""")
+            self.browser = webdriver.Chrome(executable_path=chromedriver_bin)
 
         self.browser_quitter = BrowserQuitter(self.browser)
 
