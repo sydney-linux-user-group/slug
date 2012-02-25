@@ -34,6 +34,7 @@ class SeleniumTestCase(LiveServerTestCase):
         LiveServerTestCase.setUp(self)
 
         self.browser = webdriver.Firefox()
+        self.browser.implicitly_wait(10)
         self.browser_quiter = BrowserQuitter(self.browser)
 
         self.browser.get("%s" % self.live_server_url)

@@ -25,16 +25,13 @@ class TestLogin(SeleniumTestCase):
         login_link = self.browser.find_element_by_id("login_link")
         login_link.click()
         self.browser.switch_to_window("login")
-        time.sleep(5) # FIXME(mithro): Change this to a normal for something...
         self.browser.find_element_by_name("username").send_keys("admin")
         self.browser.find_element_by_id("id_password").send_keys("admin")
         self.browser.find_element_by_id("submit_login").click()
-        time.sleep(5) # FIXME(mithro): Change this to a normal for something...
         self.browser.switch_to_window(self.main_window_handle)
 
     def do_create_event(self):
         self.browser.find_element_by_id("add_event").click()
-        time.sleep(5) # FIXME(jpolley): Wait for page to load
         fridays = Select(self.browser.find_element_by_id("fridays"))
         fridays.select_by_index(1)
         templates = Select(self.browser.find_element_by_id("templates"))
@@ -60,7 +57,6 @@ class TestLogin(SeleniumTestCase):
         self.assertEqual(event_url[-1], 'edit')
         self.assertNotIn(u"Traceback", self.browser.page_source)
         self.assertIn(u"Suggest or sign up", self.browser.page_source)
-        time.sleep(60)
 
 
 
