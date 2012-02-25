@@ -15,6 +15,7 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 from selenium.webdriver.firefox.firefox_profile import FirefoxProfile
+from selenium.webdriver.support.ui import WebDriverWait
 
 from django.conf import settings
 from django.utils import unittest
@@ -80,9 +81,11 @@ class SeleniumTestCase(LiveServerTestCase):
         login_link = self.browser.find_element_by_id("login_link")
         login_link.click()
         self.browser.switch_to_window("login")
-        self.browser.find_element_by_name("username").send_keys("admin")
-        self.browser.find_element_by_id("id_password").send_keys("admin")
+        self.browser.find_elements_by_name("username")[0].send_keys(username)
+        self.browser.find_element_by_id("id_password").send_keys(password)
         self.browser.find_element_by_id("submit_login").click()
+
+        WebDriverWait(self.browser, 30).until(lambda b: len(b.window_handles) == 1)
         self.browser.switch_to_window(self.main_window_handle)
         self.assertIn("Sydney Linux User Group", self.browser.title)
 
