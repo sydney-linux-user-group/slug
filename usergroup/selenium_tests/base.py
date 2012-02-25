@@ -3,12 +3,16 @@
 # -*- coding: utf-8 -*-
 # vim: set ts=4 sw=4 et sts=4 ai:
 
+import os
 import time
+import warnings
 
 from selenium import webdriver
 from selenium.selenium import selenium
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
+from selenium.webdriver.firefox.firefox_profile import FirefoxProfile
 
 from django.conf import settings
 from django.utils import unittest
@@ -33,7 +37,17 @@ class SeleniumTestCase(LiveServerTestCase):
     def setUp(self):
         LiveServerTestCase.setUp(self)
 
-        self.browser = webdriver.Firefox()
+        profile = FirefoxProfile()
+        profile.set_preference('plugins.hide_infobar_for_missing_plugin', True)
+
+
+        firefox_bin = os.path.join('firefox', 'firefox')
+        if os.path.exists(firefox_bin):
+            self.browser = webdriver.Firefox(firefox_profile=profile, firefox_binary=FirefoxBinary(firefox_bin))
+        else:
+            warnings.warn("Using your default firefox, this can be unreliable!")
+            self.browser = webdriver.Firefox(firefox_profile=profile)
+
         self.browser_quiter = BrowserQuiter(self.browser)
 
         self.browser.get("%s" % self.live_server_url)
