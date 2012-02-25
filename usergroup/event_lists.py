@@ -9,6 +9,7 @@
 import datetime
 
 # Django Imports
+import django
 
 # Third Party imports
 
@@ -25,7 +26,7 @@ def get_date(**kw):
 def get_event_responses(event, user):
     response = None
     guests = []
-    if user:
+    if not isinstance(user, django.contrib.auth.models.AnonymousUser):
         q = models.Response.objects.all(
                 ).filter(event__exact=event
                 ).filter(created_by__exact=user)

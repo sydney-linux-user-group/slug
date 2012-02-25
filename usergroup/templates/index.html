@@ -77,7 +77,7 @@ vim: set ts=2 sw=2 et sts=2 ai:
       <h2>{{ event_list.name }}</h2>
       <ul>
         {% for event, response, guests in event_list.events %}
-          <li class=eventitem>
+        <li id="event_item_{{ event.pk }}" class=eventitem>
             <div class=respond id="{{ event.key.id }}">
               {% include "response-show.html" %}
             </div>
