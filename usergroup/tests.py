@@ -7,11 +7,13 @@ import cStringIO as StringIO
 
 import os
 import re
+import socket
 import subprocess
 import sys
 
 from django import test as djangotest
 from django.core.management import call_command
+from django.core.servers import basehttp
 from django.conf import settings
 from django.db import connections, DEFAULT_DB_ALIAS
 from django.db.models import get_app
@@ -23,6 +25,12 @@ from usergroup.test_utils import fix_fixtures
 from usergroup.test_utils import fix_exceptions
 from usergroup.test_utils import display_servers
 
+def finish_response(self, f=basehttp.ServerHandler.finish_response):
+    try:
+        f(self)
+    except socket.error:
+        self.close()
+basehttp.ServerHandler.finish_response = finish_response
 
 class UserGroupTestSuiteRunner(testsuite.DjangoTestSuiteRunner):
     """A test suite runner which can use a display."""
@@ -52,7 +60,10 @@ class UserGroupTestSuiteRunner(testsuite.DjangoTestSuiteRunner):
 
         if test_labels:
             for label in test_labels:
-                appname, test = label.split('.', 1)
+                if '.' in label:
+                    appname, test = label.split('.', 1)
+                else:
+                    appname, test = label, ''
 
                 def filter_test(testcase, testprefix=label):
                     testname = "%s.%s.%s" % (testcase.__class__.__module__, testcase.__class__.__name__, testcase)
