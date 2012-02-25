@@ -49,7 +49,7 @@ class SeleniumTestCase(LiveServerTestCase):
             warnings.warn("Using your default firefox, this can be unreliable!")
             self.browser = webdriver.Firefox(firefox_profile=profile)
 
-        self.browser_quiter = BrowserQuitter(self.browser)
+        self.browser_quitter = BrowserQuitter(self.browser)
 
         self.browser.implicitly_wait(10)
 
@@ -73,7 +73,7 @@ class SeleniumTestCase(LiveServerTestCase):
         return s.getvalue()
 
     def tearDown(self):
-        del self.browser_quiter
+        del self.browser_quitter
         LiveServerTestCase.tearDown(self)
 
     def doLogin(self, username, password):
