@@ -45,7 +45,7 @@ class VNCDisplay(object):
 
         # Start a window manager
         winman = subprocess.Popen(
-            ' '.join(['ratpoison']),
+            ' '.join(['metacity']),
             shell=True,
             )
 
