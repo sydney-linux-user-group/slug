@@ -21,10 +21,10 @@ class TestEventCreationAndPublication(SeleniumTestCase):
 
     fixtures = [ 'test_admin_user' ]
 
-    def do_create_event(self):
+    def do_create_event(self, friday=1):
         self.browser.find_element_by_id("add_event").click()
         fridays = Select(self.browser.find_element_by_id("fridays"))
-        fridays.select_by_index(1)
+        fridays.select_by_index(friday)
         templates = Select(self.browser.find_element_by_id("templates"))
         templates.select_by_visible_text("slugmeeting")
         self.browser.find_element_by_id("event_name").send_keys("Sample Event")
@@ -47,6 +47,7 @@ class TestEventCreationAndPublication(SeleniumTestCase):
         logout_link.click()
 
     def testCreateEvent(self):
+        """Create event; should not get a Traceback. Should end up on /edit"""
         self.doLogin()
         event_url = self.do_create_event()
         event_id, event_action = self.get_id_and_action_from_url(event_url)
@@ -55,6 +56,7 @@ class TestEventCreationAndPublication(SeleniumTestCase):
         self.assertIn(u"Suggest or sign up", self.browser.page_source)
 
     def testNewEventReadyToPublish(self):
+        """Newly created events should be in the unpublished state."""
         self.doLogin()
         event_url = self.do_create_event()
         event_id, _ = self.get_id_and_action_from_url(event_url)
@@ -64,9 +66,25 @@ class TestEventCreationAndPublication(SeleniumTestCase):
         self.assertEqual(u"Publish event", submit_text, msg=submit)
 
     def testUnpublishedEventInvisibleToAnonymousUsers(self):
+        """Create two events; publish one; log out. Should only see one event."""
         self.doLogin()
+        #create first event
         event_url = self.do_create_event()
-        event_url = event_url.split('/')[-3:]
-        event_id = event_url[1]
+        first_event_id, _ = self.get_id_and_action_from_url(event_url)
+        #create second event
+        event_url = self.do_create_event(friday=2)
+        second_event_id, _ = self.get_id_and_action_from_url(event_url)
+        #Go to events page; publish first event
+        self.browser.find_element_by_id("events_link").click()
+        submit = self.browser.find_element_by_id("submit_%s" % first_event_id)
+        submit.click()
         self.doLogout()
-        self.browser.get("%s" % self.live_server_url)
+        #Check that the front page rendered okay
+        self.assertNotIn(u"Traceback", self.browser.page_source)
+        self.assertEqual(self.browser.current_url, self.live_server_url + u"/")
+        #Check that we can see the first event
+        first_event_item = self.browser.find_element_by_id(
+                "event_item_%s" % first_event_id)
+        #Check that we can't see the second event
+        self.assertNotIn(u"event_item_%s" % second_event_id,
+                self.browser.page_source)
