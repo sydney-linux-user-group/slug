@@ -19,8 +19,7 @@ class TestLogin(SeleniumTestCase):
 
     fixtures = [ 'test_admin_user' ]
 
-    def testLoginAndLogout(self):
-        self.assertEqual(1, len(self.browser.window_handles))
+    def do_login(self):
         login_link = self.browser.find_element_by_id("login_link")
         login_link.click()
         self.browser.switch_to_window("login")
@@ -30,6 +29,10 @@ class TestLogin(SeleniumTestCase):
         self.browser.find_element_by_id("submit_login").click()
         time.sleep(5) # FIXME: Change this to a normal for something...
         self.browser.switch_to_window(self.main_window_handle)
+
+    def testLoginAndLogout(self):
+        self.assertEqual(1, len(self.browser.window_handles))
+        self.do_login()
         self.assertEqual(1, len(self.browser.window_handles))
         self.assertIn("Sydney Linux User Group", self.browser.title)
         logout_link = self.browser.find_element_by_id("logout_link")
