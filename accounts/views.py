@@ -12,6 +12,8 @@ from django.contrib.messages.api import get_messages
 
 import social_auth.backends
 
+import accounts.triggers
+
 # Add in a URL which can be used to check it this person is logged into that service
 social_auth.backends.twitter.TwitterBackend.loggedin_test = 'https://twitter.com/account/use_phx?setting=false&amp;format=text'
 social_auth.backends.facebook.FacebookBackend.loggedin_test = 'https://www.facebook.com/imike3'

@@ -1,20 +1,26 @@
+#!/usr/bin/python
+#
+# -*- coding: utf-8 -*-
+# vim: set ts=4 sw=4 et sts=4 ai:
+
 from django.conf.urls.defaults import patterns, url, include
 from django.contrib.auth import views
 
 from accounts.views import *
 
 from registration import forms as register_forms
-from django.contrib.auth import forms as login_forms
+from accounts import forms as login_forms
+
 
 urlpatterns = patterns(
     'accounts',
 
     url(r'login/*$', views.login,
-	{'template_name': 'login.html',
+	    {'template_name': 'login.html',
+         'authentication_form': login_forms.AuthenticationWithInActiveForm,
          'extra_context': {
-            'login_form':  login_forms.AuthenticationForm(),
-            'register_form': register_forms.RegistrationForm(),
-	    'providers': PROVIDERS,
+            'register_form': register_forms.RegistrationFormUniqueEmail(),
+	        'providers': PROVIDERS,
     	    'openid_providers': OPENID_PROVIDERS,
             },
         }),
@@ -26,5 +32,6 @@ urlpatterns = patterns(
     url(r'error/*$', error, name='error'),
     url(r'logout/*$', logout, name='logout'),
     url(r'', include('social_auth.urls')),
-    url(r'', include('registration.backends.default.urls')),
+    url(r'', include('registration.backends.default.urls'),
+        {'form_class': register_forms.RegistrationFormUniqueEmail}),
 )
