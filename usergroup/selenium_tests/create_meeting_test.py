@@ -57,7 +57,11 @@ class TestLogin(SeleniumTestCase):
         event_url = self.do_create_event()
         event_url = event_url.split('/')[-3:]
         event_id = event_url[1]
+        self.assertEqual(event_url[-1], 'add')
+        self.assertNotIn(u"Traceback", self.browser.page_source)
         self.assertIn(u"Suggest or sign up", self.browser.page_source)
+        time.sleep(60)
+
 
 
 
