@@ -118,8 +118,8 @@ vim: set ts=2 sw=2 et sts=2 ai:
 <script type="text/javascript">
 function openid_login() {
   var url = '/accounts/login/?next=/refresh';
-  var width  = 400;
-  var height = 400;
+  var width  = 750;
+  var height = 600;
   var left   = (screen.width  - width)/2;
   var top    = (screen.height - height)/2;
   var params = 'width='+width+', height='+height;
@@ -128,7 +128,7 @@ function openid_login() {
   params += ', location=no';
   params += ', menubar=no';
   params += ', resizable=no';
-  params += ', scrollbars=no';
+  params += ', scrollbars=yes';
   params += ', status=no';
   params += ', toolbar=no';
   newwin=window.open(url,'login', params);
