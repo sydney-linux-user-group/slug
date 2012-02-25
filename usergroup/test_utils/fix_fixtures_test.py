@@ -9,19 +9,20 @@
 from django.utils import unittest
 from django import test as djangotest
 
+from usergroup.test_utils import fix_fixtures
+
 
 class FixFixturesTestCase(unittest.TestCase):
 
     def testNonExistant(self):
-        suite = unittest.TestSuite()
-
         class TestTestCase(djangotest.TransactionTestCase):
             fixtures = ['nonexistent']
 
-        testPass = False
-        try:
-            suite.addTest(TestTestCase())
-        except AssertionError, e:
-            testPass = True
+            def testNop(self):
+                print "testNop 1"
+                self.asserTrue(True)
+                print "testNop 2"
 
-        self.assertTrue(testPase)
+        r = unittest.TestResult()
+        TestTestCase('testNop')(r)
+        self.assertEqual(r.errors[0][-1].split('\n')[-2], "AssertionError: Was not able to find fixture nonexistent")
