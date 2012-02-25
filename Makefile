@@ -56,6 +56,9 @@ prepare-serve: install
 test: install
 	$(ACTIVATE) && TEST_DISPLAY=1 python manage.py test -v 2 usergroup.selenium_tests
 
+chrometest: install
+	$(ACTIVATE) && TEST_DRIVER="chrome" TEST_DISPLAY=1 python manage.py test -v 2 usergroup.selenium_tests
+
 lint: install
 	@# R0904 - Disable "Too many public methods" warning
 	@# W0221 - Disable "Arguments differ from parent", as get and post will.
