@@ -39,6 +39,7 @@ urlpatterns = patterns(
 
     (r'^(countdown)', 'utils.handler_any'),
     (r'^(map)', 'utils.handler_any'),
+    (r'^(noevent)', 'utils.handler_any'),
     (r'^(refresh)', 'utils.handler_any'),
 
     (r'^$', 'events.handler_events', {

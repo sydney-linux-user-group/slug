@@ -17,18 +17,9 @@ from django import test as djangotest
 from base import SeleniumTestCase
 
 
-class TestLogin(SeleniumTestCase):
+class TestEventCreationAndPublication(SeleniumTestCase):
 
     fixtures = [ 'test_admin_user' ]
-
-    def do_login(self):
-        login_link = self.browser.find_element_by_id("login_link")
-        login_link.click()
-        self.browser.switch_to_window("login")
-        self.browser.find_element_by_name("username").send_keys("admin")
-        self.browser.find_element_by_id("id_password").send_keys("admin")
-        self.browser.find_element_by_id("submit_login").click()
-        self.browser.switch_to_window(self.main_window_handle)
 
     def do_create_event(self):
         self.browser.find_element_by_id("add_event").click()
@@ -43,22 +34,17 @@ class TestLogin(SeleniumTestCase):
 
     def testLoginAndLogout(self):
         self.assertEqual(1, len(self.browser.window_handles))
-        self.do_login()
+        self.doLogin()
         self.assertEqual(1, len(self.browser.window_handles))
         self.assertIn("Sydney Linux User Group", self.browser.title)
         logout_link = self.browser.find_element_by_id("logout_link")
         logout_link.click()
 
     def testCreateEvent(self):
-        self.do_login()
+        self.doLogin()
         event_url = self.do_create_event()
         event_url = event_url.split('/')[-3:]
         event_id = event_url[1]
         self.assertEqual(event_url[-1], 'edit')
         self.assertNotIn(u"Traceback", self.browser.page_source)
         self.assertIn(u"Suggest or sign up", self.browser.page_source)
-
-
-
-
-
