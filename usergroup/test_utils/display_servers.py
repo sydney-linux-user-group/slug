@@ -47,6 +47,8 @@ class VNCDisplay(object):
         winman = subprocess.Popen(
             ' '.join(['metacity']),
             shell=True,
+            stdout=open(os.devnull,'w'),
+            stderr=open(os.devnull,'w'),
             )
 
         # Start a viewer if needed
