@@ -17,7 +17,7 @@ import django.test
 from liveserver.test.testcases import LiveServerTestCase
 
 
-class BrowserQuiter(object):
+class BrowserQuitter(object):
     """Helper class which always causes the browser object to close."""
     def __init__(self, browser):
         self.browser = browser
@@ -34,7 +34,7 @@ class SeleniumTestCase(LiveServerTestCase):
         LiveServerTestCase.setUp(self)
 
         self.browser = webdriver.Firefox()
-        self.browser_quiter = BrowserQuiter(self.browser)
+        self.browser_quiter = BrowserQuitter(self.browser)
 
         self.browser.get("%s" % self.live_server_url)
         self.assertIn("Sydney Linux User Group", self.browser.title)
