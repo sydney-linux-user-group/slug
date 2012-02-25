@@ -33,22 +33,22 @@ vim: set ts=2 sw=2 et sts=2 ai:
             {{ event.start }} - {{ event.end }}
             {% if user.is_staff %}
               <a href="{{ event.get_url }}/edit">Edit</a>
-              <div id=publishform>
+              <div class=publishform id="publish_{{ event.pk }}">
                 {% ifnotequal event.html event.announcement.html %}
                 <form name="publish" action="{{ event.get_url }}/publish" method="post">
                 {% csrf_token %}
                 {% if event.published %} <!-- Event was published, then changed"-->
-                  <input type="submit" value="Re-publish event">
+                <input id="submit_{{ event.pk }}" type="submit" value="Re-publish event">
                   <p>Cannot send announcement email until after republishing.</p>
                 {% else %} <!-- event not ever published -->
-                  <input type="submit" value="Publish event">
+                <input id="submit_{{ event.pk }}" type="submit" value="Publish event">
                 {% endif %}
                 </form>
                 {% else %} <!-- No change -->
                 <p>Already published</p>
                 <form name="sendemail" action="{{ event.get_url }}/email" method=post>
                   {% csrf_token %}
-                  <input type="submit" value="Announce event via email">
+                  <input id="submit_{{ event.pk }}" type="submit" value="Announce event via email">
                 </form>
                 {% endifnotequal %} <!-- No change -->
               </div>
