@@ -32,7 +32,7 @@ bin/activate:
 	-rm distribute*.tar.gz
 
 freeze:
-	$(ACTIVATE) && pip freeze -E . > requirements.txt
+	$(ACTIVATE) && pip freeze > requirements.txt
 
 lib/python2.6/site-packages/distribute-0.6.24-py2.6.egg-info: lib
 	$(ACTIVATE) && pip install -U distribute
@@ -44,7 +44,7 @@ third_party:
 	cd third_party && make
 
 src/pip-delete-this-directory.txt: requirements.txt
-	$(ACTIVATE) && pip install -E . -r requirements.txt
+	$(ACTIVATE) && pip install -r requirements.txt
 	touch -r requirements.txt src/pip-delete-this-directory.txt
 
 install: lib/python2.6/site-packages/ez_setup.py lib/python2.6/site-packages/distribute-0.6.24-py2.6.egg-info third_party src/pip-delete-this-directory.txt
