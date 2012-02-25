@@ -52,7 +52,7 @@ class UserGroupTestSuiteRunner(testsuite.DjangoTestSuiteRunner):
                 appname, test = label.split('.', 1)
 
                 def filter_test(testcase, testprefix=label):
-                    testname = "%s.%s" % (testcase.__class__.__module__, testcase.__class__.__name__)
+                    testname = "%s.%s.%s" % (testcase.__class__.__module__, testcase.__class__.__name__, testcase)
                     return testname.startswith(testprefix)
 
                 app = get_app(appname)
