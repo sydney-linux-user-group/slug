@@ -3,12 +3,18 @@
 # -*- coding: utf-8 -*-
 # vim: set ts=4 sw=4 et sts=4 ai:
 
+import cStringIO as StringIO
+import os
+import sys
 import time
+import warnings
 
 from selenium import webdriver
 from selenium.selenium import selenium
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
+from selenium.webdriver.firefox.firefox_profile import FirefoxProfile
 
 from django.conf import settings
 from django.utils import unittest
@@ -17,7 +23,7 @@ import django.test
 from liveserver.test.testcases import LiveServerTestCase
 
 
-class BrowserQuiter(object):
+class BrowserQuitter(object):
     """Helper class which always causes the browser object to close."""
     def __init__(self, browser):
         self.browser = browser
@@ -33,15 +39,41 @@ class SeleniumTestCase(LiveServerTestCase):
     def setUp(self):
         LiveServerTestCase.setUp(self)
 
-        self.browser = webdriver.Firefox()
-        self.browser_quiter = BrowserQuiter(self.browser)
+        profile = FirefoxProfile()
+        profile.set_preference('plugins.hide_infobar_for_missing_plugin', True)
+
+        firefox_bin = os.path.join('firefox', 'firefox')
+        if os.path.exists(firefox_bin):
+            self.browser = webdriver.Firefox(firefox_profile=profile, firefox_binary=FirefoxBinary(firefox_bin))
+        else:
+            warnings.warn("Using your default firefox, this can be unreliable!")
+            self.browser = webdriver.Firefox(firefox_profile=profile)
+
+        self.browser_quitter = BrowserQuitter(self.browser)
+
+        self.browser.implicitly_wait(10)
 
         self.browser.get("%s" % self.live_server_url)
         self.assertIn("Sydney Linux User Group", self.browser.title)
         self.main_window_handle = self.browser.window_handles[0]
 
+    def _formatMessage(self, msg, standardMsg):
+        s = StringIO.StringIO()
+        s.write(LiveServerTestCase._formatMessage(self, msg, standardMsg))
+        s.write("\n")
+        s.write("\n")
+        s.write("failure url: %s\n" % self.browser.current_url)
+        s.write("failure page source\n")
+        s.write("-"*80)
+        s.write("\n")
+        s.write(self.browser.page_source)
+        s.write("\n")
+        s.write("-"*80)
+        s.write("\n")
+        return s.getvalue()
+
     def tearDown(self):
-        del self.browser_quiter
+        del self.browser_quitter
         LiveServerTestCase.tearDown(self)
 
     def doLogin(self, username, password):

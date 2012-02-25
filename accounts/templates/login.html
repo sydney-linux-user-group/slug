@@ -21,6 +21,15 @@ vim: set ts=2 sw=2 et sts=2 ai:
       <form action="" method="POST">
         {% csrf_token %}
         <table>
+          <tr>
+            <td colspan=2>
+            {% if form.errors %}
+              {% for error in form.errors.values %}
+                <p>{{ error }}</p>
+              {% endfor %}
+            {% endif %}
+            </tr>
+          </tr>
           {{ login_form.as_table }}
           <tr>
             <td colspan=2>

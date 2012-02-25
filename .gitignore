@@ -16,3 +16,4 @@ tags
 build/
 .Python
 vncserver.stdout
+firefox

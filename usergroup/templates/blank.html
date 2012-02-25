@@ -2,15 +2,21 @@
 -*- coding: utf-8 -*-
 vim: set ts=2 sw=2 et sts=2 ai:
 {% endcomment %}
-<html>
+<html {%block namespace %}{%endblock%}>
   <head>
-    <title>{%block title%}Sydney Linux User Group{%endblock%}</title>
+    <title>{%block title %}Sydney Linux User Group{%endblock%}</title>
     <link rel="StyleSheet" href="{{ STATIC_URL }}css/base.css" type="text/css" media="screen">
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
     {% block head %}
     {% endblock %}
   </head>
   <body>
-    {% block body %}{% endblock %}
+    {% block header %}
+    {% endblock %}
+
+    {% block body %}
+    {% endblock %}
   </body>
+{% block script %}
+{% endblock %}
 </html>

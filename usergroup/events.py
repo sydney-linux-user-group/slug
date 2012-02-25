@@ -21,7 +21,7 @@ from django.views.decorators import http as method
 from django.contrib.auth import decorators as auth
 
 # Third Party imports
-import datetime_tz
+from datetime_tz import datetime_tz
 import markdown
 
 # Our App imports
