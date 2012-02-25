@@ -76,7 +76,7 @@ class SeleniumTestCase(LiveServerTestCase):
         del self.browser_quitter
         LiveServerTestCase.tearDown(self)
 
-    def doLogin(self, username, password):
+    def doLogin(self, username="admin", password="admin"):
         login_link = self.browser.find_element_by_id("login_link")
         login_link.click()
         self.browser.switch_to_window("login")
@@ -84,7 +84,8 @@ class SeleniumTestCase(LiveServerTestCase):
         self.browser.find_element_by_id("id_password").send_keys("admin")
         self.browser.find_element_by_id("submit_login").click()
         self.browser.switch_to_window(self.main_window_handle)
-        self.assertIn("Sydney Linux User Group", self.browser.title)
+        #Pause for up to implicitly_wait seconds until it page is loaded
+        self.browser.find_element_by_id("content")
 
     def doLogout(self):
         self.browser.switch_to_window(self.main_window_handle)
