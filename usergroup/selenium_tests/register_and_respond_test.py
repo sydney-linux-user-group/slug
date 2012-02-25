@@ -12,6 +12,8 @@ Steps are:
 
 """
 
+import re
+
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.support.ui import WebDriverWait
@@ -123,4 +125,16 @@ class TestRegister(SeleniumTestCase):
 
         # Try and login again
         self.doLogin("test", "testingpassword1")
+        self.doLogout()
+
+        # Test that one message has been sent.
+        self.assertEqual(len(mail.outbox), 1)
+
+        # Verify that the subject of the first message is correct.
+        self.assertEqual(mail.outbox[0].subject, "Please confirm your email address")
+
+        activate_groups = re.search(r"(/accounts/activate/[0-9a-f]+/)", str(mail.outbox[0].body))
+        activate_link = activate_groups.groups()[0]
+
+        self.browser.get("%s%s" % (self.live_server_url, activate_link))
         self.doLogout()

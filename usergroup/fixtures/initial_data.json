@@ -1,0 +1,10 @@
+[
+  {
+    "pk": 1, 
+    "model": "sites.site", 
+    "fields": {
+      "domain": "slug.org.au", 
+      "name": "Sydney Linux User Group"
+    }
+  }
+]

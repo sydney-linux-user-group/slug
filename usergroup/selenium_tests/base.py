@@ -11,7 +11,7 @@ import warnings
 
 from selenium import webdriver
 from selenium.selenium import selenium
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoSuchElementException, WebDriverException
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 from selenium.webdriver.firefox.firefox_profile import FirefoxProfile
@@ -26,12 +26,16 @@ from liveserver.test.testcases import LiveServerTestCase
 
 class BrowserQuitter(object):
     """Helper class which always causes the browser object to close."""
+
     def __init__(self, browser):
         self.browser = browser
 
     def __del__(self):
-        self.browser.close()
-        self.browser.quit()
+        try:
+            self.browser.close()
+            self.browser.quit()
+        except WebDriverException:
+            pass
 
 
 class SeleniumTestCase(LiveServerTestCase):
@@ -64,7 +68,7 @@ put in your base directory.
 
         self.browser_quitter = BrowserQuitter(self.browser)
 
-        self.browser.implicitly_wait(10)
+        self.browser.implicitly_wait(600)
 
         self.browser.get("%s" % self.live_server_url)
         self.assertIn("Sydney Linux User Group", self.browser.title)
@@ -79,7 +83,7 @@ put in your base directory.
         s.write("failure page source\n")
         s.write("-"*80)
         s.write("\n")
-        s.write(self.browser.page_source)
+        s.write(self.browser.page_source.encode('utf-8'))
         s.write("\n")
         s.write("-"*80)
         s.write("\n")
