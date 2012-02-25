@@ -40,19 +40,14 @@ lib/python2.6/site-packages/distribute-0.6.24-py2.6.egg-info: lib
 lib/python2.6/site-packages/ez_setup.py: lib
 	$(ACTIVATE) && pip install ez_setup
 
-third_party/.initialized:
-	git submodule init
-	touch third_party/.initialized
-
-third_party/.updated: .gitmodules third_party/.initialized
-	git submodule update
-	touch -r .gitmodules third_party/.updated
+third_party:
+	cd third_party && make
 
 src/pip-delete-this-directory.txt: requirements.txt
 	$(ACTIVATE) && pip install -E . -r requirements.txt
 	touch -r requirements.txt src/pip-delete-this-directory.txt
 
-install: lib/python2.6/site-packages/ez_setup.py lib/python2.6/site-packages/distribute-0.6.24-py2.6.egg-info third_party/.initialized third_party/.updated src/pip-delete-this-directory.txt
+install: lib/python2.6/site-packages/ez_setup.py lib/python2.6/site-packages/distribute-0.6.24-py2.6.egg-info third_party src/pip-delete-this-directory.txt
 
 prepare-serve: install
 	$(ACTIVATE) && python manage.py collectstatic --noinput
@@ -98,4 +93,4 @@ private:
 	rm -rf private
 	git clone git+ssh://git@github.com/mithro/slug-private.git private
 
-.PHONY : lint upload deploy serve clean config edit private prepare-serve
+.PHONY : lint upload deploy serve clean config edit private prepare-serve third_party

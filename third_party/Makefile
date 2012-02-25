@@ -1,18 +1,16 @@
 #!/bin/bash
 
-all: git
+all: .updated
 clean: git_clean
 
 ###############################################################################
 # third_party modules are managed by git
 ###############################################################################
 
-git:
+.updated: ../.gitmodules
 	@cd ..; echo "Updating git submodules." ;\
 		git submodule init; \
 		git submodule update
+	touch -r ../.gitmodules .updated
 
-git_clean:
-	
-
-.PHONY : all clean git git_clean
+.PHONY : all clean git
