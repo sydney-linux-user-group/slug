@@ -23,7 +23,7 @@ import django.test
 from liveserver.test.testcases import LiveServerTestCase
 
 
-class BrowserQuiter(object):
+class BrowserQuitter(object):
     """Helper class which always causes the browser object to close."""
     def __init__(self, browser):
         self.browser = browser
@@ -42,7 +42,6 @@ class SeleniumTestCase(LiveServerTestCase):
         profile = FirefoxProfile()
         profile.set_preference('plugins.hide_infobar_for_missing_plugin', True)
 
-
         firefox_bin = os.path.join('firefox', 'firefox')
         if os.path.exists(firefox_bin):
             self.browser = webdriver.Firefox(firefox_profile=profile, firefox_binary=FirefoxBinary(firefox_bin))
@@ -50,7 +49,9 @@ class SeleniumTestCase(LiveServerTestCase):
             warnings.warn("Using your default firefox, this can be unreliable!")
             self.browser = webdriver.Firefox(firefox_profile=profile)
 
-        self.browser_quiter = BrowserQuiter(self.browser)
+        self.browser_quiter = BrowserQuitter(self.browser)
+
+        self.browser.implicitly_wait(10)
 
         self.browser.get("%s" % self.live_server_url)
         self.assertIn("Sydney Linux User Group", self.browser.title)

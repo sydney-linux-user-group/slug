@@ -3,14 +3,25 @@ Initial Configuration
 
 To get the code and dependencies:
 
-    git clone -b django git@github.com:sydney-linux-user-group/slug.git
+    git clone git@github.com:sydney-linux-user-group/slug.git
     cd slug
     make install
 
 Running a test server
 =====================
 
-Simply ``make serve``
+Simply ``make serve``; this will configure a virtualenv, download and install
+dependencies (inside the virtualenv; your system will not be touched); and a
+test server will be started.
+
+If this is your first time running ``make serve`` you'll be prompted to provide
+a username and password for an admin account.
+
+Running tests
+=============
+
+Simply ``make test``
+
 
 Production Deployment
 =====================
