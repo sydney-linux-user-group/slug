@@ -168,7 +168,7 @@ function twitter(query) {
 }
 
 $(document).ready(function(){
-
+{% if not TESTING %}
   twitter_setup();
 
   // Setup the YouTube widget
@@ -188,6 +188,7 @@ $(document).ready(function(){
   var tag = document.createElement('script');
   tag.src = "http://www.youtube.com/player_api";
   firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+{% endif %}
 });
 
 var youtube_api_ready = false;
