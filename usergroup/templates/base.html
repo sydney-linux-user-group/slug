@@ -51,7 +51,7 @@ vim: set ts=2 sw=2 et sts=2 ai:
     <ul id="config">
       <li style="list-style: none">{% if user.is_staff %}</li>
       <li><span style="color: red;">Admin User</span></li>
-      <li><a href="/event/add">Add Event</a></li>
+      <li><a id="add_event" href="/event/add">Add Event</a></li>
       <li style="list-style: none">{% endif %}</li>
       <li id="feed-icons">
         <a href="webcal://{{ request.get_host }}/ical" title="iCal feed of all events">

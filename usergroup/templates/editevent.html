@@ -42,12 +42,12 @@ vim: set ts=2 sw=2 et sts=2 ai:
         </form>
         <ul class="eventData">
           <li><label for="name">Event Name: </label>
-            <input type="text" name="name" value="{{event.name}}"/></li>
+            <input id="event_name" type="text" name="name" value="{{event.name}}"/></li>
           <li><label for="start">Start Time: </label>
             <input type="text" name="start" value="{{event.start}}"/></li>
           <li><label for="end">End Time: </label>
             <input type="text" name="end" value="{{event.end}}" /></li>
-          <li><input type="submit"/></li>
+          <li><input id="submit_event" type="submit"/></li>
         </ul>
       </div>
     </div>
