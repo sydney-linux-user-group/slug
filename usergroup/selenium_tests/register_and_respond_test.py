@@ -133,8 +133,8 @@ class TestRegister(SeleniumTestCase):
         # Verify that the subject of the first message is correct.
         self.assertEqual(mail.outbox[0].subject, "Please confirm your email address")
 
+        # Verify the activate link works.
         activate_groups = re.search(r"(/accounts/activate/[0-9a-f]+/)", str(mail.outbox[0].body))
         activate_link = activate_groups.groups()[0]
-
         self.browser.get("%s%s" % (self.live_server_url, activate_link))
         self.doLogout()
