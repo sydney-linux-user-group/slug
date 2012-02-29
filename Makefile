@@ -53,7 +53,12 @@ prepare-serve: install
 	$(ACTIVATE) && python manage.py collectstatic --noinput
 	$(ACTIVATE) && python manage.py syncdb
 
-test: install
+test: clitest firefoxtest
+
+clitest: install
+	$(ACTIVATE) && python manage.py test -v2 usergroup.django_tests
+
+firefoxtest: install
 	$(ACTIVATE) && TEST_DISPLAY=1 python manage.py test -v 2 usergroup.selenium_tests
 
 chrometest: install

@@ -72,6 +72,18 @@ class TestEventCreationAndPublication(SeleniumTestCase):
         submit_text = submit.get_attribute("value")
         self.assertEqual(u"Publish event", submit_text, msg=submit)
 
+    def testPublishedEventReadyToAnnounce(self):
+        """Newly created events should be in the unpublished state."""
+        self.doLogin()
+        event_url = self.do_create_event()
+        event_id, _ = self.get_id_and_action_from_url(event_url)
+        self.browser.find_element_by_id("events_link").click()
+        submit = self.browser.find_element_by_id("submit_%s" % event_id)
+        submit.click()
+        submit = self.browser.find_element_by_id("submit_%s" % event_id)
+        submit_text = submit.get_attribute("value")
+        self.assertEqual(u"Announce event via email", submit_text, msg=submit)
+
     def testUnpublishedEventInvisibleToAnonymousUsers(self):
         """Create two events; publish one; log out. Should only see one event."""
         first_event_id, second_event_id = self.do_two_events()
