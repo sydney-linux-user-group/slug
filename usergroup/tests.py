@@ -12,7 +12,7 @@ import subprocess
 import sys
 
 from django_testing_fixes import suite as fix_suite
-from django_testing_fixes import fix_finish_response
+from django_testing_fixes import fix_finish_response, fix_finish_request
 from django_testing_fixes import fix_fixtures
 from django_testing_fixes import fix_exceptions
 
