@@ -38,7 +38,7 @@ extensions = ['abbr', 'footnotes', 'def_list', 'fenced_code', 'tables', 'subscri
 @method.require_GET
 def handler_next(request):
     """Figure out the next event, then redirect to it."""
-    if event_lists.get_next_event() == "NULL":
+    if (not event_lists.get_next_event()):
         return shortcuts.redirect("/noevent")
     return shortcuts.redirect(event_lists.get_next_event().get_url())
 

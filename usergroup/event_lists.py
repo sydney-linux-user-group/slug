@@ -84,7 +84,7 @@ def get_next_event(**kw):
             ).filter(published__exact=True
             ).order_by('start')
     if len(q) == 0:
-        return "NULL" #Something null
+        return None
     return q[0:1]
 
 
