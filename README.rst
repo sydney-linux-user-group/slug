@@ -1,14 +1,26 @@
 ``README`` - Overview for developers
 ====================================
 
+More documentation
+------------------
+
+We're starting to add more documentation into the ``doc`` folder.
+
+If you would prefer to read formatted HTML (highly recommended),
+simply ``make doc`` and then look under ``doc/_build/html``
+
+This ``README`` is automatically generated and placed at the top level as part
+of that documentation build. If you're editing this at the top level, your
+changes will shortly be clobbered. Edit ``doc/readme.rst`` instead.
+
 Initial Configuration
 ---------------------
 
-To get the code and dependencies:
+To get the code and dependencies::
 
-    git clone git@github.com:sydney-linux-user-group/slug.git
-    cd slug
-    make install
+   git clone git@github.com:sydney-linux-user-group/slug.git
+   cd slug
+   make install
 
 Running a test server
 ---------------------
@@ -25,6 +37,14 @@ Running tests
 
 Simply ``make test``
 
+Coding standards
+----------------
+
+In general, we follow PEP-8_. ``make lint`` will tell you in detail about all the
+things we need to fix.
+
+.. _PEP-8: http://www.python.org/dev/peps/pep-0008/
+
 
 Production Deployment
 ---------------------
@@ -37,7 +57,9 @@ Production Deployment
    for ``private`` in settings.py
 
 #. The SLUG deployment uses one user to deploy the code, and another user to
-   run the code::
+   run the code:
+
+   .. code-block:: console
 
       zhasper@tridge:~$ grep slug /etc/passwd /etc/group
       /etc/passwd:slug:x:1001:1001::/home/slug:/bin/bash
@@ -60,7 +82,9 @@ Production Deployment
 
    .. _deploy key: http://help.github.com/deploy-keys/
 
-#. To do the deployment, I use this simple script, which would benefit from a ton more checking::
+#. To do the deployment, I use this simple script, which would benefit from a ton more checking:
+
+   .. code-block:: bash
 
       #!/bin/bash
 
@@ -84,7 +108,9 @@ Production Deployment
       case you need to roll back the database changes.
 
 #. We've chosen to run the app inside `Green Unicorn`_, and have it started by
-   ``upstart``::
+   ``upstart``:
+
+   .. code-block:: console
 
       slug@tridge:~/django/current$ cat /etc/init/slug.conf 
       description "SLUG Django instance"
@@ -105,7 +131,10 @@ Production Deployment
 
    .. _Green Unicorn: http://gunicorn.org/
 
-#. We've chosen to use `nginx`_ as a frontend, and to serve static files. Only a few changes from the default config are needed to accomplish this::
+#. We've chosen to use `nginx`_ as a frontend, and to serve static files. Only
+   a few changes from the default config are needed to accomplish this:
+
+   .. code-block:: nginx
 
       # path for static files
       root /home/slug/django/current/usergroup/;
@@ -135,3 +164,5 @@ Production Deployment
 
 .. [1] For instance, if you're using ``sqlite`` as the database, the run
        user will need permission to write to the ``sqlite`` file
+
+..  vim: set ts=2 sw=2 tw=0 et:
