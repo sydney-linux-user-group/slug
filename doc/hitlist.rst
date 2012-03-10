@@ -1,5 +1,5 @@
-Hitlist
-=======
+``Hitlist`` - Things we need to test
+====================================
 
 Validate event creation
 -----------------------
@@ -11,6 +11,11 @@ Validate event creation
   * Submit
   * Navigate to the events page
   * Verify that the event shows as being unpublished
+
+Status: Implemented.
+
+  .. automethod:: usergroup.selenium_tests.create_and_manipulate_meetings_test.TestEventCreationAndPublication.testCreateEvent
+
 
 Validate event publication
 --------------------------
@@ -40,18 +45,18 @@ Anonymous users cannot see unpublished events
 Announce an event
 -----------------
 
-  * Install a fixture with at least 1 published unannounced event
-  * Load the events page as an admin
-  * Verify that the event shows as being unannouned
-  * Announce the event
-  * Verify that the event shows as having been announced
-  * Django outbox should contain one email
+   * Install a fixture with at least 1 published unannounced event
+   * Load the events page as an admin
+   * Verify that the event shows as being unannouned
+   * Announce the event
+   * Verify that the event shows as having been announced
+   * Django outbox should contain one email
 
-    * Validate from address
-    * Validate to address
-    * Check that body has nothing that looks like a template tag
-    * Check that tile is present in body
-    * Check that date and time are in body
+     * Validate from address
+     * Validate to address
+     * Check that body has nothing that looks like a template tag
+     * Check that tile is present in body
+     * Check that date and time are in body
 
 Edit an announced event
 -----------------------
