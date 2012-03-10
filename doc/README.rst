@@ -56,10 +56,10 @@ Production Deployment
    To see where this is used and get an idea of what you can override, search
    for ``private`` in settings.py
 
-#. The SLUG deployment uses one user to deploy the code, and another user to
-   run the code:
+   .. highlight:: console
 
-   .. code-block:: console
+#. The SLUG deployment uses one user to deploy the code, and another user to
+   run the code::
 
       zhasper@tridge:~$ grep slug /etc/passwd /etc/group
       /etc/passwd:slug:x:1001:1001::/home/slug:/bin/bash
@@ -82,9 +82,9 @@ Production Deployment
 
    .. _deploy key: http://help.github.com/deploy-keys/
 
-#. To do the deployment, I use this simple script, which would benefit from a ton more checking:
+   .. highlight:: bash
 
-   .. code-block:: bash
+#. To do the deployment, I use this simple script, which would benefit from a ton more checking::
 
       #!/bin/bash
 
@@ -107,10 +107,10 @@ Production Deployment
       backup of the existing database before running ``make prepare-serve`` in
       case you need to roll back the database changes.
 
-#. We've chosen to run the app inside `Green Unicorn`_, and have it started by
-   ``upstart``:
+      .. highlight:: console
 
-   .. code-block:: console
+#. We've chosen to run the app inside `Green Unicorn`_, and have it started by
+   ``upstart``::
 
       slug@tridge:~/django/current$ cat /etc/init/slug.conf 
       description "SLUG Django instance"
@@ -131,10 +131,10 @@ Production Deployment
 
    .. _Green Unicorn: http://gunicorn.org/
 
-#. We've chosen to use `nginx`_ as a frontend, and to serve static files. Only
-   a few changes from the default config are needed to accomplish this:
+   .. highlight:: nginx
 
-   .. code-block:: nginx
+#. We've chosen to use `nginx`_ as a frontend, and to serve static files. Only
+   a few changes from the default config are needed to accomplish this::
 
       # path for static files
       root /home/slug/django/current/usergroup/;
