@@ -70,9 +70,9 @@ lint: install
 	@# W0221 - Disable "Arguments differ from parent", as get and post will.
 	@# E1103 - Disable "Instance of 'x' has no 'y' member (but some types could not be inferred)"
 	@# I0011 - Disable "Locally disabling 'xxxx'"
-	@$(ACTIVATE) && python \
+	@$(ACTIVATE) && $(DJANGO) python \
 		-W "ignore:disable-msg is:DeprecationWarning:pylint.lint" \
-		-c "import config; config.lint_setup(); import sys; from pylint import lint; lint.Run(sys.argv[1:])" \
+		-c "import sys; from pylint import lint; lint.Run(sys.argv[1:])" \
 		--reports=n \
 		--include-ids=y \
 		--no-docstring-rgx "(__.*__)|(get)|(post)|(main)" \
