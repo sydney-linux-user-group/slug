@@ -7,13 +7,14 @@ define \n
 endef
 
 ACTIVATE = . bin/activate
+DJANGO = DJANGO_SETTINGS_MODULE=usergroup.settings
 
 ###############################################################################
 # Export the configuration to sub-makes
 ###############################################################################
 export
 
-all: test
+all: test README.txt
 
 virtualenv: bin/activate
 lib: bin/activate
@@ -47,7 +48,7 @@ src/pip-delete-this-directory.txt: requirements.txt
 	$(ACTIVATE) && pip install -r requirements.txt
 	touch -r requirements.txt src/pip-delete-this-directory.txt
 
-install: lib/python2.6/site-packages/ez_setup.py lib/python2.6/site-packages/distribute-0.6.24-py2.6.egg-info third_party src/pip-delete-this-directory.txt
+install: lib/python2.6/site-packages/ez_setup.py lib/python2.6/site-packages/distribute-0.6.24-py2.6.egg-info third_party src/pip-delete-this-directory.txt README.txt
 
 prepare-serve: install
 	$(ACTIVATE) && python manage.py collectstatic --noinput
@@ -101,4 +102,10 @@ private:
 	rm -rf private
 	git clone git+ssh://git@github.com/mithro/slug-private.git private
 
-.PHONY : lint upload deploy serve clean config edit private prepare-serve third_party
+doc: README.txt
+	$(ACTIVATE) && cd doc && $(DJANGO) $(MAKE) html
+
+README.txt: doc/README.rst
+	cd doc && $(DJANGO) sphinx-build -b text . .. README.rst
+
+.PHONY : lint upload deploy serve clean config edit private prepare-serve third_party doc

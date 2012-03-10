@@ -1,5 +1,8 @@
+``README`` - Overview for developers
+====================================
+
 Initial Configuration
-=====================
+---------------------
 
 To get the code and dependencies:
 
@@ -8,7 +11,7 @@ To get the code and dependencies:
     make install
 
 Running a test server
-=====================
+---------------------
 
 Simply ``make serve``; this will configure a virtualenv, download and install
 dependencies (inside the virtualenv; your system will not be touched); and a
@@ -18,13 +21,13 @@ If this is your first time running ``make serve`` you'll be prompted to provide
 a username and password for an admin account.
 
 Running tests
-=============
+-------------
 
 Simply ``make test``
 
 
 Production Deployment
-=====================
+---------------------
 
 #. To account for differences between the dev and prod infrastructure, we have
    a ``private`` repo which needs to be checked out. Exactly where the
