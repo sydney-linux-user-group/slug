@@ -12,13 +12,19 @@ Create an event
 * Choose a date and template
 * Add a title
 * Submit
-* Navigate to the events page
-* Verify that the event shows as being unpublished
+* Verify that we've been redirected appropriately.
 
-.. admonition:: Status: Implemented
+Implemented in :func:`usergroup.selenium_tests.create_and_manipulate_meetings_test.TestEventCreationAndPublication.testCreateEvent`
 
-  .. automethod:: usergroup.selenium_tests.create_and_manipulate_meetings_test.TestEventCreationAndPublication.testCreateEvent
+Newly created events are ready to publish
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+* Install a fixture with one unpublished event
+* As an admin, browse to the Events List page
+* Find the submit button associated with the event
+* Verify that the button says "Publish Event"
+
+Implemented in :func:`usergroup.selenium_tests.create_and_manipulate_meetings_test.TestEventCreationAndPublication.testNewEventReadyToPublish`
 
 Publish an event
 ^^^^^^^^^^^^^^^^
@@ -26,8 +32,13 @@ Publish an event
 * Install a fixture with two unpublished events
 * Load the events page as an admin
 * Publish one event
-* Verify that events page shows that event as being published
+* Verify that events page shows that event as being published (ie, ready to announce)
 * Verify that events page does not show the other event as being published
+
+Kinda-sorta-mostly done in :func:`usergroup.selenium_tests.create_and_manipulate_meetings_test.TestEventCreationAndPublication.testNewEventReadyToPublish`, although it only uses one event.
+TODO: Switch to using a fixture instead of clicky-clicky to save time.
+TODO: Start with two unpublished events, not one
+TODO: Add verification that the second event is not published.
 
 Normal users cannot see unpublished events
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -37,6 +48,8 @@ Normal users cannot see unpublished events
 * Verify that all published events are visible
 * Verify that all unpublished events are not visible
 
+Implemented in :func:`usergroup.selenium_tests.create_and_manipulate_meetings_test.TestEventCreationAndPublication.testCreateEvent`
+
 Anonymous users cannot see unpublished events
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -44,6 +57,8 @@ Anonymous users cannot see unpublished events
 * Load the front page as a an anonymous
 * Verify that all published events are visible
 * Verify that all unpublished events are not visible
+
+Implemented in :func:`usergroup.selenium_tests.create_and_manipulate_meetings_test.TestEventCreationAndPublication.testUnpublishedEventInvisibleToAnonymousUsers`
 
 Announce an event
 ^^^^^^^^^^^^^^^^^

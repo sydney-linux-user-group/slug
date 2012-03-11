@@ -2,10 +2,11 @@
 #
 
 all: html text epub changes linkcheck doctest
+DJANGO=export DJANGO_SETTINGS_MODULE=usergroup.settings
 
 # You can set these variables from the command line.
 SPHINXOPTS    =
-SPHINXBUILD   = sphinx-build
+SPHINXBUILD   = ${DJANGO}; sphinx-build
 PAPER         =
 BUILDDIR      = _build
 

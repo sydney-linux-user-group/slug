@@ -14,6 +14,7 @@ Contents:
 
    README
    hitlist
+   tests
 
 
 ==================
