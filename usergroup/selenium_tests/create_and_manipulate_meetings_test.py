@@ -1,26 +1,20 @@
 #!/usr/bin/python
+"""Tests around creating and manipulating meetings"""
 #
 # -*- coding: utf-8 -*-
 # vim: set ts=4 sw=4 et sts=4 ai:
 
-from selenium import webdriver
-from selenium.selenium import selenium
-from selenium.common.exceptions import NoSuchElementException
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support.ui import Select
-import time
 
-from django.utils import unittest
-from django import test as djangotest
-
-from base import SeleniumTestCase
+from .base import SeleniumTestCase
 
 class TestEventCreationAndPublication(SeleniumTestCase):
+    """Tests of event creation and publishing."""
 
     fixtures = [ 'test_admin_user', 'test_existing_user' ]
 
     def do_create_event(self, friday=1):
+        """Common routine - create an event."""
         self.browser.find_element_by_id("add_event").click()
         fridays = Select(self.browser.find_element_by_id("fridays"))
         fridays.select_by_index(friday)
@@ -32,12 +26,16 @@ class TestEventCreationAndPublication(SeleniumTestCase):
         return event_url
 
     def get_id_and_action_from_url(self, event_url):
+        """Split ``event_url`` into event_id and event_action."""
         event_url = event_url.split('/')[-3:]
         event_id = event_url[1]
         event_action = event_url[2]
         return event_id, event_action
 
     def do_two_events(self):
+        """Create two events; publish the first event.
+
+        FIXME: this should probably be replaced with a fixture."""
         self.doLogin()
         #create first event
         event_url = self.do_create_event()
@@ -85,7 +83,7 @@ class TestEventCreationAndPublication(SeleniumTestCase):
         self.assertEqual(u"Announce event via email", submit_text, msg=submit)
 
     def testUnpublishedEventInvisibleToAnonymousUsers(self):
-        """Create two events; publish one; log out. Should only see one event."""
+        """Create two events; publish one; log out. Should only see one."""
         first_event_id, second_event_id = self.do_two_events()
         #Check that the front page rendered okay
         self.assertNotIn(u"Traceback", self.browser.page_source)
