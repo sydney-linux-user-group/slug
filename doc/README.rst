@@ -13,6 +13,8 @@ This ``README`` is automatically generated and placed at the top level as part
 of that documentation build. If you're editing this at the top level, your
 changes will shortly be clobbered. Edit ``doc/readme.rst`` instead.
 
+You can browse the latest checked-in version of the docs at `http://slug-usergroup.rtfd.org`
+
 Initial Configuration
 ---------------------
 
