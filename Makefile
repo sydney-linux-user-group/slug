@@ -7,13 +7,14 @@ define \n
 endef
 
 ACTIVATE = . bin/activate
+DJANGO = DJANGO_SETTINGS_MODULE=usergroup.settings
 
 ###############################################################################
 # Export the configuration to sub-makes
 ###############################################################################
 export
 
-all: test
+all: test README.rst
 
 virtualenv: bin/activate
 lib: bin/activate
@@ -47,13 +48,18 @@ src/pip-delete-this-directory.txt: requirements.txt
 	$(ACTIVATE) && pip install -r requirements.txt
 	touch -r requirements.txt src/pip-delete-this-directory.txt
 
-install: lib/python2.6/site-packages/ez_setup.py lib/python2.6/site-packages/distribute-0.6.24-py2.6.egg-info third_party src/pip-delete-this-directory.txt
+install: lib/python2.6/site-packages/ez_setup.py lib/python2.6/site-packages/distribute-0.6.24-py2.6.egg-info third_party src/pip-delete-this-directory.txt README.rst
 
 prepare-serve: install
 	$(ACTIVATE) && python manage.py collectstatic --noinput
 	$(ACTIVATE) && python manage.py syncdb
 
-test: install
+test: clitest firefoxtest
+
+clitest: install
+	$(ACTIVATE) && python manage.py test -v2 usergroup.django_tests
+
+firefoxtest: install
 	$(ACTIVATE) && TEST_DISPLAY=1 python manage.py test -v 2 usergroup.selenium_tests
 
 chrometest: install
@@ -64,9 +70,9 @@ lint: install
 	@# W0221 - Disable "Arguments differ from parent", as get and post will.
 	@# E1103 - Disable "Instance of 'x' has no 'y' member (but some types could not be inferred)"
 	@# I0011 - Disable "Locally disabling 'xxxx'"
-	@$(ACTIVATE) && python \
+	@$(ACTIVATE) && $(DJANGO) python \
 		-W "ignore:disable-msg is:DeprecationWarning:pylint.lint" \
-		-c "import config; config.lint_setup(); import sys; from pylint import lint; lint.Run(sys.argv[1:])" \
+		-c "import sys; from pylint import lint; lint.Run(sys.argv[1:])" \
 		--reports=n \
 		--include-ids=y \
 		--no-docstring-rgx "(__.*__)|(get)|(post)|(main)" \
@@ -96,4 +102,10 @@ private:
 	rm -rf private
 	git clone git+ssh://git@github.com/mithro/slug-private.git private
 
-.PHONY : lint upload deploy serve clean config edit private prepare-serve third_party
+doc: README.rst
+	$(ACTIVATE) && cd doc && $(DJANGO) $(MAKE) html
+
+README.rst: doc/README.rst
+	cp $^ $@
+
+.PHONY : lint upload deploy serve clean config edit private prepare-serve third_party doc

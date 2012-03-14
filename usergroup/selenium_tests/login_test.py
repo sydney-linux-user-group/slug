@@ -25,8 +25,6 @@ class TestValidAdminLogin(SeleniumTestCase):
         self.doLogin()
         self.assertEqual(1, len(self.browser.window_handles))
         self.assertIn("Sydney Linux User Group", self.browser.title)
-        logout_link = self.browser.find_element_by_id("logout_link")
-        logout_link.click()
 
 class TestInvalidUserLogin(SeleniumTestCase):
 
@@ -51,5 +49,3 @@ class TestValidNonAdminLogin(SeleniumTestCase):
         self.doLogin(username="existing", password="password")
         self.assertEqual(1, len(self.browser.window_handles))
         self.assertIn("Sydney Linux User Group", self.browser.title)
-        logout_link = self.browser.find_element_by_id("logout_link")
-        logout_link.click()
