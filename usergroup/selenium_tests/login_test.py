@@ -21,6 +21,7 @@ class TestValidAdminLogin(SeleniumTestCase):
     fixtures = [ 'test_admin_user' ]
 
     def testLoginAndLogout(self):
+        """Test client-side actions on login/logout."""
         self.assertEqual(1, len(self.browser.window_handles))
         self.doLogin()
         self.assertEqual(1, len(self.browser.window_handles))
@@ -31,6 +32,7 @@ class TestInvalidUserLogin(SeleniumTestCase):
     fixtures = [ 'test_admin_user' ]
 
     def testInvalidLogin(self):
+        """Test client-side actions on login/logout."""
         self.doLogin(username="notexisting", password="wrong", wait=False)
         #Login window should still be active
         self.assertEqual(2, len(self.browser.window_handles))
@@ -45,6 +47,7 @@ class TestValidNonAdminLogin(SeleniumTestCase):
     fixtures = [ 'test_admin_user', 'test_existing_user' ]
 
     def testLoginAndLogout(self):
+        """Test client-side actions on login/logout."""
         self.assertEqual(1, len(self.browser.window_handles))
         self.doLogin(username="existing", password="password")
         self.assertEqual(1, len(self.browser.window_handles))

@@ -7,6 +7,10 @@ Event creation and publication
 Create an event
 ^^^^^^^^^^^^^^^
 
+* Fixtures:
+
+  * Single admin user
+
 * Login as an administrator
 * Click "add event"
 * Choose a date and template
@@ -19,15 +23,24 @@ Implemented in :func:`usergroup.django_tests.event_manipulation_test.TestCreateE
 Newly created events are ready to publish
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-* Install a fixture with one unpublished event
+* Fixtures:
+
+  * Single admin user
+  * One unpublished event
+
 * As an admin, browse to the Events List page
 * Find the submit button associated with the event
 * Verify that the button says "Publish Event"
 
-Implemented in :func:`usergroup.selenium_tests.create_and_manipulate_meetings_test.TestEventCreationAndPublication.testNewEventReadyToPublish`
+Implemented in :func:`usergroup.django_tests.event_manipulation_test.TestPublishEvent.test_ready_to_publish`
 
 Publish an event
 ^^^^^^^^^^^^^^^^
+
+* Fixtures:
+
+  * Two unpublished events
+  * One admin user
 
 * Install a fixture with two unpublished events
 * Load the events page as an admin

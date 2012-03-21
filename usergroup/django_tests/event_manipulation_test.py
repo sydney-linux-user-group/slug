@@ -7,19 +7,11 @@ import datetime
 import random
 
 import django.test
-from django.test.client import Client
 
 import usergroup.event_edit
 
-#TestCases have lots of public methods #pylint: disable=R0904
-
-class TestLogin(django.test.TestCase):
-    """Before we test anything else, let's see if login actually works"""
-    fixtures = [ 'test_admin_user' ]
-
-    def test_login(self):
-        login_status = self.client.login(username='admin', password='admin')
-        self.assertTrue(login_status)
+#TestCases have lots of public methods
+#pylint: disable=R0904
 
 class TestCreateEvent(django.test.TestCase):
     """Test simple event creation."""
@@ -52,3 +44,15 @@ class TestEditEvent(django.test.TestCase):
         self.assertEqual("March 30, 2012 06:30PM", start)
         self.assertEqual("March 30, 2012 08:00PM", end)
 
+
+class TestPublishEvent(django.test.TestCase):
+    """Test things that happen when publishing events."""
+
+    fixtures = ['test_admin_user', 'single_unpublished_event']
+
+    def test_ready_to_publish(self):
+        """Test that a newly created event shows as ready to publish."""
+        self.client.login(username="admin", password="admin")
+        response = self.client.get('/events')
+        self.assertContains(response, '<input id="submit_1" type="submit" '
+                            'value="Publish event">')
