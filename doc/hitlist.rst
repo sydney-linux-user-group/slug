@@ -14,7 +14,7 @@ Create an event
 * Submit
 * Verify that we've been redirected appropriately.
 
-Implemented in :func:`usergroup.selenium_tests.create_and_manipulate_meetings_test.TestEventCreationAndPublication.testCreateEvent`
+Implemented in :func:`usergroup.django_tests.event_manipulation_test.TestCreateEvent.test_create_event`
 
 Newly created events are ready to publish
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -36,9 +36,10 @@ Publish an event
 * Verify that events page does not show the other event as being published
 
 Kinda-sorta-mostly done in :func:`usergroup.selenium_tests.create_and_manipulate_meetings_test.TestEventCreationAndPublication.testNewEventReadyToPublish`, although it only uses one event.
-TODO: Switch to using a fixture instead of clicky-clicky to save time.
-TODO: Start with two unpublished events, not one
-TODO: Add verification that the second event is not published.
+
+* TODO: Switch to using a fixture instead of clicky-clicky to save time.
+* TODO: Start with two unpublished events, not one
+* TODO: Add verification that the second event is not published.
 
 Normal users cannot see unpublished events
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

@@ -51,20 +51,6 @@ class TestEventCreationAndPublication(SeleniumTestCase):
 
         return first_event_id, second_event_id
 
-    def testCreateEvent(self):
-        """Test creating a single event."""
-
-        #Login as an administrator
-        self.doLogin()
-        #Click "Add Event". Choose a date and template, add a title, submit.
-        event_url = self.do_create_event()
-        event_id, event_action = self.get_id_and_action_from_url(event_url)
-        #Verify that we've gone to the right URL
-        self.assertEqual(event_action, 'edit')
-        #That it's not an error page
-        self.assertNotIn(u"Traceback", self.browser.page_source)
-        self.assertIn(u"Suggest or sign up", self.browser.page_source)
-
     def testNewEventReadyToPublish(self):
         """Newly created events should be in the unpublished state."""
         #FIXME: Nothing being tested here is clientside, so use the test client

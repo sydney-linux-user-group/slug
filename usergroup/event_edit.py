@@ -12,7 +12,7 @@ try:
 except ImportError:
     import json
 
-from datetime import datetime
+import datetime
 
 # Django Imports
 from django import http
@@ -33,7 +33,16 @@ def lastfridays():
     """Return 5 last Fridays of the month."""
     return list(x.date() for x in rrule.rrule(
          rrule.MONTHLY, interval=1, count=10, byweekday=(rrule.FR(-1)),
-         dtstart=datetime.now()))
+         dtstart=datetime.datetime.now()))
+
+def meeting_times(date, starttime=(18, 30), endtime=(20, 00)):
+    """Generate meeting start/end times on particular date."""
+    #pylint: disable=W0142
+    formatstring = "%B %d, %Y %I:%M%p"
+    start = datetime.datetime.combine(date, datetime.time(*starttime))
+    end = datetime.datetime.combine(date, datetime.time(*endtime))
+    return start.strftime(formatstring), end.strftime(formatstring)
+
 
 
 def get_templates():
