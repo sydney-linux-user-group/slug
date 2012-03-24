@@ -58,7 +58,7 @@ Normal users cannot see unpublished events
 * Verify that all published events are visible
 * Verify that all unpublished events are not visible
 
-Implemented in :func:`usergroup.selenium_tests.create_and_manipulate_meetings_test.TestEventCreationAndPublication.testCreateEvent`
+Implemented in :func:`usergroup.django_tests.event_manipulation_test.TestEventVisibility.testVisibilityAsOrdinaryUser`
 
 Anonymous users cannot see unpublished events
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -68,7 +68,8 @@ Anonymous users cannot see unpublished events
 * Verify that all published events are visible
 * Verify that all unpublished events are not visible
 
-Implemented in :func:`usergroup.selenium_tests.create_and_manipulate_meetings_test.TestEventCreationAndPublication.testUnpublishedEventInvisibleToAnonymousUsers`
+
+Implemented in :func:`usergroup.django_tests.event_manipulation_test.TestEventVisibility.testVisibilityAsAnonymousUser`
 
 Announce an event
 ^^^^^^^^^^^^^^^^^

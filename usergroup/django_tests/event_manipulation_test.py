@@ -79,3 +79,34 @@ class TestPublishSomeEvents(django.test.TestCase):
         #Second event should still be waiting to be published
         self.assertContains(response, '<input id="submit_2" type="submit" '
                             'value="Publish event">')
+
+class TestEventVisibility(django.test.TestCase):
+    """Test that unpublished events cannot be seen except by admins."""
+
+    fixtures = ['test_admin_user', 'test_existing_user',
+                'two_unpublished_events']
+
+    def setUp(self):
+        self.client.login(username="admin", password="admin")
+        response = self.client.post('/event/1/publish', follow=True)
+        self.client.logout()
+
+    def testVisibilityAsAnonymousUser(self):
+        response = self.client.get('/events')
+        #Two events, ready to publish
+        self.assertContains(response, '<a class=eventname href="/event/1">'
+                            'Monthly Meeting</a>')
+        self.assertNotContains(response, '<a class=eventname href="/event/2">'
+                               'asfdadsf</a>')
+
+    def testVisibilityAsOrdinaryUser(self):
+        self.client.login(username='existing', password='password')
+        response = self.client.get('/events')
+        #Two events, ready to publish
+        self.assertContains(response, '<a class=eventname href="/event/1">'
+                            'Monthly Meeting</a>')
+        self.assertNotContains(response, '<a class=eventname href="/event/2">'
+                               'asfdadsf</a>')
+        self.client.logout()
+
+
