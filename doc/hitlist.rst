@@ -48,11 +48,7 @@ Publish an event
 * Verify that events page shows that event as being published (ie, ready to announce)
 * Verify that events page does not show the other event as being published
 
-Kinda-sorta-mostly done in :func:`usergroup.selenium_tests.create_and_manipulate_meetings_test.TestEventCreationAndPublication.testNewEventReadyToPublish`, although it only uses one event.
-
-* TODO: Switch to using a fixture instead of clicky-clicky to save time.
-* TODO: Start with two unpublished events, not one
-* TODO: Add verification that the second event is not published.
+Implemented in :func:`usergroup.django_tests.event_manipulation_test.TestPublishSomeEvents.test_unpublished_events_show_as_unpublished`
 
 Normal users cannot see unpublished events
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

@@ -56,3 +56,26 @@ class TestPublishEvent(django.test.TestCase):
         response = self.client.get('/events')
         self.assertContains(response, '<input id="submit_1" type="submit" '
                             'value="Publish event">')
+
+class TestPublishSomeEvents(django.test.TestCase):
+    """Test that only published events show as being published."""
+
+    fixtures = ['test_admin_user', 'two_unpublished_events']
+
+    def test_unpublished_events_show_as_unpublished(self):
+        """Test that only published events show as being published."""
+        self.client.login(username="admin", password="admin")
+        response = self.client.get('/events')
+        #Two events, ready to publish
+        self.assertContains(response, '<input id="submit_1" type="submit" '
+                            'value="Publish event">')
+        self.assertContains(response, '<input id="submit_2" type="submit" '
+                            'value="Publish event">')
+        #Publish the first event
+        response = self.client.post('/event/1/publish', follow=True)
+        #First event should now be ready for announcement
+        self.assertContains(response, '<input id="submit_1" type="submit" '
+                            'value="Announce event via email">')
+        #Second event should still be waiting to be published
+        self.assertContains(response, '<input id="submit_2" type="submit" '
+                            'value="Publish event">')

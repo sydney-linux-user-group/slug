@@ -32,38 +32,6 @@ class TestEventCreationAndPublication(SeleniumTestCase):
         event_action = event_url[2]
         return event_id, event_action
 
-    def do_two_events(self):
-        """Create two events; publish the first event.
-
-        TODO: this should probably be replaced with a fixture."""
-        self.doLogin()
-        #create first event
-        event_url = self.do_create_event()
-        first_event_id, _ = self.get_id_and_action_from_url(event_url)
-        #create second event
-        event_url = self.do_create_event(friday=2)
-        second_event_id, _ = self.get_id_and_action_from_url(event_url)
-        #Go to events page; publish first event
-        self.browser.find_element_by_id("events_link").click()
-        submit = self.browser.find_element_by_id("submit_%s" % first_event_id)
-        submit.click()
-        self.doLogout()
-
-        return first_event_id, second_event_id
-
-    def testPublishedEventReadyToAnnounce(self):
-        """Newly created events should be in the unpublished state."""
-        #FIXME: Nothing being tested here is clientside, so use the test client
-        self.doLogin()
-        event_url = self.do_create_event()
-        event_id, _ = self.get_id_and_action_from_url(event_url)
-        self.browser.find_element_by_id("events_link").click()
-        submit = self.browser.find_element_by_id("submit_%s" % event_id)
-        submit.click()
-        submit = self.browser.find_element_by_id("submit_%s" % event_id)
-        submit_text = submit.get_attribute("value")
-        self.assertEqual(u"Announce event via email", submit_text, msg=submit)
-
     def testUnpublishedEventInvisibleToAnonymousUsers(self):
         """Create two events; publish one; log out. Should only see one."""
         #FIXME: Nothing being tested here is clientside, so use the test client
