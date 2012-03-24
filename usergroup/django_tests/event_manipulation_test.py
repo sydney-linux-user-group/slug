@@ -7,11 +7,16 @@ import datetime
 import random
 
 import django.test
+import django.core.mail
 
 import usergroup.event_edit
 
 #TestCases have lots of public methods
 #pylint: disable=R0904
+#Yes, method names are long.
+#pylint: disable=C0103
+#Really no point creating docstrings for most of this
+#pylint: disable=C0111
 
 class TestCreateEvent(django.test.TestCase):
     """Test simple event creation."""
@@ -88,10 +93,10 @@ class TestEventVisibility(django.test.TestCase):
 
     def setUp(self):
         self.client.login(username="admin", password="admin")
-        response = self.client.post('/event/1/publish', follow=True)
+        self.client.post('/event/1/publish', follow=True)
         self.client.logout()
 
-    def testVisibilityAsAnonymousUser(self):
+    def test_visibility_as_anonymous_user(self):
         response = self.client.get('/events')
         #Two events, ready to publish
         self.assertContains(response, '<a class=eventname href="/event/1">'
@@ -109,4 +114,53 @@ class TestEventVisibility(django.test.TestCase):
                                'asfdadsf</a>')
         self.client.logout()
 
+class TestEventEmail(django.test.TestCase):
+
+    fixtures = ['test_admin_user', 'two_unpublished_events']
+
+    def setUp(self):
+        self.client.login(username="admin", password="admin")
+        self.client.post('/event/1/publish', follow=True)
+        self.client.post('/event/1/email', follow=True)
+        self.buffer = True
+
+    def test_one_email_sent(self):
+        self.assertEqual(len(django.core.mail.outbox), 1)
+
+    def test_email_from(self):
+        self.assertEqual(django.core.mail.outbox[0].from_email,
+                         "committee@slug.org.au")
+
+    def test_email_to(self):
+        self.assertEqual(django.core.mail.outbox[0].to,
+                         ["announce@slug.org.au"])
+
+    def test_subject(self):
+        self.assertEqual(django.core.mail.outbox[0].subject, "Monthly Meeting")
+
+    def test_update_email_sent(self):
+        self.client.post('/event/1/email', follow=True)
+        self.assertEqual(len(django.core.mail.outbox), 2)
+
+    def test_update_email_subject(self):
+        self.client.post('/event/1/email', follow=True)
+        self.assertEqual(django.core.mail.outbox[1].subject,
+                         "Updated: Monthly Meeting")
+
+    def test_message_body_has_no_template_tags(self):
+        body = django.core.mail.outbox[0].body
+        self.assertNotIn('{{', body)
+        self.assertNotIn('{%', body)
+
+    def test_title_in_message_body(self):
+        body = django.core.mail.outbox[0].body
+        self.assertIn('====== March 2012 SLUG Meeting ======', body)
+
+    def test_date_in_body(self):
+        body = django.core.mail.outbox[0].body
+        self.assertIn('Date: Friday, March 30, 2012', body)
+
+    def test_start_time_in_body(self):
+        body = django.core.mail.outbox[0].body
+        self.assertIn('* Start: Arrive at 6pm for a 6:30pm start', body)
 

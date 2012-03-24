@@ -75,17 +75,19 @@ Announce an event
 ^^^^^^^^^^^^^^^^^
 
 * Install a fixture with at least 1 published unannounced event
-* Load the events page as an admin
-* Verify that the event shows as being unannouned
 * Announce the event
-* Verify that the event shows as having been announced
 * Django outbox should contain one email
 
   * Validate from address
   * Validate to address
+  * Check that the subject is the meeting name
+  * Check that if the meeting is re-announced, the second email has "Updated: "
+    plus the meeting name.
   * Check that body has nothing that looks like a template tag
-  * Check that tile is present in body
+  * Check that title is present in body
   * Check that date and time are in body
+
+Implemented in :class:`usergroup.django_tests.event_manipulation_test.TestEventEmail`
 
 Edit an announced event
 ^^^^^^^^^^^^^^^^^^^^^^^
