@@ -49,7 +49,6 @@ class TestEditEvent(django.test.TestCase):
         self.assertEqual("March 30, 2012 06:30PM", start)
         self.assertEqual("March 30, 2012 08:00PM", end)
 
-
 class TestPublishEvent(django.test.TestCase):
     """Test things that happen when publishing events."""
 
@@ -115,6 +114,7 @@ class TestEventVisibility(django.test.TestCase):
         self.client.logout()
 
 class TestEventEmail(django.test.TestCase):
+    """Test the emails that get sent out when an event is announced."""
 
     fixtures = ['test_admin_user', 'two_unpublished_events']
 
@@ -122,7 +122,6 @@ class TestEventEmail(django.test.TestCase):
         self.client.login(username="admin", password="admin")
         self.client.post('/event/1/publish', follow=True)
         self.client.post('/event/1/email', follow=True)
-        self.buffer = True
 
     def test_one_email_sent(self):
         self.assertEqual(len(django.core.mail.outbox), 1)
@@ -164,3 +163,26 @@ class TestEventEmail(django.test.TestCase):
         body = django.core.mail.outbox[0].body
         self.assertIn('* Start: Arrive at 6pm for a 6:30pm start', body)
 
+class TestEventEditing(django.test.TestCase):
+    """Ensure that editing an event propagates changes."""
+
+    fixtures = ['test_admin_user', 'single_unpublished_event']
+
+    def setUp(self):
+        self.client.login(username="admin", password="admin")
+        self.client.post('/event/1/publish', follow=True)
+        self.client.post('/event/1/email', follow=True)
+
+    def test_edit_event_name(self):
+        response = self.client.post('/event/1', data={
+                'name': 'Weekly Meeting'}, follow=True)
+        self.assertContains(response, 'name="name" value="Weekly Meeting"')
+
+    def test_plaintext_containts_new_event_name(self):
+        response = self.client.post(
+                '/event/1',
+                data={'name': 'Plaintext Meeting',
+                      'input': '{{event.name}}'},
+                follow=True)
+        self.assertContains(
+                response, '<pre class="eventOutput">Plaintext Meeting</pre>')
