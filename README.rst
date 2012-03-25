@@ -11,9 +11,13 @@ simply ``make doc`` and then look under ``doc/_build/html``
 
 This ``README`` is automatically generated and placed at the top level as part
 of that documentation build. If you're editing this at the top level, your
-changes will shortly be clobbered. Edit ``doc/readme.rst`` instead.
+changes will shortly be clobbered. Edit ``doc/README.rst`` instead.
 
-You can browse the latest checked-in version of the docs at `http://slug-usergroup.rtfd.org`
+You can browse the latest checked-in version of the docs at http://slug-usergroup.rtfd.org
+
+You can check the status of the latest checking thanks to our free CI service from `Travis`_
+
+.. _Travis: http://travis-ci.org/#!/sydney-linux-user-group/slug
 
 Initial Configuration
 ---------------------
