@@ -64,3 +64,11 @@ Django tests -- Test views and backend functionality only
   :members:
   :undoc-members:
   :show-inheritance:
+
+:mod:`event_manipulation_test` -- Create and manipulate events
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+.. automodule:: usergroup.django_tests.event_manipulation_test
+  :members:
+  :undoc-members:
+  :show-inheritance:

@@ -18,7 +18,9 @@ Create an event
 * Submit
 * Verify that we've been redirected appropriately.
 
-Implemented in :func:`usergroup.django_tests.event_manipulation_test.TestCreateEvent.test_create_event`
+.. py:currentmodule:: usergroup.django_tests.event_manipulation_test
+
+Implemented in :func:`TestCreateEvent.test_create_event`
 
 Newly created events are ready to publish
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -32,7 +34,7 @@ Newly created events are ready to publish
 * Find the submit button associated with the event
 * Verify that the button says "Publish Event"
 
-Implemented in :func:`usergroup.django_tests.event_manipulation_test.TestPublishEvent.test_ready_to_publish`
+Implemented in :func:`TestPublishEvent.test_ready_to_publish`
 
 Publish an event
 ^^^^^^^^^^^^^^^^
@@ -48,7 +50,7 @@ Publish an event
 * Verify that events page shows that event as being published (ie, ready to announce)
 * Verify that events page does not show the other event as being published
 
-Implemented in :func:`usergroup.django_tests.event_manipulation_test.TestPublishSomeEvents.test_unpublished_events_show_as_unpublished`
+Implemented in :func:`TestPublishSomeEvents.test_unpublished_events_show_as_unpublished`
 
 Normal users cannot see unpublished events
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -58,7 +60,7 @@ Normal users cannot see unpublished events
 * Verify that all published events are visible
 * Verify that all unpublished events are not visible
 
-Implemented in :func:`usergroup.django_tests.event_manipulation_test.TestEventVisibility.testVisibilityAsOrdinaryUser`
+Implemented in :func:`TestEventVisibility.testVisibilityAsOrdinaryUser`
 
 Anonymous users cannot see unpublished events
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -69,7 +71,7 @@ Anonymous users cannot see unpublished events
 * Verify that all unpublished events are not visible
 
 
-Implemented in :func:`usergroup.django_tests.event_manipulation_test.TestEventVisibility.testVisibilityAsAnonymousUser`
+Implemented in :func:`TestEventVisibility.testVisibilityAsAnonymousUser`
 
 Announce an event
 ^^^^^^^^^^^^^^^^^
@@ -87,7 +89,7 @@ Announce an event
   * Check that title is present in body
   * Check that date and time are in body
 
-Implemented in :class:`usergroup.django_tests.event_manipulation_test.TestEventEmail`
+Implemented in :class:`TestEventEmail`
 
 Edit an announced event
 ^^^^^^^^^^^^^^^^^^^^^^^
