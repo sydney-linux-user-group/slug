@@ -103,7 +103,7 @@ private:
 	git clone git+ssh://git@github.com/mithro/slug-private.git private
 
 doc: README.rst
-	$(ACTIVATE) && cd doc && $(DJANGO) $(MAKE) html
+	$(ACTIVATE) && cd doc && $(MAKE) html
 
 README.rst: doc/README.rst
 	cp $^ $@
