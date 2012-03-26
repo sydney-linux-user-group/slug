@@ -97,8 +97,14 @@ Edit an announced event
 * Install a fixture with at least one 1 published announced event
 * Load the event detail page as an admin
 * Edit the details of the event and submit changes
-* Load the event list page as an admin
-* Verify that the event now shows ready to be re-published
+* Load the event list page as an admin. Verify that the event now shows ready
+  to be re-published
+* Load the event details page as an admin. Verify that the HTML and Plaintext
+  views ahve been updated.
+* Re-publish the event, and verify that the updated information is used to
+  generate the email.
+
+Implemented in :class:`TestEventEditing`
 
 Re-publish an event
 ^^^^^^^^^^^^^^^^^^^

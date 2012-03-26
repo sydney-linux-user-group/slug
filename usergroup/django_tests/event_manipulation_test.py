@@ -172,17 +172,49 @@ class TestEventEditing(django.test.TestCase):
         self.client.login(username="admin", password="admin")
         self.client.post('/event/1/publish', follow=True)
         self.client.post('/event/1/email', follow=True)
+        self.request_data = {'start': 'March 30, 2012, 6 p.m.',
+                             'end': 'March 30, 2012, 8 p.m.',
+                             'input': '{{event.name}}',
+                             'name': 'Sample Meeting'}
 
     def test_edit_event_name(self):
-        response = self.client.post('/event/1', data={
-                'name': 'Weekly Meeting'}, follow=True)
+        self.request_data['name'] = 'Weekly Meeting'
+        response = self.client.post('/event/1', data=self.request_data,
+                                    follow=True)
         self.assertContains(response, 'name="name" value="Weekly Meeting"')
 
-    def test_plaintext_containts_new_event_name(self):
-        response = self.client.post(
-                '/event/1',
-                data={'name': 'Plaintext Meeting',
-                      'input': '{{event.name}}'},
-                follow=True)
+    def test_plaintext_contains_new_event_name(self):
+        self.request_data['name'] = 'Plaintext Meeting'
+        response = self.client.post('/event/1', data=self.request_data,
+                                    follow=True)
         self.assertContains(
                 response, '<pre class="eventOutput">Plaintext Meeting</pre>')
+
+    def test_html_contains_new_event_name(self):
+        self.request_data['name'] = 'HTML Meeting'
+        response = self.client.post('/event/1', data=self.request_data,
+                                    follow=True)
+        self.assertContains(
+                response, '<p>HTML Meeting</p>')
+
+    def test_email_contains_new_event_name(self):
+        self.request_data['name'] = 'Email Meeting'
+        self.client.post('/event/1', data=self.request_data,
+                                    follow=True)
+        _ = self.client.post('/event/1/publish', follow=True)
+        self.client.post('/event/1/email', follow=True)
+        body = django.core.mail.outbox[1].body
+        self.assertIn('Email Meeting', body)
+
+    def test_event_ready_for_republish(self):
+        self.buffer = True
+        response = self.client.get('/events')
+        self.assertContains(
+                response, '<div class=publishform id="publish_1">\n'
+                '                 <!-- No change -->')
+        self.request_data['name'] = 'Republished Meeting'
+        self.client.post('/event/1', data=self.request_data)
+        response = self.client.get('/events')
+        self.assertContains(
+                response, '<!-- Event was published, then changed"-->\n'
+                '                <input id="submit_1"')
