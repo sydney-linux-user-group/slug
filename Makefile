@@ -35,7 +35,7 @@ bin/activate:
 freeze:
 	$(ACTIVATE) && pip freeze > requirements.txt
 
-lib/python2.6/site-packages/distribute-0.6.24-py2.6.egg-info: lib
+lib/python2.6/site-packages/distribute-0.6.25-py2.6.egg-info: lib
 	$(ACTIVATE) && pip install -U distribute
 
 lib/python2.6/site-packages/ez_setup.py: lib
@@ -48,7 +48,7 @@ src/pip-delete-this-directory.txt: requirements.txt
 	$(ACTIVATE) && pip install -r requirements.txt
 	touch -r requirements.txt src/pip-delete-this-directory.txt
 
-install: lib/python2.6/site-packages/ez_setup.py lib/python2.6/site-packages/distribute-0.6.24-py2.6.egg-info third_party src/pip-delete-this-directory.txt README.rst
+install: lib/python2.6/site-packages/ez_setup.py lib/python2.6/site-packages/distribute-0.6.25-py2.6.egg-info third_party src/pip-delete-this-directory.txt README.rst
 
 prepare-serve: install
 	$(ACTIVATE) && python manage.py collectstatic --noinput
