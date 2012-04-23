@@ -231,3 +231,11 @@ class TestEventEditing(django.test.TestCase):
         response = self.client.get('/events')
         self.assertNotContains(
                 response, 'Republished Meeting')
+
+    def test_republished_event_shows_as_ready_for_reannouncement(self):
+        self.buffer = True
+        self.client.post('/event/1/publish')
+        response = self.client.get('/events')
+        self.assertContains(
+                response, '<form name="sendemail" action="/event/1/email"')
+
