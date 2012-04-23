@@ -218,3 +218,16 @@ class TestEventEditing(django.test.TestCase):
         self.assertContains(
                 response, '<!-- Event was published, then changed"-->\n'
                 '                <input id="submit_1"')
+
+    def test_event_shows_old_details_for_anonymous_user(self):
+        self.buffer = True
+        response = self.client.get('/events')
+        self.assertContains(
+                response, '<div class=publishform id="publish_1">\n'
+                '                 <!-- No change -->')
+        self.request_data['name'] = 'Republished Meeting'
+        self.client.post('/event/1', data=self.request_data)
+        self.client.logout()
+        response = self.client.get('/events')
+        self.assertNotContains(
+                response, 'Republished Meeting')
