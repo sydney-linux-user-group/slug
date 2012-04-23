@@ -113,6 +113,7 @@ Re-publish an event
 * Install a fixture with one published announced edited event ready for re-publication
 * Load the event list page as an admin
 * Verify that the event shows as being ready for re-publication
+* Already done in :func:`TestEventEditing.test_event_shows_old_details_for_anonymous_user`
 
 * Load the event list as an anonymous user
 * Verify that the event list shows the old issue details
