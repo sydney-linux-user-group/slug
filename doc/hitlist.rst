@@ -188,8 +188,23 @@ Normal user interaction
 
 Assume starts with "Able to"
 
-Login
+
+Login with username/password
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+* Admin user can login with username/password
+* Valid existing user can login with username/password
+* Invalid user can't login username/password
+
+Login with OpenID
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+* Admin user can login
+* Valid existing user can login
+* Invalid OpenID goes to Create a new account option below.
+
+Implemented in :class:`TestValidAdminLogin`
+Implemented in :class:`TestInvalidUserLogin`
+Implemented in :class:`TestValidNonAdminLogin`
+
 
 Create a new account using OpenID
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -199,6 +214,15 @@ Create a new account using OpenID
 Create a new account using username/password
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 * Including checking of the email address.
+
+* testFailOnMissingField
+* testFailOnNonMatchingPasswords
+* testFailOnInvalidEmailAddress
+* testFailOnExistingUsername
+* testFailOnExistingEmail
+* testRegistrationSuccess
+
+Implemented in :class:`TestRegister`
 
 
 Change/add local password
