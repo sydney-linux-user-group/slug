@@ -1,6 +1,7 @@
 ``Hitlist`` - Things we need to test
 ====================================
 
+
 Event creation and publication
 ------------------------------
 
@@ -143,6 +144,7 @@ Re-announce a re-published event
   * Check that date and time are in body
   * Validate that the subject indicates that this is a re-announcement
 
+
 Create and edit talk offers
 ---------------------------
 
@@ -181,6 +183,72 @@ Admin edits agenda for a meeting
 * Verify that the talk was dropped into Agenda Items; and has turned orange
 * Click on the Source tab and submit the form
 * Click on "Formatted Plaintext" and "HTML" and verify that the talk is shown in the agenda
+
+
+Normal user interaction
+------------------------------
+
+Assume starts with "Able to"
+
+Login
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Create a new account using OpenID
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+* Including checking of the email address from non-trusted providers.
+
+
+Create a new account using username/password
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+* Including checking of the email address.
+
+
+Change/add local password
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Add an OpenID account to an existing account
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Remove an OpenID account to an existing account
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Merge two accounts (OpenID/OpenID, OpenID/login)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Say Yes to attending an event
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Say No to attending an event
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Bring friends to attending an event
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+get to via links
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+* map
+* webirc on freenode
+* mailing list
+* calendar
+
+
+--------------------------------------------------------
+
+"quick tweet" about attending an event
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+"quick facebook post" about attending an event
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+to sign up to the mailing list
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
 
