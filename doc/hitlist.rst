@@ -160,6 +160,10 @@ Anonymous user clicks "offers a talk"
 * Click "Offer Talk"
 * Get redirected to the login page
 
+.. py:currentmodule:: usergroup.selenium_tests.talk_offer_test
+
+Done in func:`TestOffer.test_anonymous_user_clicks_offer_talk`
+
 Logged-in user offers a talk
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
