@@ -130,6 +130,8 @@ Done in :func:`TestEventEditing.test_republished_event_shows_as_ready_for_reanno
 * Load the event list as an anonymous user
 * Verify that the event list shows the new issue details
 
+Done in :func:`TestEventEditing.test_republished_event_displays_for_anonymous_user`
+
 Re-announce a re-published event
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
