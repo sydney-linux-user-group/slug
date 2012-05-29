@@ -130,6 +130,8 @@ Done in :func:`TestEventEditing.test_republished_event_shows_as_ready_for_reanno
 * Load the event list as an anonymous user
 * Verify that the event list shows the new issue details
 
+Done in :func:`TestEventEditing.test_republished_event_displays_for_anonymous_user`
+
 Re-announce a re-published event
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -158,12 +160,19 @@ Anonymous user clicks "offers a talk"
 * Click "Offer Talk"
 * Get redirected to the login page
 
+.. py:currentmodule:: usergroup.selenium_tests.talk_offer_test
+
+Done in :func:`TestAnonymousUserClicksOffer.test_anonymous_user_clicks_offer_talk`
+
 Logged-in user offers a talk
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 * Browse the main page as a logged-in user
 * Click "Offer Talk"
 * A second window opens with the "Offer Talk" form
+
+Done in :func:`TestLoggedInUserClicksLogin.test_logged_in_user_clicks_offer_talk`
+
 * Enter values into all fields
 * Submit the form
 * Verify that the window has redirected to "/offer/add#prevoffers"

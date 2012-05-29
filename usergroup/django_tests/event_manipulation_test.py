@@ -239,3 +239,25 @@ class TestEventEditing(django.test.TestCase):
         self.assertContains(
                 response, '<form name="sendemail" action="/event/1/email"')
 
+    def test_republished_event_displays_for_anonymous_user(self):
+        self.buffer = True
+        self.request_data['name'] = 'Republished Meeting'
+        self.client.post('/event/1', data=self.request_data)
+        self.client.post('/event/1/publish')
+        self.client.logout()
+        response = self.client.get('/events')
+        self.assertContains(
+                response, '<a class=eventname href="/event/1">Republished '
+                    'Meeting</a>')
+
+    def test_reannounced_event_shows_reannounced(self):
+        self.buffer = True
+        self.request_data['name'] = 'Republished Meeting'
+        self.request_data['input'] = 'Republished location'
+        self.client.post('/event/1', data=self.request_data)
+        self.client.post('/event/1/publish')
+        self.client.post('/event/1/email', follow=True)
+        body = django.core.mail.outbox[1].body
+        subject = django.core.mail.outbox[1].subject
+        self.assertIn('Republished Meeting', subject)
+        self.assertIn('Republished location', body)
