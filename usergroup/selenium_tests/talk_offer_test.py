@@ -27,10 +27,20 @@ from django import test as djangotest
 from base import SeleniumTestCase
 
 
-class TestOffer(SeleniumTestCase):
+class TestAnonymousUserClicksOffer(SeleniumTestCase):
 
     def test_anonymous_user_clicks_offer_talk(self):
         self.assertEqual(1, len(self.browser.window_handles))
         offer_link = self.browser.find_element_by_id('offer')
         self.assertEqual(1, len(self.browser.window_handles))
 
+class TestLoggedInUserClicksOffer(SeleniumTestCase):
+
+    fixtures = [ 'test_admin_user', 'test_existing_user' ]
+
+    def test_logged_in_user_clicks_offer_talk(self):
+        """Check that talk offer page opens in new window"""
+        self.doLogin(username="existing", password="password")
+        self.assertEqual(1, len(self.browser.window_handles))
+        offer_link = self.browser.find_element_by_id('offer')
+        self.assertEqual(1, len(self.browser.window_handles))
