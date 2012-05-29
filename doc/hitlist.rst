@@ -200,15 +200,15 @@ Login with username/password
 * Valid existing user can login with username/password
 * Invalid user can't login username/password
 
+Implemented in :class:`TestValidAdminLogin`
+Implemented in :class:`TestInvalidUserLogin`
+Implemented in :class:`TestValidNonAdminLogin`
+
 Login with OpenID
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 * Admin user can login
 * Valid existing user can login
 * Invalid OpenID goes to Create a new account option below.
-
-Implemented in :class:`TestValidAdminLogin`
-Implemented in :class:`TestInvalidUserLogin`
-Implemented in :class:`TestValidNonAdminLogin`
 
 
 Create a new account using OpenID
