@@ -162,7 +162,7 @@ Anonymous user clicks "offers a talk"
 
 .. py:currentmodule:: usergroup.selenium_tests.talk_offer_test
 
-Done in func:`TestAnonymousUserClicksOffer.test_anonymous_user_clicks_offer_talk`
+Done in :func:`TestAnonymousUserClicksOffer.test_anonymous_user_clicks_offer_talk`
 
 Logged-in user offers a talk
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -171,7 +171,7 @@ Logged-in user offers a talk
 * Click "Offer Talk"
 * A second window opens with the "Offer Talk" form
 
-Done in func:`TestLoggedInUserClicksLogin.test_logged_in_user_clicks_offer_talk`
+Done in :func:`TestLoggedInUserClicksLogin.test_logged_in_user_clicks_offer_talk`
 
 * Enter values into all fields
 * Submit the form
