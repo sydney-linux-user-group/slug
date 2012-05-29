@@ -147,7 +147,7 @@ INSTALLED_APPS = (
     'gunicorn',
 ) + OUR_APPS
 
-AUTHENTICATION_BACKENDS = (
+TRUSTED_AUTHENTICATION_BACKENDS = (
     'social_auth.backends.twitter.TwitterBackend',
     'social_auth.backends.facebook.FacebookBackend',
     'social_auth.backends.google.GoogleOAuthBackend',
@@ -157,9 +157,13 @@ AUTHENTICATION_BACKENDS = (
     'social_auth.backends.contrib.linkedin.LinkedinBackend',
     'social_auth.backends.contrib.foursquare.FoursquareBackend',
     'social_auth.backends.contrib.github.GithubBackend',
+)
+
+AUTHENTICATION_BACKENDS = TRUSTED_AUTHENTICATION_BACKENDS + (
     'social_auth.backends.OpenIDBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
+
 
 LOGIN_URL = '/accounts/login'
 LOGIN_ERROR_URL = '/accounts/error'
