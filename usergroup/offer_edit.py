@@ -24,32 +24,28 @@ from usergroup import models
 
 @auth.login_required
 @method.require_http_methods(["GET", "POST"])
-def handler(request):
+def handler(request, key):
     """Handler for creating and editing Event objects."""
 
     q = models.TalkOffer.objects.all()
-    if not request.user.is_staff():
+    if not request.user.is_staff:
         q = q.filter(created_by__exact=request.user)
     offers = q[:100]
 
     # /offer/<key> (POST/Get)
     # /offer/add (POST/Get)
-    try:
-        unused_offer, key = request.path_info.split('/')
-    except IndexError:
-        return shortcuts.redirect('/offers')
 
     if key == 'add':
-        offer = models.Offer()
+        offer = models.TalkOffer()
     else:
         offer = shortcuts.get_object_or_404(models.TalkOffer, pk=key)
 
     if request.method == 'GET':
         offer_list = q[:100]
 
-        return shortcut.render(
+        return shortcuts.render(request,
                 'offertalk.html', {
-                        'offer': offer, 'offer_list': offers, 'self': self})
+                        'offer': offer, 'offer_list': offers})
     elif request.method == 'POST':
         return handler_edit(request, offer, offers)
 
