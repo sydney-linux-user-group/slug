@@ -1,11 +1,16 @@
 application: sydney-linux-user-group-hr
-version: 8
-runtime: python
+version: 9
 api_version: 1
+runtime: python27
+threadsafe: true
 
 builtins:
 - datastore_admin: on
 - appstats: on
+
+libraries:
+- name: lxml
+  version: latest
 
 handlers:
 - url: /favicon.ico
@@ -24,24 +29,24 @@ handlers:
 - url: /third_party
   static_dir: static/third_party
 
-- url: /_ah/login_required
-  script: do_openid_login.py
-
-- url: /event/add
-  login: admin
-  script: handler-admin.py
-
-- url: /event/[a-zA-Z0-9]*/(edit|publish|email|addoffer|remoffer)
-  login: admin
-  script: handler-admin.py
-
-- url: /admin/.*
-  script: $PYTHON_LIB/google/appengine/ext/admin
-  login: admin
-
-- url: /talks
-  script: handler.py
-  login: required
+#- url: /_ah/login_required
+#  script: do_openid_login.py
+#
+#- url: /event/add
+#  login: admin
+#  script: handler-admin.py
+#
+#- url: /event/[a-zA-Z0-9]*/(edit|publish|email|addoffer|remoffer)
+#  login: admin
+#  script: handler-admin.py
+#
+#- url: /admin/.*
+#  script: $PYTHON_LIB/google/appengine/ext/admin
+#  login: admin
+#
+#- url: /talks
+#  script: handler.py
+#  login: required
 
 - url: /.*
   script: handler.py
